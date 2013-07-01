@@ -1,28 +1,256 @@
-<!doctype html>
-<html lang="en" ng-app="myApp">
-<head>
-  <meta charset="utf-8">
-  <title>My AngularJS App</title>
-  <link rel="stylesheet" href="css/app.css"/>
-</head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<!DOCTYPE html>
+<html lang="en" ng-app="microbrewit">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  
+  <body>
+    <header id="main-header" class="clearfix">
+      <div class="container">
+        <nav id="main-nav" class="clearfix">
+          <ul>
+            <li><a href=""><img src="img/microbrewit.png" /></a></li>
+            <li><a href="">Beer</a></li>
+            <li><a href="">Breweries</a></li>
+            <li id="search">
+              <form id="search-form" method="post">
+                <input type="text" placeholder="Search" />
+                <button>Search</button>
+              </form>
+            </li>
+            <li class="right"><a href="">Login/register</a></li>
+            <li class="right"><a href="">Add</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <div ng-view></div>
+    <article class="container">
+      <nav class="three columns vertical-float-nav right">
+        <ul>
+          <li class="active"><a href="">Information</a></li>
+          <li><a href="">Recipe</a></li>
+          <li><a href="">Forks</a></li>
+      </nav>
+      <section class="thirteen columns content-area">
+        <section class="beer-meta offset-bottom-by-two clearfix">
+          <h1>Brun Bjarne</h1>
+          <section class="sixteen columns beer-info offset-bottom-by-one clearfix">
+            <div class="text-center large-text semibold beer-style">
+              Trappist Dubbel (Ale)
+            </div>
+            <div class="four columns beer-abv">
+              <div>ABV</div>
+              <span class="large-text">5.4%</span>
+            </div>
+            <div class="four columns beer-bitterness">
+              <div>Bitterness</div>
+              <span class="large-text">20 IBU</span>
+            </div>
+            <div class="four columns beer-colour">
+              <div>colour</div>
+              <span class="beer-colour-indicator"></span><span class="large-text">47 EBC</span>
+            </div>
+            <div class="four columns beer-glass">
+              <div>Serve in</div>
+            </div>
+          </section>
+          <img src="img/placeholders/beer-img.jpg" class="responsive block" />
+          <section class="five columns brewery-info no-padding">
+            <img src="img/placeholders/thune-logo.png" class="responsive" />
+            <div class="wrapper std-padding">
+              <h2 class="uppercase">Thune Homebrewery</h2>
+              <ul class="brewers">
+                <li><img src="img/placeholders/avatar.png" class="avatar-small" /> John Doe</li>
+              </ul>
+              <div class="uppercase semibold brewery-number-of-brews">
+                12 Brews
+              </div>
+            </div>
+          </section>
+          <section class="ten columns offset-by-one beer-description">
+            <h2>Description</h2>
+            <p>Mead lagering degrees plato pub terminal gravity dry hopping. Seidel additive black malt aau copper double bock/dopplebock pilsner. Shelf life. Oxidized lambic, acid rest. Pint glass tulip glass lauter seidel filter berliner weisse goblet mead aroma hops. Degrees plato mead. Ibu saccharification brewhouse carbonation imperial attenuation malt extract, carbonation malt extract. Draft (draught) malt bittering hops aroma hops, ale. Specific gravity attenuation tulip glass, lambic shelf life aroma hops. Acid rest; keg crystal malt. Abbey beer lambic lauter racking squares ester.</p>
+          </section>
+        </section>
 
-  <div>Angular seed app: v<span app-version></span></div>
+        <section class="recipe clear-both">
+          <header class="recipe-header clearfix">
+            <div class="separator"><h2 class="huge-text">Recipe</h2></div>
+            <div class="uppercase recipe-meta left">
+              <strong>Brun Bjarne</strong>: 
+              <span class="og">OG: <strong>1054</strong></span>
+              <span class="fg">FG: <strong>1008</strong> </span>
+              <span class="abv">ABV: <strong>5.4%</strong></span>
+              <span class="bitterness">IBU: <strong>20</strong></span>
+              <span class="colour">EBC: <strong>47</strong></span>
+              <span class="fermentation"><strong>~4 weeks</strong></span>
+            </div>
+            <a class="fork-btn medium-text right" href="" title="Click to make a new copy of this recipe">Fork this recipe</a>
+          </header>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-  -->
-  <script src="lib/angular/angular.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
-</body>
+          <h3>Ingredients</h3>
+
+          <h4 class="uppercase">Fermentables</h4>
+          <table class="zebra">
+            <thead>
+              <tr>
+                <th>amount</th>
+                <th>malt type</th>
+                <th>extraction efficiency</th>
+                <th>% fermentables in mash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5 kg</td>
+                <td>pilsner malt</td>
+                <td>38 PPG</td>
+                <td>90%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>chocolate malt</td>
+                <td>36 PPG</td>
+                <td>5%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>sugar (sucrose)</td>
+                <td>46 PPG</td>
+                <td>15%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 class="uppercase">Hops</h4>
+          <table class="zebra">
+            <thead>
+              <tr>
+                <th>amount</th>
+                <th>malt type</th>
+                <th>extraction efficiency</th>
+                <th>% fermentables in mash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5 kg</td>
+                <td>pilsner malt</td>
+                <td>38 PPG</td>
+                <td>90%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>chocolate malt</td>
+                <td>36 PPG</td>
+                <td>5%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>sugar (sucrose)</td>
+                <td>46 PPG</td>
+                <td>15%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 class="uppercase">Other Ingredients</h4>
+          <table class="zebra">
+            <thead>
+              <tr>
+                <th>amount</th>
+                <th>malt type</th>
+                <th>extraction efficiency</th>
+                <th>% fermentables in mash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5 kg</td>
+                <td>pilsner malt</td>
+                <td>38 PPG</td>
+                <td>90%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>chocolate malt</td>
+                <td>36 PPG</td>
+                <td>5%</td>
+              </tr>
+              <tr>
+                <td>0.2 kg</td>
+                <td>sugar (sucrose)</td>
+                <td>46 PPG</td>
+                <td>15%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Mash Steps</h3>
+
+          <h3>Boil Steps</h3>
+
+          <h3>Fermentation Steps</h3>
+        </section>
+
+        <section class="forks clear-both offset-top-by-two">
+          <h2 class="separator huge-text">Forks</h2>
+          <ul class="beer-square-list">
+            <li class="add-fork"><a href="">add my fork</a></li>
+            <li>
+              <h2 class="uppercase">Brun Bjarne v2</h2>
+              <div class="beer-style uppercase">Trappist Dubbel</div>
+              <div class="fork-meta">All-grain - 9% - 35 IBU - 45 EBC</div>
+            </li>
+          </ul>
+        </section>
+
+      </section>
+    </article>
+
+    <footer id="main-footer" class="container">
+      <div class="footer-wrapper clearfix offset-top-by-two">
+        <div class="four columns offset-right-by-one footer-logo">
+          <div class="number-of-recipes">
+            <img src="img/tiny-tulip.png" alt="" /> 20 recipes
+          </div>
+          <img src="img/microbrewit.png" alt="Microbrewit" />
+        </div>
+        <div class="four columns developer-links footer-links">
+          <strong>Developer</strong>
+          <ul>
+            <li><a href="">Join us at GitHub</a></li>
+            <li><a href="">API</a></li>
+          </ul>
+        </div>
+        <div class="four columns company-links footer-links">
+          <strong>Company</strong>
+          <ul>
+            <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="three columns connect-links footer-links">
+          <strong>Connect</strong>
+          <ul>
+            <li><a href="">@microbrewit</a></li>
+            <li><a href="">hello@microbrew.it</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright-notice sixteen columns text-center">&copy;2013 Microbrew.it - Made in Norway</div>
+    </footer>
+    
+    <!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+
+  </body>
 </html>
