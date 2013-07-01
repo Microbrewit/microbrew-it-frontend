@@ -41,6 +41,12 @@ body{
 	line-height: 1.4;
 }
 
+h2 {
+	font-size: 25px;
+	margin-bottom: 10px;
+	font-weight: 700;
+}
+
 @import "header.scss";
 
 .content-area {
@@ -52,6 +58,21 @@ body{
 
 .semibold {
 	font-weight: 600;
+}
+
+.medium-text, h3 {
+	font-size: 20px;
+}
+
+h3 {
+	line-height: 2;
+	margin-top: 25px;
+	margin-bottom: 20px;
+	font-weight: 700;
+}
+h4 {
+	line-height: 2;
+	font-weight: 700;
 }
 
 .large-text {
@@ -76,12 +97,23 @@ li {
 strong {
 	font-weight: 700;
 }
-
+.relative {
+	position: relative;
+}
+.edge {
+	position: absolute;
+}
+.edge-right {
+	right: 0;
+}
 .edge-left {
-	margin-left: -25px;
+	left: 0;
 }
 .edge-top {
-	margin-top: -25px;
+	top: 0;
+}
+.edge + * {
+	position:relative;
 }
 
 a {
@@ -101,6 +133,21 @@ nav .active {
 	color: #fff;
 	background: #D53232;
 }
+
+.vertical-float-nav {
+	text-align:center;
+}
+	.vertical-float-nav li {
+		margin-bottom: 5px;
+	}
+	.vertical-float-nav a {
+		line-height: 2;
+		display: block;
+
+	}
+	.vertical-float-nav .active a {
+		color: #fff;
+	}
 
 @import "recipe.scss";
 
