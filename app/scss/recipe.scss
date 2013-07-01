@@ -1,0 +1,33 @@
+h1 {
+	font-size: 60px;
+	text-align:center;
+	margin-bottom: 25px;
+}
+
+.beer-info {
+	background: #f7f7f7;
+	border: 1px solid #ccc;
+	padding-bottom: 0;
+}
+	.beer-colour-indicator {
+		width: 25px;
+		height: 25px;
+		background: #ccc;
+		display: inline-block;
+		margin-right: 8px;
+		margin-bottom: -5px;
+	}
+.brewery-info {
+	background: #fafafa; // fa fa fafafa
+	border: 1px solid #ccc;
+	box-shadow: 4px 4px 7px 1px rgba(223, 223, 223, 0.1);
+}
+
+.separator {
+	padding: 10px 25px;
+	background: #666;
+	color: #fff;
+	margin-left: -25px;
+	width: 100%;
+	margin-bottom: 25px;
+}
