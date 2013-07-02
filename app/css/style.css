@@ -611,6 +611,11 @@ body {
   background: #fbfbfb;
   line-height: 1.4; }
 
+h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: 700; }
+
 #main-header {
   background: #fff;
   border-bottom: 1px solid #ccc;
@@ -704,6 +709,19 @@ body {
 .semibold {
   font-weight: 600; }
 
+.medium-text, h3 {
+  font-size: 20px; }
+
+h3 {
+  line-height: 2;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  font-weight: 700; }
+
+h4 {
+  line-height: 2;
+  font-weight: 700; }
+
 .large-text {
   font-size: 28px; }
 
@@ -722,11 +740,23 @@ li {
 strong {
   font-weight: 700; }
 
+.relative {
+  position: relative; }
+
+.edge {
+  position: absolute; }
+
+.edge-right {
+  right: 0; }
+
 .edge-left {
-  margin-left: -25px; }
+  left: 0; }
 
 .edge-top {
-  margin-top: -25px; }
+  top: 0; }
+
+.edge + * {
+  position: relative; }
 
 a {
   text-decoration: none;
@@ -742,6 +772,19 @@ img.responsive {
 nav .active {
   color: #fff;
   background: #D53232; }
+
+.vertical-float-nav {
+  text-align: center; }
+
+.vertical-float-nav li {
+  margin-bottom: 5px; }
+
+.vertical-float-nav a {
+  line-height: 2;
+  display: block; }
+
+.vertical-float-nav .active a {
+  color: #fff; }
 
 h1 {
   font-size: 60px;
@@ -766,6 +809,9 @@ h1 {
   border: 1px solid #ccc;
   box-shadow: 4px 4px 7px 1px rgba(223, 223, 223, 0.1); }
 
+.recipe-header {
+  border-bottom: 1px solid #ccc; }
+
 .separator {
   padding: 10px 25px;
   background: #666;
@@ -773,6 +819,35 @@ h1 {
   margin-left: -25px;
   width: 100%;
   margin-bottom: 25px; }
+
+table {
+  width: 100%;
+  margin-bottom: 25px; }
+
+table.zebra tbody tr:nth-child(odd) {
+  background: #f0f0f0; }
+
+th {
+  color: #fff;
+  background: #666;
+  border: 1px solid #666;
+  text-align: left; }
+
+tr td:first-child, tr th:first-child {
+  padding-left: 15px; }
+
+tr:nth-child(n+1) {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; }
+
+tr:last-child {
+  border-bottom: 1px solid #ccc; }
+
+td, th {
+  padding: 5px; }
+
+tr.results {
+  background: #e9e9e9; }
 
 .footer-wrapper {
   border-top: 1px solid #ccc;
