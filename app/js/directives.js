@@ -8,4 +8,11 @@ angular.module('microbrewit.directives', []).
     return function(scope, elm, attrs) {
       elm.text(version);
     };
-  }]);
+  }]).
+  directive('gravatar', function() {
+	var returnz = md5(contents(elem).replace(/\s+/g, '').toLowerCase());
+	return {
+		restrict: "E",
+		template: "<img src='http://gravata.com/avatar/"+returnz+"'' />"
+	};
+});

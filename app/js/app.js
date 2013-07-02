@@ -3,19 +3,14 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers']).
-	config(['$locationProvider', function($locationProvider) {
-		$locationProvider.html5Mode(true);
-	}]).
   	config(['$routeProvider', function($routeProvider) {
-
-
-    	// $routeProvider.when('/user/:userName', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-    	$routeProvider.when('/login', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-    	$routeProvider.when('/login', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-    	$routeProvider.when('/login', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-
-
-    	$routeProvider.otherwise({redirectTo: '/view1'});
+      $routeProvider.when('/beer', {templateUrl: 'partials/beer.html', controller: 'BeerCtrl'})
+      .when('/brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})
+      .when('/search', {templateUrl: 'partials/search.html', controller: 'BreweryCtrl'})
+      .when('/login', {templateUrl: 'partials/login.html', controller: 'BreweryCtrl'})
+      .when('/register', {templateUrl: 'partials/register.html', controller: 'BreweryCtrl'})
+      .when('/', {templateUrl: 'partials/index.html', controller: 'BreweryCtrl'});
+      // $routeProvider.otherwise({redirectTo: '/index'});
   	}]);
 // app.get('/user/:userName', routes.user);
 // app.get('/add/user', routes.addUser);

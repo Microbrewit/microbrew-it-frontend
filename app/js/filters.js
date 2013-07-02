@@ -7,4 +7,9 @@ angular.module('microbrewit.filters', []).
     return function(text) {
       return String(text).replace(/\%VERSION\%/mg, version);
     }
-  }]);
+  }]).
+  filter('gravatar', function () {
+  	return function (email) {
+		return md5(email.replace(/\s+/g, '').toLowerCase());
+	}
+  });
