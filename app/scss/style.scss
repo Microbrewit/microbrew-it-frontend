@@ -149,6 +149,54 @@ nav .active {
 		color: #fff;
 	}
 
+.large-form input[type=text], .large-form input[type=password] {
+	display: block;
+	width: 100%;
+	padding: 0 12px;
+	line-height: 40px;
+	border: 1px solid #ccc;
+	margin-bottom: 25px;
+	-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+h1 {
+	font-size: 60px;
+	margin-bottom: 25px;
+}
+
+h2 small {
+	font-size: 15px;
+	font-weight: normal;
+}
+
+fieldset {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding-top: 25px;
+}
+fieldset + fieldset {
+	border-top: 0;
+}
+p {
+	margin-bottom: 25px;
+}
+
+.action-btn {
+	background: #D53232;
+	text-transform: uppercase;
+	padding: 14px 20px;
+	color: #fff;
+	border:0;
+	font-weight: 700;
+}
+	.action-btn:hover {
+		background: #DE5C5C
+	}
+	.action-btn:active {
+		background: #AB2323;
+	}
 @import "recipe.scss";
 
 @import "footer.scss";

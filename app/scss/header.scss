@@ -21,7 +21,7 @@
 		line-height: 50px;
 		display: inline-block;
 	}
-		#main-nav a:hover {
+		#main-nav a:hover, #main-nav a.active {
 			background: #333;
 			color: #fff;
 		}
@@ -77,7 +77,7 @@
 		font-size: 16px;
 	}
 
-		#search-form input:focus {
+		#search-form input:focus, #search-form input.active {
 			background: #333;
 			color: #fff;
 		}
