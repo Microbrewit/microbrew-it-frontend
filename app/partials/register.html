@@ -1,24 +1,33 @@
 <article class="container" ng-controller="RegisterCtrl">
-	<h1>Register</h1>
-	<p>Already got a Microbrew.it account? <a href="#/login">Login here!</a></p>
-	<form method="">
-		<fieldset>
-			<label for="username">Username</label>
-			<input type="text" id="username" />
+	<div class="wrapper ten columns center">
+		<h1>Register</h1>
+		<p>Already got a Microbrew.it account? <a href="#/login">Login here!</a></p>
+		<form class="large-form">
+			<fieldset>
+				<h2>Account info <small>(You can change everything except username later)</h2>
+				<label for="username">username</label>
+				<input type="text" id="username" ng-model="username" />
 
-			<label for="email">email</label>
-			<input type="text" id="email" ng-model="email" />
+				<label for="email">email</label>
+				<input type="text" id="email" ng-model="email" />
 
-			<img src="http://www.gravatar.com/avatar/{{email | gravatar}}" class="block" />
+				<div class="offset-bottom-by-one">
+					<span>avatar (we use <a href="http://gravatar.com">gravatars</a>)</span>
+					<gravatar>{{email}}</gravatar>
+				</div>
 
-			<label for="password">Password</label>
-			<input type="password" id="password" />
-<gravatar>tortein@gmail.com</gravatar>
-			<label for="repeat-password">Username</label>
-			<input type="password" id="repeat-password" />
-		</fieldset>
-		<input type="checkbox" id="remember-me" /> Remember me on this device
-		
-		<button class="action-btn">Login</button>
-	</form>
+				<label for="password">password</label>
+				<input type="password" id="password" />
+				
+				<label for="repeat-password">repeat password</label>
+				<input type="password" id="repeat-password" />
+			</fieldset>
+			<fieldset>
+				<label for="brewery-name">What is your brewery called?</label>
+				<input type="text" id="brewery-name" />
+			</fieldset>
+			<div class="offset-top-by-one left">Welcome to the gang, <strong class="uppercase">{{username}}</strong>!</div>
+			<button class="action-btn right offset-top-by-one">Register</button>
+		</form>
+	</div>
 </article>
