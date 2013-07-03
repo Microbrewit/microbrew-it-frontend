@@ -6,6 +6,7 @@ angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'm
   	config(['$routeProvider', function($routeProvider) {
       $routeProvider.when('/beer', {templateUrl: 'partials/beer.html', controller: 'BeerCtrl'})
       .when('/brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})
+      .when('/add', {templateUrl: 'partials/add.html', controller: 'RecipeCtrl'})
       .when('/search', {templateUrl: 'partials/search.html', controller: 'BreweryCtrl'})
       .when('/login', {templateUrl: 'partials/login.html', controller: 'BreweryCtrl'})
       .when('/register', {templateUrl: 'partials/register.html', controller: 'BreweryCtrl'})
