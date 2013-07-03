@@ -638,7 +638,7 @@ h2 {
   line-height: 50px;
   display: inline-block; }
 
-#main-nav a:hover {
+#main-nav a:hover, #main-nav a.active {
   background: #333;
   color: #fff; }
 
@@ -692,7 +692,7 @@ h2 {
   font-family: 'Source Sans Pro';
   font-size: 16px; }
 
-#search-form input:focus {
+#search-form input:focus, #search-form input.active {
   background: #333;
   color: #fff; }
 
@@ -786,10 +786,49 @@ nav .active {
 .vertical-float-nav .active a {
   color: #fff; }
 
+.large-form input[type=text], .large-form input[type=password] {
+  display: block;
+  width: 100%;
+  padding: 0 12px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  margin-bottom: 25px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
 h1 {
   font-size: 60px;
-  text-align: center;
   margin-bottom: 25px; }
+
+h2 small {
+  font-size: 15px;
+  font-weight: normal; }
+
+fieldset {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding-top: 25px; }
+
+fieldset + fieldset {
+  border-top: 0; }
+
+p {
+  margin-bottom: 25px; }
+
+.action-btn {
+  background: #D53232;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  color: #fff;
+  border: 0;
+  font-weight: 700; }
+
+.action-btn:hover {
+  background: #de5c5c; }
+
+.action-btn:active {
+  background: #AB2323; }
 
 .beer-info {
   background: #f7f7f7;
