@@ -12,16 +12,16 @@
         <nav id="main-nav" class="clearfix">
           <ul>
             <li><a href="#/"><img src="img/microbrewit.png" /></a></li>
-            <li><a href="#/beer">Beer</a></li>
-            <li><a href="#/brewery">Breweries</a></li>
+            <li><a href="#/beer" active-link="active">Beer</a></li>
+            <li><a href="#/brewery" active-link="active">Breweries</a></li>
             <li id="search">
-              <form id="search-form" method="post">
-                <input type="text" placeholder="Search" />
+              <form id="search-form" method="post" action="#/search">
+                <input type="text" placeholder="Search" href="#/search" active-link="active" />
                 <button>Search</button>
               </form>
             </li>
-            <li class="right"><a href="#/login">Login/register</a></li>
-            <li class="right"><a href="#/add">Add</a></li>
+            <li class="right"><a href="#/login" active-link="active">Login/register</a></li>
+            <li class="right"><a href="#/add" active-link="active">Add</a></li>
           </ul>
         </nav>
       </div>
