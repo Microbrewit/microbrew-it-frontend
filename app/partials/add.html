@@ -1,0 +1,45 @@
+<article class="container">
+	<div class="left ten columns no-top-padding no-bottom-padding">
+		<h1 class="large-text no-margin semibold">{{beerName}}</h1>
+		<p>Fork of "{{ forkOf }}"
+	</div>
+	<form class="sixteen columns content-area large-form">
+		<fieldset>
+			<h2>Beer Meta</h2>
+			<label for="beerName">Name of beer</label>
+			<input type="text" id="beerName" placeholder="untitled" ng-model="beerName" />
+
+			<label for="fork-of">Name of beer</label>
+			<input type="text" id="fork-of" ng-model="forkOf" />
+
+			<select>
+			  <option value="volvo">Dubbel</option>
+			  <option value="saab">Tripel</option>
+			  <option value="mercedes">Blonde</option>
+			  <option value="audi">Golden Ale</option>
+			</select>
+		</fieldset>
+
+		<div class="calc-bar black sixteen columns">
+			Click to override our estimations:
+			<div class="left"><label for="og-calc">OG:</label><input class="inline" id="og-calc" ng-model="fg-calc"/></div>
+			<div class="left"><label for="fg-calc">FG:</label><input class="inline" id="fg-calc" ng-model="fg-calc" /></div>
+			<div class="left"><label for="abv-calc">ABV:</label><input class="inline" id="abv-calc" ng-model="abv-calc" /></div>
+			<div class="left"><label for="srm-calc">SRM:</label><input class="inline" id="srm-calc" ng-model="srm-calc" /></div>
+			<div class="left"><label for="ibu-calc">IBU:</label><input class="inline" id="ibu-calc" ng-model="ibu-calc" /></div>
+		</div>
+
+		<fieldset>
+			<h2>Mash</h2>
+		</fieldset>
+		<fieldset>
+			<h2>Boil</h2>
+		</fieldset>
+		<fieldset>
+			<h2>Fermentation</h2>
+			<label for="yeast">Yeast</label><input id="yeast" ng-model="yeast" />
+		</fieldset>
+
+		<button class="action-btn right">Add Beer</button>
+	</form>
+</article>
