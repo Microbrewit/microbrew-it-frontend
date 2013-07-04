@@ -620,7 +620,8 @@ h2 {
   background: #fff;
   border-bottom: 1px solid #ccc;
   box-shadow: 0px 0px 12px 5px rgba(233, 233, 233, 0.65);
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  z-index: 100; }
 
 #main-nav {
   width: 100%;
@@ -731,8 +732,8 @@ h2 {
 .content-area {
   background: #fff;
   border: 1px solid #e9e9e9;
-  box-shadow: 0 0 12px 5px rgba(244, 244, 244, 0.65);
-  border-radius: 4px; }
+  border-radius: 4px;
+  z-index: 10; }
 
 .semibold {
   font-weight: 600; }
@@ -826,7 +827,7 @@ nav .active {
   box-sizing: border-box; }
 
 h1 {
-  font-size: 60px;
+  font-size: 50px;
   margin-bottom: 25px; }
 
 h2 small {
@@ -834,12 +835,11 @@ h2 small {
   font-weight: normal; }
 
 fieldset {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  padding-top: 25px; }
+  border-bottom: 1px solid #ccc; }
 
 fieldset + fieldset {
-  border-top: 0; }
+  border-top: 0;
+  padding-top: 25px; }
 
 p {
   margin-bottom: 25px; }
@@ -857,6 +857,35 @@ p {
 
 .action-btn:active {
   background: #AB2323; }
+
+.top-background-image {
+  position: relative;
+  top: -50px;
+  left: 0;
+  right: 0;
+  z-index: -1; }
+
+.top-background-image + .container {
+  margin-top: -150px; }
+
+.transparent-gradient {
+  background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.9) 0%, white 100px);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, white 100px);
+  /* W3C */ }
+
+.brewery .brewery-info {
+  margin-top: -12px;
+  position: relative; }
+
+.brewery .brewery-info:before {
+  position: absolute;
+  top: 0;
+  left: -10px;
+  border-top: 0px solid transparent;
+  border-bottom: 10px solid #666;
+  border-left: 10px solid transparent;
+  content: ''; }
 
 .beer-info {
   background: #f7f7f7;
