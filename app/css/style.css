@@ -617,7 +617,7 @@ h2 {
   font-weight: 700; }
 
 #main-header {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #ccc;
   box-shadow: 0px 0px 12px 5px rgba(233, 233, 233, 0.65);
   margin-bottom: 25px;
@@ -657,6 +657,7 @@ h2 {
 
 #search-form input {
   height: 50px;
+  background: transparent;
   padding: 0 75px 0 25px;
   margin: 0;
   border: 0;
@@ -860,13 +861,16 @@ p {
 
 .top-background-image {
   position: relative;
-  top: -50px;
+  top: -101px;
   left: 0;
   right: 0;
   z-index: -1; }
 
 .top-background-image + .container {
-  margin-top: -150px; }
+  margin-top: -125px; }
+
+.top-background-image + .container.background-overlay {
+  margin-top: -230px; }
 
 .transparent-gradient {
   background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.9) 0%, white 100px);
@@ -954,7 +958,9 @@ tr.results {
 .footer-wrapper img {
   vertical-align: middle; }
 
-.footer-logo {
+footer .footer-wrapper .footer-logo {
+  margin-top: 12.5px;
+  margin-bottom: 12.5px;
   border-right: 1px solid #ccc; }
 
 .number-of-recipes {
