@@ -7,7 +7,10 @@
 	.footer-wrapper img {
 		vertical-align: middle;
 	}
-	.footer-logo {
+	footer .footer-wrapper .footer-logo {
+		margin-top: 12.5px;
+		margin-bottom: 12.5px;
+		// padding: 37.5px 25px;
 		border-right: 1px solid #ccc;
 	}
 		.number-of-recipes {
