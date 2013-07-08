@@ -172,8 +172,14 @@ h2 small {
 	font-weight: normal;
 }
 
+hr {
+	border:0;
+	background: #ccc;
+	height: 1px;
+	margin-bottom: 25px;
+}
+
 fieldset {
-	// border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
 fieldset+fieldset {

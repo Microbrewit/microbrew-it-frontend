@@ -11,24 +11,8 @@ angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'm
       .when('/login', {templateUrl: 'partials/login.html', controller: 'BreweryCtrl'})
       .when('/register', {templateUrl: 'partials/register.html', controller: 'BreweryCtrl'})
       .when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'})
+      .when('/calculators', {templateUrl: 'partials/calculators.html', controller: 'CalculatorCtrl'})
+      .when('/calculators/abv', {templateUrl: 'partials/calculators/abv.html', controller: 'CalculatorCtrl'})
       .when('/', {templateUrl: 'partials/index.html', controller: 'BreweryCtrl'});
       $routeProvider.otherwise({templateUrl: 'partials/404.html'});
   	}]);
-// app.get('/user/:userName', routes.user);
-// app.get('/add/user', routes.addUser);
-// app.get('/login', routes.loginCheck);
-
-// searches
-// app.get('/find/:searchTerms', routes.find);
-// app.get('/find/user/:name', routes.findUser);
-// app.get('/find/brewery/:name', routes.findBrewery);
-// app.get('/find/beer/:name', routes.findBeer);
-
-// beer and breweries
-// app.get('/brewery/:brewery/:id', routes.brewery);
-// app.get('/brewery/:id', routes.brewery);
-// app.get('/brewery/:brewery/:id/:beer', routes.beer);
-
-// add new beers and breweries
-// app.get('/add/brewery', routes.addBrewery);
-// app.get('/add/beer', routes.addBeer);
