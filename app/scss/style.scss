@@ -201,14 +201,18 @@ p {
 
 .top-background-image {
 	position: relative;
-	top:-50px;
+	top:-101px;
 	left:0;
 	right:0;
 	z-index: -1;
 }
 
 .top-background-image + .container {
-	margin-top: -150px;
+	margin-top: -125px;
+}
+
+.top-background-image + .container.background-overlay {
+	margin-top: -230px;
 }
 
 .transparent-gradient {
