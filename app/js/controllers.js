@@ -9,6 +9,12 @@ angular.module('microbrewit.controllers', []).
   }]).
   controller('RegisterCtrl', function($scope) {
   }).
+  controller('ProfileCtrl', function($scope) {
+    $scope.profile = {
+      name: "torthu",
+      email: "torstein@gmail.com"
+    };
+  }).
   controller('BreweryCtrl', [function($scope) {
   }]).
   controller('RecipeCtrl', function($scope) {
