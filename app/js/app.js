@@ -10,8 +10,9 @@ angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'm
       .when('/search', {templateUrl: 'partials/search.html', controller: 'BreweryCtrl'})
       .when('/login', {templateUrl: 'partials/login.html', controller: 'BreweryCtrl'})
       .when('/register', {templateUrl: 'partials/register.html', controller: 'BreweryCtrl'})
+      .when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'})
       .when('/', {templateUrl: 'partials/index.html', controller: 'BreweryCtrl'});
-      // $routeProvider.otherwise({redirectTo: '/index'});
+      $routeProvider.otherwise({templateUrl: 'partials/404.html'});
   	}]);
 // app.get('/user/:userName', routes.user);
 // app.get('/add/user', routes.addUser);
