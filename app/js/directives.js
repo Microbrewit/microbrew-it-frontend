@@ -56,26 +56,64 @@ angular.module('microbrewit.directives', []).
     		scope: 'isolate',
     		template: '<div class="abv">{{abv}}% ({{formula}})</div>',
     		link: function (scope, element, attr) {
-    			var formulaToUse = "fix";
+    			var formulaToUse = "";
 
     			function calcAbv(og, fg) {
     				if(formulaToUse == "fix") {
     					return mbcalc.abvFix(og, fg);
     				}
-    				if(formulaToUse == "miller") {
+    				else if(formulaToUse == "miller") {
     					return mbcalc.abvMiller(og, fg);
     				}
-    				if(formulaToUse == "advanced") {
+    				else if(formulaToUse == "advanced") {
     					return mbcalc.abvAdvanced(og,fg);
     				}
-    				if(formulaToUse == "alternativeAdvanced") {
+    				else if(formulaToUse == "alternativeAdvanced") {
     					return mbcalc.abvAlternativeAdvanced(og,fg);
     				}
-    				if(formulaToUse == "simple") {
+    				else if(formulaToUse == "simple") {
     					return mbcalc.abvSimple(og, fg);
     				}
-    				if(formulaToUse == "alternativeSimple") {
+    				else if(formulaToUse == "alternativeSimple") {
     					return mbcalc.abvAlternativeSimple(og, fg);
+    				} else {
+    					return mbcalc.abvMicrobrewIt(og, fg);
+    				}
+    			}
+
+    			attr.$observe('formula', function (formula) {
+    				formulaToUse = formula;
+    				scope.formula = formula;
+    			});
+
+    			attr.$observe('og', function (og) {
+    				scope.abv = calcAbv(og, attr.fg).toFixed(2);
+    			});
+
+    			attr.$observe('fg', function (fg) {
+    				scope.abv = calcAbv(attr.og, fg).toFixed(2);
+    			});
+    		}
+    	};
+	}).
+	directive('mbCalcBitterness', function(mbcalc) {
+weight, alphaAcid, batchSize, og, boilTime
+		return {
+    		restrict: 'EA',
+    		scope: 'isolate',
+    		template: '<div class="bitterness">{{bitterness}} {{unit}}</div>',
+    		link: function (scope, element, attr) {
+    			var unitToUse = "IBU";
+
+    			function calcBitterness(og, fg) {
+    				if(formulaToUse == "tinseth") {
+    					return mbcalc.ibuTinseth(og, fg);
+    				}
+    				if(formulaToUse == "rager") {
+    					return mbcalc.ibuRager(og, fg);
+    				}
+    				if(formulaToUse == "garetz") {
+    					return mbcalc.ibuGaretz(og,fg);
     				}
     			}
 
