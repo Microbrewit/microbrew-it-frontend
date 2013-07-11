@@ -31,6 +31,49 @@ angular.module('microbrewit.services', []).
 			return ((this.alternativeSimple(og, fg)+this.alternativeAdvanced(og,fg)+this.simple(og, fg)+this.advanced(og,fg)+this.miller(og, fg))/5);
 		};
 	}).
+	service('mbSrmCalc', function (mbConversionCalc) {
+		this.srmToEbc = function (srm) {
+			return srm*1.97;
+		};
+		this.ebcToSrm = function (ebc) {
+			return ebc/1.97;
+		};
+
+		// Malt Color Units weight in lbs., volume of wort (in gal.)
+		this.mcu = function (weight, lovibond, postBoilVolume) {
+			return (mbConversionCalc.kgToLbs(weight)*lovibond/mbConversionCalc.litersToGallons(postBoilVolume));
+		};
+
+		// SRM
+		this.morey = function (weight, lovibond, postBoilVolume) {
+			return 1.4922 * Math.pow(this.mcu(weight, lovibond, postBoilVolume), 0.6859); // most accurate
+		};
+
+		// SRM
+		this.daniels = function (weight, lovibond, postBoilVolume) {
+			return (0.2 * this.mcu(weight, lovibond, postBoilVolume)) + 8.4;
+		};
+		// SRM
+		this.mosher = function (weight, lovibond, postBoilVolume) {
+			return (0.3 * this.mcu(weight, lovibond, postBoilVolume)) + 4.7;
+		};
+	}).
+	service('mbIbuCalc', function () {
+		// Tinseth specific?
+		this.hopUtilisation = function (og, boilTime) {
+			var a = Math.pow(1.65*0.000125, og-1);
+			var b = Math.pow(og-1,-0.04*boilTime);
+			return a*(b/4.14);
+		};
+
+		this.tinseth = function (weight, alphaAcid, batchSize, og, boilTime) {
+			// Tinseth: IBU = Utilization * ( oz of hops * ( Alpha Acid% / 100 ) * 7490 ) / Gallons of Wort
+			return (weight*alphaAcid*1000*this.hopUtilisation(og, boilTime))/batchSize;
+		};
+		this.roger = function () {
+
+		};
+	}).
 	service('mbConversionCalc', function () {
 
 		/* SG <-> Plato */
@@ -104,30 +147,6 @@ angular.module('microbrewit.services', []).
 		return (1-(initialPlato/finalPlato));
 	};
 
-	/*	ABV - Alcohol By Volume
-		I have no idea which is more accurate */
-	this.abvMiller = function (og, fg) {
-		return ((og-fg)/0.75)*100; // Dave Miller, 1988
-	};
-	this.abvFix = function (og, fg) {
-		return this.abvGeorgeFix(this.SGtoPlato(og), this.SGtoPlato(fg)); // George Fix, 1992
-	};
-	this.abvSimple = function (og, fg) {
-		return (og-fg)*131.25; // Simplified "rule of thumb"
-	};
-	this.abvAdvanced = function (og,fg) {
-		return ((og-fg)*(100.3*(og-fg) + 125.65)); // advanced simple
-	};
-	this.abvAlternativeAdvanced = function (og,fg) {
-		return (76.08 * (og-fg) / (1.775-og)) * (fg / 0.794); // advanced, rumored to be more accurate at high gravities, from BrewersFriend?
-	};
-	this.abvAlternativeSimple = function (og, fg) {
-		return ((1.05/0.79)*((og-fg/fg))*100); // yet another formula
-	};
-	this.abvMicrobrewIt = function (og, fg) {
-		return ((this.abvAlternativeSimple(og, fg)+this.abvAlternativeAdvanced(og,fg)+this.abvSimple(og, fg)+this.abvAdvanced(og,fg)+this.abvMiller(og, fg))/5);
-	}
-
 	// alcohol by weight
 	this.abw = function (abv, fg) {
 		return ((0.79 * abv)/fg);
@@ -146,22 +165,4 @@ angular.module('microbrewit.services', []).
 		return ((((6.9*abw)+4.0*(realExtract-0.1))*fg)/100);
 	};
 
-	this.pelletToHop = function (weight) {
-		return weight*1.07; // pellets gives ~6-7% more utilisation, though some say 10% or 15%
-	}
-	this.hopToPellet = function (weight) {
-		return weight*0.93;
-	}
-
-	this.hopUtilisation = function (og, boilTime) {
-		var a = Math.pow(1.65*0.000125, og-1);
-		var b = Math.pow(og-1,-0.04*boilTime);
-		return a*(b/4.14);
-	};
-
-	// weight in g, a-acd in %, batchSize in L
-	this.ibu = function (weight, alphaAcid, batchSize, og, boilTime) {
-		// Tinseth: IBU = Utilization * ( oz of hops * ( Alpha Acid% / 100 ) * 7490 ) / Gallons of Wort
-		return (weight*alphaAcid*1000*this.hopUtilisation(og, boilTime))/batchSize;
-	};
   });
