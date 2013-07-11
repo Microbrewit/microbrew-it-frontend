@@ -12,9 +12,9 @@ angular.module('microbrewit.services', []).
 		return ((og-fg)/0.75)*100; // Dave Miller, 1988
 		};
 		// I think this is implemented wrong
-		// this.fix = function (og, fg) {
-		// 	return this.abvGeorgeFix(this.SGtoPlato(og), this.SGtoPlato(fg)); // George Fix, 1992
-		// };
+		this.fix = function (initialPlato, finalPlato) {
+			return (initialPlato-((0.1808 * initialPlato) + (0.8192 * finalPlato)))/(2.0665-(0.010665*initialPlato))*0.789;
+		};
 		this.simple = function (og, fg) {
 			return (og-fg)*131.25; // Simplified "rule of thumb"
 		};
@@ -59,35 +59,35 @@ angular.module('microbrewit.services', []).
 
 		this.ozToLb = function (oz) {
 			return oz*0.0625;
-		}
+		};
 		this.lbToOz = function (lb) {
 			return lb/0.0625;
-		}
+		};
 
 		this.kgToLb = function (kg) {
 			return kg*2.2046;
-		}
+		};
 		this.lbToKg = function (lb) {
 			return lb/2.2046;
-		}
+		};
 
 		this.celciusToFarenheit = function (celcius) {
 			return celcius*1.8 + 32;
-		}
+		};
 		this.farenheitToCelcius = function (farenheit) {
 			return (farenheit-32)/1.8;
-		}
+		};
 
 		this.litersToGallons = function (liters) {
 			return liters/3.78541178;
-		}
+		};
 		this.gallonsToLiters = function (gallons) {
 			return gallons*3.78541178;
-		}
+		};
 
 		this.platoToSG = function (plato) {
-			(plato/(258.6-((plato/258.2)*227.1))+1 = Specific gravity
-		}
+			return (plato/(258.6-((plato/258.2)*227.1))+1);
+		};
 
 	}).
 	service('mbcalc', function () {

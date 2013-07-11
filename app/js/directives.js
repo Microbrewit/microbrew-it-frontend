@@ -9,7 +9,7 @@ angular.module('microbrewit.directives', []).
             restrict: 'E',
             scope: 'isolate',
             replace: true,
-            template: '<div class="avatar gravatar"><img src="http://www.gravatar.com/avatar/{{src}}" style="width:{{size}};height:{{size}}" alt="" /></div>',
+            template: '<div class="avatar gravatar round"><img src="http://www.gravatar.com/avatar/{{src}}" style="width:{{size}};height:{{size}}" alt="" /></div>',
             link: function (scope, element, attr) {
                 attr.$observe('src', function(current_value) {
                     scope.src = md5(current_value.replace(/\s+/g, '').toLowerCase()); // create gravatar hash of interpolated value, push to scope
@@ -50,7 +50,7 @@ angular.module('microbrewit.directives', []).
             }
         };
     }).
-    directive('mbCalcAbv', function(mbcalc) {
+    directive('mbCalcAbv', function(mbAbvCalc, mbConversionCalc) {
     	return {
     		restrict: 'EA',
     		scope: 'isolate',
@@ -60,24 +60,24 @@ angular.module('microbrewit.directives', []).
 
     			function calcAbv(og, fg) {
     				if(formulaToUse == "fix") {
-    					return mbcalc.abvFix(og, fg);
+    					return mbAbvCalc.fix(mbConversionCalc.SGtoPlato(og), mbConversionCalc.SGtoPlato(fg));
     				}
     				else if(formulaToUse == "miller") {
-    					return mbcalc.abvMiller(og, fg);
+    					return mbAbvCalc.miller(og, fg);
     				}
     				else if(formulaToUse == "advanced") {
-    					return mbcalc.abvAdvanced(og,fg);
+    					return mbAbvCalc.advanced(og,fg);
     				}
     				else if(formulaToUse == "alternativeAdvanced") {
-    					return mbcalc.abvAlternativeAdvanced(og,fg);
+    					return mbAbvCalc.alternativeAdvanced(og,fg);
     				}
     				else if(formulaToUse == "simple") {
-    					return mbcalc.abvSimple(og, fg);
+    					return mbAbvCalc.simple(og, fg);
     				}
     				else if(formulaToUse == "alternativeSimple") {
-    					return mbcalc.abvAlternativeSimple(og, fg);
+    					return mbAbvCalc.alternativeSimple(og, fg);
     				} else {
-    					return mbcalc.abvMicrobrewIt(og, fg);
+    					return mbAbvCalc.microbrewIt(og, fg);
     				}
     			}
 

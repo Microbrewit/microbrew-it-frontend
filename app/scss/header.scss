@@ -9,17 +9,25 @@
 		width: 100%;
 		display: table;
 	}
-	#main-nav ul {
+	#main-nav > ul {
 		display: table-row;
 		width: 100%;
+		position: relative;
 	}
-	#main-nav li {
+	#main-nav > ul > li {
 		display: table-cell;
 		border-right: 1px solid #ccc;
 	}
 	#main-nav img {
 		vertical-align: middle;
 	}
+	#main-nav .more {
+		background: url(../img/more-btn.png) top center;
+		text-indent: -9999px;
+	}
+		#main-nav .more:hover, #main-nav .more.active {
+			background: url(../img/more-btn.png) bottom center #333;
+		}
 	#main-nav a {
 		font-weight: 700;
 		text-transform: uppercase;
@@ -30,9 +38,23 @@
 		display: block;
 		text-align:center;
 	}
+
 		#main-nav a:hover, #main-nav a.active {
 			background: #333;
 			color: #fff;
+		}
+		#main-nav .sub-nav {
+			position: absolute;
+			left: 0;
+			width: 100%;
+			top: 100%;
+			z-index: 110;
+			background: rgba(255,255,255,0.9);
+			padding: 5px;
+			display: none;
+		}
+		#main-nav li:hover .sub-nav {
+			display: none;
 		}
 	#search-form {
 		position: relative;

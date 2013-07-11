@@ -239,6 +239,23 @@ p {
 		border-left: 10px solid transparent;
 		content: '';
 	}
+.zebra {
+	border: 1px solid #ccc;
+}
+.zebra > li {
+	padding: 12px;
+}
+	.zebra > li:nth-child(odd) {
+		background: #eee;
+	}
+	.microbrewit-estimate {
+		background: #333 !important;
+		color: #fff;
+		font-weight: 700;
+	}
+.round {
+	border-radius: 50%;
+}
 @import "recipe.scss";
 
 @import "footer.scss";
