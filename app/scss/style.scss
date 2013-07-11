@@ -166,6 +166,14 @@ h1 {
 	font-size: 50px;
 	margin-bottom: 25px;
 }
+.container > h1 {
+	padding-left: 25px !important;
+	margin:0;
+	font-weight: 700;
+}
+.container > p {
+	padding-left: 25px;
+}
 
 h2 small {
 	font-size: 15px;
