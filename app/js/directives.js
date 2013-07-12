@@ -137,8 +137,8 @@ angular.module('microbrewit.directives', []).
             restrict: 'E',
             template: '<li><input class="two columns no-padding offset-right-by-one" /><input class="ten columns no-padding offset-right-by-one" /><input class="two columns no-padding" /></li>',
             link: function (scope, element, attr) {
-                $('button', $(element).on('click', function () {
-                    
+                $('.add', $(element).on('click', function () {
+                    scope.malts.push({ name: "", lovibond: 0, weight: 0 });
                 }));
             }
         }

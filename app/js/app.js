@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers']).
+angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore']).
   	config(['$routeProvider', function($routeProvider) {
       $routeProvider.when('/beer', {templateUrl: 'partials/beer.html', controller: 'BeerCtrl'})
       .when('/brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})

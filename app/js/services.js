@@ -31,7 +31,7 @@ angular.module('microbrewit.services', []).
 			return ((this.alternativeSimple(og, fg)+this.alternativeAdvanced(og,fg)+this.simple(og, fg)+this.advanced(og,fg)+this.miller(og, fg))/5);
 		};
 	}).
-	service('mbSrmCalc', function (mbConversionCalc) {
+	service('mbSrmCalc', ['mbConversionCalc', function (mbConversionCalc) {
 		this.srmToEbc = function (srm) {
 			return srm*1.97;
 		};
@@ -41,7 +41,7 @@ angular.module('microbrewit.services', []).
 
 		// Malt Color Units weight in lbs., volume of wort (in gal.)
 		this.mcu = function (weight, lovibond, postBoilVolume) {
-			return (mbConversionCalc.kgToLbs(weight)*lovibond/mbConversionCalc.litersToGallons(postBoilVolume));
+			return (mbConversionCalc.kgToLb(weight)*lovibond/mbConversionCalc.litersToGallons(postBoilVolume));
 		};
 
 		// SRM
@@ -55,9 +55,10 @@ angular.module('microbrewit.services', []).
 		};
 		// SRM
 		this.mosher = function (weight, lovibond, postBoilVolume) {
+			console.log("MCU: " + this.mcu(weight, lovibond, postBoilVolume));
 			return (0.3 * this.mcu(weight, lovibond, postBoilVolume)) + 4.7;
 		};
-	}).
+	}]).
 	service('mbIbuCalc', function () {
 		// Tinseth specific?
 		this.hopUtilisation = function (og, boilTime) {
