@@ -13,6 +13,7 @@ angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'm
       .when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'})
       .when('/calculators', {templateUrl: 'partials/calculators.html', controller: 'CalculatorCtrl'})
       .when('/calculators/abv', {templateUrl: 'partials/calculators/abv.html', controller: 'CalculatorCtrl'})
+      .when('/calculators/srm', {templateUrl: 'partials/calculators/srm.html', controller: 'SrmCtrl'})
       .when('/company/privacy-policy', {templateUrl: 'partials/company/privacy-policy.html', controller: 'CalculatorCtrl'})
       .when('/more', {templateUrl: 'partials/more.html'})
       .when('/', {templateUrl: 'partials/index.html'});

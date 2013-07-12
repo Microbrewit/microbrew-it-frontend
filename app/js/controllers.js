@@ -4,9 +4,13 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('BeerCtrl', [function($scope) {
+  controller('MainCtrl', function($scope, $routeParams) {
+    console.log($routeParams);
+    $scope.title = "Microbrew.it";
+  }).
+	controller('BeerCtrl', function($scope) {
 		$scope.title = "Brun Bjarne";
-	}]).
+	}).
 	controller('RegisterCtrl', function($scope) {
 	}).
 	controller('ProfileCtrl', function($scope) {
@@ -26,4 +30,10 @@ angular.module('microbrewit.controllers', []).
 			og: 1.050,
 			fg: 1.010
 		};
+  }).
+  controller('SrmCtrl', function($scope) {
+    $scope.data = {};
+    $scope.title = 'Lol';
+
+    console.log($scope.data);
   });

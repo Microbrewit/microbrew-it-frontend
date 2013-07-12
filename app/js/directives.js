@@ -96,8 +96,55 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
+    directive('mbCalcColour', function(mbIbuCalc) {
+        return {
+            restrict: 'A',
+            scope: 'isolate',
+            template: '<div class="colour">{{colour}} {{unit}}</div>',
+            replace: true,
+            link: function (scope, element, attr) {
+                function calc (weight, volume, lovibond, unit) {
+                    if(weight && weight != "" && volume && volume != "" && lovibond && lovibond != "") {
+                        var colour = mbIbuCalc.morey(weight, volume, lovibond);
+
+                        if(unit == "ebc") {
+                            var colour = mbIbuCalc.srmToEbc(colour);
+                        }
+
+                        return colour;
+                    } else {
+                        return 'undefined';
+                    }
+                }
+
+                attr.$observe('unit', function (unit) {
+                    scope.colour = calc(attr.weight, attr.volume, attr.lovibond, unit);
+                });
+                attr.$observe('weight', function (weight) {
+                    scope.colour = calc(weight, attr.volume, attr.lovibond, attr.unit);
+                });
+                attr.$observe('volume', function (volume) {
+                    scope.colour = calc(attr.weight, volume, attr.lovibond, attr.unit);
+                });
+                attr.$observe('lovibond', function (lovibond) {
+                    scope.colour = calc(attr.weight, attr.volume, lovibond, attr.unit);
+                });
+            }
+        }
+    }).
+    directive('mbColour', function() {
+        return {
+            restrict: 'E',
+            template: '<li><input class="two columns no-padding offset-right-by-one" /><input class="ten columns no-padding offset-right-by-one" /><input class="two columns no-padding" /></li>',
+            link: function (scope, element, attr) {
+                $('button', $(element).on('click', function () {
+                    
+                }));
+            }
+        }
+    }).
 	directive('mbCalcBitterness', function(mbcalc) {
-weight, alphaAcid, batchSize, og, boilTime
+    //weight, alphaAcid, batchSize, og, boilTime
 		return {
     		restrict: 'EA',
     		scope: 'isolate',
