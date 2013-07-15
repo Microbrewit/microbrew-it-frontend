@@ -4,22 +4,48 @@
 
 
 angular.module('microbrewit.controllers', []).
-  controller('MainCtrl', function($scope, $routeParams) {
-    $scope.title = "Microbrew.it";
-  }).
+	controller('MainCtrl', function ($scope, $routeParams, $rootScope) {
+		$scope.title = "Microbrew.it";
+	}).
+	controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
+
+		$scope.login = function () {
+			console.log('logging in, querying: ' + 'http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
+			$http.jsonp('http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
+				success(function(data, status, headers, config) {
+					$rootScope.user = data.user; // set logged user to responded user
+					console.log(data);
+					$location.path('/profile');
+
+				}).
+				error(function(data, status, headers, config) {
+					console.log(data);
+					console.log(status);
+					console.log(headers);
+					console.log(config);
+				});
+		};
+		$rootScope.profileSettings = {
+			name: '',
+			email: '',
+			gravatar: '',
+
+		};
+	}).
 	controller('BeerCtrl', function($scope) {
 		$scope.title = "Brun Bjarne";
 	}).
 	controller('RegisterCtrl', function($scope) {
 	}).
-	controller('ProfileCtrl', function($scope) {
-		$scope.profile = {
-			name: "torthu",
-			email: "torstein@gmail.com"
-		};
+	controller('ProfileCtrl', function($scope, $rootScope) {
+		console.log($rootScope.user);
+		$scope.profile = $rootScope.user;
+		console.log($scope.user);
+		// $scope.profile = {
+		// 	name: "torthu",
+		// 	email: "torstein@gmail.com"
+		// };
 	}).
-	controller('BreweryCtrl', [function($scope) {
-	}]).
 	controller('RecipeCtrl', function($scope) {
 		$scope.beerName = "Brun Bjarne v2";
 		$scope.forkOf = "Brun Bjarne";
@@ -31,15 +57,6 @@ angular.module('microbrewit.controllers', []).
 		};
   }).
   controller('SrmCtrl', function($scope, mbSrmCalc) {
-
-
-    $scope.addMalt = function () {
-		this.malts.push({name:"", lovibond: 0, weight: 0});
-    };
-	$scope.removeMalt = function (scope, elem, attr) {
-		var hashKey = this.malt.$$hashKey;
-		$scope.malts = _($scope.malts).reject(function(el) { return el.$$hashKey !== hashKey; });
-	};
 
 	$scope.$watch('malts', function(malts, oldMalts) {
 		var srm = 0;

@@ -8,7 +8,7 @@
 				<input type="radio" name="formula" value="srm" ng-model="formula">srm 
 				<input type="radio" name="formula" value="ebc" ng-model="formula">ebc
 			</div>
-			<ul class="zebra offset-top-by-one offset-bottom-by-one">
+			<!-- <ul class="zebra offset-top-by-one offset-bottom-by-one">
 				<li ng-repeat="malt in malts">
 					<label for="malt-name"></label><input type="text" id="malt-name" ng-model="malt.name" />
 					<input type="text" id="malt-lovibond" ng-model="malt.lovibond" /><label for="malt-lovibond">°L</label>
@@ -17,7 +17,9 @@
 				</li>
 			</ul>
 		</form>
-		<button ng-click="addMalt()">Add</button>
+		<button ng-click="addMalt()">Add</button> -->
+
+		<div mb-malt-list></div>
 		<hr />
 		<h2>SRM:</h2>
 		<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{srm}} <span class="uppercase">{{formula}}</span></div></div>

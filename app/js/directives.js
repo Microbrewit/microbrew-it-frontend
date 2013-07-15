@@ -96,86 +96,52 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
-    directive('mbCalcColour', function(mbIbuCalc) {
+    directive('mbMaltList', function (mbProfileSettings) {
         return {
-            restrict: 'A',
-            scope: 'isolate',
-            template: '<div class="colour">{{colour}} {{unit}}</div>',
+            restrict: 'EA',
+            template: '<div class="malts">' +
+                    '<ul class="zebra malts">' +
+                        '<li ng-repeat="malt in fermentables.malts">' +
+                            '<label for="malt-name"></label><input type="text" id="malt-name" ng-model="malt.name" />' +
+                            '<input type="text" id="malt-lovibond" ng-model="malt.lovibond" /><label for="malt-lovibond">°L</label>' +
+                            '<input type="text" id="malt-weight" ng-model="malt.weight" /><label for="malt-weight">kg</label>' +
+                            '<button ng-click="fermentables.removeMalt()">-</button>' +
+                        '</li>' +
+                    '</ul>' +
+                    '<button ng-click="fermentables.addMalt()">Add</button>' +
+                '</div>',
             replace: true,
-            link: function (scope, element, attr) {
-                function calc (weight, volume, lovibond, unit) {
-                    if(weight && weight != "" && volume && volume != "" && lovibond && lovibond != "") {
-                        var colour = mbIbuCalc.morey(weight, volume, lovibond);
-
-                        if(unit == "ebc") {
-                            var colour = mbIbuCalc.srmToEbc(colour);
-                        }
-
-                        return colour;
-                    } else {
-                        return 'undefined';
-                    }
+            link: function (scope, elem, attr) {
+                if(!scope.fermentables.malts) {
+                    scope.fermentables.formula = "srm";
+                    scope.fermentables.srm = 0;
+                    scope.fermentables.malts = [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}];
                 }
 
-                attr.$observe('unit', function (unit) {
-                    scope.colour = calc(attr.weight, attr.volume, attr.lovibond, unit);
-                });
-                attr.$observe('weight', function (weight) {
-                    scope.colour = calc(weight, attr.volume, attr.lovibond, attr.unit);
-                });
-                attr.$observe('volume', function (volume) {
-                    scope.colour = calc(attr.weight, volume, attr.lovibond, attr.unit);
-                });
-                attr.$observe('lovibond', function (lovibond) {
-                    scope.colour = calc(attr.weight, attr.volume, lovibond, attr.unit);
-                });
+                if(!scope.mashVolume) {
+                    scope.mashVolume = 20;
+                }
+
+                scope.fermentables.addMalt = function () {
+                    this.fermentables.malts.push({name:"", lovibond: 0, weight: 0});
+                };
+                scope.fermentables.removeMalt = function () {
+                    var hashKey = this.fermentables.malt.$$hashKey;
+                    scope.fermentables.malts = _(scope.fermentables.malts).reject(function(el) { return el.$$hashKey == hashKey; });
+                };
+                scope.fermentables.removeEmpty = function () {
+                    scope.fermentables.malts = _(scope.fermentables.malts).reject(function(el) { return el.weight === 0 && el.lovibond === 0; });
+                };
             }
-        }
+        };
     }).
-    directive('mbColour', function() {
+    directive('mbColour', function () {
         return {
-            restrict: 'E',
-            template: '<li><input class="two columns no-padding offset-right-by-one" /><input class="ten columns no-padding offset-right-by-one" /><input class="two columns no-padding" /></li>',
-            link: function (scope, element, attr) {
-                $('.add', $(element).on('click', function () {
-                    scope.malts.push({ name: "", lovibond: 0, weight: 0 });
-                }));
+            restrict: 'EA',
+            template: '<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{colour}} <span class="uppercase">{{formula}}</span></div></div>',
+            replace: true,
+            link: function (scope, elem, attr) {
+
             }
-        }
-    }).
-	directive('mbCalcBitterness', function(mbcalc) {
-    //weight, alphaAcid, batchSize, og, boilTime
-		return {
-    		restrict: 'EA',
-    		scope: 'isolate',
-    		template: '<div class="bitterness">{{bitterness}} {{unit}}</div>',
-    		link: function (scope, element, attr) {
-    			var unitToUse = "IBU";
-
-    			function calcBitterness(og, fg) {
-    				if(formulaToUse == "tinseth") {
-    					return mbcalc.ibuTinseth(og, fg);
-    				}
-    				if(formulaToUse == "rager") {
-    					return mbcalc.ibuRager(og, fg);
-    				}
-    				if(formulaToUse == "garetz") {
-    					return mbcalc.ibuGaretz(og,fg);
-    				}
-    			}
-
-    			attr.$observe('formula', function (formula) {
-    				formulaToUse = formula;
-    				scope.formula = formula;
-    			});
-
-    			attr.$observe('og', function (og) {
-    				scope.abv = calcAbv(og, attr.fg).toFixed(2);
-    			});
-
-    			attr.$observe('fg', function (fg) {
-    				scope.abv = calcAbv(attr.og, fg).toFixed(2);
-    			});
-    		}
-    	};
-	});
+        };
+    });
