@@ -4,18 +4,27 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, $routeParams, $rootScope) {
-		$scope.title = "Microbrew.it";
-	}).
+	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, user) {
+			$scope.title = "Microbrew.it";
+			console.log(user.isLogged());
+			console.log(user.getDetails());
+			 // if('profile' in $rootScope) {
+	   //      console.log('heyo');
+	   //    }
+	   //      // $routeProvider.when('/', {templateUrl: 'partials/loggedIndex.html'})
+	   //      $route.when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'});
+	
+		}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
 
-		$scope.login = function () {
+		$scope.login = function (user) {
 			console.log('logging in, querying: ' + 'http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
 			$http.jsonp('http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
 				success(function(data, status, headers, config) {
 					$rootScope.user = data.user; // set logged user to responded user
-					console.log(data);
-					$location.path('/profile');
+					user.setCookie(data.user); // set a cookie with user data
+
+					$location.path('/');
 
 				}).
 				error(function(data, status, headers, config) {
@@ -41,6 +50,8 @@ angular.module('microbrewit.controllers', []).
 		console.log($rootScope.user);
 		$scope.profile = $rootScope.user;
 		console.log($scope.user);
+
+
 		// $scope.profile = {
 		// 	name: "torthu",
 		// 	email: "torstein@gmail.com"

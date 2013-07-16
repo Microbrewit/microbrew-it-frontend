@@ -134,6 +134,84 @@ angular.module('microbrewit.services', []).
 		};
 
 	}).
+	service('user', function ($cookies, $cookieStore, $rootScope) {
+		this.isLogged = function () {
+			if($cookieStore.get('mb_auth')) {
+				return true;
+			} else if($rootScope.user) {
+				return true;
+			}
+
+			return false;
+		};
+		this.getDetails = function () {
+			return $cookieStore.get('mb_user');
+		};
+		this.setCookie = function (userObj) {
+			if(!$cookies.mb_user) {
+				$cookies.mb_user = userObj;
+			} else {
+				$cookieStore.put('mb_user', userObj);
+			}
+		};
+		this.removeCookie = function () {
+			$cookieStore.remove('mb_user');
+		};
+	}).
+	service('api', function ($http, $rootScope, $location, user) {
+
+		var endpoint = "http://api.microbrew.it:3000";
+
+		// user api
+		this.addUser = function (userObj) {
+			if(!user.isLogged && !$rootScope.user) {
+				$http.jsonp(endpoint + '/user/add?username=' + userObj.username + '&password=' + userObj.password + '&settings=' + userObj.settings + '&callback=JSON_CALLBACK', {method: 'GET'}).
+				success(function(data, status, headers, config) {
+					$rootScope.user = data.user; // set logged user to responded user
+					user.setCookie(data.user); // set a cookie with user data
+					$location.path('/profile'); // send to settings
+				}).
+				error(function(data, status, headers, config) {
+					return false; // TODO: display error
+				});
+			} else {
+				return false;
+			}
+		};
+		this.login = function (username, password) {
+			if(!user.isLogged && !$rootScope.user) {
+				$http.jsonp(endpoint + '/user/login?username=' + $scope.username + '&password=' + $scope.password + '&callback=JSON_CALLBACK', {method: 'GET'}).
+				success(function(data, status, headers, config) {
+					$rootScope.user = data.user; // set logged user to responded user
+					user.setCookie(data.user); // set a cookie with user data
+
+					$location.path('/profile'); // send to settings
+
+				}).
+				error(function(data, status, headers, config) {
+					return false; // TODO: display error
+				});
+			} else {
+				return false;
+			}
+		};
+		this.logout = function () {};
+		this.updateUser = function (username, password, breweryName, settings) {};
+		this.userFollowing = function () {};
+		this.userStarred = function () {};
+		this.userStream = function () {};
+
+		// beer api
+		this.addBeer = function (beerObj, beerId) {};
+		this.updateBeer = function (beerObj, beerId) {};
+
+		// brewery api
+
+
+		// search api
+		this.search = function (searchObj) {};
+
+	}).
 	service('mbcalc', function () {
 	this.SGtoPlato = function (sg) {
 		return ((-463.371) + (668.7183 * sg) - (205.347 * (sg*sg)));
