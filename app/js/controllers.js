@@ -15,6 +15,7 @@ angular.module('microbrewit.controllers', []).
 	   //      $route.when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'});
 	
 		}).
+	controller('BreweryCtrl', function () {}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
 
 		$scope.login = function (user) {
@@ -51,11 +52,6 @@ angular.module('microbrewit.controllers', []).
 		$scope.profile = $rootScope.user;
 		console.log($scope.user);
 
-
-		// $scope.profile = {
-		// 	name: "torthu",
-		// 	email: "torstein@gmail.com"
-		// };
 	}).
 	controller('RecipeCtrl', function($scope) {
 		$scope.beerName = "Brun Bjarne v2";
@@ -69,26 +65,11 @@ angular.module('microbrewit.controllers', []).
   }).
   controller('SrmCtrl', function($scope, mbSrmCalc) {
 
-	$scope.$watch('malts', function(malts, oldMalts) {
-		var srm = 0;
-		for(var i = 0;i<malts.length;i++) {
-			srm += mbSrmCalc.morey(malts[i].weight, malts[i].lovibond, 20);
-		}
+	// $scope.formula = "srm";
+	// $scope.srm = 0;
+	// $scope.volume = 20;
+	// $scope.fermentables.malts = [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}];
 
-		if($scope.formula == "ebc") {
-			srm = mbSrmCalc.srmToEbc(srm);
-		}
-		$scope.srm = srm.toFixed(2);
-	}, true);
-	$scope.$watch('formula', function(formula) {
-		if(formula == "ebc") {
-			$scope.srm = mbSrmCalc.srmToEbc($scope.srm);
-		} else if(formula == "srm") {
-			$scope.srm = mbSrmCalc.ebcToSrm($scope.srm);
-		}
-	});
-	$scope.formula = "srm";
-	$scope.srm = 0;
-	$scope.volume = 20;
-	$scope.malts = [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}];
+	
+	
   });

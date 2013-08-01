@@ -96,52 +96,78 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
-    directive('mbMaltList', function (mbProfileSettings) {
+    directive('mbMaltList', function (mbSrmCalc, $http) {
         return {
             restrict: 'EA',
+            transclude: true,
+            visibility: "=",
             template: '<div class="malts">' +
                     '<ul class="zebra malts">' +
                         '<li ng-repeat="malt in fermentables.malts">' +
                             '<label for="malt-name"></label><input type="text" id="malt-name" ng-model="malt.name" />' +
                             '<input type="text" id="malt-lovibond" ng-model="malt.lovibond" /><label for="malt-lovibond">°L</label>' +
                             '<input type="text" id="malt-weight" ng-model="malt.weight" /><label for="malt-weight">kg</label>' +
-                            '<button ng-click="fermentables.removeMalt()">-</button>' +
+                            '<button ng-click="fermentables.removeMalt(this)">-</button>' +
                         '</li>' +
                     '</ul>' +
+                    '<button class="left" ng-click="fermentables.removeEmpty()">Remove empty</button>'+
                     '<button ng-click="fermentables.addMalt()">Add</button>' +
                 '</div>',
             replace: true,
             link: function (scope, elem, attr) {
-                if(!scope.fermentables.malts) {
-                    scope.fermentables.formula = "srm";
-                    scope.fermentables.srm = 0;
-                    scope.fermentables.malts = [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}];
+
+                // check if fermentables are defined, set up mock if not
+                if(typeof scope.fermentables === "undefined") {
+                    scope.fermentables = {
+                        formula: "srm",
+                        srm: 0,
+                        malts: [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}]
+                    };
                 }
 
-                if(!scope.mashVolume) {
+                if(typeof scope.mashVolume === "undefined") {
                     scope.mashVolume = 20;
                 }
 
+                // set up functions called by buttons
                 scope.fermentables.addMalt = function () {
-                    this.fermentables.malts.push({name:"", lovibond: 0, weight: 0});
+                    this.malts.push({name:"", lovibond: 0, weight: 0});
                 };
-                scope.fermentables.removeMalt = function () {
-                    var hashKey = this.fermentables.malt.$$hashKey;
+
+                // look for built in functionality for doing this ;D
+                scope.fermentables.removeMalt = function (listElem) {
+                    var hashKey = listElem.malt.$$hashKey;
                     scope.fermentables.malts = _(scope.fermentables.malts).reject(function(el) { return el.$$hashKey == hashKey; });
                 };
+                // look for built in functionality for doing this ;D
                 scope.fermentables.removeEmpty = function () {
                     scope.fermentables.malts = _(scope.fermentables.malts).reject(function(el) { return el.weight === 0 && el.lovibond === 0; });
                 };
-            }
-        };
-    }).
-    directive('mbColour', function () {
-        return {
-            restrict: 'EA',
-            template: '<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{colour}} <span class="uppercase">{{formula}}</span></div></div>',
-            replace: true,
-            link: function (scope, elem, attr) {
 
+                var performCalc = function(a, b, updatedScope) {
+                    var srm = 0;
+                    for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
+                        srm += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
+                    }
+
+                    if(scope.fermentables.formula == "ebc") {
+                        srm = mbSrmCalc.srmToEbc(srm);
+                    }
+                    scope.fermentables.srm = srm.toFixed(2);
+                };
+
+                // setup listeners
+                scope.$watch('fermentables.malts', performCalc, true);
+                scope.$watch('mashVolume', performCalc, true);
+
+
+                // scope.$watch('fermentables.formula', function(formula) {
+                //     if(formula == "ebc") {
+                //         scope.fermentables.srm = mbSrmCalc.srmToEbc(scope.mbSrmCalc.srm);
+                //     } else if(formula == "srm") {
+                //         scope.fermentables.srm = mbSrmCalc.ebcToSrm(scope.mbSrmCalc.srm);
+                //     }
+                // });
             }
         };
     });
