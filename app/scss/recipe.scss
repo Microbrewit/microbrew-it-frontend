@@ -37,6 +37,9 @@ table {
 table.zebra tbody tr:nth-child(odd) {
 	background: #f0f0f0;
 }
+.zebra  > *:nth-child(odd) {
+	background: #f0f0f0;
+}
 th {
 	color: #fff;
 	background: #666;

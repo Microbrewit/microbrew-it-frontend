@@ -19,8 +19,8 @@ angular.module('microbrewit.controllers', []).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
 
 		$scope.login = function (user) {
-			console.log('logging in, querying: ' + 'http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
-			$http.jsonp('http://betelgeuse.snorre.io:3000/user/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
+			console.log('logging in, querying: ' + 'http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
+			$http.jsonp('http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
 				success(function(data, status, headers, config) {
 					$rootScope.user = data.user; // set logged user to responded user
 					user.setCookie(data.user); // set a cookie with user data
@@ -65,11 +65,4 @@ angular.module('microbrewit.controllers', []).
   }).
   controller('SrmCtrl', function($scope, mbSrmCalc) {
 
-	// $scope.formula = "srm";
-	// $scope.srm = 0;
-	// $scope.volume = 20;
-	// $scope.fermentables.malts = [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}];
-
-	
-	
   });

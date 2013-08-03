@@ -1,3 +1,26 @@
+// utility functions piggybacking
+String.prototype.replaceAll = function (str1, str2, ignore) {
+	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+};
+String.prototype.htmlEncode = function (str) {
+	var str = "";
+	str = this.replaceAll('&', '&amp;');
+	str = str.replaceAll('"', '&quot;');
+	str = str.replaceAll("'", '&#39;');
+	str = str.replaceAll("<", '&lt;');
+	str = str.replaceAll(">", '&gt;');
+	return str;
+};
+
+String.prototype.htmlDecode = function (str) {
+	str = str.replaceAll('&amp;', '&');
+	str = str.replaceAll('&quot;', '"');
+	str = str.replaceAll('&#39;', "'");
+	str = str.replaceAll('&lt;', "<");
+	str = str.replaceAll('&gt;', ">");
+};
+
+//md5 start
 function md5cycle(x, k) {
 	var a = x[0], b = x[1], c = x[2], d = x[3];
 

@@ -149,7 +149,9 @@ nav .active {
 	.vertical-float-nav .active a {
 		color: #fff;
 	}
-
+.no-float {
+	float: none !important;
+}
 .large-form input[type=text], .large-form input[type=password] {
 	display: block;
 	width: 100%;
@@ -160,6 +162,15 @@ nav .active {
 	-moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+
+
+input.full-width {
+	width: 90%;
+}
+input.small {
+	width: 20px;
 }
 
 h1 {
@@ -313,6 +324,25 @@ p {
 		.call-to-action-register-btn:hover {
 			background: #fff;
 		}
+
+.desktop-tr {
+	display: table-row;
+	width: 100%;
+	padding: 12.5px;
+}
+.desktop-th {
+	display: table-row;
+	background: #333 !important;
+	color: #fff;
+}
+.desktop-td {
+	display: table-cell;
+	padding: 12.5px !important;
+}
+.desktop-table {
+	display: table;
+	width: 100%;
+}
 @import "recipe.scss";
 
 @import "footer.scss";

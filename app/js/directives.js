@@ -96,30 +96,44 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
-    directive('mbMaltList', function (mbSrmCalc, $http) {
+    directive('mbMaltList', function (mbSrmCalc, $http, settings) {
         return {
             restrict: 'EA',
             transclude: true,
             visibility: "=",
-            template: '<div class="malts">' +
-                    '<ul class="zebra malts">' +
-                        '<li ng-repeat="malt in fermentables.malts">' +
-                            '<label for="malt-name"></label><input type="text" id="malt-name" ng-model="malt.name" />' +
-                            '<input type="text" id="malt-lovibond" ng-model="malt.lovibond" /><label for="malt-lovibond">°L</label>' +
-                            '<input type="text" id="malt-weight" ng-model="malt.weight" /><label for="malt-weight">kg</label>' +
-                            '<button ng-click="fermentables.removeMalt(this)">-</button>' +
-                        '</li>' +
-                    '</ul>' +
+            template: '<div class="malts sixteen columns no-padding">' +
+                    '<div class="zebra malts offset-bottom-by-one desktop-table">' +
+                        '<div class="desktop-th">' +
+                            '<div class="desktop-td">Amount</div>' +
+                            '<div class="desktop-td twelve columns no-padding no-float">Name of malt</div>' +
+                            '<div class="desktop-td">Colour</div>' +
+                            '<div class="desktop-td">PPG</div>' +
+                            '<div class="desktop-td text-right">&nbsp;</div>' +
+                        '</div>' +
+                        '<div class="desktop-tr" ng-repeat="malt in fermentables.malts" class="clearfix">' +
+                            '<div class="desktop-td"><input type="text" id="malt-weight" class="small" ng-model="malt.weight" /><label for="malt-weight"> {{settings.units.largeWeight}}</label></div>' +
+                            '<div class="desktop-td twelve columns no-padding no-float"><label for="malt-name"></label><input type="text" id="malt-name" class="full-width" ng-model="malt.name" placeholder="Fermentable" /></div>' +
+                            '<div class="desktop-td"><input type="text" id="malt-lovibond" class="small" ng-model="malt.lovibond" /><label for="malt-lovibond"> °L</label></div>' +
+                            '<div class="desktop-td"><input type="text" id="malt-ppg" class="small" ng-model="malt.ppg" /><label for="malt-ppg"></label></div>' +
+                            '<div class="desktop-td text-right"><button ng-click="fermentables.removeMalt(this)">-</button></div>' +
+                        '</div>' +
+                    '</div>' +
                     '<button class="left" ng-click="fermentables.removeEmpty()">Remove empty</button>'+
                     '<button ng-click="fermentables.addMalt()">Add</button>' +
                 '</div>',
             replace: true,
             link: function (scope, elem, attr) {
 
-                // check if fermentables are defined, set up mock if not
+                // setup settings if undefined by controller
+                if(typeof scope.settings === "undefined") {
+                   scope.settings = settings;  
+                }
+               
+                // setup empty fermentables model if undefined
                 if(typeof scope.fermentables === "undefined") {
                     scope.fermentables = {
-                        formula: "srm",
+                        formula: settings.fermentables.formula,
+                        unit: settings.fermentables.unit,
                         srm: 0,
                         malts: [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}]
                     };
@@ -145,20 +159,45 @@ angular.module('microbrewit.directives', []).
                 };
 
                 var performCalc = function(a, b, updatedScope) {
-                    var srm = 0;
+                    var colour = 0;
+                    
+                    // use user's preferred formula. Morey is more reliable, therefore set as default
+                    if(updatedScope.fermentables.formula === "daniels") {
+                        for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
+                            colour += mbSrmCalc.daniels(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
+                        }
+                    }
+                    else if(updatedScope.fermentables.formula === "mosher") {
+                        for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
+                            colour += mbSrmCalc.mosher(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
+                        }
+                    }
+                    else {
+                        for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
+                            colour += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
+                        } 
+                    }
+                    // daniels
+
+                    // mosher
+
                     for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
-                        srm += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
+                        colour += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
                     }
 
-                    if(scope.fermentables.formula == "ebc") {
-                        srm = mbSrmCalc.srmToEbc(srm);
+                    // convert to EBC if applicable
+                    if(scope.fermentables.unit == "ebc") {
+                        colour = mbSrmCalc.srmToEbc(colour);
                     }
-                    scope.fermentables.srm = srm.toFixed(2);
+
+                    updatedScope.fermentables.srm = colour.toFixed(2);
                 };
 
                 // setup listeners
                 scope.$watch('fermentables.malts', performCalc, true);
                 scope.$watch('mashVolume', performCalc, true);
+                scope.$watch('fermentables.formula', performCalc, true);
+                scope.$watch('fermentables.unit', performCalc, true);
 
 
                 // scope.$watch('fermentables.formula', function(formula) {

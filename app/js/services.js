@@ -6,7 +6,6 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.services', []).
-	value('version', '0.1').
 	service('mbAbvCalc', function () {
 		this.miller = function (og, fg) {
 		return ((og-fg)/0.75)*100; // Dave Miller, 1988
@@ -55,7 +54,6 @@ angular.module('microbrewit.services', []).
 		};
 		// SRM
 		this.mosher = function (weight, lovibond, postBoilVolume) {
-			console.log("MCU: " + this.mcu(weight, lovibond, postBoilVolume));
 			return (0.3 * this.mcu(weight, lovibond, postBoilVolume)) + 4.7;
 		};
 	}]).
@@ -135,18 +133,26 @@ angular.module('microbrewit.services', []).
 
 	}).
 	service('user', function ($cookies, $cookieStore, $rootScope) {
+
 		this.isLogged = function () {
+
+			// do we have a user cookie?
 			if($cookieStore.get('mb_auth')) {
 				return true;
-			} else if($rootScope.user) {
+			}
+
+			// do we have a user object?
+			else if($rootScope.user) {
 				return true;
 			}
 
 			return false;
 		};
+
 		this.getDetails = function () {
 			return $cookieStore.get('mb_user');
 		};
+
 		this.setCookie = function (userObj) {
 			if(!$cookies.mb_user) {
 				$cookies.mb_user = userObj;
@@ -154,9 +160,32 @@ angular.module('microbrewit.services', []).
 				$cookieStore.put('mb_user', userObj);
 			}
 		};
+
 		this.removeCookie = function () {
 			$cookieStore.remove('mb_user');
 		};
+	}).
+	service('settings', function () {
+		this.fermentables = {
+			unit: 'srm',
+			formula: 'morey'
+		};
+		this.abv = {
+			unit: 'sg',
+			formula: 'microbrewit'
+		};
+		this.ibu = {
+			unit: 'ibu',
+			formula: 'tinseth'
+		};
+		this.units = {
+			volume: 'liters',
+			largeWeight: 'kg',
+			smallWight: 'g',
+			temperature: 'celcius'
+		};
+		this.mashVolume = 20;
+		this.efficiency = 70;
 	}).
 	service('api', function ($http, $rootScope, $location, user) {
 
@@ -184,9 +213,7 @@ angular.module('microbrewit.services', []).
 				success(function(data, status, headers, config) {
 					$rootScope.user = data.user; // set logged user to responded user
 					user.setCookie(data.user); // set a cookie with user data
-
-					$location.path('/profile'); // send to settings
-
+					$location.path('/index'); // send to settings
 				}).
 				error(function(data, status, headers, config) {
 					return false; // TODO: display error
@@ -233,7 +260,7 @@ angular.module('microbrewit.services', []).
 
 	this.abvGeorgeFix = function (initialPlato, finalPlato) {
 		return (this.abwGeorgeFix(initialPlato, finalPlato)*0.789);
-	}
+	};
 
 	this.abwGeorgeFix = function (initialPlato, finalPlato) {
 		return ((initialPlato-this.realExtract(initialPlato, finalPlato))/(2.0665-(0.010665*initialPlato)));
