@@ -45,7 +45,38 @@ angular.module('microbrewit.controllers', []).
 	controller('BeerCtrl', function($scope) {
 		$scope.title = "Brun Bjarne";
 	}).
-	controller('RegisterCtrl', function($scope) {
+	controller('RegisterCtrl', function($scope, $http) {
+		$scope.register = function (user) {
+			var dataObj = {
+				id: $scope.username,
+				password: $scope.password,
+				email: $scope.email,
+				breweryName: $scope.breweryName,
+				settings: $scope.settings,
+				callback: JSON_CALLBACK
+			};
+
+			console.log(dataObj);
+
+			$http.post('http://api.microbrew.it/users/add?', 
+				{method: 'POST'},
+				dataObj
+				).
+				success(function(data, status, headers, config) {
+					$rootScope.user = data.user; // set logged user to responded user
+					user.setCookie(data.user); // set a cookie with user data
+
+					$location.path('/');
+					console.log($rootScope.user);
+
+				}).
+				error(function(data, status, headers, config) {
+					console.log(data);
+					console.log(status);
+					console.log(headers);
+					console.log(config);
+				});
+		};
 	}).
 	controller('ProfileCtrl', function($scope, $rootScope) {
 		console.log($rootScope.user);

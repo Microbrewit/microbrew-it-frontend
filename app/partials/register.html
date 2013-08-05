@@ -18,17 +18,17 @@
 				</div>
 
 				<label for="password">password</label>
-				<input type="password" id="password" />
+				<input type="password" id="password" ng-model="password" />
 				
 				<label for="repeat-password">repeat password</label>
-				<input type="password" id="repeat-password" />
+				<input type="password" id="repeat-password" ng-model="passwordrep" />
 			</fieldset>
 			<fieldset>
 				<label for="brewery-name">What is your brewery called?</label>
-				<input type="text" id="brewery-name" />
+				<input type="text" id="brewery-name" ng-model="breweryName" />
 			</fieldset>
 			<div class="offset-top-by-one left">Welcome to the gang, <strong class="uppercase">{{username}}</strong>!</div>
-			<button class="action-btn right offset-top-by-one">Register</button>
+			<button class="action-btn right offset-top-by-one" ng-click="register()">Register</button>
 		</form>
 	</div>
 </article>
