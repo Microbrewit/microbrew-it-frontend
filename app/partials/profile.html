@@ -2,14 +2,80 @@
 	<gravatar class="left standard-right-padding" size="80px" src="{{profile.email}}"></gravatar>
 	<h1>Howdy, {{profile.username}}</h1>
 	<div class="wrapper sixteen columns content-area">
+		<div class="eight columns">
+			<h2>Profile Settings</h2>
+			<p>Brewery name: <input type="text" /></p>
+			<p>Email: <input type="email" /></p>
+			<h3>Passwprd change</h3>
+			<p>Old password:
+				<input type="password" />
+			</p>
+			<p>New password:
+				<input type="password" />
+				<input type="password" />
+			</p>
+		</div>
+		<div class="right eight columns">
+			<h2>Unit and formula settings</h2>
+			<p>Here you can choose your preferred units and formulas used for calculating recipe metrics.</p>
+			<form>
+				<fieldset>
+					<h3>Weight and volume</h3>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit"><label for="metric">S.I (Metric)</label>
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit"><label for="imperial">Imperial</label>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit"><label for="mixed">Mixed</label>
+				</fieldset>
+				<fieldset>
+					<h3>Temperature</h3>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">Celcius
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Farenheit
+				</fieldset>
+				<fieldset>
+					<h3>Sugar content/Alcohol by volume (ABV)</h3>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">Specific Gravity
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Plato
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Brix
 
-		<strong>Todo</strong>
-		<ol>
-			<li>My Recipes</li>
-			<li>Settings panel</li>
-			<li>Link to breweries the user is connected to</li>
-			<li>(Starred recipes)</li>
-			<li>(Starred users/breweries)</li>
-		</ol>
+					<p>Formula: 
+					<select>
+						<option>Miller</option>
+						<option>Fix</option>
+						<option>Simple (rule of thumb)</option>
+						<option>Microbrewit</option>
+
+					</select></p>
+				</fieldset>
+
+				<fieldset>
+					<h3>Colour</h3>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">srm 
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">ebc
+
+					<p>Formula: 
+					<select>
+						<option>Morey</option>
+						<option>Daniels</option>
+						<option>Mosher</option>
+					</select></p>
+				</fieldset>
+
+				<fieldset>
+					<h3>Btterness</h3>
+					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">ibu
+					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">ebu
+
+					<p>Formula: 
+					<select>
+						<option></option>
+					</select></p>
+				</fieldset>
+
+				<fieldset>
+					<h2>Recipes</h2>
+					<p>Mash Volume: <input type="text" class="small" /></p>
+					<p>Efficiency: <input type="text" class="small" /> %</p>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 </article>

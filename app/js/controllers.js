@@ -4,10 +4,29 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, user) {
+	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, mbUser) {
 			$scope.title = "Microbrew.it";
-			console.log(user.isLogged());
-			console.log(user.getDetails());
+
+			mbUser.setupUserSession({
+				username: "Torstein",
+				email: "torstein@gmail.com",
+				breweryName: "Thune Hjemmebryggeri",
+				settings: {
+					units: {
+						colour: 'srm',
+						bitterness: 'ibu',
+						temperature: 'celcius',
+						smallWeight: 'grams',
+						largeWeight: 'kg',
+						liquid: 'liters'
+					},
+					formulae: {
+						colour: 'morey',
+						bitterness: 'tinseth',
+						abv: 'microbrewit'
+					}
+				}
+			});
 			 // if('profile' in $rootScope) {
 	   //      console.log('heyo');
 	   //    }
@@ -16,14 +35,14 @@ angular.module('microbrewit.controllers', []).
 	
 		}).
 	controller('BreweryCtrl', function () {}).
-	controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
+	controller('LoginCtrl', function ($scope, $rootScope, $http, $location, mbUser) {
 
-		$scope.login = function (user) {
+		$scope.login = function (mbUser) {
 			console.log('logging in, querying: ' + 'http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
 			$http.jsonp('http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
 				success(function(data, status, headers, config) {
 					$rootScope.user = data.user; // set logged user to responded user
-					user.setCookie(data.user); // set a cookie with user data
+					mbUser.setCookie(data.user); // set a cookie with user data
 
 					$location.path('/');
 
@@ -45,38 +64,48 @@ angular.module('microbrewit.controllers', []).
 	controller('BeerCtrl', function($scope) {
 		$scope.title = "Brun Bjarne";
 	}).
-	controller('RegisterCtrl', function($scope, $http) {
-		$scope.register = function (user) {
-			var dataObj = {
-				id: $scope.username,
+	controller('RegisterCtrl', function($scope, $http, $resource, $location, $rootScope, mbUser) {
+		
+
+		$scope.username = 'testest';
+		$scope.email='tsettes';
+		$scope.breweryName='gesgseg';
+		$scope.settings= {};
+		$scope.password='testst';
+		
+		$scope.register = function (mbUser) {
+
+			mbUser.register({
+				username: $scope.username,
 				password: $scope.password,
 				email: $scope.email,
-				breweryName: $scope.breweryName,
-				settings: $scope.settings,
-				callback: JSON_CALLBACK
-			};
-
-			console.log(dataObj);
-
-			$http.post('http://api.microbrew.it/users/add?', 
-				{method: 'POST'},
-				dataObj
-				).
-				success(function(data, status, headers, config) {
-					$rootScope.user = data.user; // set logged user to responded user
-					user.setCookie(data.user); // set a cookie with user data
-
-					$location.path('/');
-					console.log($rootScope.user);
-
-				}).
-				error(function(data, status, headers, config) {
-					console.log(data);
-					console.log(status);
-					console.log(headers);
-					console.log(config);
-				});
+				breweryname: $scope.breweryName,
+				settings: $scope.settings
+			});
 		};
+
+			// var User = $resource('http://api.microbrew.it/users/add', {}, {
+   //              add: {
+   //                  method: 'POST'
+   //              },
+   //              get: {
+   //              },
+   //              update: {
+   //              }
+   //          });
+
+   //          User.add({}, 
+			// 	dataObj, 
+			// 	function (data) {
+			// 		$rootScope.user = data.user;
+			// 		$location.path('/profile');
+			// 	},
+			// 	function () {
+			// 		console.log('Register failed');
+   //          	}
+   //          );
+        // };
+
 	}).
 	controller('ProfileCtrl', function($scope, $rootScope) {
 		console.log($rootScope.user);

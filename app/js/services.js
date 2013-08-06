@@ -8,7 +8,7 @@
 angular.module('microbrewit.services', []).
 	service('mbAbvCalc', function () {
 		this.miller = function (og, fg) {
-		return ((og-fg)/0.75)*100; // Dave Miller, 1988
+			return ((og-fg)/0.75)*100; // Dave Miller, 1988
 		};
 		// I think this is implemented wrong
 		this.fix = function (initialPlato, finalPlato) {
@@ -132,12 +132,79 @@ angular.module('microbrewit.services', []).
 		};
 
 	}).
-	service('user', function ($cookies, $cookieStore, $rootScope) {
+	service('mbUser', function ($cookies, $cookieStore, $rootScope, $http, $resource, $location) {
+
+		// takes in a userObj that you want to add to the user db in the API
+		this.update = function (userObj) {
+			$http.defaults.useXDomain = true;
+
+			$http.post('http://api.microbrew.it/users', userObj).
+			success(function (data) {
+				// on success login
+				$rootScope.user = data.user;
+
+				$location.path('/');
+
+				if(typeof data.message !== 'undefined') {
+					console.log(data.message);
+				}
+
+			}).
+			error(function (error) {
+				if(typeof error.error !== 'undefined') {
+					console.log(error.error);
+				}
+			});
+		};
+
+		// TODO: test/fix
+		this.login = function (userObj) {
+			if(!this.isLogged) {
+				$http.post('http://api.microbrew.it/users/login/', {id:userObj.username,password:userObj.password}).
+				success(function (data) {
+					this.setupUserSession(data.user);
+				}).
+				error(function (error) {
+
+				});
+			}
+		};
+
+		this.logout = function () {
+			if(this.isLogged) {
+				$http.post('http://api.microbrew.it/users/logout', {}).
+				success(function (data) {
+
+				}).
+				error(function (error) {});
+			}
+		};
+
+		// TODO: test/fix
+		this.update = function (userObj) {
+			$http.post('http://api.microbrew.it/users', userObj).
+			success(function (data) {
+
+			}).
+			error(function (error) {
+
+			});
+		};
+
+		this.setupUserSession = function (userObj) {
+			this.setCookie(userObj);
+			$rootScope.user = userObj;
+		};
+
+		this.destroyUserSession = function () {
+			this.removeCookie();
+			$rootScope.user = {};
+		};
 
 		this.isLogged = function () {
 
 			// do we have a user cookie?
-			if($cookieStore.get('mb_auth')) {
+			if($cookieStore.get('mb_user')) {
 				return true;
 			}
 
@@ -154,11 +221,7 @@ angular.module('microbrewit.services', []).
 		};
 
 		this.setCookie = function (userObj) {
-			if(!$cookies.mb_user) {
-				$cookies.mb_user = userObj;
-			} else {
-				$cookieStore.put('mb_user', userObj);
-			}
+			$cookieStore.put('mb_user', userObj);
 		};
 
 		this.removeCookie = function () {
@@ -187,46 +250,7 @@ angular.module('microbrewit.services', []).
 		this.mashVolume = 20;
 		this.efficiency = 70;
 	}).
-	service('api', function ($http, $rootScope, $location, user) {
-
-		var endpoint = "http://api.microbrew.it:3000";
-
-		// user api
-		this.addUser = function (userObj) {
-			if(!user.isLogged && !$rootScope.user) {
-				$http.jsonp(endpoint + '/user/add?username=' + userObj.username + '&password=' + userObj.password + '&settings=' + userObj.settings + '&callback=JSON_CALLBACK', {method: 'GET'}).
-				success(function(data, status, headers, config) {
-					$rootScope.user = data.user; // set logged user to responded user
-					user.setCookie(data.user); // set a cookie with user data
-					$location.path('/profile'); // send to settings
-				}).
-				error(function(data, status, headers, config) {
-					return false; // TODO: display error
-				});
-			} else {
-				return false;
-			}
-		};
-		this.login = function (username, password) {
-			if(!user.isLogged && !$rootScope.user) {
-				$http.jsonp(endpoint + '/user/login?username=' + $scope.username + '&password=' + $scope.password + '&callback=JSON_CALLBACK', {method: 'GET'}).
-				success(function(data, status, headers, config) {
-					$rootScope.user = data.user; // set logged user to responded user
-					user.setCookie(data.user); // set a cookie with user data
-					$location.path('/index'); // send to settings
-				}).
-				error(function(data, status, headers, config) {
-					return false; // TODO: display error
-				});
-			} else {
-				return false;
-			}
-		};
-		this.logout = function () {};
-		this.updateUser = function (username, password, breweryName, settings) {};
-		this.userFollowing = function () {};
-		this.userStarred = function () {};
-		this.userStream = function () {};
+	service('api', function ($http, $rootScope, $location) {
 
 		// beer api
 		this.addBeer = function (beerObj, beerId) {};

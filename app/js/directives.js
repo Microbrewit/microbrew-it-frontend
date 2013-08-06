@@ -96,7 +96,7 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
-    directive('mbMaltList', function (mbSrmCalc, $http, settings) {
+    directive('mbMaltList', function (mbSrmCalc, $http) {
         return {
             restrict: 'EA',
             transclude: true,

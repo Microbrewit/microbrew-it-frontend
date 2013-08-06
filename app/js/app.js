@@ -2,14 +2,14 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore', 'ngCookies']).
-    run(function($rootScope, user) {
+angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore', 'ngCookies']).
+    run(function($rootScope, mbUser) {
 
       // check if user is logged in
-      $rootScope.isLogged = user.isLogged();
+      $rootScope.isLogged = mbUser.isLogged();
 
       if($rootScope.isLogged) {
-        $rootScope.profile = user.getDetails();
+        $rootScope.profile = mbUser.getDetails();
       }
 
     }).
@@ -22,7 +22,9 @@ angular.module('microbrewit', ['microbrewit.filters', 'microbrewit.services', 'm
       .when('/calculators/abv', {templateUrl: 'partials/calculators/abv.html', controller: 'CalculatorCtrl'})
       .when('/calculators/srm', {templateUrl: 'partials/calculators/srm.html', controller: 'SrmCtrl'})
       .when('/company/privacy-policy', {templateUrl: 'partials/company/privacy-policy.html', controller: 'CalculatorCtrl'})
-      .when('/more', {templateUrl: 'partials/more.html'});
+      .when('/more', {templateUrl: 'partials/more.html'})
+
+      .when('/profile', {templateUrl: 'partials/profile.html'});
 
 
         $routeProvider.when('/', {templateUrl: 'partials/index.html'})
