@@ -1,0 +1,28 @@
+<article class="container">
+	<h1 class="no-margin semibold">Colour calculator</h1>
+	<p>Estimate the colour of your brew.</p>
+	<div class="content-area sixteen columns">
+		<form>
+
+			<div class="offset-bottom-by-one">
+				<label for="mash-volume">Mash volume (liters): </label><input ng-model="settings.mashVolume" id="mash-volume" />
+				<div class="right">
+					Calculate colour using 
+					<select ng-model="settings.formula.colour">
+						<option value="morey">Morey</option>
+						<option value="daniels">Daniels</option>
+						<option value="mosher">Mosher</option>
+					</select>
+					
+					<input type="radio" name="unit" value="srm" ng-model="settings.units.colour">srm 
+					<input type="radio" name="unit" value="ebc" ng-model="settings.units.colour">ebc
+				</div>
+
+				
+			</div>
+
+		<div mb-malt-list class="offset-bottom-by-one"></div>
+		<hr />
+		<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{fermentables.srm}} <span class="uppercase">{{settings.units.colour}}</span></div></div>
+	</div>
+</article>
