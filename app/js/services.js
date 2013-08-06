@@ -133,7 +133,24 @@ angular.module('microbrewit.services', []).
 
 	}).
 	service('mbUser', function ($cookies, $cookieStore, $rootScope, $http, $resource, $location) {
-
+		this.standardSettings = {
+			units: {
+				colour: 'srm',
+				bitterness: 'ibu',
+				temperature: 'celcius',
+				smallWeight: 'grams',
+				largeWeight: 'kg',
+				liquid: 'liters'
+			},
+			formula: {
+				colour: 'morey',
+				bitterness: 'tinseth',
+				abv: 'microbrewit'
+			},
+			mashVolume: 20,
+			efficiency: 70
+				
+		};
 		// takes in a userObj that you want to add to the user db in the API
 		this.update = function (userObj) {
 			$http.defaults.useXDomain = true;
@@ -159,7 +176,7 @@ angular.module('microbrewit.services', []).
 
 		// TODO: test/fix
 		this.login = function (userObj) {
-			if(!this.isLogged) {
+			if(!this.isLogged()) {
 				$http.post('http://api.microbrew.it/users/login/', {id:userObj.username,password:userObj.password}).
 				success(function (data) {
 					this.setupUserSession(data.user);
@@ -167,6 +184,8 @@ angular.module('microbrewit.services', []).
 				error(function (error) {
 
 				});
+			} else if (typeof $rootScope.user === "undefined" || typeof $rootScope.user.username === "undefined") {
+				$rootScope.user = this.getDetailsFromCookie();
 			}
 		};
 
@@ -174,49 +193,39 @@ angular.module('microbrewit.services', []).
 			if(this.isLogged) {
 				$http.post('http://api.microbrew.it/users/logout', {}).
 				success(function (data) {
-
+					this.destroyUserSession();
 				}).
 				error(function (error) {});
 			}
 		};
 
-		// TODO: test/fix
-		this.update = function (userObj) {
-			$http.post('http://api.microbrew.it/users', userObj).
-			success(function (data) {
-
-			}).
-			error(function (error) {
-
-			});
-		};
-
 		this.setupUserSession = function (userObj) {
 			this.setCookie(userObj);
 			$rootScope.user = userObj;
+			$rootScope.isLogged = true;
 		};
 
 		this.destroyUserSession = function () {
 			this.removeCookie();
 			$rootScope.user = {};
+			$rootScope.isLogged = false;
 		};
 
 		this.isLogged = function () {
-
 			// do we have a user cookie?
 			if($cookieStore.get('mb_user')) {
 				return true;
 			}
 
 			// do we have a user object?
-			else if($rootScope.user) {
+			else if(typeof $rootScope.user !== "undefined" && $rootScope.user.username) {
 				return true;
 			}
 
 			return false;
 		};
 
-		this.getDetails = function () {
+		this.getDetailsFromCookie = function () {
 			return $cookieStore.get('mb_user');
 		};
 
@@ -227,28 +236,6 @@ angular.module('microbrewit.services', []).
 		this.removeCookie = function () {
 			$cookieStore.remove('mb_user');
 		};
-	}).
-	service('settings', function () {
-		this.fermentables = {
-			unit: 'srm',
-			formula: 'morey'
-		};
-		this.abv = {
-			unit: 'sg',
-			formula: 'microbrewit'
-		};
-		this.ibu = {
-			unit: 'ibu',
-			formula: 'tinseth'
-		};
-		this.units = {
-			volume: 'liters',
-			largeWeight: 'kg',
-			smallWight: 'g',
-			temperature: 'celcius'
-		};
-		this.mashVolume = 20;
-		this.efficiency = 70;
 	}).
 	service('api', function ($http, $rootScope, $location) {
 
@@ -264,12 +251,6 @@ angular.module('microbrewit.services', []).
 
 	}).
 	service('mbcalc', function () {
-	this.SGtoPlato = function (sg) {
-		return ((-463.371) + (668.7183 * sg) - (205.347 * (sg*sg)));
-	};
-	this.PlatotoSG = function (plato) {
-		return (plato/258.6-(plato/258.2*227.1)+1);
-	};
 	this.realExtract = function (initialPlato, finalPlato) {
 		return ((0.1808 * initialPlato) + (0.8192 * finalPlato));
 	};

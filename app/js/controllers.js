@@ -11,54 +11,24 @@ angular.module('microbrewit.controllers', []).
 				username: "Torstein",
 				email: "torstein@gmail.com",
 				breweryName: "Thune Hjemmebryggeri",
-				settings: {
-					units: {
-						colour: 'srm',
-						bitterness: 'ibu',
-						temperature: 'celcius',
-						smallWeight: 'grams',
-						largeWeight: 'kg',
-						liquid: 'liters'
-					},
-					formulae: {
-						colour: 'morey',
-						bitterness: 'tinseth',
-						abv: 'microbrewit'
-					}
-				}
+				settings: mbUser.standardSettings
 			});
-			 // if('profile' in $rootScope) {
-	   //      console.log('heyo');
-	   //    }
-	   //      // $routeProvider.when('/', {templateUrl: 'partials/loggedIndex.html'})
-	   //      $route.when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'});
-	
+			mbUser.destroyUserSession();
 		}).
 	controller('BreweryCtrl', function () {}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location, mbUser) {
+		
+		// redirect user if logged in
+		if($rootScope.user.username) {
+			$location.path('/profile');
+		}
 
+		// use mbUser service to perform login via AJAX (it handles errors and location.path atm)
 		$scope.login = function (mbUser) {
-			console.log('logging in, querying: ' + 'http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK');
-			$http.jsonp('http://api.microbrew.it/users/login?username='+$scope.username+'&password='+$scope.password+'&callback=JSON_CALLBACK', {method: 'GET'}).
-				success(function(data, status, headers, config) {
-					$rootScope.user = data.user; // set logged user to responded user
-					mbUser.setCookie(data.user); // set a cookie with user data
-
-					$location.path('/');
-
-				}).
-				error(function(data, status, headers, config) {
-					console.log(data);
-					console.log(status);
-					console.log(headers);
-					console.log(config);
-				});
-		};
-		$rootScope.profileSettings = {
-			name: '',
-			email: '',
-			gravatar: '',
-
+			mbUser.login({
+				username: $scope.username,
+				password: $scope.password
+			});
 		};
 	}).
 	controller('BeerCtrl', function($scope) {
@@ -66,22 +36,31 @@ angular.module('microbrewit.controllers', []).
 	}).
 	controller('RegisterCtrl', function($scope, $http, $resource, $location, $rootScope, mbUser) {
 		
+		// redirect user if logged in
+		if($rootScope.user.username) {
+			$location.path('/profile');
+		}
 
-		$scope.username = 'testest';
-		$scope.email='tsettes';
-		$scope.breweryName='gesgseg';
-		$scope.settings= {};
-		$scope.password='testst';
-		
+		// userObj for test purposes
+		$scope.user = {
+			username: 'testest',
+			email: 'test@test.test',
+			breweryName: 'Test Brewery',
+			password: 'test'
+		}
+
+		$scope.passwordRep = 'test';
+
+
 		$scope.register = function (mbUser) {
+			if($scope.password == $scope.passwordRep) {
+				var userObj = $scope.user;
+				userObj.settings = mbUser.standardSettings;
 
-			mbUser.register({
-				username: $scope.username,
-				password: $scope.password,
-				email: $scope.email,
-				breweryname: $scope.breweryName,
-				settings: $scope.settings
-			});
+				mbUser.register(userObj);
+			} else {
+				console.log('password !== passwordRep');
+			}
 		};
 
 			// var User = $resource('http://api.microbrew.it/users/add', {}, {
@@ -108,9 +87,11 @@ angular.module('microbrewit.controllers', []).
 
 	}).
 	controller('ProfileCtrl', function($scope, $rootScope) {
-		console.log($rootScope.user);
-		$scope.profile = $rootScope.user;
-		console.log($scope.user);
+		$scope.user = $rootScope.user;
+
+		$scope.update = function (mbUser) {
+			mbUser.addUpdate($scope.user);
+		};
 
 	}).
 	controller('RecipeCtrl', function($scope) {
@@ -122,7 +103,4 @@ angular.module('microbrewit.controllers', []).
 			og: 1.050,
 			fg: 1.010
 		};
-  }).
-  controller('SrmCtrl', function($scope, mbSrmCalc) {
-
   });

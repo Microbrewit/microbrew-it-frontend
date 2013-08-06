@@ -96,7 +96,7 @@ angular.module('microbrewit.directives', []).
     		}
     	};
 	}).
-    directive('mbMaltList', function (mbSrmCalc, $http) {
+    directive('mbMaltList', function (mbSrmCalc, $http, mbUser) {
         return {
             restrict: 'EA',
             transclude: true,
@@ -126,14 +126,17 @@ angular.module('microbrewit.directives', []).
 
                 // setup settings if undefined by controller
                 if(typeof scope.settings === "undefined") {
-                   scope.settings = settings;  
+                    if(typeof scope.user.settings === "undefined") {
+                        console.log('setting std settings');
+                        scope.settings = mbUser.standardSettings;
+                    } else {
+                        scope.settings = scope.user.settings;
+                    } 
                 }
                
                 // setup empty fermentables model if undefined
                 if(typeof scope.fermentables === "undefined") {
                     scope.fermentables = {
-                        formula: settings.fermentables.formula,
-                        unit: settings.fermentables.unit,
                         srm: 0,
                         malts: [{name:"", lovibond: 0, weight: 0},{name:"", lovibond: 0, weight: 0}]
                     };
@@ -161,32 +164,27 @@ angular.module('microbrewit.directives', []).
                 var performCalc = function(a, b, updatedScope) {
                     var colour = 0;
                     
-                    // use user's preferred formula. Morey is more reliable, therefore set as default
-                    if(updatedScope.fermentables.formula === "daniels") {
+                    // daniels
+                    if(updatedScope.settings.formula.colour === "daniels") {
                         for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
                             colour += mbSrmCalc.daniels(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
                         }
                     }
-                    else if(updatedScope.fermentables.formula === "mosher") {
+                    // mosher
+                    else if(updatedScope.settings.formula.colour === "mosher") {
                         for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
                             colour += mbSrmCalc.mosher(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
                         }
                     }
+                    // use user's preferred formula. Morey is more reliable, therefore set as default
                     else {
                         for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
                             colour += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
                         } 
                     }
-                    // daniels
-
-                    // mosher
-
-                    for(var i = 0;i<updatedScope.fermentables.malts.length;i++) {
-                        colour += mbSrmCalc.morey(updatedScope.fermentables.malts[i].weight, updatedScope.fermentables.malts[i].lovibond, updatedScope.mashVolume);
-                    }
 
                     // convert to EBC if applicable
-                    if(scope.fermentables.unit == "ebc") {
+                    if(scope.settings.units.colour == "ebc") {
                         colour = mbSrmCalc.srmToEbc(colour);
                     }
 
@@ -194,19 +192,44 @@ angular.module('microbrewit.directives', []).
                 };
 
                 // setup listeners
-                scope.$watch('fermentables.malts', performCalc, true);
-                scope.$watch('mashVolume', performCalc, true);
-                scope.$watch('fermentables.formula', performCalc, true);
-                scope.$watch('fermentables.unit', performCalc, true);
-
-
-                // scope.$watch('fermentables.formula', function(formula) {
-                //     if(formula == "ebc") {
-                //         scope.fermentables.srm = mbSrmCalc.srmToEbc(scope.mbSrmCalc.srm);
-                //     } else if(formula == "srm") {
-                //         scope.fermentables.srm = mbSrmCalc.ebcToSrm(scope.mbSrmCalc.srm);
-                //     }
-                // });
+                scope.$watch('fermentables', performCalc, true);
+                scope.$watch('settings', performCalc, true);
             }
         };
+    }).
+    directive('mbMessage', function () {
+        return {
+            restrict: 'A',
+            template: '<div class="{{mbMessage.messageType}} message">{{mbMessage.messageText}} <button ng-click="removeMessage(scope)">close</button></div>',
+            replace: true,
+            link: function (scope) {
+                var showMessage = function (a, b, updatedScope) {
+
+                }
+                scope.$watch('mbMessage', showMessage, true);
+
+                scope.removeMessage = function () {
+                    console.log('');
+                }
+            }
+        };
+    }).
+    directive('mbMainNavigation', function (mbUser) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                 console.log(element.find('.login'));
+                console.log(element.children);
+                // append('<li style="width: 100px" class="profile"><a href="#/profile" active-link="active">Profile</a></li>');
+                // login.after('<li style="width: 100px" class="profile"><a href="#/profile" active-link="active">Profile</a></li>');
+
+                if(mbUser.isLogged()) {
+                    var conditionalNav = '';
+                }
+                else {
+                    var conditionalNav = '<li style="width: 100px"><a href="#/login" active-link="active">Login</a></li>';
+                }
+            }
+        }
+
     });

@@ -11,14 +11,15 @@
   <body>
     <header id="main-header" class="clearfix">
       <div class="container">
-        <nav id="main-nav" class="clearfix" >
+        <nav id="main-nav" class="clearfix" mb-Main-Navigation>
           <ul>
             <li style="width: 194px;"><a href="#/"><img src="img/microbrewit.png" /></a></li>
             <li style="width: 88px"><a href="#/beer" active-link="active">Beer</a></li>
             <li style="width: 134px"><a href="#/brewery" active-link="active">Breweries</a></li>
             <li id="search"><form id="search-form" method="get" action="#/search" href="#/search" active-link="active" ><input type="text" placeholder="Search" /><button>Search</button></form></li>
             <li style="width: 80px"><a href="#/add" active-link="active">Add</a></li>
-            <li style="width: 180px"><a href="#/login" active-link="active">Login/register</a></li>
+            <li style="width: 110px" class="login" ng-hide="isLogged"><a href="#/login" active-link="active">Login</a></li>
+            <li style="width: 110px" class="login" ng-show="isLogged"><a href="#/login" active-link="active"><gravatar class="left" size="25px" src="{{user.email}}"></gravatar>&nbsp;&nbsp;Me</a></li>
             <li style="width: 50px"><a href="#/more" active-link="active" class="more">More</a>
               <ul class="sub-nav">
                 <li><a href="#/calculators">Calculators</a></li>

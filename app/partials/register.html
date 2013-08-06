@@ -3,32 +3,34 @@
 		<h1 class="no-margin semibold">Register</h1>
 		<p>Already got a Microbrew.it account? <a href="#/login">Login here!</a></p>
 
-		<form method="" class="large-form content-area sixteen columns">
+		<form name="registerNewUser" class="large-form content-area sixteen columns">
 			<fieldset>
 				<h2>Account info <small>(You can change everything except username later)</h2>
-				<label for="username">username</label>
-				<input type="text" id="username" ng-model="username" />
+				<label for="username">username (required)</label>
+				<input type="text" id="username" ng-model="user.username" required />
 
-				<label for="email">email</label>
-				<input type="text" id="email" ng-model="email" />
+				<label for="email">email (required)</label>
+				<input type="text" id="email" ng-model="user.email" required />
 
-				<div class="offset-bottom-by-one">
-					<span>avatar (we use <a href="http://gravatar.com">gravatars</a>)</span>
-					<gravatar src="{{email}}"></gravatar>
+				<div class="offset-bottom-by-one" ng-show="user.email">
+					<span>avatar (we use <a href="http://gravatar.com" target="_blank">gravatars</a>)</span>
+					<gravatar src="{{user.email}}"></gravatar>
 				</div>
 
-				<label for="password">password</label>
-				<input type="password" id="password" ng-model="password" />
-				
-				<label for="repeat-password">repeat password</label>
-				<input type="password" id="repeat-password" ng-model="passwordrep" />
+				<fieldset name="password">
+					<label for="password">password (required)</label>
+					<input type="password" id="password" ng-model="user.password" required />
+					
+					<label for="repeat-password">repeat password</label>
+					<input type="password" id="repeat-password" ng-model="passwordrep" required />
+				</fieldset>
 			</fieldset>
 			<fieldset>
-				<label for="brewery-name">What is your brewery called?</label>
-				<input type="text" id="brewery-name" ng-model="breweryName" />
+				<label for="brewery-name">What is your brewery called? (optional)</label>
+				<input type="text" id="brewery-name" ng-model="user.breweryName" />
 			</fieldset>
-			<div class="offset-top-by-one left">Welcome to the gang, <strong class="uppercase">{{username}}</strong>!</div>
-			<button class="action-btn right offset-top-by-one" ng-click="register()">Register</button>
+			<div class="offset-top-by-one left" ng-show="registerNewUser.$valid">Welcome to the gang, <strong class="uppercase">{{user.username}}</strong>!</div>
+			<button class="action-btn right offset-top-by-one" ng-click="register()" ng-disabled="!registerNewUser.$valid">Register</button>
 		</form>
 	</div>
 </article>
