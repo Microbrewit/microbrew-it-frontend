@@ -197,6 +197,134 @@ angular.module('microbrewit.directives', []).
             }
         };
     }).
+    directive('mbHopsList', function (mbIbuCalc, mbConversionCalc, mbUser) {
+        return {
+            restrict: 'EA',
+            transclude: true,
+            visibility: "=",
+            template: '<div class="hops sixteen columns no-padding">' +
+                    '<div class="zebra hops offset-bottom-by-one desktop-table">' +
+                        '<div class="desktop-th">' +
+                            '<div class="desktop-td">Amount</div>' +
+                            '<div class="desktop-td twelve columns no-padding no-float">Name of hops</div>' +
+                            '<div class="desktop-td">aa</div>' +
+                            '<div class="desktop-td text-right">&nbsp;</div>' +
+                            '<div class="desktop-td">boil</div>' +
+                            '<div class="desktop-td text-right">&nbsp;</div>' +
+                        '</div>' +
+                        '<div class="desktop-tr" ng-repeat="hop in hops" class="clearfix">' +
+                            '<div class="desktop-td"><input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label></div>' +
+                            '<div class="desktop-td twelve columns no-padding no-float"><label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" /><br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}</div>' +
+                            '<div class="desktop-td"><input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label></div>' +
+                            '<div class="desktop-td"><select ng-model="hop.type"><option value="pellet">Pellet</option><option value="flower">Flower</option></select></div>' +
+                            '<div class="desktop-td"><input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label></div>' +
+                            '<div class="desktop-td text-right"><button ng-click="removeHops(this)">-</button></div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<button class="left" ng-click="removeEmptyHops()">Remove empty</button>'+
+                    '<button ng-click="addHops()">Add</button>' +
+                '</div>',
+            replace: true,
+            link: function (scope, elem, attr) {
+
+                // setup settings if undefined by controller
+                if(typeof scope.settings === "undefined") {
+                    if(typeof scope.user.settings === "undefined") {
+                        console.log('setting std settings');
+                        scope.settings = mbUser.standardSettings;
+                    } else {
+                        scope.settings = scope.user.settings;
+                    } 
+                }
+               
+                // setup empty fermentables model if undefined
+                if(typeof scope.ibu === "undefined") {
+                    scope.ibu = 0;
+                }
+                if(typeof scope.hops === "undefined") {
+                    scope.hops = [{name:"", aa: 0, weight: 0, boiltime: 0, utilisation:0, ibu:0, type: 'pellet'},{name:"", aa: 0, weight: 0, boiltime: 0, utilisation:0, ibu:0, type: 'pellet'}];
+                }
+
+                if(typeof scope.boilVolume === "undefined") {
+                    scope.boilVolume = 20;
+                }
+                if(typeof scope.boilGravity === "undefined") {
+                    scope.boilGravity = 1.040;
+                }
+
+                // set up functions called by buttons
+                scope.addHops = function () {
+                    this.hops.push({name:"", lovibond: 0, weight: 0});
+                };
+
+                // look for built in functionality for doing this ;D
+                scope.removeHops = function (listElem) {
+                    var hashKey = listElem.hop.$$hashKey;
+                    scope.hops = _(scope.hops).reject(function(el) { return el.$$hashKey == hashKey; });
+                };
+                // look for built in functionality for doing this ;D
+                scope.removeEmptyHops = function () {
+                    scope.hops = _(scope.hops).reject(function(el) { return el.weight === 0 && el.aa === 0; });
+                };
+
+                var performCalc = function(a, b, updatedScope) {
+                    var totalibu = 0,
+                        ibu = 0,
+                        utilisation,
+                        mgl,
+                        i;
+
+                    // rager
+                    if(updatedScope.settings.formula.bitterness === "rager") {
+                        for(i = 0;i<updatedScope.hops.length;i++) {
+                            utilisation = mbIbuCalc.ragerUtilisation(updatedScope.hops[i].boiltime);
+
+                            if(updatedScope.hops[i].type == "pellet") {
+                               utilisation = mbConversionCalc.pelletToHop(utilisation);
+                            }
+                            mgl = mbIbuCalc.tinsethMgl(updatedScope.hops[i].weight, updatedScope.hops[i].aa, updatedScope.boilVolume);
+
+                            // function (weight, utilisation, alphaAcid, boilVolume, boilGravity) {
+                            ibu = mbIbuCalc.ragerIbu(updatedScope.hops[i].weight, utilisation, updatedScope.hops[i].aa, updatedScope.boilVolume, updatedScope.boilGravity);
+                            
+                            // update hop scope with values
+                            updatedScope.hops[i].utilisation = utilisation.toFixed(2);
+                            updatedScope.hops[i].mgl = mgl.toFixed(2);
+                            updatedScope.hops[i].ibu = ibu.toFixed(2);
+
+                            // update scope with total ibu
+                            totalibu += ibu;
+                        }
+                    } else {
+                        // this.tinseth = function (weight, alphaAcid, batchSize, og, boilTime)
+                        for(i = 0;i<updatedScope.hops.length;i++) {
+                            utilisation = mbIbuCalc.tinsethUtilisation(updatedScope.boilGravity, updatedScope.hops[i].boiltime);
+
+                            if(updatedScope.hops[i].type == "pellet") {
+                               utilisation = mbConversionCalc.pelletToHop(utilisation);
+                            }
+                            mgl = mbIbuCalc.tinsethMgl(updatedScope.hops[i].weight, updatedScope.hops[i].aa, updatedScope.boilVolume);
+                            ibu = mbIbuCalc.tinsethIbu(utilisation, mgl);
+                            
+                            // update hop scope with values
+                            updatedScope.hops[i].utilisation = utilisation.toFixed(2);
+                            updatedScope.hops[i].mgl = mgl.toFixed(2);
+                            updatedScope.hops[i].ibu = ibu.toFixed(2);
+
+                            // update scope with total ibu
+                            totalibu += ibu;
+                        }
+                    }
+
+                    updatedScope.ibu = totalibu.toFixed(2);
+                };
+
+                // setup listeners
+                scope.$watch('hops', performCalc, true);
+                scope.$watch('settings', performCalc, true);
+            }
+        };
+    }).
     directive('mbMessage', function () {
         return {
             restrict: 'A',
@@ -213,23 +341,4 @@ angular.module('microbrewit.directives', []).
                 }
             }
         };
-    }).
-    directive('mbMainNavigation', function (mbUser) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attr) {
-                 console.log(element.find('.login'));
-                console.log(element.children);
-                // append('<li style="width: 100px" class="profile"><a href="#/profile" active-link="active">Profile</a></li>');
-                // login.after('<li style="width: 100px" class="profile"><a href="#/profile" active-link="active">Profile</a></li>');
-
-                if(mbUser.isLogged()) {
-                    var conditionalNav = '';
-                }
-                else {
-                    var conditionalNav = '<li style="width: 100px"><a href="#/login" active-link="active">Login</a></li>';
-                }
-            }
-        }
-
     });

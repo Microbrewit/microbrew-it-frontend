@@ -4,7 +4,7 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, mbUser) {
+	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, mbUser, mbIbuCalc) {
 			$scope.title = "Microbrew.it";
 
 			mbUser.setupUserSession({
@@ -13,7 +13,7 @@ angular.module('microbrewit.controllers', []).
 				breweryName: "Thune Hjemmebryggeri",
 				settings: mbUser.standardSettings
 			});
-			mbUser.destroyUserSession();
+			// mbUser.destroyUserSession();
 		}).
 	controller('BreweryCtrl', function () {}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location, mbUser) {

@@ -58,19 +58,41 @@ angular.module('microbrewit.services', []).
 		};
 	}]).
 	service('mbIbuCalc', function () {
-		// Tinseth specific?
-		this.hopUtilisation = function (og, boilTime) {
-			var a = Math.pow(1.65*0.000125, og-1);
-			var b = Math.pow(og-1,-0.04*boilTime);
-			return a*(b/4.14);
+		// Tinseth
+		this.tinsethUtilisation = function (og, boilTime) {
+			var boilTimeFactor = (1-Math.exp(-0.04*boilTime))/4.15;
+			var bignessFactor = 1.65*Math.pow(0.000125, (og-1));
+			var utilisation = bignessFactor * boilTimeFactor;
+			return utilisation;
+		};
+		this.tinsethMgl = function (weight, alphaAcid, batchSize) {
+			// mg/L
+			alphaAcid = alphaAcid/100;
+
+			return (alphaAcid*weight*1000)/batchSize;
 		};
 
-		this.tinseth = function (weight, alphaAcid, batchSize, og, boilTime) {
-			// Tinseth: IBU = Utilization * ( oz of hops * ( Alpha Acid% / 100 ) * 7490 ) / Gallons of Wort
-			return (weight*alphaAcid*1000*this.hopUtilisation(og, boilTime))/batchSize;
+		this.tinsethIbu = function (mgl, utilisation) {
+			return utilisation*mgl;
 		};
-		this.roger = function () {
 
+		// Rager
+		this.tanh = function (x) {
+			var e = Math.exp(2*x);
+			return (e-1)/(e+1);
+		};
+
+		this.ragerUtilisation = function (boilTime) {
+			return (18.11 + 13.86 * this.tanh((boilTime-31.32)/18.27)) / 100;
+		};
+
+		this.ragerIbu = function (weight, utilisation, alphaAcid, boilVolume, boilGravity) {
+			var ga = 0;
+			alphaAcid = alphaAcid/100;
+			if(boilGravity > 1.050) {
+				ga = (boilGravity-1.050)/0.2;
+			}
+			return (weight * utilisation * alphaAcid * 1000) / (boilVolume * (1+ga));
 		};
 	}).
 	service('mbConversionCalc', function () {

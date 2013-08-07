@@ -1,0 +1,29 @@
+<article class="container">
+	<h1 class="no-margin semibold">Bitterness calculator</h1>
+	<p>Estimate the perceived bitterness (IBU/EBU) of your brew.</p>
+	<div class="content-area sixteen columns">
+		<form>
+
+			<div class="offset-bottom-by-one">
+				<label for="boil-volume">Boil volume (liters): </label><input ng-model="boilVolume" id="boil-volume" />
+				<label for="boil-gravity">Boil gravity: </label><input ng-model="boilGravity" id="boil-gravity" />
+				<div class="right">
+					Calculate bitterness using 
+					<select ng-model="settings.formula.bitterness">
+						<option value="tinseth">Tinseth (default)</option>
+						<option value="rager">Rager</option>
+						<option value="garetz">Garetz (unimplemented)</option>
+					</select>
+					
+					<input type="radio" name="unit" value="ibu" ng-model="settings.units.bitterness">ibu
+					<input type="radio" name="unit" value="ebu" ng-model="settings.units.bitterness">ebu
+				</div>
+
+				
+			</div>
+
+		<div mb-hops-list class="offset-bottom-by-one"></div>
+		<hr />
+		<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{ibu}} <span class="uppercase">{{settings.units.bitterness}}</span></div></div>
+	</div>
+</article>

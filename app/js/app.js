@@ -17,6 +17,7 @@ angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit
       .when('/calculators', {templateUrl: 'partials/calculators.html', controller: 'CalculatorCtrl'})
       .when('/calculators/abv', {templateUrl: 'partials/calculators/abv.html', controller: 'CalculatorCtrl'})
       .when('/calculators/colour', {templateUrl: 'partials/calculators/colour.html'})
+      .when('/calculators/bitterness', {templateUrl: 'partials/calculators/bitterness.html'})
 
       .when('/breweries', {templateUrl: 'partials/breweries.html', controller: 'BreweryCtrl'})
       .when('/breweries/:brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})
