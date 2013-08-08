@@ -29,7 +29,17 @@
         </nav>
       </div>
     </header>
-
+    <div>
+      <ul class="breadcrumb">
+        <li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+          <span class="divider">/</span>
+          <ng-switch on="$last">
+          <span ng-switch-when="true">{{breadcrumb.name}}</span>
+          <span ng-switch-default><a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a></span>
+          </ng-switch>
+        </li>
+      </ul>
+    </div>
     <div ng-view></div>
 
     <footer id="main-footer" class="container">
@@ -76,6 +86,7 @@
     <script src="js/controllers.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
+    <script src="js/breadcrumbs.js"></script>
     <script src="lib/mbit/md5.js"></script>
   </body>
 </html>

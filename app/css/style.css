@@ -856,6 +856,9 @@ nav .active {
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
+.round img {
+  border-radius: 50%; }
+
 input.full-width {
   width: 90%; }
 

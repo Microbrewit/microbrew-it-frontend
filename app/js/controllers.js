@@ -4,9 +4,9 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, $routeParams, $rootScope, $route, mbUser, mbIbuCalc) {
+	controller('MainCtrl', function ($scope, mbUser,breadcrumbs) {
 			$scope.title = "Microbrew.it";
-
+			$scope.breadcrumbs = breadcrumbs;
 			mbUser.setupUserSession({
 				username: "Torstein",
 				email: "torstein@gmail.com",
@@ -16,8 +16,31 @@ angular.module('microbrewit.controllers', []).
 			// mbUser.destroyUserSession();
 		}).
 	controller('BreweryCtrl', function () {}).
+	controller('HopsCtrl', function ($scope, hops) {
+		hops.getHops().async().then(function(data) {
+			$scope.hops = data.hops;
+			$scope.orderProp = "name";
+		});
+	}).
+	controller('HopDetailsCtrl', function ($scope, hops, $routeParams) {
+		hops.getHops().async().then(function (data) {
+			$scope.hops = data.hops;
+			$scope.hop = _(data.hops).reject(function(el) { return el.id != $routeParams.hopid; })[0];
+			console.log($scope.hop);
+
+			var substitutions = null;
+
+			if($scope.hop.substitutions.length > 0) {
+				substitutions = [];
+				// horrible, please rewrite me
+				for(var i=0;i<$scope.hop.substitutions;i++) {
+					substitutions.push(_(data.hops).reject(function(el) { return el.id != substitutions[i].id; })[0]);
+				}
+			}
+			$scope.substitutions = substitutions;
+		});
+	}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location, mbUser) {
-		
 		// redirect user if logged in
 		if($rootScope.user.username) {
 			$location.path('/profile');
@@ -35,7 +58,6 @@ angular.module('microbrewit.controllers', []).
 		$scope.title = "Brun Bjarne";
 	}).
 	controller('RegisterCtrl', function($scope, $http, $resource, $location, $rootScope, mbUser) {
-		
 		// redirect user if logged in
 		if($rootScope.user.username) {
 			$location.path('/profile');

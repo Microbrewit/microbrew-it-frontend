@@ -259,17 +259,27 @@ angular.module('microbrewit.services', []).
 			$cookieStore.remove('mb_user');
 		};
 	}).
-	service('api', function ($http, $rootScope, $location) {
-
-		// beer api
-		this.addBeer = function (beerObj, beerId) {};
-		this.updateBeer = function (beerObj, beerId) {};
-
-		// brewery api
-
-
-		// search api
-		this.search = function (searchObj) {};
+	service('hops', function ($http) {
+		this.getHops = function () {
+			var promise = sessionStorage.getItem("hops");
+			var hops = {
+				async: function () {
+					if (!promise) {
+						console.log('?');
+						promise = $http.jsonp('http://api.microbrew.it/hops?callback=JSON_CALLBACK', {}).then(function (response) {
+							// The then function here is an opportunity to modify the response
+							sessionStorage.setItem("hops", response.data.hops);
+							console.log('!');
+							// The return value gets picked up by the then in the controller.
+							return response.data;
+						});
+					}
+					return promise;
+				}
+			};
+			return hops;
+		};
+		this.updateHops = function () {};
 
 	}).
 	service('mbcalc', function () {

@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore', 'ngCookies']).
+angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore', 'ngCookies', 'services.breadcrumbs']).
   run(function($rootScope, mbUser) {
 
   }).
@@ -18,6 +18,9 @@ angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit
       .when('/calculators/abv', {templateUrl: 'partials/calculators/abv.html', controller: 'CalculatorCtrl'})
       .when('/calculators/colour', {templateUrl: 'partials/calculators/colour.html'})
       .when('/calculators/bitterness', {templateUrl: 'partials/calculators/bitterness.html'})
+
+      .when('/hops', {templateUrl: 'partials/hops.html', controller: 'HopsCtrl'})
+      .when('/hops/:hopid', {templateUrl: 'partials/hopDetails.html', controller: 'HopDetailsCtrl'})
 
       .when('/breweries', {templateUrl: 'partials/breweries.html', controller: 'BreweryCtrl'})
       .when('/breweries/:brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})
