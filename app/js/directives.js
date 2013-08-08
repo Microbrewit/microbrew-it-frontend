@@ -197,34 +197,11 @@ angular.module('microbrewit.directives', []).
             }
         };
     }).
-    directive('mbHopsList', function (mbIbuCalc, mbConversionCalc, mbUser) {
+    directive('mbHopsList', function (mbIbuCalc, mbConversionCalc, mbUser, hops) {
         return {
             restrict: 'EA',
-            transclude: true,
-            visibility: "=",
-            template: '<div class="hops sixteen columns no-padding">' +
-                    '<div class="zebra hops offset-bottom-by-one desktop-table">' +
-                        '<div class="desktop-th">' +
-                            '<div class="desktop-td">Amount</div>' +
-                            '<div class="desktop-td twelve columns no-padding no-float">Name of hops</div>' +
-                            '<div class="desktop-td">aa</div>' +
-                            '<div class="desktop-td text-right">&nbsp;</div>' +
-                            '<div class="desktop-td">boil</div>' +
-                            '<div class="desktop-td text-right">&nbsp;</div>' +
-                        '</div>' +
-                        '<div class="desktop-tr" ng-repeat="hop in hops" class="clearfix">' +
-                            '<div class="desktop-td"><input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label></div>' +
-                            '<div class="desktop-td twelve columns no-padding no-float"><label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" /><br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}</div>' +
-                            '<div class="desktop-td"><input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label></div>' +
-                            '<div class="desktop-td"><select ng-model="hop.type"><option value="pellet">Pellet</option><option value="flower">Flower</option></select></div>' +
-                            '<div class="desktop-td"><input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label></div>' +
-                            '<div class="desktop-td text-right"><button ng-click="removeHops(this)">-</button></div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<button class="left" ng-click="removeEmptyHops()">Remove empty</button>'+
-                    '<button ng-click="addHops()">Add</button>' +
-                '</div>',
-            replace: true,
+            // transclude: true,
+            // visibility: "=",
             link: function (scope, elem, attr) {
 
                 // setup settings if undefined by controller
@@ -236,15 +213,24 @@ angular.module('microbrewit.directives', []).
                         scope.settings = scope.user.settings;
                     } 
                 }
+
+                if(typeof scope.hopsDb === "undefined") {
+                    console.log(hops.getHops().async().then());
+                    hops.getHops().async().then(function(data) {
+                        scope.hopsDb=data.hops;
+                        console.log('HopDB: ');
+                        console.log(scope.hops);
+                    });
+                }
                
                 // setup empty fermentables model if undefined
                 if(typeof scope.ibu === "undefined") {
                     scope.ibu = 0;
                 }
                 if(typeof scope.hops === "undefined") {
-                    scope.hops = [{name:"", aa: 0, weight: 0, boiltime: 0, utilisation:0, ibu:0, type: 'pellet'},{name:"", aa: 0, weight: 0, boiltime: 0, utilisation:0, ibu:0, type: 'pellet'}];
+                    scope.hops = [];
                 }
-
+                console.log(scope.hops);
                 if(typeof scope.boilVolume === "undefined") {
                     scope.boilVolume = 20;
                 }
@@ -256,6 +242,10 @@ angular.module('microbrewit.directives', []).
                 scope.addHops = function () {
                     this.hops.push({name:"", lovibond: 0, weight: 0});
                 };
+
+                scope.addHop = function(scope) {
+                    scope.hops.push(this.hop);
+                }
 
                 // look for built in functionality for doing this ;D
                 scope.removeHops = function (listElem) {

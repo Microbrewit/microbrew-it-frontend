@@ -22,7 +22,49 @@
 				
 			</div>
 
-		<div mb-hops-list class="offset-bottom-by-one"></div>
+		<div mb-hops-list class="offset-bottom-by-one">
+			<div class="hops sixteen columns no-padding">
+                <div class="zebra hops offset-bottom-by-one desktop-table">
+                   <div class="desktop-th">
+                        <div class="desktop-td">Amount</div>
+                        <div class="desktop-td twelve columns no-padding no-float">Name of hops</div>
+                        <div class="desktop-td">aa</div>
+                        <div class="desktop-td text-right">&nbsp;</div>
+                        <div class="desktop-td">boil</div>
+                        <div class="desktop-td text-right">&nbsp;</div>
+                    </div>
+                   	<div class="desktop-tr" ng-repeat="hop in hops" class="clearfix">
+                        <div class="desktop-td">
+                        	<input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label>
+                        </div>
+                        <div class="desktop-td twelve columns no-padding no-float">
+                        	<label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" />
+                        	<br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}
+                        </div>
+                        <div class="desktop-td">
+                        	<input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label>
+                        </div>
+                        <div class="desktop-td">
+                        	<select ng-model="hop.type">
+                        		<option value="pellet">Pellet</option>
+                        		<option value="flower">Flower</option>
+                        	</select>
+                        </div>
+                        <div class="desktop-td">
+                        	<input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label>
+                        </div>
+                        <div class="desktop-td text-right">
+                        	<button ng-click="removeHops(this)">-</button>
+                        </div>
+                    </div>
+                </div>
+                <input class="large-text" ng-model="hopSearch" /><button ng-click="addHops()">Add</button>
+                <ul ng-show="hopSearch">
+        			<li ng-repeat="hop in hopsDb | filter:hopSearch | orderBy: 'name'"><a ng-click="addHop(this)">{{hop.name}}</a></li>
+        		</ul>
+
+            </div>
+		</div>
 		<hr />
 		<div class="microbrewit-estimate sixteen columns">Our estimate:<div class="large-text">{{ibu}} <span class="uppercase">{{settings.units.bitterness}}</span></div></div>
 	</div>

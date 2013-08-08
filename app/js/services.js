@@ -261,7 +261,7 @@ angular.module('microbrewit.services', []).
 	}).
 	service('hops', function ($http) {
 		this.getHops = function () {
-			var promise = sessionStorage.getItem("hops");
+			var promise;
 			var hops = {
 				async: function () {
 					if (!promise) {
