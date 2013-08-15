@@ -9,7 +9,7 @@ angular.module('microbrewit.directives', []).
             restrict: 'E',
             scope: 'isolate',
             replace: true,
-            template: '<div class="avatar gravatar round"><img src="http://www.gravatar.com/avatar/{{src}}" style="width:{{size}};height:{{size}}" alt="" /></div>',
+            template: '<div class="avatar gravatar"><img src="http://www.gravatar.com/avatar/{{src}}"  class="round" style="width:{{size}};height:{{size}}" alt="" /></div>',
             link: function (scope, element, attr) {
                 attr.$observe('src', function(current_value) {
                     scope.src = md5(current_value.replace(/\s+/g, '').toLowerCase()); // create gravatar hash of interpolated value, push to scope
@@ -93,7 +93,7 @@ angular.module('microbrewit.directives', []).
     			attr.$observe('fg', function (fg) {
     				scope.abv = calcAbv(attr.og, fg).toFixed(2);
     			});
-    		}
+            }
     	};
 	}).
     directive('mbMaltList', function (mbSrmCalc, $http, mbUser) {
@@ -131,7 +131,7 @@ angular.module('microbrewit.directives', []).
                         scope.settings = mbUser.standardSettings;
                     } else {
                         scope.settings = scope.user.settings;
-                    } 
+                    }
                 }
                
                 // setup empty fermentables model if undefined

@@ -11,7 +11,8 @@ angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit
       
       .when('/search', {templateUrl: 'partials/search.html', controller: 'BreweryCtrl'})
       
-      .when('/company/privacy-policy', {templateUrl: 'partials/company/privacy-policy.html', controller: 'CalculatorCtrl'})
+      .when('/company/privacy-policy', {templateUrl: 'partials/company/privacy-policy.html'})
+      .when('/company/terms-of-service', {templateUrl: 'partials/company/terms-of-service.html'})
       .when('/more', {templateUrl: 'partials/more.html'})
 
       .when('/calculators', {templateUrl: 'partials/calculators.html', controller: 'CalculatorCtrl'})
@@ -25,7 +26,7 @@ angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit
       .when('/breweries', {templateUrl: 'partials/breweries.html', controller: 'BreweryCtrl'})
       .when('/breweries/:brewery', {templateUrl: 'partials/brewery.html', controller: 'BreweryCtrl'})
 
-      .when('/beers', {templateUrl: 'partials/beers.html', controller: 'BeerCtrl'})
+      .when('/beers', {templateUrl: 'partials/singleBeer.html', controller: 'BeerCtrl'})
       .when('/beers/:beer', {templateUrl: 'partials/beer.html', controller: 'BeerCtrl'})
 
 

@@ -4,7 +4,7 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, mbUser,breadcrumbs) {
+	controller('MainCtrl', function ($scope, mbUser, breadcrumbs, $location) {
 			$scope.title = "Microbrew.it";
 			$scope.breadcrumbs = breadcrumbs;
 			mbUser.setupUserSession({
@@ -13,6 +13,12 @@ angular.module('microbrewit.controllers', []).
 				breweryName: "Thune Hjemmebryggeri",
 				settings: mbUser.standardSettings
 			});
+
+			if($location.url != "/") {
+				$scope.location = true;
+			} else {
+				$scope.location = false;
+			}
 			// mbUser.destroyUserSession();
 		}).
 	controller('BreweryCtrl', function () {}).
@@ -25,19 +31,22 @@ angular.module('microbrewit.controllers', []).
 	controller('HopDetailsCtrl', function ($scope, hops, $routeParams) {
 		hops.getHops().async().then(function (data) {
 			$scope.hops = data.hops;
-			$scope.hop = _(data.hops).reject(function(el) { return el.id != $routeParams.hopid; })[0];
-			console.log($scope.hop);
+			$scope.hop = _(data.hops).reject(function(el) { if(el != null) return el.id != $routeParams.hopid; else return false })[0];
 
 			var substitutions = null;
 
-			if($scope.hop.substitutions.length > 0) {
+			if(typeof $scope.hop !== "undefined" && $scope.hop !== null && $scope.hop.substitutions.length > 0) {
 				substitutions = [];
 				// horrible, please rewrite me
-				for(var i=0;i<$scope.hop.substitutions;i++) {
-					substitutions.push(_(data.hops).reject(function(el) { return el.id != substitutions[i].id; })[0]);
+				for(var i=0;i<$scope.hop.substitutions.length;i++) {
+					var substituteObj = _(data.hops).reject(function(el) { if(el) return el.href != $scope.hop.substitutions[i]; })[0]
+					if(substituteObj) substitutions.push(substituteObj);
 				}
 			}
-			$scope.substitutions = substitutions;
+
+			if(substitutions && substitutions.length >0) $scope.substitutions = substitutions;
+
+			console.log(substitutions);
 		});
 	}).
 	controller('LoginCtrl', function ($scope, $rootScope, $http, $location, mbUser) {
