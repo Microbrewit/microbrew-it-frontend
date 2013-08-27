@@ -669,6 +669,9 @@ a.round.logo:hover {
 #breadcrumbs li:first-child:before {
   content: ''; }
 
+.padding {
+  padding: 25px; }
+
 body {
   font-family: 'Source Sans Pro';
   background: #fbfbfb;
@@ -819,9 +822,6 @@ h2 {
   overflow: auto; }
 
 .content-area {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 4px;
   z-index: 10; }
 
 .semibold {
@@ -1153,11 +1153,49 @@ td, th {
 tr.results {
   background: #e9e9e9; }
 
+.headline-black {
+  background: #333; }
+
+.headline-black label {
+  color: #fff; }
+
+label {
+  margin-bottom: 15px;
+  display: block; }
+
+.left-count {
+  width: 50px;
+  height: 50px;
+  color: white;
+  line-height: 50px;
+  font-size: 25px;
+  font-weight: bold;
+  background: #333;
+  float: left;
+  text-align: center; }
+
+.large-form textarea {
+  width: 100%;
+  height: 150px; }
+
+.step {
+  border: 1px solid #ccc;
+  display: inline-block; }
+
+.step-head {
+  background: #fff; }
+
+.footer-wrapper .logo.medium {
+  background: #fff;
+  color: #333; }
+
 .footer-wrapper {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 25px 50px;
-  color: #666; }
+  color: #999;
+  background: #333;
+  margin-bottom: 25px; }
 
 .footer-wrapper img {
   vertical-align: middle; }

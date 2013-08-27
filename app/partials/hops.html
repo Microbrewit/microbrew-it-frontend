@@ -14,7 +14,7 @@
 		</div>
 		<ul class="zebra">
 			<li ng-repeat="hop in hops | filter:hopsFilter | orderBy:orderProp">
-				<a href="#/hops/{{hop.id}}"><strong>{{hop.name}}</strong> <small>({{hop.origin}})</small> [{{hop.recommendedusage}}] AA: {{hop.aalow}} - {{hop.aahigh}}% {{hop.flavour}}</a></li>
+				<a href="#/hops/{{hop.name}}"><strong>{{hop.name}}</strong> <small>({{hop.origin}})</small> [{{hop.recommendedusage}}] AA: {{hop.aalow}} - {{hop.aahigh}}% {{hop.flavour}}</a></li>
 		</ul>
 	</div>
 </article>

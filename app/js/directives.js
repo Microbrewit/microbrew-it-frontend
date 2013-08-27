@@ -203,7 +203,7 @@ angular.module('microbrewit.directives', []).
             // transclude: true,
             // visibility: "=",
             link: function (scope, elem, attr) {
-
+                
                 // setup settings if undefined by controller
                 if(typeof scope.settings === "undefined") {
                     if(typeof scope.user.settings === "undefined") {
@@ -331,4 +331,11 @@ angular.module('microbrewit.directives', []).
                 }
             }
         };
+    }).
+    directive('mbProgress', function ($document, $window, $rootScope, progressbar) {
+        return {
+           restrict: 'EA',
+           link: function (scope, elem, attrs) {
+           }
+        }
     });

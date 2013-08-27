@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'angular-underscore', 'ngCookies', 'services.breadcrumbs']).
+angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit.services', 'microbrewit.directives', 'microbrewit.controllers', 'microbrewit.users', 'microbrewit.hops', 'angular-underscore', 'ngCookies', 'services.breadcrumbs', 'ngProgress']).
   run(function($rootScope, mbUser) {
 
   }).
@@ -35,7 +35,7 @@ angular.module('microbrewit', ['ngResource', 'microbrewit.filters', 'microbrewit
       .when('/', {templateUrl: 'partials/index.html'})
 
       .when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'})
-      .when('/register', {templateUrl: 'partials/register.html', controller: 'BreweryCtrl'});
+      .when('/register', {templateUrl: 'partials/register.html', controller: 'RegisterCtrl'});
 
 
 

@@ -1,12 +1,15 @@
 <article class="container" ng-controller="ProfileCtrl">
-	<gravatar class="left standard-right-padding" size="80px" src="{{profile.email}}"></gravatar>
-	<h1>Howdy, {{profile.username}}</h1>
+	<div class="right" ng-controller="LogoutCtrl">
+		<button class="right" ng-click="logout()">Logout</button>
+	</div>
+	<gravatar class="left standard-right-padding" size="80px" src="{{user.email}}"></gravatar>
+	<h1>Howdy, {{user.username}}</h1>
 	<div class="wrapper sixteen columns content-area">
 		<div class="eight columns">
 			<h2>Profile Settings</h2>
-			<p>Brewery name: <input type="text" /></p>
-			<p>Email: <input type="email" /></p>
-			<h3>Passwprd change</h3>
+			<p>Brewery name: <input type="text" ng.model="user.breweryname" /></p>
+			<p>Email: <input type="email" ng-model="user.email" /></p>
+			<h3>Password change</h3>
 			<p>Old password:
 				<input type="password" />
 			</p>
@@ -21,59 +24,67 @@
 			<form>
 				<fieldset>
 					<h3>Weight and volume</h3>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit"><label for="metric">S.I (Metric)</label>
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit"><label for="imperial">Imperial</label>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit"><label for="mixed">Mixed</label>
+					<p>Liquids:
+						<input type="radio" name="unit" value="liters" ng-model="user.settings.units.liquid">Liters (g)
+						<input type="radio" name="unit" value="oz" ng-model="user.settings.units.liquid">Ounces (oz)
+					</p>
+					<p>Small weights:
+						<input type="radio" name="unit" value="grams" ng-model="user.settings.units.smallWeight">Grams (g)
+						<input type="radio" name="unit" value="oz" ng-model="user.settings.units.smallWeight">Ounces (oz)
+					</p>
+					<p>Large weights:
+						<input type="radio" name="unit" value="kg" ng-model="user.settings.units.largeWeight">Kilograms (kg)
+						<input type="radio" name="unit" value="bs" ng-model="user.settings.units.largeWeight">Pounds (lbs)
 				</fieldset>
 				<fieldset>
 					<h3>Temperature</h3>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">Celcius
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Farenheit
+					<input type="radio" name="unit" value="celcius" ng-model="user.settings.units.temperature">Celcius
+					<input type="radio" name="unit" value="farenheit" ng-model="user.settings.units.temperature">Farenheit
 				</fieldset>
 				<fieldset>
 					<h3>Sugar content/Alcohol by volume (ABV)</h3>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">Specific Gravity
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Plato
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">Brix
+					<input type="radio" name="unit" value="sg" ng-model="user.settings.units.gravity">Specific Gravity
+					<input type="radio" name="unit" value="plato" ng-model="user.settings.units.gravity">Plato
+					<input type="radio" name="unit" value="brix" ng-model="user.settings.units.gravity">Brix
 
 					<p>Formula: 
-					<select>
-						<option>Miller</option>
-						<option>Fix</option>
-						<option>Simple (rule of thumb)</option>
-						<option>Microbrewit</option>
+					<select ng-model="user.settings.formula.abv">
+						<option value="miller">Miller</option>
+						<option value="fix">Fix</option>
+						<option value="simple">Simple (rule of thumb)</option>
+						<option value="microbrewit">Microbrewit</option>
 
 					</select></p>
 				</fieldset>
 
 				<fieldset>
 					<h3>Colour</h3>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">srm 
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">ebc
+					<input type="radio" name="unit" value="srm" ng-model="user.settings.units.colour">srm 
+					<input type="radio" name="unit" value="ebc" ng-model="user.settings.units.colour">ebc
 
 					<p>Formula: 
-					<select>
-						<option>Morey</option>
-						<option>Daniels</option>
-						<option>Mosher</option>
+					<select ng-model="user.settings.formula.colour">
+						<option value="morey">Morey</option>
+						<option value="daniels">Daniels</option>
+						<option value="mosher">Mosher</option>
 					</select></p>
 				</fieldset>
 
 				<fieldset>
-					<h3>Btterness</h3>
-					<input type="radio" name="unit" value="srm" ng-model="fermentables.unit">ibu
-					<input type="radio" name="unit" value="ebc" ng-model="fermentables.unit">ebu
+					<h3>Bitterness</h3>
+					<input type="radio" name="unit" value="ibu" ng-model="user.settings.units.bitterness">ibu
+					<input type="radio" name="unit" value="ebu" ng-model="user.settings.units.bitterness">ebu
 
 					<p>Formula: 
-					<select>
-						<option></option>
+					<select ng-model="user.settings.formula.bitterness">
+						<option value="tinseth">Tinseth</option>
 					</select></p>
 				</fieldset>
 
 				<fieldset>
 					<h2>Recipes</h2>
-					<p>Mash Volume: <input type="text" class="small" /></p>
-					<p>Efficiency: <input type="text" class="small" /> %</p>
+					<p>Mash Volume: <input type="text" class="small" ng-model="user.settings.mashVolume" /></p>
+					<p>Efficiency: <input type="text" class="small" ng-model="user.settings.efficiency" /> %</p>
 				</fieldset>
 			</form>
 		</div>

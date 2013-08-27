@@ -13,7 +13,7 @@
 		<h2>Substitutes</h2>
 		<p ng-show="!substitutions">None in database.</p>
 		<ul class="zebra" ng-show="substitutions">
-			<li ng-repeat="substitute in substitutions">{{substitute}} lol</li>
+			<li ng-repeat="substitute in substitutions"><a href="#/hops/{{substitute.name}}"><strong>{{substitute.name}}</strong> <small>({{substitute.origin}})</small> [{{substitute.recommendedusage}}] AA: {{substitute.aalow}} - {{substitute.aahigh}}% {{substitute.flavour}}</a></li>
 		</ul>
 	</div>
 </article>

@@ -7,30 +7,34 @@
 			<fieldset>
 				<h2>Account info <small>(You can change everything except username later)</h2>
 				<label for="username">username (required)</label>
-				<input type="text" id="username" ng-model="user.username" required />
+				<input type="text" id="username" ng-model="registerObj.username" required />
+
+				<label for="name">name (optional)</label>
+				<input type="text" id="name" ng-model="registerObj.name" />
 
 				<label for="email">email (required)</label>
-				<input type="text" id="email" ng-model="user.email" required />
+				<input type="text" id="email" ng-model="registerObj.email" required />
 
-				<div class="offset-bottom-by-one" ng-show="user.email">
+				<div class="offset-bottom-by-one" ng-show="registerObj.email">
 					<span>avatar (we use <a href="http://gravatar.com" target="_blank">gravatars</a>)</span>
-					<gravatar src="{{user.email}}"></gravatar>
+					<gravatar src="{{registerObj.email}}"></gravatar>
 				</div>
 
 				<fieldset name="password">
 					<label for="password">password (required)</label>
-					<input type="password" id="password" ng-model="user.password" required />
+					<input type="password" id="password" ng-model="registerObj.password" required />
 					
 					<label for="repeat-password">repeat password</label>
 					<input type="password" id="repeat-password" ng-model="passwordrep" required />
 				</fieldset>
 			</fieldset>
 			<fieldset>
-				<label for="brewery-name">What is your brewery called? (optional)</label>
-				<input type="text" id="brewery-name" ng-model="user.breweryName" />
+				<label for="breweryname">What is your brewery called? (optional)</label>
+				<input type="text" id="breweryname" ng-model="registerObj.breweryname" />
 			</fieldset>
-			<div class="offset-top-by-one left" ng-show="registerNewUser.$valid">Welcome to the gang, <strong class="uppercase">{{user.username}}</strong>!</div>
-			<button class="action-btn right offset-top-by-one" ng-click="register()" ng-disabled="!registerNewUser.$valid">Register</button>
+
+			<div class="offset-top-by-one left" ng-show="registerNewUser.$valid">Welcome to the gang, <strong class="uppercase">{{registerObj.username}}</strong>!</div>
+			<button class="action-btn right offset-top-by-one" ng-click="register()" ng-show="registerNewUser.$valid">Register</button>
 		</form>
 	</div>
 </article>
