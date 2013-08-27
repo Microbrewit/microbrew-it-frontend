@@ -24,7 +24,13 @@ angular.module('microbrewit.users', []).
 	}).
 	controller('LogoutCtrl', function($scope, $location, mbUser) {
 		$scope.logout = function () {
-			mbUser.logout().async().then(function () {
+			mbUser.logout().async().then(function (logoutObj) {
+				if(logoutObj.error) {
+					console.log(logoutObj);
+				}
+				mbUser.destroyUserSession();
+				$location.path('/');
+			}, function (logoutObj) {
 				mbUser.destroyUserSession();
 				$location.path('/');
 			});
@@ -49,21 +55,6 @@ angular.module('microbrewit.users', []).
 			settings: mbUser.standardSettings
 		}
 
-		// $scope.user = {
-		// 	username: 'torstein',
-		// 	name: '',
-		// 	avatar: '',
-		// 	location: '',
-		// 	age: 0,
-		// 	gender: '',
-		// 	password: 'test',
-		// 	email: 'torstein@gmail.com',
-		// 	breweryname: 'Thune Hjemmebryggeri',
-		// 	settings: mbUser.standardSettings
-		// }
-
-		// userObj for test purposes
-
 		$scope.passwordRep = '';
 
 
@@ -83,15 +74,16 @@ angular.module('microbrewit.users', []).
 			}
 		};
 	}).
-	controller('ProfileCtrl', function($scope, $rootScope) {
+	controller('ProfileCtrl', function($scope, $rootScope, $location) {
 		$scope.user = $rootScope.user;
 
-		console.log($scope.user.settings);
-
-		$scope.update = function (mbUser) {
-			mbUser.addUpdate($scope.user);
-		};
-
+		if(typeof $scope.user === "undefined" || !$scope.user.isLogged){
+			$location.path('/login');
+		} else {
+			$scope.update = function (mbUser) {
+				mbUser.addUpdate($scope.user);
+			};
+		}
 	}).
 	service('mbUser', function ($cookies, $cookieStore, $rootScope, $http, progressbar, mbApiUrl) {
 
@@ -184,11 +176,17 @@ angular.module('microbrewit.users', []).
 					if (!promise) {
 						promise = $http.get(mbApiUrl + '/users/logout').
 						error(function(response, status, headers, config) {
-							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
+							if(response.error.code == "U104" || response.error.code === 0) {
+								destroyUserSession();
+								logoutObj = response;
+								return logoutObj;
+							} else {
+								progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
+							}
 						}).then(function (response) {
 							console.log('LOGOUT response: ');
-							var userObj = response;
-							return userObj;
+							var logoutObj = response;
+							return logoutObj;
 						});
 					}
 					return promise;
@@ -207,6 +205,12 @@ angular.module('microbrewit.users', []).
 
 		this.destroyUserSession = function () {
 			this.removeCookie();
+			$rootScope.user = {};
+			$rootScope.user.isLogged = false;
+		};
+
+		function destroyUserSession() {
+			$cookieStore.remove('mb_user');
 			$rootScope.user = {};
 			$rootScope.user.isLogged = false;
 		};

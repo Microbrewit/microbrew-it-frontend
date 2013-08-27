@@ -4,7 +4,7 @@
 
 
 angular.module('microbrewit.controllers', []).
-	controller('MainCtrl', function ($scope, mbUser, breadcrumbs, $location, progressbar, $rootScope) {
+	controller('MainCtrl', function ($scope, mbUser, breadcrumbs, $location, progressbar, $rootScope, $cookies, $cookieStore) {
 		$scope.title = "Microbrew.it";
 		$scope.breadcrumbs = breadcrumbs;
 
@@ -12,6 +12,10 @@ angular.module('microbrewit.controllers', []).
 		if(mbUser.isLogged()) {
 			mbUser.setupUserSession(mbUser.getDetailsFromCookie());
 		}
+
+		console.log($cookieStore.get('mb_auth'));
+
+
 
 		$scope.close = function () {
 			progressbar.close();
