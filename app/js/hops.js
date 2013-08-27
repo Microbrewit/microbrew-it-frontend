@@ -6,14 +6,14 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.hops', []).
-	service('hops', function ($http) {
+	service('hops', function ($http, mbApiUrl) {
 		this.getHops = function () {
 			var promise;
 			var hops = {
 				async: function () {
 					if (!promise) {
 						console.log('fetching hops');
-						promise = $http.jsonp('http://api.microbrew.it/hops?callback=JSON_CALLBACK', {}).then(function (response) {
+						promise = $http.jsonp(mbApiUrl + '/hops?callback=JSON_CALLBACK', {}).then(function (response) {
 							// The then function here is an opportunity to modify the response
 							sessionStorage.setItem("hops", response.data.hops);
 							console.log('!');

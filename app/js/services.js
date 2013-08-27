@@ -6,6 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.services', []).
+	value('mbApiUrl', 'http://api.microbrew.it').
 	service('mbAbvCalc', function () {
 		this.miller = function (og, fg) {
 			return ((og-fg)/0.75)*100; // Dave Miller, 1988
@@ -119,14 +120,14 @@ angular.module('microbrewit.services', []).
 	}).
 	
 	
-	service('fermentables', function ($http, progressbar) {
+	service('fermentables', function ($http, progressbar, mbApiUrl) {
 		this.getFermentables = function () {
 			var promise;
 			var fermentables = {
 				async: function () {
 					if (!promise) {
 						console.log('fetching fermentables');
-						promise = $http.jsonp('http://api.microbrew.it/fermentables?callback=JSON_CALLBACK', {})
+						promise = $http.jsonp(mbApiUrl + '/fermentables?callback=JSON_CALLBACK', {})
 							.error(function (data, status) {
 								console.log(data);
 								progressbar.message('Could not get fermentables from API (code: ' + status + ')', '#DE5C5C');
@@ -146,14 +147,14 @@ angular.module('microbrewit.services', []).
 		};
 
 	}).
-	service('yeasts', function ($http, progressbar) {
+	service('yeasts', function ($http, progressbar, mbApiUrl) {
 		this.getYeasts = function () {
 			var promise;
 			var yeasts = {
 				async: function () {
 					if (!promise) {
 						console.log('fetching yeast');
-						promise = $http.jsonp('http://api.microbrew.it/yeasts?callback=JSON_CALLBACK', {})
+						promise = $http.jsonp(mbApiUrl + '/yeasts?callback=JSON_CALLBACK', {})
 							.error(function (data, status) {
 								console.log(data);
 								progressbar.message('Could not get yeasts from API (code: ' + status + ')', '#DE5C5C');

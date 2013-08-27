@@ -93,7 +93,7 @@ angular.module('microbrewit.users', []).
 		};
 
 	}).
-	service('mbUser', function ($cookies, $cookieStore, $rootScope, $http, progressbar) {
+	service('mbUser', function ($cookies, $cookieStore, $rootScope, $http, progressbar, mbApiUrl) {
 
 		this.register = function (userObj) {
 			$http.defaults.useXDomain = true;
@@ -103,7 +103,7 @@ angular.module('microbrewit.users', []).
 					console.log(userObj);
 					if (!promise) {
 						console.log('registering user');
-						promise = $http.post('http://api.microbrew.it/users', {
+						promise = $http.post( + '/users', {
 							username: userObj.username,
 							name: userObj.name,
 							avatar: userObj.avatar,
@@ -159,7 +159,7 @@ angular.module('microbrewit.users', []).
 			var returnUserObj = {
 				async: function () {
 					if (!promise) {
-						promise = $http.post('http://api.microbrew.it/users/login/', {id:userObj.username,password:userObj.password}).
+						promise = $http.post(mbApiUrl + '/users/login/', {id:userObj.username,password:userObj.password}).
 						error(function(response, status, headers, config) {
 							console.log(response);
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
@@ -182,7 +182,7 @@ angular.module('microbrewit.users', []).
 			var logoutObj = {
 				async: function () {
 					if (!promise) {
-						promise = $http.get('http://api.microbrew.it/users/logout').
+						promise = $http.get(mbApiUrl + '/users/logout').
 						error(function(response, status, headers, config) {
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
 						}).then(function (response) {
