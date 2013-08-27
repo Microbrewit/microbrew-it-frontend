@@ -6,6 +6,12 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.hops', []).
+	config(['$routeProvider', function($routeProvider) {
+		$routeProvider.
+			when('/hops', {templateUrl: 'partials/hops.html', controller: 'HopsCtrl'}).
+    		when('/hops/:hopid', {templateUrl: 'partials/hopDetails.html', controller: 'HopDetailsCtrl'}).
+    		when('/calculators/bitterness', {templateUrl: 'partials/calculators/bitterness.html'})
+	}]).
 	service('hops', function ($http, mbApiUrl) {
 		this.getHops = function () {
 			var promise;

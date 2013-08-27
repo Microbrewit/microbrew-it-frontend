@@ -1,0 +1,18 @@
+<article class="container">
+	<h1 class="no-margin semibold">Yeast registry</h1>
+	<p>Search the Microbrew.it yeast registry.</p>
+	<div class="content-area sixteen columns">
+		<div class="offset-bottom-by-one">
+			<label for="yeast-filter">Search</label> <input type="text" id="yeast-filter" ng-model="yeastFilter" />
+			Sort by:
+			<select ng-model="orderProp">
+				<option value="productCode">Product code</option>
+				<option value="name">Alphabetical</option>
+			</select>
+		</div>
+		<ul class="zebra">
+			<li ng-repeat="yeast in yeasts | filter:yeastFilter | orderBy:orderProp">
+				<a href="#/yeasts/{{yeast.id}}"><strong>{{yeast.productCode}} - {{yeast.name}}</strong> ({{yeast.type}})</a></li>
+		</ul>
+	</div>
+</article>

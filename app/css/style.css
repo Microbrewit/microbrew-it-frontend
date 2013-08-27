@@ -1193,12 +1193,11 @@ label {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 25px 50px;
-  color: #999;
+  color: #ccc;
   background: #333;
-  margin-bottom: 25px; }
-
-.footer-wrapper img {
-  vertical-align: middle; }
+  margin-bottom: 25px;
+  border-top: 25px solid #fff;
+  border-bottom: 25px solid #fff; }
 
 footer .footer-wrapper .footer-logo {
   margin-top: 12.5px;

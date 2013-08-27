@@ -1,0 +1,18 @@
+<article class="container">
+	<h1 class="no-margin semibold">Malt registry</h1>
+	<p>Search the Microbrew.it malt registry.</p>
+	<div class="content-area sixteen columns">
+		<div class="offset-bottom-by-one">
+			<label for="fermentable-filter">Search</label> <input type="text" id="fermentable-filter" ng-model="fermentableFilter" />
+			Sort by:
+			<select ng-model="orderProp">
+				<option value="productCode">Product code</option>
+				<option value="name">Alphabetical</option>
+			</select>
+		</div>
+		<ul class="zebra">
+			<li ng-repeat="fermentable in fermentables | filter:fermentableFilter | orderBy:orderProp">
+				<a href="#/fermentables/{{fermentable.id}}"><strong>{{fermentable.productCode}} - {{fermentable.name}}</strong> ({{fermentable.type}})</a></li>
+		</ul>
+	</div>
+</article>
