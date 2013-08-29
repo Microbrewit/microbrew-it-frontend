@@ -73,15 +73,18 @@ angular.module('microbrewit.hops', []).
 			return (weight * utilisation * alphaAcid * 1000) / (boilVolume * (1+ga));
 		};
 	}).
-	controller('HopsCtrl', function ($scope, hops, progressbar) {
-		progressbar.start();
+	controller('HopsCtrl', function ($scope, hops, progressbar, $cacheFactory) {
+		var $httpDefaultCache = $cacheFactory.get('$http');
+		var cachedData = $httpDefaultCache.get('http://api.microbrew.it/hops');
 
+		console.log($httpDefaultCache);
+		progressbar.start();
 		hops.getHops().async().then(function(data) {
 
 			$scope.hops = data.hops;
 			$scope.orderProp = "name";
 
-			progressbar.message('Hello world', '#DE5C5C');
+			progressbar.complete();
 		});
 	}).
 	controller('HopDetailsCtrl', function ($scope, hops, $routeParams) {

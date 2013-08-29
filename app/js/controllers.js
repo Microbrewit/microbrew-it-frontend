@@ -60,9 +60,9 @@ angular.module('microbrewit.controllers', []).
 		});
 
 		requests++;
-		fermentables.getFermentables().async().then(function(data) {
+		fermentables.getFromAPI().async().then(function(data) {
 			$scope.fermentables = data.fermentables;
-			$scope.fermentables.orderProp = "name";
+			// $scope.fermentables.orderProp = "name";
 
 			callbacks();
 		});
@@ -70,7 +70,7 @@ angular.module('microbrewit.controllers', []).
 		requests++;
 		yeasts.getYeasts().async().then(function(data) {
 			$scope.yeasts = data.yeasts;
-			$scope.yeasts.orderProp = "name";
+			// $scope.yeasts.orderProp = "name";
 
 			callbacks();
 		});
@@ -97,10 +97,7 @@ angular.module('microbrewit.controllers', []).
 						amount: 20
 					}
 				],
-				hops: [
-					{
-
-					}],
+				hops: [],
 				spices: [],
 				fruits: [],
 				notes: ""

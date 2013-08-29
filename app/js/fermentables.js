@@ -12,13 +12,13 @@ angular.module('microbrewit.fermentables', []).
 	}]).
 	// API interactions
 	service('fermentables', function ($http, mbApiUrl) {
-		this.getFermentables = function () {
+		this.getFromAPI = function () {
 			var promise;
 			var fermentables = {
 				async: function () {
 					if (!promise) {
 						console.log('fetching fermentables');
-						promise = $http.jsonp(mbApiUrl + '/fermentables?callback=JSON_CALLBACK', {}).then(function (response) {
+						promise = $http.jsonp(mbApiUrl + '/fermentables?callback=JSON_CALLBACK', { cache: true }).then(function (response) {
 							sessionStorage.setItem("fermentables", response.data.fermentables);
 							return response.data.fermentables;
 						});
@@ -27,6 +27,9 @@ angular.module('microbrewit.fermentables', []).
 				}
 			};
 			return fermentables;
+		};
+		this.getFromCache = function() {
+
 		};
 
 	}).
@@ -55,14 +58,50 @@ angular.module('microbrewit.fermentables', []).
 // mcorn-sugar - the weight of the corn sugar (glucose monohydrate) (g)
 // Vbeer - beer volume (l)
 		};
-	})
+	}).
 
 	// search yeasts
 	controller('FermentablesListCtrl', function ($scope, fermentables, progressbar) {
 
 		progressbar.start();
-		fermentables.getFermentables().async().then(function (fermentables) {
+		fermentables.getFromAPI().async().then(function (fermentables) {
+
+			// we need to flatten the model, and we need some control of what we add to the objects of the different types of fermentables
 			
+			$scope.fermentables = [];
+			for(var i=0;i<fermentables.grains.length;i++) {
+				var fermentable = fermentables.grains[i];
+				fermentable.originCountry = fermentables.grains[i].origin.split('#')[1].split('_').join(' ');
+				fermentable.type = 'grain';
+
+				$scope.fermentables.push(fermentable);
+			}
+
+			for(var i=0;i<fermentables.sugars.length;i++) {
+				var fermentable = fermentables.sugars[i];
+				// fermentable.originCountry = fermentables.sugars[i].origin.split('#')[1].split('_').join(' ');
+				fermentable.type = 'sugar';
+
+				$scope.fermentables.push(fermentable);
+			}
+
+			for(var i=0;i<fermentables.extracts.dryextracts.length;i++) {
+				var fermentable = fermentables.extracts.dryextracts[i];
+				fermentable.originCountry = fermentables.extracts.dryextracts[i].origin.split('#')[1].split('_').join(' ');
+				fermentable.type = 'dry extract';
+
+				$scope.fermentables.push(fermentable);
+			}
+
+			for(var i=0;i<fermentables.extracts.liquidextracts.length;i++) {
+				var fermentable = fermentables.extracts.liquidextracts[i];
+				fermentable.originCountry = fermentables.extracts.liquidextracts[i].origin.split('#')[1].split('_').join(' ');
+				fermentable.type = 'liquid extract';
+
+				$scope.fermentables.push(fermentable);
+			}
+
+
 
 			progressbar.complete();
 			// $scope.yeasts = yeasts.liquidyeasts;
