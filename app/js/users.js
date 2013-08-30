@@ -4,7 +4,7 @@
 
 
 angular.module('microbrewit.users', []).
-	controller('LoginCtrl', function ($scope, $http, $location, mbUser) {
+	controller('LoginCtrl', function ($scope, $http, $location, mbUser, $cookieStore) {
 		// redirect user if logged in
 		if(typeof $scope.user !== "undefined" && $scope.user.isLogged) {
 			$location.path('/profile');
@@ -18,7 +18,12 @@ angular.module('microbrewit.users', []).
 				console.log('LOGINCTRL: ')
 				console.log(userObj);
 				mbUser.setupUserSession(userObj);
+
+				console.log($cookieStore.get('mb_auth'));
+				console.log($cookieStore.get('Hello'));
 				$location.path('/');
+
+
 			});
 		};
 	}).
