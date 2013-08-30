@@ -155,10 +155,13 @@ angular.module('microbrewit.users', []).
 						error(function(response, status, headers, config) {
 							console.log(response);
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
-						}).then(function (response) {
+						}).then(function (response, status, headers, config) {
 							console.log('LOGIN response: ');
+							console.log(response);
+							console.log(status);
+							console.log(headers);
+							console.log(config);
 							var userObj = response.data.users[0];
-							console.log(userObj);
 							return userObj;
 						});
 					}
