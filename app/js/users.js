@@ -170,7 +170,7 @@ angular.module('microbrewit.users', []).
 							console.log(status);
 
 							console.log('headers: ');
-							console.log(headers);
+							console.log(headers());
 
 							console.log('config: ');
 							console.log(config);
