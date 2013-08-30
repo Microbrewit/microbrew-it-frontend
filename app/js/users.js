@@ -19,8 +19,8 @@ angular.module('microbrewit.users', []).
 				console.log(userObj);
 				mbUser.setupUserSession(userObj);
 
-				console.log($cookieStore.get('mb_auth'));
-				console.log($cookieStore.get('Hello'));
+				console.log('mb_auth: ' + $cookieStore.get('mb_auth'));
+				console.log('Hello: ' + $cookieStore.get('Hello'));
 				$location.path('/');
 
 
@@ -162,9 +162,17 @@ angular.module('microbrewit.users', []).
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
 						}).then(function (response, status, headers, config) {
 							console.log('LOGIN response: ');
+
+							console.log('response: ');
 							console.log(response);
+
+							console.log('status: ');
 							console.log(status);
+
+							console.log('headers: ');
 							console.log(headers);
+
+							console.log('config: ');
 							console.log(config);
 							var userObj = response.data.users[0];
 							return userObj;
