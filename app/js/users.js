@@ -160,7 +160,7 @@ angular.module('microbrewit.users', []).
 						error(function(response, status, headers, config) {
 							console.log(response);
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
-						}).then(function (response, status, headers, config) {
+						}).success(function(response,status,headers,config) {
 							console.log('LOGIN response: ');
 
 							console.log('response: ');
@@ -174,6 +174,8 @@ angular.module('microbrewit.users', []).
 
 							console.log('config: ');
 							console.log(config);
+						}).then(function (response, status, headers, config) {
+							
 							var userObj = response.data.users[0];
 							return userObj;
 						});
