@@ -6,7 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.services', []).
-	value('mbApiUrl', 'http://api.microbrew.it').
+	value('mbApiUrl', 'http://www.microbrew.it:3000').
 	service('mbAbvCalc', function () {
 		this.miller = function (og, fg) {
 			return ((og-fg)/0.75)*100; // Dave Miller, 1988
