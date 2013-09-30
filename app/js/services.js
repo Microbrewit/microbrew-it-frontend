@@ -6,7 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('microbrewit.services', []).
-	value('mbApiUrl', 'http://www.microbrew.it:3000').
+	value('mbApiUrl', 'http://api.microbrew.it').
 	service('mbAbvCalc', function () {
 		this.miller = function (og, fg) {
 			return ((og-fg)/0.75)*100; // Dave Miller, 1988
@@ -31,33 +31,6 @@ angular.module('microbrewit.services', []).
 			return ((this.alternativeSimple(og, fg)+this.alternativeAdvanced(og,fg)+this.simple(og, fg)+this.advanced(og,fg)+this.miller(og, fg))/5);
 		};
 	}).
-	service('mbSrmCalc', ['mbConversionCalc', function (mbConversionCalc) {
-		this.srmToEbc = function (srm) {
-			return srm*1.97;
-		};
-		this.ebcToSrm = function (ebc) {
-			return ebc/1.97;
-		};
-
-		// Malt Color Units weight in lbs., volume of wort (in gal.)
-		this.mcu = function (weight, lovibond, postBoilVolume) {
-			return (mbConversionCalc.kgToLb(weight)*lovibond/mbConversionCalc.litersToGallons(postBoilVolume));
-		};
-
-		// SRM
-		this.morey = function (weight, lovibond, postBoilVolume) {
-			return 1.4922 * Math.pow(this.mcu(weight, lovibond, postBoilVolume), 0.6859); // most accurate
-		};
-
-		// SRM
-		this.daniels = function (weight, lovibond, postBoilVolume) {
-			return (0.2 * this.mcu(weight, lovibond, postBoilVolume)) + 8.4;
-		};
-		// SRM
-		this.mosher = function (weight, lovibond, postBoilVolume) {
-			return (0.3 * this.mcu(weight, lovibond, postBoilVolume)) + 4.7;
-		};
-	}]).
 	
 	service('mbConversionCalc', function () {
 

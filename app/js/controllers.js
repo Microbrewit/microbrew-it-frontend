@@ -21,6 +21,10 @@ angular.module('microbrewit.controllers', []).
 			progressbar.close();
 		}
 
+		$rootScope.user = {
+			settings: mbUser.standardSettings
+		}
+
 		$rootScope.$watch('user', function (user) {
 			console.log('mainCtrl detected user change: ');
 			console.log($rootScope.user);
@@ -34,14 +38,16 @@ angular.module('microbrewit.controllers', []).
 		}
 		// mbUser.destroyUserSession();
 	}).
-	controller('RecipeCtrl', function ($scope, hops, fermentables, yeasts, progressbar) {
-
-		console.log('yo!');
-
+	controller('RecipeCtrl', function ($scope, hops, fermentables, yeasts, progressbar, mbUser) {
+		$scope.settings = $scope.user.settings;
 		// get ingredients
 		progressbar.start();
 		var returned = 0;
 		var requests = 0;
+
+		$scope.$watch('recipe', function () {
+			console.log('scope updated');
+		});
 
 		function callbacks() {
 			returned++;
@@ -51,17 +57,47 @@ angular.module('microbrewit.controllers', []).
 			}
 		}
 
+		function updateStepNumbers() {
+			for(var i = 0;i<$scope.recipe.mashSteps.length;i++) {
+				$scope.recipe.mashSteps[i].number = i+1;
+			}
+			for(var i=0;i<$scope.recipe.boilSteps.length;i++) {
+				$scope.recipe.boilSteps[i].number = $scope.recipe.mashSteps.length+i+1;
+			}
+			for(var i=0;i<$scope.recipe.fermentationSteps.length;i++) {
+				$scope.recipe.fermentationSteps[i].number = $scope.recipe.mashSteps.length+$scope.recipe.boilSteps.length+i+1;
+			}
+		}
+
+		// add steps
+		$scope.addMashStep = function () {
+			console.log('Add mash step');
+			$scope.recipe.mashSteps.push({
+			});
+			updateStepNumbers();
+		}
+		$scope.addBoilStep = function () {
+			console.log('Add boil step');
+			$scope.recipe.boilSteps.push({});
+			updateStepNumbers();
+		}
+		$scope.addFermentationStep = function () {
+			console.log('Add fermentation step');
+			$scope.recipe.fermentationSteps.push({});
+			updateStepNumbers();
+		}
+
 		requests++;
 		hops.getHops().async().then(function(data) {
-			$scope.hops = data.hops;
-			$scope.hops.orderProp = "name";
+			$scope.hopsDb = data.hops;
+			$scope.hopsDb.orderProp = "name";
 
 			callbacks();
 		});
 
 		requests++;
 		fermentables.getFromAPI().async().then(function(data) {
-			$scope.fermentables = data.fermentables;
+			$scope.fermentablesDb = data.fermentables;
 			// $scope.fermentables.orderProp = "name";
 
 			callbacks();
@@ -69,13 +105,23 @@ angular.module('microbrewit.controllers', []).
 
 		requests++;
 		yeasts.getYeasts().async().then(function(data) {
-			$scope.yeasts = data.yeasts;
+			$scope.yeastsDb = data.yeasts;
 			// $scope.yeasts.orderProp = "name";
 
 			callbacks();
 		});
 
 		$scope.recipe = {};
+
+		// need to implement users properly
+		if(false) {	
+			$scope.recipe.brewer = {
+				brewer: [{
+					id: $scope.user.id,
+					href: $scope.user.href
+				}]
+			}; // instantiate recipe
+		}
 
 		$scope.recipe.mashSteps = [
 			{
@@ -94,7 +140,8 @@ angular.module('microbrewit.controllers', []).
 						suppliedbyid: "http://microbrew.it/ontology.owl#Boortmalt",
 						origin: 'Germany',
 						suppliedBy: 'Boortmalt',
-						amount: 20
+						amount: 20,
+						colourContribution: 0
 					}
 				],
 				hops: [],
@@ -106,7 +153,7 @@ angular.module('microbrewit.controllers', []).
 
 		$scope.recipe.boilSteps = [
 			{
-				number: 2,
+				number: $scope.recipe.mashSteps.length+1,
 				length: 60,
 				volume: 20,
 				fermentables: [],
@@ -134,7 +181,8 @@ angular.module('microbrewit.controllers', []).
 
 		$scope.recipe.bottling = [
 			{
-				fermentables: []
+				fermentables: [],
+				notes: ''
 			}
 		];
 

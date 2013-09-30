@@ -96,6 +96,30 @@ angular.module('microbrewit.directives', []).
             }
     	};
 	}).
+    directive('fruits', function () {
+        return {
+            restrict: 'EA',
+            replace: true,
+            templateUrl: 'partials/recipe/fruits.html',
+            link: function(scope, element, attrs, controller) {
+                scope.addFruit = function (step) {
+                    step.spices.push({});
+                }
+            }
+        }
+    }).
+    directive('spices', function () {
+        return {
+            restrict: 'EA',
+            replace: true,
+            templateUrl: 'partials/recipe/spices.html',
+            link: function(scope, element, attrs, controller) {
+                scope.addSpice = function (step) {
+                    step.spices.push({});
+                }
+            }
+        }
+    }).
     directive('mbMaltList', function (mbSrmCalc, $http, mbUser) {
         return {
             restrict: 'EA',
@@ -196,6 +220,18 @@ angular.module('microbrewit.directives', []).
                 scope.$watch('settings', performCalc, true);
             }
         };
+    }).
+    directive('updateFocus', function () {
+        return function (scope, element) {
+            // ouch! worst hack ever?
+            element.bind('focus', function () {
+                element.parent().parent().find('.toggle').toggleClass('hidden');
+                console.log('focus');
+            });
+            element.bind('blur', function () { 
+                window.setTimeout(function() { element.parent().parent().find('.toggle').toggleClass('hidden')}, 100);
+            });
+        }
     }).
     directive('mbHopsList', function (mbIbuCalc, mbConversionCalc, mbUser, hops) {
         return {

@@ -10,6 +10,42 @@ angular.module('microbrewit.fermentables', []).
     		// when('/yeasts/:yeastid', {templateUrl: 'partials/singleYeast.html', controller: 'SingleYeastCtrl'}).
     		// when('/calculators/pitchrate', {templateUrl: 'partials/calculators/pitchrate.html'})
 	}]).
+	directive('fermentables', function () {
+		return {
+			restrict: 'EA',
+			replace: true,
+			templateUrl: 'partials/recipe/fermentables.html',
+			link: function(scope, element, attrs, controller) {
+				scope.addFermentable = function (step) {
+					step.fermentables.push({ amount: 0 });
+				}
+				scope.removeFermentable = function (fermentable, step) {
+					var index = step.fermentables.indexOf(fermentable.fermentable);
+					if(index > -1) {
+						step.fermentables.splice(index, 1);
+					}
+				}
+
+				scope.updateFermentable = function (newFermentable, fermentable) {
+					fermentable.name = newFermentable.name;
+					fermentable.ppg = newFermentable.ppg;
+					fermentable.colour = newFermentable.colour;
+				}
+			}
+		}
+	}).
+	directive('autocalcSrm', function (mbSrmCalc) {
+		return function (scope) {
+			// scope.fermentable.colourAddition = mbSrmCalc.calc(scope.fermentable.amount, scope.fermentable.colour, 0, scope.$parent.$parent.settings);
+
+			scope.$watch('$parent.step', function () {
+				scope.fermentable.colourAddition = Math.round(mbSrmCalc.calc(scope.fermentable.amount, scope.fermentable.colour, 15, scope.$parent.$parent.settings));
+			}, true)
+		}
+	}).
+	directive('autocalcGravity', function () {
+
+	}).
 	// API interactions
 	service('fermentables', function ($http, mbApiUrl) {
 		this.getFromAPI = function () {
@@ -19,7 +55,7 @@ angular.module('microbrewit.fermentables', []).
 					if (!promise) {
 						console.log('fetching fermentables');
 						promise = $http.jsonp(mbApiUrl + '/fermentables?callback=JSON_CALLBACK', { cache: true }).then(function (response) {
-							sessionStorage.setItem("fermentables", response.data.fermentables);
+							// sssionStorage.setItem("fermentables", response.data.fermentables);
 							return response.data.fermentables;
 						});
 					}
@@ -33,6 +69,58 @@ angular.module('microbrewit.fermentables', []).
 		};
 
 	}).
+	service('mbSrmCalc', ['mbConversionCalc', function (mbConversionCalc) {
+		this.calc = function (weight, lovibond, postBoilVolume, settings) {
+			var colour;
+
+			if(settings.units.largeWeight === "lbs") {
+				weight = mbConversionCalc.lbToKg(weight);
+			}
+
+			if(settings.formula.colour === "morey") {
+				colour = this.morey(weight,lovibond,postBoilVolume);
+			}
+			else if(settings.formula.colour === "daniels") {
+				colour = this.daniels(weight,lovibond,postBoilVolume);
+			}
+			else if(settings.formula.colour === "mosher") {
+				colour = this.mosher(weight,lovibond,postBoilVolume);
+			}
+
+			if(settings.units.colour === "ebc") {
+				colour = this.srmToEbc(colour);
+			}
+			console.log('weight: ' + weight + ' lovibond: ' + lovibond + ' postBoilVolume: ' + postBoilVolume + ' = colour ' + colour);
+
+			return colour;
+		};
+
+		this.srmToEbc = function (srm) {
+			return srm*1.97;
+		};
+		this.ebcToSrm = function (ebc) {
+			return ebc/1.97;
+		};
+
+		// Malt Color Units weight in lbs., volume of wort (in gal.)
+		this.mcu = function (weight, lovibond, postBoilVolume) {
+			return (mbConversionCalc.kgToLb(weight)*lovibond/mbConversionCalc.litersToGallons(postBoilVolume));
+		};
+
+		// SRM
+		this.morey = function (weight, lovibond, postBoilVolume) {
+			return 1.4922 * Math.pow(this.mcu(weight, lovibond, postBoilVolume), 0.6859); // most accurate
+		};
+
+		// SRM
+		this.daniels = function (weight, lovibond, postBoilVolume) {
+			return (0.2 * this.mcu(weight, lovibond, postBoilVolume)) + 8.4;
+		};
+		// SRM
+		this.mosher = function (weight, lovibond, postBoilVolume) {
+			return (0.3 * this.mcu(weight, lovibond, postBoilVolume)) + 4.7;
+		};
+	}]).
 	service('primingSugar', function () {
 		this.dme = function (wantedCarbonation, beerVolume, currentCarbonation) {
 			currentCarbonation = currentCarbonation || 0;
@@ -71,7 +159,7 @@ angular.module('microbrewit.fermentables', []).
 			$scope.fermentables = [];
 			for(var i=0;i<fermentables.grains.length;i++) {
 				var fermentable = fermentables.grains[i];
-				fermentable.originCountry = fermentables.grains[i].origin.split('#')[1].split('_').join(' ');
+				// fermentable.originCountry = fermentables.grains[i].origin.split('#')[1].split('_').join(' ');
 				fermentable.type = 'grain';
 
 				$scope.fermentables.push(fermentable);
@@ -87,7 +175,7 @@ angular.module('microbrewit.fermentables', []).
 
 			for(var i=0;i<fermentables.extracts.dryextracts.length;i++) {
 				var fermentable = fermentables.extracts.dryextracts[i];
-				fermentable.originCountry = fermentables.extracts.dryextracts[i].origin.split('#')[1].split('_').join(' ');
+				// fermentable.originCountry = fermentables.extracts.dryextracts[i].origin.split('#')[1].split('_').join(' ');
 				fermentable.type = 'dry extract';
 
 				$scope.fermentables.push(fermentable);
@@ -95,7 +183,7 @@ angular.module('microbrewit.fermentables', []).
 
 			for(var i=0;i<fermentables.extracts.liquidextracts.length;i++) {
 				var fermentable = fermentables.extracts.liquidextracts[i];
-				fermentable.originCountry = fermentables.extracts.liquidextracts[i].origin.split('#')[1].split('_').join(' ');
+				// fermentable.originCountry = fermentables.extracts.liquidextracts[i].origin.split('#')[1].split('_').join(' ');
 				fermentable.type = 'liquid extract';
 
 				$scope.fermentables.push(fermentable);

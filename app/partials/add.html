@@ -2,11 +2,11 @@
 
 	<form name="add-beer" class="large-form">
 		<fieldset>
-			<div class="headline-black">
+			<div>
 				<div class="container">
 					<div class="sixteen columns">
 						<label for="beerName">Name your beer</label>
-						<input type="text" id="beerName" class="huge-text" placeholder="Untitled" />
+						<input type="text" id="beerName" class="huge-text" placeholder="Untitled" ng-model="recipe.recipename" />
 					</div>
 				</div>
 			</div>
@@ -19,7 +19,7 @@
 				</select> -->
 
 				<label for="description">Describe your beer (optional)</label>
-				<textarea id="description"></textarea>
+				<textarea id="description" ng-model="recipe.description"></textarea>
 			</fieldset>
 
 			<h2>Recipe</h2>
@@ -35,71 +35,17 @@
 								<option value="sparge">Sparge</option>
 							</select>
 							<label for="length">Length</label>
-							<input type="number" id="number"></input> min
+							<input type="number" id="number" ng-model="step.length"></input> min
 							<label for="temperature">Temperature</label>
-							<input type="number" id="temperature" /> {{user.units.temperature}}
+							<input type="number" id="temperature" ng-model="step.temperature" /> {{user.units.temperature}}
 							<label for="volume">Amount of water</label>
-							<input type="number" id="volume" /> {{user.units.liquid}}
+							<input type="number" id="volume" ng-model="step.volume" /> {{user.units.liquid}}
 						</div>
 						<div class="step-body">
-							<div class="malt-wrapper">
-			                    <div class="zebra malts offset-bottom-by-one desktop-table" ng-show="step.fermentables">
-			                        <div class="desktop-th">
-			                            <div class="desktop-td">Amount</div>
-			                            <div class="desktop-td twelve columns no-padding no-float">Name of malt</div>
-			                            <div class="desktop-td">Colour</div>
-			                            <div class="desktop-td">PPG</div>
-			                            <div class="desktop-td text-right">&nbsp;</div>
-			                        </div>
-			                        <div class="desktop-tr" ng-repeat="malt in step.fermentables" class="clearfix">
-			                            <div class="desktop-td"><input type="text" id="malt-weight" class="small" ng-model="malt.amount" /><label for="malt-weight"> {{settings.units.largeWeight}}</label></div>
-			                            <div class="desktop-td twelve columns no-padding no-float"><label for="malt-name"></label><input type="text" id="malt-name" class="full-width" ng-model="malt.name" placeholder="Fermentable" /></div>
-			                            <div class="desktop-td"><input type="text" id="malt-lovibond" class="small" ng-model="malt.colour" /><label for="malt-lovibond"> °L</label></div>
-			                            <div class="desktop-td"><input type="text" id="malt-ppg" class="small" ng-model="malt.ppg" /><label for="malt-ppg"></label></div>
-			                            <div class="desktop-td text-right"><button ng-click="fermentables.removeMalt(this)">-</button></div>
-			                        </div>
-			                    </div>
-								<button ng-click="addFermentable(step)">Add Fermentable</button>
-							</div>
-							<div class="hops-wrapper">
-								<div class="zebra hops offset-bottom-by-one desktop-table" ng-show="step.hops">
-				                   <div class="desktop-th">
-				                        <div class="desktop-td">Amount</div>
-				                        <div class="desktop-td twelve columns no-padding no-float">Name of hops</div>
-				                        <div class="desktop-td">aa</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                        <div class="desktop-td">boil</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                    </div>
-				                   	<div class="desktop-tr" ng-repeat="hop in step.hops" class="clearfix">
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label>
-				                        </div>
-				                        <div class="desktop-td twelve columns no-padding no-float">
-				                        	<label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" />
-				                        	<br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<select ng-model="hop.type">
-				                        		<option value="pellet">Pellet</option>
-				                        		<option value="flower">Flower</option>
-				                        	</select>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label>
-				                        </div>
-				                        <div class="desktop-td text-right">
-				                        	<button ng-click="removeHops(this)">-</button>
-				                        </div>
-				                    </div>
-				                </div>
-								<button ng-click="addHops(step)">Add Hops</button>
-							</div>
-							<button ng-click="addSpice(step)">Add Spice</button>
-							<button ng-click="addFruit(step)">Add Fruit</button>
+							<fermentables></fermentables>
+							<hops></hops>
+							<spices></spices>
+							<fruits></fruits>
 						</div>
 					</div>
 					<button ng-click="addMashStep()">Add Mash Step</button>
@@ -112,77 +58,16 @@
 					<div class="left-count">{{step.number}}</div>
 					<div class="step">
 						<div class="step-head">
-							<label for="mash-type">Type</label>
-							<select ng-model="step.type">
-								<option value="infusion">Infusion</option>
-								<option value="sparge">Sparge</option>
-							</select>
 							<label for="length">Length</label>
 							<input type="number" id="number"></input> min
-							<label for="temperature">Temperature</label>
-							<input type="number" id="temperature" /> {{user.units.temperature}}
 							<label for="volume">Amount of water</label>
 							<input type="number" id="volume" /> {{user.units.liquid}}
 						</div>
 						<div class="step-body">
-							<div class="malt-wrapper">
-			                    <div class="zebra malts offset-bottom-by-one desktop-table" ng-show="step.fermentables">
-			                        <div class="desktop-th">
-			                            <div class="desktop-td">Amount</div>
-			                            <div class="desktop-td twelve columns no-padding no-float">Name of malt</div>
-			                            <div class="desktop-td">Colour</div>
-			                            <div class="desktop-td">PPG</div>
-			                            <div class="desktop-td text-right">&nbsp;</div>
-			                        </div>
-			                        <div class="desktop-tr" ng-repeat="malt in step.fermentables" class="clearfix">
-			                            <div class="desktop-td"><input type="text" id="malt-weight" class="small" ng-model="malt.amount" /><label for="malt-weight"> {{settings.units.largeWeight}}</label></div>
-			                            <div class="desktop-td twelve columns no-padding no-float"><label for="malt-name"></label><input type="text" id="malt-name" class="full-width" ng-model="malt.name" placeholder="Fermentable" /></div>
-			                            <div class="desktop-td"><input type="text" id="malt-lovibond" class="small" ng-model="malt.colour" /><label for="malt-lovibond"> °L</label></div>
-			                            <div class="desktop-td"><input type="text" id="malt-ppg" class="small" ng-model="malt.ppg" /><label for="malt-ppg"></label></div>
-			                            <div class="desktop-td text-right"><button ng-click="fermentables.removeMalt(this)">-</button></div>
-			                        </div>
-			                    </div>
-								<button ng-click="addFermentable(step)">Add Fermentable</button>
-							</div>
-							<div class="hops-wrapper">
-								<div class="zebra hops offset-bottom-by-one desktop-table" ng-show="step.hops">
-				                   <div class="desktop-th">
-				                        <div class="desktop-td">Amount</div>
-				                        <div class="desktop-td twelve columns no-padding no-float">Name of hops</div>
-				                        <div class="desktop-td">aa</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                        <div class="desktop-td">boil</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                    </div>
-				                   	<div class="desktop-tr" ng-repeat="hop in step.hops" class="clearfix">
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label>
-				                        </div>
-				                        <div class="desktop-td twelve columns no-padding no-float">
-				                        	<label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" />
-				                        	<br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<select ng-model="hop.type">
-				                        		<option value="pellet">Pellet</option>
-				                        		<option value="flower">Flower</option>
-				                        	</select>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label>
-				                        </div>
-				                        <div class="desktop-td text-right">
-				                        	<button ng-click="removeHops(this)">-</button>
-				                        </div>
-				                    </div>
-				                </div>
-								<button ng-click="addHops(step)">Add Hops</button>
-							</div>
-							<button ng-click="addSpice(step)">Add Spice</button>
-							<button ng-click="addFruit(step)">Add Fruit</button>
+							<fermentables></fermentables>
+							<hops></hops>
+							<spices></spices>
+							<fruits></fruits>
 						</div>
 					</div>
 					<button ng-click="addBoilStep()">Add Boil Step</button>
@@ -195,10 +80,10 @@
 					<div class="left-count">{{step.number}}</div>
 					<div class="step">
 						<div class="step-head">
-							<label for="mash-type">Type</label>
+							<label for="fermentation-type">Type</label>
 							<select ng-model="step.type">
-								<option value="infusion">Infusion</option>
-								<option value="sparge">Sparge</option>
+								<option value="primary">Primary</option>
+								<option value="secondary">Secondary</option>
 							</select>
 							<label for="length">Length</label>
 							<input type="number" id="number"></input> min
@@ -208,70 +93,20 @@
 							<input type="number" id="volume" /> {{user.units.liquid}}
 						</div>
 						<div class="step-body">
-							<div class="malt-wrapper">
-			                    <div class="zebra malts offset-bottom-by-one desktop-table" ng-show="step.fermentables">
-			                        <div class="desktop-th">
-			                            <div class="desktop-td">Amount</div>
-			                            <div class="desktop-td twelve columns no-padding no-float">Name of malt</div>
-			                            <div class="desktop-td">Colour</div>
-			                            <div class="desktop-td">PPG</div>
-			                            <div class="desktop-td text-right">&nbsp;</div>
-			                        </div>
-			                        <div class="desktop-tr" ng-repeat="malt in step.fermentables" class="clearfix">
-			                            <div class="desktop-td"><input type="text" id="malt-weight" class="small" ng-model="malt.amount" /><label for="malt-weight"> {{settings.units.largeWeight}}</label></div>
-			                            <div class="desktop-td twelve columns no-padding no-float"><label for="malt-name"></label><input type="text" id="malt-name" class="full-width" ng-model="malt.name" placeholder="Fermentable" /></div>
-			                            <div class="desktop-td"><input type="text" id="malt-lovibond" class="small" ng-model="malt.colour" /><label for="malt-lovibond"> °L</label></div>
-			                            <div class="desktop-td"><input type="text" id="malt-ppg" class="small" ng-model="malt.ppg" /><label for="malt-ppg"></label></div>
-			                            <div class="desktop-td text-right"><button ng-click="fermentables.removeMalt(this)">-</button></div>
-			                        </div>
-			                    </div>
-								<button ng-click="addFermentable(step)">Add Fermentable</button>
-							</div>
-							<div class="hops-wrapper">
-								<div class="zebra hops offset-bottom-by-one desktop-table" ng-show="step.hops">
-				                   <div class="desktop-th">
-				                        <div class="desktop-td">Amount</div>
-				                        <div class="desktop-td twelve columns no-padding no-float">Name of hops</div>
-				                        <div class="desktop-td">aa</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                        <div class="desktop-td">boil</div>
-				                        <div class="desktop-td text-right">&nbsp;</div>
-				                    </div>
-				                   	<div class="desktop-tr" ng-repeat="hop in step.hops" class="clearfix">
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-weight" class="small" ng-model="hop.weight" /><label for="hop-weight"> {{settings.units.smallWeight}} </label>
-				                        </div>
-				                        <div class="desktop-td twelve columns no-padding no-float">
-				                        	<label for="hop-name"></label><input type="text" id="hop-name" class="full-width" ng-model="hop.name" placeholder="Fermentable" />
-				                        	<br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<select ng-model="hop.type">
-				                        		<option value="pellet">Pellet</option>
-				                        		<option value="flower">Flower</option>
-				                        	</select>
-				                        </div>
-				                        <div class="desktop-td">
-				                        	<input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label>
-				                        </div>
-				                        <div class="desktop-td text-right">
-				                        	<button ng-click="removeHops(this)">-</button>
-				                        </div>
-				                    </div>
-				                </div>
-								<button ng-click="addHops(step)">Add Hops</button>
-							</div>
-							<button ng-click="addSpice(step)">Add Spice</button>
-							<button ng-click="addFruit(step)">Add Fruit</button>
-							<button ng-click="addYeast(step)">Add Yeast</button>
+							<fermentables></fermentables>
+							<hops></hops>
+							<spices></spices>
+							<fruits></fruits>
 						</div>
 					</div>
 					<button ng-click="addFermentationStep()">Add Fermentation Step</button>
 				</div>
 			</fieldset>
+
+			<h2>Bottling</h2>
+			<fieldset>
+			</fieldset>
 		</div>
 	</form>
+	<div>{{recipe}}</div>
 </article>

@@ -7,7 +7,7 @@ angular.module('microbrewit.users', []).
 	controller('LoginCtrl', function ($scope, $http, $location, mbUser, $cookieStore) {
 		// redirect user if logged in
 		if(typeof $scope.user !== "undefined" && $scope.user.isLogged) {
-			$location.path('/profile');
+			$location.path('/#/profile');
 		}
 
 		$scope.loginObj = {};
@@ -15,6 +15,10 @@ angular.module('microbrewit.users', []).
 		// use mbUser service to perform login via AJAX (it handles errors and location.path atm)
 		$scope.login = function () {
 			mbUser.login($scope.loginObj).async().then(function (userObj) {
+				if(userObj.error) {
+					console.log('error');
+				}
+
 				console.log('LOGINCTRL: ')
 				console.log(userObj);
 				mbUser.setupUserSession(userObj);
@@ -44,7 +48,7 @@ angular.module('microbrewit.users', []).
 	controller('RegisterCtrl', function($scope, $location, mbUser) {
 		// redirect user if logged in
 		if($scope.isLogged === true) {
-			$location.path('/profile');
+			$location.path('/#/profile');
 		}
 
 		$scope.registerObj = {
@@ -68,10 +72,15 @@ angular.module('microbrewit.users', []).
 				var registerObj = $scope.registerObj;
 
 				mbUser.register(registerObj).async().then(function(userObj) {
-					console.log('USEROBJ');
-					console.log(userObj);
-					mbUser.setupUserSession(userObj);
-					$location.path('#/profile');
+
+					if(userObj.error) {
+						console.log('error');
+					} else {
+						console.log('USEROBJ');
+						console.log(userObj);
+						mbUser.setupUserSession(userObj);
+						$location.path('#/profile');
+					}
 				});
 
 			} else {
@@ -100,7 +109,7 @@ angular.module('microbrewit.users', []).
 					console.log(userObj);
 					if (!promise) {
 						console.log('registering user');
-						promise = $http.post( + '/users', {
+						promise = $http({withCredentials: true}).post(mbApiUrl + '/users', {
 							username: userObj.username,
 							name: userObj.name,
 							avatar: userObj.avatar,
@@ -118,8 +127,15 @@ angular.module('microbrewit.users', []).
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
 						}).then(function (response) {
 							console.log('RESPONSE:');
-							console.log(response.data.users[0]);
-							return response.data.users[0][0];
+							if(typeof response.data.users !== "undefined") {
+								console.log(response.data.users[0]);
+								return response.data.users[0][0];	
+							} else if(typeof response.data.error !== "undefined") {
+								return response.data.error;
+							} else {
+								return { error: 'wtfbbq' };
+							}
+							
 						});
 					}
 					return promise;
@@ -156,7 +172,7 @@ angular.module('microbrewit.users', []).
 			var returnUserObj = {
 				async: function () {
 					if (!promise) {
-						promise = $http.post(mbApiUrl + '/users/login/', {id:userObj.username,password:userObj.password}).
+						promise = $http.post(mbApiUrl + '/users/login', {id:userObj.username,password:userObj.password}, {withCredentials: true}).
 						error(function(response, status, headers, config) {
 							console.log(response);
 							progressbar.message(response.error.message + ' (' + response.error.code + ').', '#DE5C5C');
