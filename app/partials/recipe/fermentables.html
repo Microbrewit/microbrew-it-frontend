@@ -1,0 +1,26 @@
+<div class="fermentables-wrapper">
+	<h3>Fermentables</h3>
+	<div class="zebra malts offset-bottom-by-one desktop-table" ng-show="step.fermentables.length > 0">
+	    <div class="desktop-th">
+	        <div class="desktop-td">Amount</div>
+	        <div class="desktop-td twelve columns no-padding no-float">Name of malt</div>
+	        <div class="desktop-td">Colour</div>
+	        <div class="desktop-td">PPG</div>
+	        <div class="desktop-td text-right">&nbsp;</div>
+	    </div>
+	    <div class="desktop-tr" ng-repeat="fermentable in step.fermentables" autocalc-srm class="clearfix">
+	        <div class="desktop-td"><input type="text" id="fermentable-weight" class="small" ng-model="fermentable.amount" /><label for="fermentable-weight"> {{settings.units.largeWeight}}</label></div>
+	        <div class="desktop-td twelve columns no-padding no-float">
+	        	<label for="fermentable-name"></label><input type="text" id="fermentable-name" class="full-width" ng-model="fermentable.name" placeholder="Fermentable" />
+	        	<br />colour contribution: {{fermentable.colourAddition}} {{settings.units.colour}}
+	        </div>
+	        <div class="desktop-td"><input type="text" id="fermentable-lovibond" class="small" ng-model="fermentable.colour" /><label for="fermentable-lovibond"> °L</label></div>
+	        <div class="desktop-td"><input type="text" id="fermentable-ppg" class="small" ng-model="fermentable.ppg" /><label for="fermentable-ppg"></label></div>
+	        <div class="desktop-td text-right"><button ng-click="removeFermentable(this, step)">-</button></div>
+	        <ul class="fermentablesDb hidden toggle">
+				<li ng-repeat="fermentableEntry in fermentablesDb | filter:fermentable.name | orderBy: 'name'"><a ng-click="updateFermentable(fermentableEntry, fermentable)">{{fermentableEntry.name}}</a></li>
+			</ul>
+	    </div>
+	</div>
+	<button ng-click="addFermentable(step)" class="add-button">Add Fermentable</button>
+</div>

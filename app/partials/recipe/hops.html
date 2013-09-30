@@ -1,0 +1,41 @@
+<div class="hops-wrapper">
+	<h3>Hops</h3>
+	<div class="zebra hops offset-bottom-by-one desktop-table" ng-show="step.hops.length > 0">
+	   <div class="desktop-th">
+	        <div class="desktop-td">Amount</div>
+	        <div class="desktop-td twelve columns no-padding no-float">Name of hops</div>
+	        <div class="desktop-td">aa</div>
+	        <div class="desktop-td text-right">&nbsp;</div>
+	        <div class="desktop-td">boil</div>
+	        <div class="desktop-td text-right">&nbsp;</div>
+	    </div>
+	   	<div class="desktop-tr" autocalc-ibu ng-repeat="hop in step.hops" class="clearfix">
+	        <div class="desktop-td">
+	        	<input type="text" id="hop-amount" class="small" ng-model="hop.amount" /><label for="hop-amount"> {{settings.units.smallWeight}} </label>
+	        </div>
+	        <div class="desktop-td twelve columns no-padding no-float">
+	        	<label for="hop-name"></label><input type="text" id="hop-name" update-focus class="full-width" ng-model="hop.name" placeholder="Fermentable" />
+	        	<br />mg/L: {{hop.mgl}} Utilisation: {{hop.utilisation}} IBU: {{hop.ibu}}
+	        </div>
+	        <div class="desktop-td">
+	        	<input type="text" id="hop-aa" class="small" ng-model="hop.aa" /><label for="hop-aa"> %</label>
+	        </div>
+	        <div class="desktop-td">
+	        	<select ng-model="hop.type">
+	        		<option value="pellet">Pellet</option>
+	        		<option value="flower">Flower</option>
+	        	</select>
+	        </div>
+	        <!-- <div class="desktop-td">
+	        	<input type="text" id="hop-boiltime" class="small" ng-model="hop.boiltime" /><label for="hop-boiltime"> min</label>
+	        </div> -->
+	        <div class="desktop-td text-right">
+	        	<button ng-click="removeHops(this, step)">-</button>
+	        </div>
+	        <ul class="hopsDb hidden toggle">
+				<li ng-repeat="hopEntry in hopsDb | filter:hop.name | orderBy: 'name'"><a ng-click="updateHop(hopEntry, hop)">{{hopEntry.name}}</a></li>
+			</ul>
+	    </div>
+	</div>
+	<button ng-click="addHops(step)">Add Hops</button>
+</div>
