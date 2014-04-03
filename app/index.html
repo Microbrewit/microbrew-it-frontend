@@ -1,5 +1,32 @@
-<html>
+<!doctype html>
+<!-- 
+	Hello and welcone to the Microbrew.it frontend source code.
+
+	You are looking at the index HTML. 
+
+	If you are using Chrome or Firefox you'll be better off using the inspector, since most HTML is included dynamically.
+
+	Depending on the build you can either find some reasonable CSS and Javascript files referenced,
+	or, if you are unlucky, just some minified and uglified files.
+
+	The raw source (Coffee, SASS, HTML + dependencies and Gruntfile) is available at:
+	https://github.com/Microbrewit/microbrew-it-frontend
+	
+	I hope you enjoy your stay!
+	- Torstein Thune, frontend guy.
+-->
+<html lang="en" ng-app="Microbrewit">
+<head>
+	<meta charset="utf-8">
+	<title>Microbrew.it prealpha</title>
+	<link rel="stylesheet" href="main.css"/>
+</head>
 <body>
-	Hello world (of beer!)
+	<div ng-include src="'templates/header.html'"></div>
+	<div ng-view></div>
+	<div ng-include src="'templates/footer.html'"></div>
+
+	<!-- script includes -->
+	<script src="build.js"></script>
 </body>
 </html>

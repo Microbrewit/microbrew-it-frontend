@@ -4,14 +4,14 @@
 
 app = angular.module('Microbrewit', [])
 
-app.config(
-	['$routeProvider'], 
-	($routeProvider) ->
-		$routeProvider.when('/', 
-			templateUrl: 'templates/home.html'
-			controller: 'HomeCtrl'
-		).
-		otherwise(
-			redirectTo: '/'
-		)
-)
+# app.config(
+# 	['$routeProvider'], 
+# 	($routeProvider) ->
+# 		$routeProvider.when('/', 
+# 			templateUrl: 'templates/home.html'
+# 			controller: 'HomeCtrl'
+# 		).
+# 		otherwise(
+# 			redirectTo: '/'
+# 		)
+# )
