@@ -221,7 +221,7 @@ module.exports = function (grunt) {
 
 		if(action == "added" || action == "deleted") {
 			grunt.log.writeln('FILE ' + filepath.toUpperCase() + ' WAS ' + action.toUpperCase() + ': rebuilding indexes');
-			grunt.task.run('buildindex:debug', 'buildindex:test', 'buildindex:prod');
+			// TODO rebuild indexes (since the added file might be a .coffee or something)
 		}
 
 		grunt.task.run('hasfailed', 'usetheforce_restore');
