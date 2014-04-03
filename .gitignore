@@ -3,3 +3,6 @@ build
 node_modules
 bower_components
 tmp
+tmp/js/app.js.map
+tmp/js/app.js
+tmp/scss/main.scss
