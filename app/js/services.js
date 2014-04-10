@@ -25,7 +25,7 @@ angular.module('microbrewit.services', []).
 			return (76.08 * (og-fg) / (1.775-og)) * (fg / 0.794); // advanced, rumored to be more accurate at high gravities, from BrewersFriend?
 		};
 		this.alternativeSimple = function (og, fg) {
-			return ((1.05/0.79)*((og-fg/fg))*100); // yet another formula
+			return ((1.05/0.79)*((og-fg)/fg)*100); // yet another formula
 		};
 		this.microbrewIt = function (og, fg) {
 			return ((this.alternativeSimple(og, fg)+this.alternativeAdvanced(og,fg)+this.simple(og, fg)+this.advanced(og,fg)+this.miller(og, fg))/5);
