@@ -21,7 +21,8 @@
 		"time-grunt": "~0.1.1",
 		"grunt-coffeelint": "*",
 		"grunt-shell": "*",
-		"grunt-karma": "*"
+		"grunt-karma": "*",
+		"grunt-contrib-compass": "*"
 	},
 	"engines": {
 		"node": ">=0.10.0"
