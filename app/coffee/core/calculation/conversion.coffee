@@ -5,64 +5,64 @@
 angular.module('Microbrewit/core/calculation/conversion', []).
 	service('formulas', ($log) ->
 
-		@sg:
+		@sg =
 			plato: (sg) ->
 				return (-463.371) + (668.7183 * sg) - (205.347 * (sg*sg))
 		
-		@plato:
+		@plato =
 			sg: (plato) ->
 				return plato/(258.6-((plato/258.2)*227.1))+1
 
-		@oz:
+		@oz =
 			lbs: (oz) ->
 				return oz*0.0625
 			grams: (oz) ->
 				return oz/0.035274
 
-		@grams:
+		@grams =
 			oz: (grams) ->
 				return grams*0.035274
 			kg: (grams) ->
 				return grams/1000
 
-		@kg: 
+		@kg =
 			grams: (kg) ->
 				return kg*1000
 			lbs: (kg) ->
 				return kg*2.2046
 
-		@lbs:
+		@lbs =
 			oz: (lbs) ->
 				return lbs/0.0625
 			kg: (lbs) ->
 				return lbs/2.2046
 
-		@celcius: 
+		@celcius =
 			farenheit: (celcius) ->
 				return celcius*1.8 + 32
 
-		@farenheit:
+		@farenheit =
 			celcius: (farenheit) ->
 				return (farenheit-32)/1.8
 
-		@liters:
+		@liters =
 			gallons: (liters) ->
 				return liters/3.78541178
 
-		@gallons:
+		@gallons =
 			liters: (gallons) ->
 				return gallons*3.78541178
 
 		# Pellet utilisation <-> Flower utilisation (pellets gives ~6-7% more utilisation, though some say 10% or 15%)
-		@hop:
+		@hop =
 			pellet: (weight) ->
 				return weight*0.93
 
-		@pellet:
+		@pellet =
 			hop: (weight) ->
 				return weight*1.07
 
-		@convert: (amount, from, to) ->
+		@convert = (amount, from, to) ->
 			if typeof from is string and typeof to is string
 				if @[from]?[to]
 					return @[from][to](amount)
