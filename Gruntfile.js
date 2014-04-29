@@ -155,6 +155,15 @@ module.exports = function (grunt) {
 			}
 		},
 
+		compass: {
+			dev: {                    // Another target
+				options: {
+					sassDir: 'app/sass',
+					cssDir: 'build/css'
+				}
+			}
+		},
+
 		copy: {
 			html: {
 				files: [ {expand: true, cwd: 'app/', src: ['**/*.html'], dest: 'build/', filter: 'isFile'} ]	
@@ -189,7 +198,9 @@ module.exports = function (grunt) {
 		// turn on --force
 		grunt.task.run('usetheforce_on');
 
-		// find filename and extention
+		grunt.task.run('develop');
+
+		/*// find filename and extention
 		var fileExt = filepath.split('.');
 		var fileName = fileExt[fileExt.length-2].split('/');
 		fileName = fileName[fileName.length-1];
@@ -222,7 +233,7 @@ module.exports = function (grunt) {
 		if(action == "added" || action == "deleted") {
 			grunt.log.writeln('FILE ' + filepath.toUpperCase() + ' WAS ' + action.toUpperCase() + ': rebuilding indexes');
 			// TODO rebuild indexes (since the added file might be a .coffee or something)
-		}
+		}*/
 
 		grunt.task.run('hasfailed', 'usetheforce_restore');
 	});
@@ -253,8 +264,8 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('build', 'Build Microbrew.it release (coffee compile, sass, imgmin, uglify', ['clean', 'imgmin:prod', 'coffee', 'sass:prod', 'uglify' ]);
-	grunt.registerTask('develop', 'Build Microbrew.it development version (coffee, sass)', ['clean', 'coffee', 'coffee:develop', 'concat:sass', 'sass:develop', 'concat:source', 'uglify:prod', 'copy:html']);
+	grunt.registerTask('build', 'Build Microbrew.it release (coffee compile, compass, imgmin, uglify', ['clean', 'imgmin:prod', 'coffee', 'sass:prod', 'uglify' ]);
+	grunt.registerTask('develop', 'Build Microbrew.it development version (coffee, sass)', ['clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'uglify:prod', 'copy:html']);
 
 
 	grunt.registerTask('default', 'Runs develop task and concurrent (watcher + connect).', ['develop', 'concurrent']);
