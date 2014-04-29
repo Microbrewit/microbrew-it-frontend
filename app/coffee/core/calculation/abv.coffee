@@ -9,7 +9,7 @@ angular.module('Microbrewit/core/calculation/abv', []).
 		@miller = (og, fg) ->
 			return ((og-fg)/0.75)*100
 
-		# Unimplemented
+		# George Fix (Unimplemented)
 		@fix = () ->
 
 		# Rule of thumb
