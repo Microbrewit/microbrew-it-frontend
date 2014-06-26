@@ -21,8 +21,8 @@ angular.module('Microbrewit/core/calculation/abv', []).
 
 		@advanced = (og, fg) ->
 			return (og-fg)*(100.3*(og-fg) + 125.65)
-		
-		@alternativeAdvanced
+
+		@alternativeAdvanced = (og, fg) ->
 			return (76.08 * (og-fg) / (1.775-og)) * (fg / 0.794)
 		
 		@microbrewit = (og, fg) ->
