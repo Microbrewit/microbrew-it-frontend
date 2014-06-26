@@ -15,22 +15,22 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
 			templateUrl: "templates/home.html"
 		})
 		.state('beer', {
-			url: "/login"
+			url: "/beer"
 			templateUrl: "templates/login.html"
 		})
 		.state('breweries', {
-			url: "/login"
+			url: "/breweries"
 			templateUrl: "templates/login.html"
 		})
 		.state('brewers', {
-			url: "/login"
+			url: "/brewers"
 			templateUrl: "templates/login.html"
 		})
 		.state('more', {
-			url: "/login"
+			url: "/more"
 			templateUrl: "templates/login.html"
 		})
     	.state('add', {
-			url: "/login"
-			templateUrl: "templates/login.html"
+			url: "beer/add"
+			templateUrl: "templates/beer/add.html"
 		})
