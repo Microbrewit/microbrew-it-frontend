@@ -5,7 +5,7 @@
 angular.module('Microbrewit/core/network/NetworkService', []).
 	value('ApiUrl', 'http://api.microbrew.it').
 	service('fermentables', ($http, $log, ApiUrl) ->
-		@getFermentables = () ->
+		@get = (id) ->
 			promise = false
 			
 			fermentables = 
@@ -26,20 +26,31 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 			return fermentables;
 
-		@setFermentable = (fermentable) ->
-			$log.debug "API POST/PUT/UPDATE: Adding/updating #{fermentable}."
-
-	).
-	service('yeasts', ($http, $log, ApiUrl) ->
-		@getYeasts = () ->
-			promise = false
+		@set = (fermentable) ->
+			###fermentable:
+				id: 123
+				supplier:
+					id: 432
+					name: 'Some Supplier'
+				name: 'String'
+				ppg: 123
+				type: 'Grain'###
+			$log.debug "API SET: #{fermentable}."
 			
-			yeasts = 
+			promise = false
+			request = null
+
+			if fermentable.id
+				requestUrl = "#{ApiUrl}/fermentables/#{fermentable.id}"
+			else
+				requestUrl = "#{ApiUrl}/fermentables"
+
+			request = 
 				async: () ->
 					unless promise
-						$log.debug 'fetching yeast'
+						$log.debug 'ASYNC SET fermentable'
 
-						promise = $http.jsonp(ApiUrl + '/yeasts?callback=JSON_CALLBACK', {})
+						promise = $http.post(requestUrl, fermentable)
 							.error((data, status) ->
 								$log.error(data)
 								$log.error(status)
@@ -50,9 +61,37 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 					
 					return promise
 			
-			return yeasts
+			return request
 
-		@setYeast = (yeast) ->
+	).
+	service('yeasts', ($http, $log, ApiUrl) ->
+		@get = (yeastId = false) ->
+			promise = false
+
+			if yeastId
+				requestUrl = "#{ApiUrl}/yeasts/#{yeastId}?callback=JSON_CALLBACK"
+			else
+				requestUrl = "#{ApiUrl}/yeasts?callback=JSON_CALLBACK"
+			
+			request = 
+				async: () ->
+					unless promise
+						$log.debug 'fetching yeast'
+
+						promise = $http.jsonp(requestUrl, {})
+							.error((data, status) ->
+								$log.error(data)
+								$log.error(status)
+							)
+							.then((response) ->
+								return response.data
+							)
+					
+					return promise
+			
+			return request
+
+		@set = (yeast) ->
 			$log.debug "API POST/PUT/UPDATE: Adding/updating #{yeast}."
 	).
 	service('hops', ($http, $log, ApiUrl) ->
