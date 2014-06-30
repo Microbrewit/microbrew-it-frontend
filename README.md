@@ -15,10 +15,10 @@ Open a terminal instance and navigate to the cloned microbrew-it.frontend direct
 
 - ```cp microbrew-it.json-dist microbrew-it.json```
 
-- ```npm install```
+- ```npm install``` (installs local npm dependencies, mostly grunt tasks)
 
-- ```bower install```
+- ```bower install``` (gets frontend dependencies like for isntance Angular)
 
-- ```grunt```
+- ```grunt``` (runs the build process, starts a node instance, and starts a watcher)
 
 Microbrew.it should now build, and a node instance serving the frontend should be started at http://localhost:3000.
