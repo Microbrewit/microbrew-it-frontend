@@ -3,24 +3,20 @@ var mountFolder = function (connect, dir) {
 	return connect.static(require('path').resolve(dir));
 };
 
-var jsFiles = [
-	'bower_components/angular/angular.js',
-	'bower_components/lodash/dist/lodash.compat.js',
-	'bower_components/angular-ui-router/release/angular-ui-router.js',
-	'tmp/**/*.js'
-]
-
 module.exports = function (grunt) {
 	// show elapsed time at the end
 	require('time-grunt')(grunt);
 	// load all grunt tasks
 	require('load-grunt-tasks')(grunt);
 
-	var dependencies = [];
+	// load config
+	var config = grunt.file.readJSON('microbrew-it.json');
 
-	var port = "3000";
-	var sourceFolder = "app";
-	var buildFolder = "build";
+	var jsFiles = config.build.dependencies;
+	var port = config.development.port;
+	var sourceFolder = config.build.source;
+	var buildFolder = config.build.destination;
+
 	var tmpFolder = "tmp";
 
 	
