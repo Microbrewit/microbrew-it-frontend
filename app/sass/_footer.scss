@@ -1,0 +1,35 @@
+#main-footer {
+	width: 100%;
+	padding-top: 50px;
+	padding-bottom: 75px;
+	margin-top: 75px;
+	background: #333;
+	color: white;
+}
+
+.footer-content {
+	@extend .main-wrapper;
+
+	padding: 50px 0;
+
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+
+	h3 {
+		margin: 0;
+		padding-top: 0;
+	}
+	div {
+		@include col(1/5);
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+	.connect-links {
+		@include col(2/5);
+	}
+}
+
+.copyright {
+	text-align:center;
+	margin: 50px auto;
+}
