@@ -163,6 +163,9 @@ module.exports = function (grunt) {
 		copy: {
 			html: {
 				files: [ {expand: true, cwd: 'app/', src: ['**/*.html'], dest: 'build/', filter: 'isFile'} ]	
+			},
+			images: {
+				files: [ {expand: true, cwd: 'app/', src: ['**/*.{png,jpg,jpeg,gif}'], dest: 'build/', filter: 'isFile'} ]	
 			}
 		},
 
@@ -260,9 +263,8 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('build', 'Build Microbrew.it release (coffee compile, compass, imgmin, uglify', ['clean', 'imgmin:prod', 'coffee', 'sass:prod', 'uglify' ]);
-	grunt.registerTask('develop', 'Build Microbrew.it development version (coffee, sass)', ['clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'uglify:prod', 'copy:html']);
+	grunt.registerTask('build', 'Build Microbrew.it development version (coffee, sass)', ['clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'uglify:prod', 'copy:html', 'copy:images' ]);
 
 
-	grunt.registerTask('default', 'Runs develop task and concurrent (watcher + connect).', ['develop', 'concurrent']);
+	grunt.registerTask('default', 'Runs develop task and concurrent (watcher + connect).', ['build', 'concurrent']);
 };
