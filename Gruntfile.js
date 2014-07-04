@@ -192,47 +192,44 @@ module.exports = function (grunt) {
 	// fires when any watched file is updated
 	grunt.event.on('watch', function(action, filepath, target) {
 
-		grunt.log.subhead(target + ': ' + filepath + ' has ' + action);
+		grunt.log.subhead('## ' + target + ': ' + filepath + ' has ' + action + ' ##');
 
 		// turn on --force
 		grunt.task.run('usetheforce_on');
 
-		grunt.task.run('develop');
-
-		/*// find filename and extention
+		// find filename and extention
 		var fileExt = filepath.split('.');
-		var fileName = fileExt[fileExt.length-2].split('/');
-		fileName = fileName[fileName.length-1];
 		fileExt = fileExt[fileExt.length-1];
 	
 		if(fileExt === "coffee") {
-			grunt.log.writeln('DETECTED COFFEE CHANGE - COMMENCING REBUILD');
+			grunt.log.writeln('#### DETECTED COFFEE CHANGE - COMMENCING REBUILD ####');
 			// run coffee only on changed files, for some reason coffee needs exact filepath in order to be able to write the file
 
-			grunt.task.run('coffee:compile', 'coffee:develop');
+			grunt.task.run('coffee', 'coffee:develop', 'concat:source', 'uglify:prod');
 		}
 
 		else if(fileExt === "scss" || fileExt === "css") {
-			grunt.log.writeln('DETECTED CSS CHANGE');
-			grunt.task.run('sass:develop');
+			grunt.log.writeln('#### DETECTED CSS CHANGE ####');
+			grunt.task.run('compass');
 		}
 
 		// changed file is a template
 		else if(fileExt === "html") {
-			console.log('TEMPLATE CHANGE');
+			grunt.log.writeln('#### DETECTED TEMPLATE CHANGE ####');
 			grunt.task.run('copy:html')
 		}
 
 		// if changed file is an asset
 		else if(filepath.indexOf('images') !== -1) {
-			grunt.log.writeln('DETECTED IMAGE ASSET CHANGE');
-			grunt.task.run('imagemin');
+			grunt.log.writeln('#### DETECTED IMAGE ASSET CHANGE ####');
+			// grunt.task.run('imagemin');
+			grunt.task.run('copy:images');
 		}
 
-		if(action == "added" || action == "deleted") {
-			grunt.log.writeln('FILE ' + filepath.toUpperCase() + ' WAS ' + action.toUpperCase() + ': rebuilding indexes');
-			// TODO rebuild indexes (since the added file might be a .coffee or something)
-		}*/
+		// if(action == "added" || action == "deleted") {
+		// 	grunt.log.writeln('FILE ' + filepath.toUpperCase() + ' WAS ' + action.toUpperCase() + ': rebuilding');
+		// 	grunt.task.run('build');
+		// }
 
 		grunt.task.run('hasfailed', 'usetheforce_restore');
 	});
