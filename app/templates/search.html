@@ -1,0 +1,18 @@
+<article id="search">
+	<section class="search-input">
+		<div class="inner-wrapper">
+			<input id="searchQuery" class="big-search-box" placeholder="Search Microbrew.it" ng-model="searchQuery"/>
+			<select class="search-endpoint" ng-model="endpoint" ng-options="endpoint for endpoint in endpoints"></select>
+			<div class="results-number" ng-show="resultsNumber !== undefined">Number of results: {{ resultsNumber }}</div>
+		</div>
+	</section>
+	<section class="search-results">
+		<div class="inner-wrapper">
+			<div ng-show="query.length < 3" class="center">Query must contain at least 3 characters</div>
+			<div ng-show="query.length >= 3 && resultsNumber == 0" class="center">Found no {{endpoint}} called "{{query}}"</div>
+			<ul>
+				<li ng-repeat="result in results"> {{ result.name }} </li>
+			</ul>
+		</div>
+	</section>
+</article>

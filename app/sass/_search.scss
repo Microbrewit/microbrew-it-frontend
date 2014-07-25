@@ -1,0 +1,29 @@
+.big-search-box {
+	display: block;
+	margin: 0 auto;
+	line-height: 50px;
+	margin-top: 50px;
+	margin-bottom: 10px;
+	font-size: 25px;
+
+	@include col(7/10, 0, false); 
+	padding: 0 15px;
+}
+.search-input {
+	padding-bottom: 50px;
+}
+
+.search-results {
+	border-top: 1px solid #ccc;
+	background: #eee;
+	padding: 75px 0;
+}
+
+.results-number {
+	float:left;
+	@include offset(left, 1.5/10)
+}
+.search-endpoint {
+	float:right;
+	@include offset(right, 1.5/10)
+}

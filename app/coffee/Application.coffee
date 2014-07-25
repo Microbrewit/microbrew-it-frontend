@@ -2,7 +2,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 
-mbit = angular.module('Microbrewit', ['ui.router'])
+mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService'])
 
 mbit.config ($stateProvider, $urlRouterProvider) ->
 	# For any unmatched url, redirect to /state1
@@ -26,9 +26,10 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
 			url: "/brewers"
 			templateUrl: "templates/login.html"
 		})
-		.state('more', {
-			url: "/more"
-			templateUrl: "templates/login.html"
+		.state('search', {
+			url: "/search"
+			templateUrl: "templates/search.html"
+			controller: "SearchController"
 		})
     	.state('add', {
 			url: "beer/add"
