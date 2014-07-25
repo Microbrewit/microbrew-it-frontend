@@ -1,15 +1,53 @@
 #main-footer {
 	width: 100%;
-	padding-top: 50px;
-	padding-bottom: 75px;
-	margin-top: 75px;
+	
 	background: #333;
 	color: white;
+	position: fixed;
+	bottom: 0;
+	z-index: 1;
+	height: 500px;
+
+	padding-bottom: 75px;
+
+	.footer-inner-wrapper {
+		width: 100%;
+		position: fixed;
+		bottom:0;
+		z-index: 2;
+				
+	}
+}
+
+
+.logo-circle {
+	width: 50px;
+	height: 50px;
+	display: block;
+	background: white;
+	border-radius: 50%;
+	line-height: 50px;
+	text-align:center;
+	font-size: 30px;
+	font-family: Kingthings Petrock;
+	color: #333;
+	margin: 0 auto;
+
+	@include transition(background 0.5s, color 0.2s);
+	
+	&:hover {
+		background: $link-color;
+		color: white;
+	}
+	&:active {
+		margin-top: 1px;
+	}
 }
 
 .footer-content {
-	@extend .main-wrapper;
+	@extend .inner-wrapper;
 
+	margin-top: 50px;
 	padding: 50px 0;
 
 	border-top: 1px solid #ccc;
@@ -18,14 +56,32 @@
 	h3 {
 		margin: 0;
 		padding-top: 0;
+		font-weight: normal;
+		font-size: $normal-font-size;
 	}
 	div {
 		@include col(1/5);
 		padding-bottom: 0;
 		margin-bottom: 0;
 	}
+	.footer-logo {
+		border-right: 1px solid #ccc;
+		height: 103px;
+		@include col(1/5);
+		text-align:center;
+
+	}
 	.connect-links {
 		@include col(2/5);
+
+		li {
+			@include col(1/6, 0);
+		}
+	}
+	ul, li {
+		list-style:none;
+		margin:0;
+		padding: 0;
 	}
 }
 

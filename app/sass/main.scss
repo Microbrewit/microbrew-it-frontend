@@ -1,22 +1,19 @@
-// @import "compass/reset";
+@import "compass/css3/transition";
 
-.cf:before,
-.cf:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
-
-.cf:after {
-    clear: both;
-}
-
-/**
- * For IE 6/7 only
- * Include this rule to trigger hasLayout and contain floats.
- */
 .cf {
-    *zoom: 1;
+	*zoom: 1;
+	
+	&:before,&:after {
+		content: " "; /* 1 */
+		display: table; /* 2 */
+	}
+	&:after {
+		clear: both;
+	}
 }
+
+$normal-font-size: 15px;
+$link-color: #00ABD6;
 
 // --- Lattice configuration ---
 $grid-width: 1000px;
@@ -24,9 +21,15 @@ $number-of-columns: 12;
 $default-grid-gutter: 25px;
 @import "../../bower_components/lattice/scss/grid";
 
+div, article, section, footer, header {
+	box-sizing: border-box;
+}
+
 html {
 	margin:0;
 	font-family: Source Sans Pro;
+	line-height: 1.4;
+	font-size: $normal-font-size;
 }
 
 body {
@@ -37,10 +40,33 @@ body {
 h1 {
 	text-transform: uppercase;
 	font-size: 50px;
-	text-align:center
+	text-align:center;
 }
 
-.main-wrapper {
+a {
+	color: $link-color;
+	text-decoration:none;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.main {
+	@extend .cf;
+	box-shadow: 0 9px 9px rgba(0,0,0,0.5);
+	background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
+	background-image:-moz-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
+	background-image:radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
+
+	position: relative;
+	z-index: 3;
+	background: #FBFBFB;
+	margin-bottom: 400px;
+}
+
+.inner-wrapper {
 	@extend .cf;
 	@include col(12, 0, false);
 	margin: 0 auto;
@@ -49,3 +75,4 @@ h1 {
 
 @import "navigation";
 @import "footer";
+@import "_search";
