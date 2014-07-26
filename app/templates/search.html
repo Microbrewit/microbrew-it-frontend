@@ -11,7 +11,7 @@
 			<div ng-show="query.length < 3" class="center">Query must contain at least 3 characters</div>
 			<div ng-show="query.length >= 3 && resultsNumber == 0" class="center">Found no {{endpoint}} called "{{query}}"</div>
 			<ul>
-				<li ng-repeat="result in results"> {{ result.name }} </li>
+				<li ng-repeat="result in results"> <a ui-sref="{{endpoint}}.single({id:result.id})">{{ result.name }}</a></li>
 			</ul>
 		</div>
 	</section>

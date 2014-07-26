@@ -1,0 +1,30 @@
+.single-yeast {
+
+	.inner-wrapper {
+		strong {
+			display: block;
+		}
+		// span {
+		// 	text-align: left;
+		// 	display: inline-block;
+		// 	margin: 0 auto;
+		// }
+		@include col(6/10, 0, false);
+	}
+	.code,.type,.supplier,.temperature-range,.flocculation,.alcohol-tolerance {
+		@include col(2/10);
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	.temperature-range,.flocculation,.alcohol-tolerance {
+		border-top: 0;
+	}
+	.type,.supplier,.flocculation,.alcohol-tolerance {
+		border-left: 0;
+	}
+	.meta {
+		padding: 50px 0;
+		border-top: #ccc;
+		background: #eee;
+	}
+}
