@@ -18,6 +18,20 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
 			url: "/beer"
 			templateUrl: "templates/login.html"
 		})
+		.state('hops', {
+			abstract: true
+			templateUrl: "templates/ingredients/hops.html"
+		})
+		.state('hops.list', {
+			url: '/hops'
+			controller: 'HopsController'
+			templateUrl: "templates/ingredients/hops.list.html"
+		})
+		.state('hops.single', {
+			url: '/hops/{id:[0-9]{1,4}}'
+			controller: 'HopsController'
+			templateUrl: "templates/ingredients/hops.single.html"
+		})
 		.state('breweries', {
 			url: "/breweries"
 			templateUrl: "templates/login.html"

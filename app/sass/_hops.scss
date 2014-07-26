@@ -1,0 +1,44 @@
+.single-hops {
+	.inner-wrapper {
+		strong {
+			display: block;
+		}
+		// span {
+		// 	text-align: left;
+		// 	display: inline-block;
+		// 	margin: 0 auto;
+		// }
+		@include col(6/10, 0, false);
+	}
+	.alpha-acid, .beta-acid, .origin {
+		@include col(2/10);
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	.beta-acid, .origin {
+		border-left: 0;
+	}
+	.meta {
+		padding: 50px 0;
+		border-top: #ccc;
+		background: #eee;
+	}
+}
+.the-list {
+	background: #ddd;
+	border-top: 1px solid #c6c6c6;
+	padding: 50px 0;
+}
+.hops-list,.fermentables-list, .yeasts-list {
+	width: 100%;
+	td, th { padding: 10px; }
+	tr:first-child {
+		background: #666;
+		color: white;
+		text-align: left;
+	}
+	tr:nth-child(odd) {}
+	tr:nth-child(even) {
+		background: #eee;
+	}
+}
