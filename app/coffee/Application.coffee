@@ -32,6 +32,20 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
 			controller: 'HopsController'
 			templateUrl: "templates/ingredients/hops.single.html"
 		})
+		.state('fermentables', {
+			abstract: true
+			templateUrl: "templates/ingredients/fermentables.html"
+		})
+		.state('fermentables.list', {
+			url: '/fermentables'
+			controller: 'FermentablesController'
+			templateUrl: "templates/ingredients/fermentables.list.html"
+		})
+		.state('fermentables.single', {
+			url: '/fermentables/{id:[0-9]{1,4}}'
+			controller: 'FermentablesController'
+			templateUrl: "templates/ingredients/fermentables.single.html"
+		})
 		.state('breweries', {
 			url: "/breweries"
 			templateUrl: "templates/login.html"

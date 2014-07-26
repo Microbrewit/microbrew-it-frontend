@@ -1,0 +1,28 @@
+<article class="all-fermentables">
+	<h1>Fermentables</h1>
+	<section class="the-list">
+		<div class="inner-wrapper">
+			<table class="fermentables-list" cellspacing="0">
+				<tr>
+					<th>Name</th>
+					<th>Colour (lovibond)</th>
+					<th>Sugar content (PPG)</th>
+					<th>Maltster</th>
+				</tr>
+				<tr ng-repeat="fermentable in fermentables">
+					<td><a ui-sref="fermentables.single({id:fermentable.id})">{{fermentable.name}} ({{fermentable.supplier.Origin.Name}})</a></td>
+					<td>{{fermentable.lovibond}}</td>
+					<td>{{fermentable.ppg}}</td>
+					<td>{{fermentable.supplier.Name}}</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</article>
+
+id: 281
+lovibond: 250
+name: "Chocolate Rye Malt"
+ppg: 31
+supplier: null
+type: ""

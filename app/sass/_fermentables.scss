@@ -1,0 +1,33 @@
+.single-fermentable {
+
+	.inner-wrapper {
+		strong {
+			display: block;
+		}
+		// span {
+		// 	text-align: left;
+		// 	display: inline-block;
+		// 	margin: 0 auto;
+		// }
+		@include col(6/10, 0, false);
+	}
+	.lovibond, .ppg, .supplier {
+		@include col(2/10);
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	.origin, .type {
+		@include col(3/10);
+		border: 1px solid #ccc;
+		border-bottom: 0;
+		text-align: center;
+	}
+	.origin, .ppg, .supplier {
+		border-left: 0;
+	}
+	.meta {
+		padding: 50px 0;
+		border-top: #ccc;
+		background: #eee;
+	}
+}
