@@ -4,25 +4,17 @@
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/network/NetworkService', []).
 	value('ApiUrl', 'http://api.microbrew.it').
-	service('getFermentables', ($http, $log, ApiUrl) ->
-		
-		get = (id = null) ->
+	factory('get', ($http, $log, ApiUrl) ->
+		factory = {}
+		factory.get = (requestUrl) ->
+			console.log requestUrl
 			promise = false
-
-			if id
-				getUrl = "/fermentables/#{id}"
-			else
-				getUrl = '/fermentables'
-
-			console.log getUrl
-
-			fermentables = 
+			request = 
 				async: () ->
-					console.log 'Hello'
 					unless promise
-						$log.debug 'fetching fermentables'
+						$log.debug "fetching #{requestUrl}"
 
-						promise = $http.jsonp(ApiUrl + "#{getUrl}?callback=JSON_CALLBACK", {})
+						promise = $http.jsonp(requestUrl, {})
 							.error((data, status) ->
 								$log.error(data)
 								$log.error(status)
@@ -33,63 +25,44 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 					return promise
 
-			return fermentables
-		).
+			return request
 
-		service('setFermentables', ($http, $log, ApiUrl) ->
-			@set = (fermentable) ->
-				###fermentable:
-					id: 123
-					supplier:
-						id: 432
-						name: 'Some Supplier'
-					name: 'String'
-					ppg: 123
-					type: 'Grain'###
-				$log.debug "API SET: #{fermentable}."
-				
-				promise = false
-				request = null
+		factory.fermentables = (id = null) ->
+			if id
+				requestUrl = "#{ApiUrl}/fermentables/#{id}?callback=JSON_CALLBACK"
+			else
+				requestUrl = "#{ApiUrl}/fermentables?callback=JSON_CALLBACK"
 
-				if fermentable.id
-					requestUrl = "#{ApiUrl}/fermentables/#{fermentable.id}"
-				else
-					requestUrl = "#{ApiUrl}/fermentables"
+			return @get(requestUrl)
 
-				request = 
-					async: () ->
-						unless promise
-							$log.debug 'ASYNC SET fermentable'
-
-							promise = $http.post(requestUrl, fermentable)
-								.error((data, status) ->
-									$log.error(data)
-									$log.error(status)
-								)
-								.then((response) ->
-									return response.data
-								)
-						
-						return promise
-				
-				return request
-
-	).
-	service('getYeasts', ($http, $log, ApiUrl) ->
-		@get = (yeastId = false) ->
-			promise = false
-
-			if yeastId
-				requestUrl = "#{ApiUrl}/yeasts/#{yeastId}?callback=JSON_CALLBACK"
+		factory.yeasts = (id = null) ->
+			if id
+				requestUrl = "#{ApiUrl}/yeasts/#{id}?callback=JSON_CALLBACK"
 			else
 				requestUrl = "#{ApiUrl}/yeasts?callback=JSON_CALLBACK"
-			
+
+			return @get(requestUrl)
+
+		factory.hops = (id = null) ->
+			if id
+				requestUrl = "#{ApiUrl}/hops/#{id}?callback=JSON_CALLBACK"
+			else
+				requestUrl = "#{ApiUrl}/hops?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		return factory
+
+	).
+	factory('set', ($http, $log, ApiUrl) ->
+		factory = {}
+		factory.set = (requestUrl, object) ->
 			request = 
 				async: () ->
 					unless promise
-						$log.debug 'fetching yeast'
+						$log.debug 'ASYNC SET fermentable'
 
-						promise = $http.jsonp(requestUrl, {})
+						promise = $http.post(requestUrl, object)
 							.error((data, status) ->
 								$log.error(data)
 								$log.error(status)
@@ -101,11 +74,20 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 					return promise
 			
 			return request
+		factory.fermentables = (id = null) ->
+			###fermentable:
+				id: 123
+				supplier:
+					id: 432
+					name: 'Some Supplier'
+				name: 'String'
+				ppg: 123
+				type: 'Grain'###
+		factory.hops = (id = null) ->
+		factory.yeasts = (id = null) ->
+		return factory
 	).
-	service('setYeasts', ($http, $log, ApiUrl) ->
-		@set = (yeast) ->
-			$log.debug "API POST/PUT/UPDATE: Adding/updating #{yeast}."
-	).
+
 	service('search', ($http, $log, ApiUrl) ->
 		@search = (query, endpoint = "") ->
 			if query.length >= 3
@@ -133,30 +115,4 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 						return promise
 				
 				return request	
-	).
-	service('hops', ($http, $log, ApiUrl) ->
-		@getHops = () ->
-			promise = false
-			
-			hops = 
-				async: () ->
-					unless promise
-						$log.debug 'fetching hops'
-
-						promise = $http.jsonp(ApiUrl + '/hops?callback=JSON_CALLBACK', {})
-							.error((data, status) ->
-								$log.error(data)
-								$log.error(status)
-							)
-							.then((response) ->
-								return response.data
-							)
-					
-					return promise
-
-			return hops
-
-		@setHops = (hop) ->
-			$log.debug "API POST/PUT/UPDATE: Adding/updating #{hop}."
-
 	)
