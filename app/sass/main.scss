@@ -53,6 +53,23 @@ a {
 	text-align: center;
 }
 
+.loading {
+	width: 200px;
+	height:200px;
+	border-radius: 5px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: rgba(0,0,0,0.7);
+	text-align:center;
+	z-index: 100;
+	padding-top: 60px;
+	margin-left: -100px;
+	margin-top: -100px;
+	color: white;
+	line-height: 2.8;
+}
+
 .main {
 	@extend .cf;
 	box-shadow: 0 9px 9px rgba(0,0,0,0.5);

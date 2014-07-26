@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
+	<div class="loading" ng-show="loading > 0">Loading<br/><img src="images/spinner.gif"/></div>
 	<div class="main">
 		<div ng-include src="'templates/header.html'"></div>
 		<div ui-view></div>
