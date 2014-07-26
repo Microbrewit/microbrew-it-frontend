@@ -2,7 +2,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 
-mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService'])
+mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash'])
 
 mbit.config ($stateProvider, $urlRouterProvider) ->
 	# For any unmatched url, redirect to /state1
