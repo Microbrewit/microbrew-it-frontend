@@ -1,52 +1,80 @@
-<main class="beer-recipe">
+<article class="add-beer-recipe">
 	<header>
-		<div class="header-image"></div>
-
-		<h1><div class="main-wrapper">Brun Bjarne</div></h1>
+		<h1>New Recipe</h1>
 	</header>
 
-	<article class="meta">
-		<section class="brewer">
-			<img src="" class="avatar" alt=""/>
-			Torstein Thune
-		</section>
-		<section class="options">
-			<a class="favourites">add to favourites</a>
-			<a class="fork">add my fork</a>
-		</section>
-		<section class="score-and-classification">
-			<div class="category"></div>
-			<div class="scores"></div>
-			<div class="nationality norway"></div>
-		</section>
-		<section class="readings">
-			<div class="abv"></div>
-			<div class="original-gravity"></div>
-			<div class="final-gravity"></div>
-			<div class="bitterness"></div>
-			<div class="colour"></div>
-			<div class="glassware"></div>
-		</section>
-		<section class="description">
-			<p>Mead lagering degrees plato pub terminal gravity dry hopping. Seidel additive black malt aau copper double bock/dopplebock pilsner. Shelf life. Oxidized lambic, acid rest. Pint glass tulip glass lauter seidel filter berliner weisse goblet mead aroma hops. Degrees plato mead. Ibu saccharification brewhouse carbonation imperial attenuation malt extract, carbonation malt extract. Draft (draught) malt bittering hops aroma hops, ale. Specific gravity attenuation tulip glass, lambic shelf life aroma hops. Acid rest; keg crystal malt.</p>
-		</section>
-	</article>
+	<section class="meta-information">
+		<div class="inner-wrapper">
 
-	<article class="recipe">
-		<header><h2>Recipe</h2></header>
-		<section class="readings"></section>
-		<section class="ingredients">
-			<h3>Ingredients</h3>
-			<section class="fermentables">
-				<h4>Fermentables</h4>
-				<table>
-				</table>
-			</section>
-			
-		</section>
-	</article>
+		</div>
+	</section>
 
-	<article class="forks">
-	</article>
-</main>
+	<section class="meta-calculations">
+	</section>
+
+	<section class="mash">
+		<div class="inner-wrapper">
+			<h2>Mash</h2>
+			<ul>
+				<li ng-repeat="step in recipe.mash">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Mash step</span>
+						<span class="values"></span>
+					</div>
+
+					<table class="fermentables" ng-show="step.fermentables.length > 0">
+						<tr>
+							<th>Name of <strong>FERMENTABLE</strong></th>
+							<th>Amount</th>
+							<th>Colour</th>
+							<th>PPG</th>
+						</tr>
+						<tr ng-repeat="fermentable in step.fermentables">
+							<td><input type="text" ng-model="fermentable.name"/></td>
+							<td><input type="text" ng-model="fermentable.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+					
+					<table class="hops" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong> (malt/sugars)</th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+		</div>
+
+
+
+	</section>
+
+	<section class="boil">
+		<h2>Boil</h2>
+	</section>
+
+	<section class="fermentation">
+		<h2>Fermentation</h2>
+	</section>
+
+	<section class="wrap-up">
+		<h2>Wrap up</h2>
+	</section>
+
+	<section class="conclusion">
+	</section>
+
+</article>
 
