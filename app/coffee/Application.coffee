@@ -2,11 +2,18 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 
-mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash'])
+mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash', 'Microbrewit/core/calculation/abv', 'Microbrewit/core/UserService', 'Microbrewit/core/utils/LocalStorage'])
 
-mbit.config ($stateProvider, $urlRouterProvider) ->
+mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
+	# Enable CORS
+	$httpProvider.defaults.useXDomain = true
+
 	# For any unmatched url, redirect to /state1
-	$urlRouterProvider.otherwise("/")
+	$urlRouterProvider
+		.when('fermentabledto/:id', 'fermentables/:id')
+		.when('yeastdto/:id', 'yeasts/:id')
+		.when('hopdto/:id', 'hops/:id')
+		.otherwise("/")
 
 	# Now set up the states
 	$stateProvider
@@ -73,12 +80,31 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
 			templateUrl: "templates/search.html"
 			controller: "SearchController"
 		})
+		.state('searchWithTerm', {
+			url: "/search/:searchTerm"
+			templateUrl: "templates/search.html"
+			controller: "SearchController"
+		})
     	.state('add', {
-			url: "beer/add"
+			url: "/add"
 			templateUrl: "templates/beer/add.html"
+		})
+		.state('add.beer', {
+			url: "/beer"
+		})
+		.state('add.brewery', {
+			url: "/brewery"
+		})
+		.state('add.ingredient', {
+			url: "/ingredient"
+		})
 		.state('abv-calculator', {
 			url: "/calculators/abv"
 			templateUrl: "templates/calculators/abv.html"
 			controller: "CalculatorController"
 		})
+		.state('login', {
+			url: "/login"
+			templateUrl: "templates/users/login.html"
+			controller: "LoginController"
 		})
