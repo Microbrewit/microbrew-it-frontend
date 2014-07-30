@@ -4,6 +4,7 @@
 			"bower_components/angular/angular.js",
 			"bower_components/lodash/dist/lodash.compat.js",
 			"bower_components/angular-ui-router/release/angular-ui-router.js",
+			"bower_components/angular-md5/angular-md5.js",
 			"tmp/**/*.js"
 		],
 		"source": "app",
