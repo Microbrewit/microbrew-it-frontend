@@ -95,8 +95,8 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 				if endpoint isnt ""
 					endpoint = "/"+endpoint
-
 				requestUrl = "#{ApiUrl}#{endpoint}?query=#{query}&callback=JSON_CALLBACK"
+				console.log requestUrl
 				
 				request = 
 					async: () ->
@@ -105,10 +105,16 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 							promise = $http.jsonp(requestUrl, {})
 								.error((data, status) ->
+									console.log 'ERROR'
+									console.log status
 									$log.error(data)
 									$log.error(status)
 								)
 								.then((response) ->
+									if response.data.hits?
+										for i in [0...response.data.hits.hits.length]
+											response.data.hits.hits[i].endpoint = response.data.hits.hits[i]._type.replace('dto', 's')
+
 									return response.data
 								)
 						

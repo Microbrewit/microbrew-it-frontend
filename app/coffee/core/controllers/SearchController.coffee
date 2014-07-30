@@ -1,12 +1,15 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('SearchController', ['$scope', 'search', 
-	($scope, search) ->
+mbit.controller('SearchController', ['$scope', 'search', '$stateParams',
+	($scope, search, $stateParams) ->
 		console.log 'CONTROLLER ACTIVE'
 
-		$scope.endpoint = "hops"
+		$scope.searchQuery = $stateParams.searchTerm if $stateParams.searchTerm
+
+		$scope.endpoint = "search"
 
 		$scope.endpoints = [
+			"search"
 			"fermentables"
 			"hops"
 			"yeasts"
@@ -20,7 +23,11 @@ mbit.controller('SearchController', ['$scope', 'search',
 			# we only perform an API call if there are more than 3 characters supplied
 			if query? and query.length >= 3
 				search(query, $scope.endpoint).async().then((apiResponse) ->
-					$scope.results = apiResponse[$scope.endpoint]
+					if $scope.endpoint is "search"
+						$scope.results = apiResponse.hits.hits
+						console.log apiResponse.hits.hits
+					else
+						$scope.results = apiResponse[$scope.endpoint]
 					$scope.resultsNumber = $scope.results.length
 				)
 			else
