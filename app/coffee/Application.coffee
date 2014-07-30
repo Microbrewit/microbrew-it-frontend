@@ -76,4 +76,9 @@ mbit.config ($stateProvider, $urlRouterProvider) ->
     	.state('add', {
 			url: "beer/add"
 			templateUrl: "templates/beer/add.html"
+		.state('abv-calculator', {
+			url: "/calculators/abv"
+			templateUrl: "templates/calculators/abv.html"
+			controller: "CalculatorController"
+		})
 		})
