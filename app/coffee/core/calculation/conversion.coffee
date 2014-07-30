@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/calculation/conversion', []).
-	service('formulas', ($log) ->
+	service('conversion', ($log) ->
 
 		@sg =
 			plato: (sg) ->
