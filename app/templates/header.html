@@ -8,6 +8,6 @@
 		<li style="width:266px"><form><input type="text" ng-model="searchTerm" placeholder="search microbrewit"/><button ng-submit="search(searchTerm); searchTerm=''" ng-click="search(searchTerm); searchTerm=''">Search</button></form></li>
 		<li style="width:61px"><a ui-sref="add">Add</a></li>
 		<li style="width:89px" ng-show="!user"><a ui-sref="login">Login</a></li>
-		<li style="width:89px" ng-show="user"><a ui-sref="profile"><gravatar src="{{user.email}}" size="25px"></gravatar> Me</a></li>
+		<li style="width:89px" ng-show="user"><a ui-sref="userSettings"><gravatar src="{{user.email}}" size="25px"></gravatar> Me</a></li>
 	</ul>
 </nav>

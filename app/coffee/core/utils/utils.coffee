@@ -3,6 +3,23 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/utils/Lodash', ['angular-md5']).
+	value('mbAvailable', {
+		measurements:
+			weights:
+				large: ['kg']
+				small: ['gram']
+			liquids: ['liters']
+			temperature: ['celcius', 'fahrenheit']
+		abv:
+			formulas: ['microbrewit', 'simple', 'alternateSimple', 'miller', 'advanced', 'alterateAdvanced']
+			units: ['specific-gravity', 'plato', 'brix']
+		bitterness:
+			formulas: []
+			units: ['ibu', 'ebu']
+		colour:
+			formulas: []
+			units: ['srm', 'ebc']
+	}).
 	factory('_', ['$window',
 		($window) ->
 			# place lodash include before angular

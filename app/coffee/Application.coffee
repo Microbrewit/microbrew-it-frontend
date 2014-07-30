@@ -108,3 +108,8 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			templateUrl: "templates/users/login.html"
 			controller: "LoginController"
 		})
+		.state('userSettings', {
+			url: "/user/settings"
+			templateUrl: "templates/users/settings.html"
+			controller: "UserSettingsController"
+		})
