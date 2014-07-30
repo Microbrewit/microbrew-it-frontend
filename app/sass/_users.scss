@@ -1,0 +1,47 @@
+.login {
+	//text-align:center;
+
+	.login-form {
+		background: #eee;
+		border-top: #ccc;
+		padding: 50px 0;
+	}
+	input[type=text] {
+		@include col(2/4, 0, false);
+		padding: 0 5px;
+		line-height: 30px;
+		font-size: 20px;
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 25px;
+	}
+	input[type=checkbox] {
+		display: inline-block;
+	}
+
+	label {
+		display: inline-block;
+		@include push(1/4);
+		margin-bottom: 5px;
+		color: #999;
+	}
+	button {
+		@include col(1/8, 5px, false);
+		float: right;
+		@include offset(right, 2/8);
+		height: 50px;
+		font-size: 15px;
+		line-height: 25px;
+		background: #CD2729;
+		color: white;border:0;
+	}
+}
+
+.gravatar {
+	display: inline-block;
+	
+	img {
+		border-radius: 50%;
+		vertical-align: sub;
+	}
+}

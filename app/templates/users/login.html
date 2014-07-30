@@ -1,0 +1,16 @@
+<article class="login">
+	<h1>Login</h1>
+	<section class="login-form">
+		<div class="inner-wrapper">
+			<form>
+				<label for="username">Username</label>
+				<input type="text" id="password" ng-model="username" placeholder="username"/>
+				<label for="password">Password</label>
+				<input type="text" id="password" ng-model="password" placeholder="password"/>
+				<label for="remember">keep logged in</label>
+				<input type="checkbox" id="remember" ng-model="remember"/>
+				<button ng-click="login()">Login</button>
+			</form>
+		</div>
+	</section>
+</article>

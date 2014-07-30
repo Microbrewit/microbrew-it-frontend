@@ -33,7 +33,7 @@ html {
 }
 
 body {
-	background: #FBFBFB;
+	background: #333;
 	margin: 0;
 }
 
@@ -70,6 +70,12 @@ a {
 	line-height: 2.8;
 }
 
+.content {
+	padding: 50px 0;
+	background: #eee;
+	border-top: 1px solid #ddd;
+}
+
 .main {
 	@extend .cf;
 	box-shadow: 0 9px 9px rgba(0,0,0,0.5);
@@ -96,3 +102,4 @@ a {
 @import "hops";
 @import "fermentables";
 @import "yeasts";
+@import "users";
