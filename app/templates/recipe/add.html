@@ -25,7 +25,7 @@
 
 					<table class="fermentables" ng-show="step.fermentables.length > 0">
 						<tr>
-							<th>Name of <strong>FERMENTABLE</strong></th>
+							<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
 							<th>Amount</th>
 							<th>Colour</th>
 							<th>PPG</th>
@@ -37,10 +37,26 @@
 							<td>{{fermentable.ppg}}</td>
 						</tr>
 					</table>
-					
+
 					<table class="hops" ng-show="step.hops.length > 0">
 						<tr>
-							<th>Name of <strong>HOPS</strong> (malt/sugars)</th>
+							<th>Name of <strong>HOPS</strong></th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+
+					<table class="other" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong></th>
 							<th>Amount</th>
 							<th>Form</th>
 							<th>AA</th>
