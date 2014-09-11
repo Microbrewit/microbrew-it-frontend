@@ -96,6 +96,27 @@ a {
 	clear: both;
 }
 
+#notifications {
+	position: fixed;
+	right: 20px;
+	top: 55px;
+	@include col(3, 0, false);
+
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+		list-style: none;
+		background: rgba(255,255,255,0.8);
+		border: 1px solid #ccc;
+		color: #333;
+		padding: 25px;
+		margin-bottom: 5px;
+		border-radius: 5px;
+	}
+}
+
 @import "navigation";
 @import "footer";
 @import "search";

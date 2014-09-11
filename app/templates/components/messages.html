@@ -1,0 +1,3 @@
+<ul id="notifications">
+	<li class="message" ng-repeat="alert in alerts" class="alert.type" ng-click="closeAlert($index)"><strong>{{alert.title}}</strong> {{alert.body}}</li>
+</ul>
