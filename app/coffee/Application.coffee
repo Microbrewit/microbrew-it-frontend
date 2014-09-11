@@ -2,7 +2,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 
-mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash', 'Microbrewit/core/calculation/abv', 'Microbrewit/core/UserService', 'Microbrewit/core/utils/LocalStorage', 'Microbrewit/core/utils/NotificationService'])
+mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash', 'Microbrewit/core/calculation/AbvCalc', 'Microbrewit/core/UserService', 'Microbrewit/core/utils/LocalStorage', 'Microbrewit/core/utils/NotificationService'])
 
 mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 	# Enable CORS

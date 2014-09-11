@@ -2,7 +2,7 @@
 #
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
-angular.module('Microbrewit/core/calculation/PrimingSugar', []).
+angular.module('Microbrewit/core/calculation/PrimingCalc', []).
 factory('primingSugar', () ->
 	priming = {}
 

@@ -1,4 +1,4 @@
-angular.module('Microbrewit/core/utils/countries', []).
+angular.module('Microbrewit/core/utils/CountryService', []).
 	service('countries', () ->
 		countries = [ 
 			{name: 'Afghanistan', code: 'AF'}

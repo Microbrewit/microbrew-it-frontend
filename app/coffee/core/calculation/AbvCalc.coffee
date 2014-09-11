@@ -2,7 +2,7 @@
 #
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
-angular.module('Microbrewit/core/calculation/abv', []).
+angular.module('Microbrewit/core/calculation/AbvCalc', []).
 	factory('abvCalc', ($log) ->
 		abv = {}
 		# Dave Miller, 1988

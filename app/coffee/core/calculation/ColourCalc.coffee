@@ -2,7 +2,7 @@
 #
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
-angular.module('Microbrewit/core/calculation/colour', []).
+angular.module('Microbrewit/core/calculation/ColourCalc', []).
 factory('colourCalc', ['conversion', (conversion) ->
 	colourCalc = {}
 

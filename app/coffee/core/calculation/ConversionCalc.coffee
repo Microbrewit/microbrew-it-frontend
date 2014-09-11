@@ -2,7 +2,7 @@
 #
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
-angular.module('Microbrewit/core/calculation/conversion', []).
+angular.module('Microbrewit/core/calculation/ConversionCalc', []).
 	service('conversion', ($log) ->
 
 		@sg =
