@@ -22,7 +22,8 @@
 		"grunt-coffeelint": "*",
 		"grunt-shell": "*",
 		"grunt-karma": "*",
-		"grunt-contrib-compass": "*"
+		"grunt-contrib-compass": "*",
+		"grunt-sftp-deploy": "*"
 	},
 	"engines": {
 		"node": ">=0.10.0"

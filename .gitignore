@@ -3,5 +3,7 @@ build
 node_modules
 bower_components
 tmp
+.ftppass
+sftpCache.json
 
 microbrew-it.json

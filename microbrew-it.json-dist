@@ -8,7 +8,16 @@
 			"tmp/**/*.js"
 		],
 		"source": "app",
-		"destination": "build"
+		"destination": "build",
+		"autoDeploy": "false"
+	},
+
+	"autoDeploy": {
+		"host": null,
+		"port": 22,
+		"src": "build",
+		"dest": null,
+		"key": null
 	},
 
 	"development": {

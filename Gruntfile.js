@@ -46,6 +46,23 @@ module.exports = function (grunt) {
 				dest: buildFolder              // Destination path prefix
 			}]
 		},
+
+		'sftp-deploy': {
+			build: {
+				auth: {
+					host: config.autoDeploy.host,
+					port: config.autoDeploy.port,
+					authKey: config.autoDeploy.key
+				},
+				cache: 'sftpCache.json',
+				src: config.autoDeploy.src,
+				dest: config.autoDeploy.path,
+				exclusions: ['/build/core', 'build/Application.js', 'build/Application.js.map', 'build/build.map.js'],
+				serverSep: '/',
+				concurrency: 4,
+				progress: true
+			}
+		},
 		
 		// The Coffeescript compiler
 		coffee: {
@@ -226,6 +243,10 @@ module.exports = function (grunt) {
 			grunt.task.run('copy:images');
 		}
 
+		if(config.build.autoDeploy) {
+			grunt.task.run('sftp-deploy:build');
+		}
+
 		// if(action == "added" || action == "deleted") {
 		// 	grunt.log.writeln('FILE ' + filepath.toUpperCase() + ' WAS ' + action.toUpperCase() + ': rebuilding');
 		// 	grunt.task.run('build');
@@ -262,6 +283,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', 'Build Microbrew.it development version (coffee, sass)', ['clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'uglify:prod', 'copy:html', 'copy:images' ]);
 
+	grunt.registerTask('deploy', 'Deploy files to SFTP-server.', ['sftp-deploy:build']);
 
 	grunt.registerTask('default', 'Runs develop task and concurrent (watcher + connect).', ['build', 'concurrent']);
 };
