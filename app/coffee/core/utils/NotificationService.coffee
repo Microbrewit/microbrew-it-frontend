@@ -1,10 +1,22 @@
-# Module for using native browser notifications
-# Based on MDN Notification api example
+# Module for messages/notification to user.
+# Supports both native notifications (through the browser Notification API) and local notifications displayed within the browser.
+#
+# The module consists of one factory, notification, which essentially wraps around an array of messages.
+# notification.add(message) pushes notifications to the array
+# notification.close(index) removes the given message
+# notification.messages is the messages array
+#
+# @method add
+# @method close
+# @method getMessages
+
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/utils/NotificationService', []).
 	factory('notification', ['$rootScope', ($rootScope) ->
 
+		# Wrapper for native Notification
+		# @private
 		nativeNotification = (message) ->
 			notificationOptions = message
 
@@ -38,9 +50,24 @@ angular.module('Microbrewit/core/utils/NotificationService', []).
 		
 
 		notification = {}
+
+		# The messages array
 		notification.messages = []
 
-		# Message contains: title, body, type, onclick, onshow, onclose, icon
+		# Add a notification to the messages array
+		# A message is an object that can contain the following things:
+		# @param: message object
+		# @example
+		#    {
+		#	     title: 'title' # required
+		#	     body: 'further description' # optional
+		#	     icon: 'url/to/icon' # optional
+		#	     onClick: callback # optional
+		#	     onClose: callback # optional
+		#	     time: 5000 # default: null, ms until autoclose
+		#	     medium: 'native' # default: null, native = browser Notification API
+		#    }
+		#
 		notification.add = (message) ->
 			console.log message
 
@@ -59,6 +86,7 @@ angular.module('Microbrewit/core/utils/NotificationService', []).
 					, message.time)
 
 		# Close given index
+		# @param: [int] index
 		notification.close = (index) ->
 			@messages.splice(index, 1)
 
