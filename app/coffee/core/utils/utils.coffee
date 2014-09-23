@@ -35,7 +35,8 @@ angular.module('Microbrewit/core/utils/Lodash', ['angular-md5']).
 			replace: true
 			template: '<div class="avatar gravatar"><img src="http://www.gravatar.com/avatar/{{src}}" style="width:{{size}};height:{{size}}" alt="" /></div>'
 			link: (scope, element, attr) ->
-				attr.$observe('src', (current_value) -> scope.src = md5.createHash(current_value.replace(/\s+/g, '').toLowerCase()))
-				scope.size = attr.size
+				attr.$observe('src', (current_value) -> 
+					scope.src = md5.createHash(current_value.replace(/\s+/g, '').toLowerCase())) if current_value?
+				scope.size = attr.size if src?
 		}
 	)
