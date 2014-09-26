@@ -88,6 +88,7 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
     	.state('add', {
 			url: "/add"
 			templateUrl: "templates/recipe/add.html"
+			controller: "RecipeController"
 		})
 		.state('add.beer', {
 			url: "/beer"

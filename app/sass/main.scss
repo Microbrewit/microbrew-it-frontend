@@ -116,6 +116,92 @@ a {
 		border-radius: 5px;
 	}
 }
+.add-beer-recipe {
+	h2 {
+		text-align:center;
+		font-size: 50px;
+		font-weight: normal;
+	}
+	ul, li {
+		list-style: none;
+		padding:0;
+		margin:0;
+	}
+	.step-number {
+		color: white;
+		font-size: 40px;
+		text-align:center;
+		line-height: 50px;
+		@include col(1/20, 0);
+	}
+	.step-meta {
+		background: rgba(0,0,0,0.1);
+		line-height: 46px;
+		@include col(19/20, 0);
+		padding: 0 25px;
+
+		.step-type {
+			font-size: 20px;
+			line-height: 50px;
+			padding: 0;
+			margin: 0;
+		}
+	}
+	.steps {
+		margin-top: 1px;
+		padding-bottom: 50px;
+
+		table {
+			width: 100%;
+			padding:0;
+			border-spacing: 0;
+		}
+
+		tr {
+			padding: 0;
+			margin: 0;
+			height: 50px;
+			background: rgba(255,255,255,0.2);
+		}
+		tr:nth-child(even) {
+			background: rgba(0,0,0,0.05);
+		}
+		tr:first-child {
+			color: white;
+			line-height: 40px;
+		}
+		td,th {
+			padding: 0 10px;
+			margin:0;
+		}
+	}
+	.mash {
+		background: #EEE4DB;
+		color: #705F58;
+		border-top: 1px solid #D8D2CA;
+		.step-number, tr:first-child  {
+			background: #705F58;
+		}
+	}
+	.boil {
+		background: #DFE4CD;
+		color: #66743E;
+		border-top: 1px solid #D2D5C3;
+
+		.step-number, tr:first-child  {
+			background: #66743E;
+		}
+	}
+	.fermentation {
+		background: #FCF1EF;
+		color: #592114;
+		border-top: 1px solid #D0D4C1;
+
+		.step-number, tr:first-child  {
+			background: #592114;
+		}
+	}
+}
 
 @import "navigation";
 @import "footer";

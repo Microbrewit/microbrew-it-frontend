@@ -12,7 +12,7 @@
 	<section class="meta-calculations">
 	</section>
 
-	<section class="mash">
+	<section class="mash steps">
 		<div class="inner-wrapper">
 			<h2>Mash</h2>
 			<ul>
@@ -77,12 +77,128 @@
 
 	</section>
 
-	<section class="boil">
-		<h2>Boil</h2>
+	<section class="boil steps">
+		<div class="inner-wrapper">
+			<h2>Boil</h2>
+			<ul>
+				<li ng-repeat="step in recipe.boil">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Boil step</span>
+						<span class="values"></span>
+					</div>
+
+					<table class="fermentables" ng-show="step.fermentables.length > 0">
+						<tr>
+							<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+							<th>Amount</th>
+							<th>Colour</th>
+							<th>PPG</th>
+						</tr>
+						<tr ng-repeat="fermentable in step.fermentables">
+							<td><input type="text" ng-model="fermentable.name"/></td>
+							<td><input type="text" ng-model="fermentable.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+
+					<table class="hops" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong></th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+
+					<table class="other" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong></th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+		</div>
 	</section>
 
-	<section class="fermentation">
-		<h2>Fermentation</h2>
+		<section class="fermentation steps">
+		<div class="inner-wrapper">
+			<h2>Fermentation</h2>
+			<ul>
+				<li ng-repeat="step in recipe.fermentation">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Fermentation step</span>
+						<span class="values"></span>
+					</div>
+
+					<table class="fermentables" cellspacing="0" ng-show="step.fermentables.length > 0">
+						<tr>
+							<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+							<th>Amount</th>
+							<th>Colour</th>
+							<th>PPG</th>
+						</tr>
+						<tr ng-repeat="fermentable in step.fermentables">
+							<td><input type="text" ng-model="fermentable.name"/></td>
+							<td><input type="text" ng-model="fermentable.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+
+					<table class="hops" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong></th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+
+					<table class="other" ng-show="step.hops.length > 0">
+						<tr>
+							<th>Name of <strong>HOPS</strong></th>
+							<th>Amount</th>
+							<th>Form</th>
+							<th>AA</th>
+							<th>Contributes</th>
+						</tr>
+						<tr ng-repeat="hop in step.hops">
+							<td><input type="text" ng-model="hop.name"/></td>
+							<td><input type="text" ng-model="hop.amount"/></td>
+							<td>{{fermentable.lovibond}}</td>
+							<td>{{fermentable.ppg}}</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+		</div>
 	</section>
 
 	<section class="wrap-up">
