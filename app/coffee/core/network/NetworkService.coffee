@@ -4,7 +4,7 @@
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/network/NetworkService', []).
 	value('ApiUrl', 'http://api.microbrew.it').
-	factory('get', ($http, $log, ApiUrl, $rootScope) ->
+	factory('mbGet', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
 			console.log requestUrl
@@ -57,16 +57,31 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 		return factory
 
 	).
-	factory('set', ($http, $log, ApiUrl) ->
+	factory('mbSet', ($http, $log, ApiUrl, localStorage) ->
 		factory = {}
 		factory.set = (requestUrl, object) ->
+			auth = localStorage.getItem('user')
 			request = 
 				async: () ->
+					# if not $scope.token.token
+					# 	user = localStorage.getItem('user')
+					# 	if user and user.auth isnt ""
+
+
 					unless promise
 						$log.debug 'ASYNC SET fermentable'
 						$rootScope.loading++
 
-						promise = $http.post(requestUrl, object)
+						promise = $http.post(
+							requestUrl, 
+							object,
+							{
+								withCredentials: true
+								headers: {
+									'authorization-token': $scope.token.token
+								}
+							}
+						)
 							.error((data, status) ->
 								$rootScope.loading--
 								$log.error(data)
@@ -91,10 +106,12 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 				type: 'Grain'###
 		factory.hops = (id = null) ->
 		factory.yeasts = (id = null) ->
+
 		return factory
+
 	).
 
-	service('search', ($http, $log, ApiUrl) ->
+	service('mbSearch', ($http, $log, ApiUrl, $rootScope) ->
 		@search = (query, endpoint = "") ->
 			if query.length >= 3
 				promise = false

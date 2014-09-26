@@ -1,6 +1,6 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('SearchController', ['$scope', 'search', '$stateParams',
+mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams',
 	($scope, search, $stateParams) ->
 		console.log 'CONTROLLER ACTIVE'
 

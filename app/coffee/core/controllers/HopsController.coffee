@@ -1,6 +1,6 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('HopsController', ['$scope', 'get', '$stateParams', '_'
+mbit.controller('HopsController', ['$scope', 'mbGet', '$stateParams', '_'
 	($scope, get, $stateParams, _) ->
 		console.log 'HopsController'
 		# $scope.loading++
