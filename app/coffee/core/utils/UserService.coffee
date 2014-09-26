@@ -47,4 +47,8 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/network
 			$rootScope.token = null
 			$localStorage.removeItem('user')
 	).
-	service('update', () ->)
+	service('updateUser', (ApiUrl, mbSet) ->
+		userUpdate = (userObject) ->
+			# TODO: Check user object for errors
+			return mbSet.set("#{ApiUrl}/users", userObject)
+	)
