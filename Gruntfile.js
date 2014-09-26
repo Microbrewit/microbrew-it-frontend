@@ -243,9 +243,9 @@ module.exports = function (grunt) {
 			grunt.task.run('copy:images');
 		}
 
-		if(config.build.autoDeploy) {
-			grunt.task.run('sftp-deploy:build');
-		}
+		// if(config.build.autoDeploy) {
+		// 	grunt.task.run('sftp-deploy:build');
+		// }
 
 		grunt.task.run('hasfailed', 'usetheforce_restore');
 	});
