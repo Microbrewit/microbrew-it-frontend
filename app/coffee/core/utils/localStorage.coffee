@@ -44,7 +44,7 @@ angular.module('Microbrewit/core/utils/LocalStorage', []).
 
 		return storageApi
 	).
-	factory('sessionStorage', () ->
+	factory('sessionStorage', (validJSON) ->
 		storageApi = {}
 
 		
