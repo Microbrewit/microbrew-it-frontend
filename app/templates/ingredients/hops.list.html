@@ -5,12 +5,14 @@
 			<table class="hops-list" cellspacing="0">
 				<tr>
 					<th>Name</th>
+					<th>Origin</th>
 					<th>Alpha</th>
 					<th>Beta</th>
 					<th>Flavours</th>
 				</tr>
 				<tr ng-repeat="hop in hops">
-					<td><a ui-sref="hops.single({id:hop.id})">{{hop.name}} ({{hop.origin.Name}})</a></td>
+					<td><a ui-sref="hops.single({id:hop.id})">{{hop.name}}</a></td>
+					<td>{{hop.origin.name}}</td>
 					<td>{{hop.aalow}}% - {{hop.aahigh}}%</td>
 					<td>{{hop.betalow}}% - {{hop.betahigh}}%</td>
 					<td>{{hop.flavours.join(',')}}</td>

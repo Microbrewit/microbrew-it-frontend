@@ -12,8 +12,8 @@
 					<th>Alcohol Tolerance</th>
 				</tr>
 				<tr ng-repeat="yeast in yeasts">
-					<td><a ui-sref="yeasts.single({id:yeast.id})">{{yeast.Name}} ({{yeast.productcode}})</a></td>
-					<td>{{yeast.supplier.Name}}</td>
+					<td><a ui-sref="yeasts.single({id:yeast.id})">{{yeast.name}} ({{yeast.productcode}})</a></td>
+					<td>{{yeast.supplier.name}}</td>
 					<td>{{yeast.type}}</td>
 					<td>{{yeast.temperaturelow}} - {{yeast.temperaturehigh}}</td>
 					<td>{{yeast.flocculation}}</td>
