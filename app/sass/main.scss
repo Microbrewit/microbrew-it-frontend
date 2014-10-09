@@ -171,15 +171,24 @@ a {
 			line-height: 40px;
 		}
 		td,th {
+			font-weight: normal;
 			padding: 0 10px;
 			margin:0;
 		}
+	}
+	.add-step {
+		float:right;
+		line-height: 50px;
+		font-size: 20px;
+		color: white;
+		margin: 25px 0;
+		border:0;
 	}
 	.mash {
 		background: #EEE4DB;
 		color: #705F58;
 		border-top: 1px solid #D8D2CA;
-		.step-number, tr:first-child  {
+		.step-number, tr:first-child, .add-step  {
 			background: #705F58;
 		}
 	}
@@ -188,7 +197,7 @@ a {
 		color: #66743E;
 		border-top: 1px solid #D2D5C3;
 
-		.step-number, tr:first-child  {
+		.step-number, tr:first-child, .add-step  {
 			background: #66743E;
 		}
 	}
@@ -197,9 +206,15 @@ a {
 		color: #592114;
 		border-top: 1px solid #D0D4C1;
 
-		.step-number, tr:first-child  {
+		.step-number, tr:first-child, .add-step  {
 			background: #592114;
 		}
+	}
+	.recipe-notes {
+		display: block;
+		@include col(8, 15px, false);
+		min-height: 100px;
+		margin: 0 auto;
 	}
 }
 

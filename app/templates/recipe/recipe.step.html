@@ -1,0 +1,56 @@
+<div class="step-number">{{step.number}}</div>
+	<div class="step-meta">
+		<span class="step-type">Mash step</span>
+		<span class="values"></span>
+	</div>
+
+	<table class="fermentables" ng-show="step.fermentables.length > 0">
+		<tr>
+			<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+			<th>Amount</th>
+			<th>Colour</th>
+			<th>PPG</th>
+		</tr>
+		<tr ng-repeat="fermentable in step.fermentables">
+			<td><input type="text" ng-model="fermentable.name"/></td>
+			<td><input type="text" ng-model="fermentable.amount"/></td>
+			<td>{{fermentable.lovibond}}</td>
+			<td>{{fermentable.ppg}}</td>
+		</tr>
+	</table>
+
+	<table class="hops" ng-show="step.hops.length > 0">
+		<tr>
+			<th>Name of <strong>HOPS</strong></th>
+			<th>Amount</th>
+			<th>Form</th>
+			<th>AA</th>
+			<th>Contributes</th>
+		</tr>
+		<tr ng-repeat="hop in step.hops">
+			<td><input type="text" ng-model="hop.name"/></td>
+			<td><input type="text" ng-model="hop.amount"/></td>
+			<td><select ng-model="hop.type" ng-options="type for type in hopTypes"></select></td>
+			<td><input type="text" ng-model="hop.aa"/></td>
+			<td></td>
+		</tr>
+	</table>
+
+	<table class="other" ng-show="step.others.length > 0">
+		<tr>
+			<th>Name of <strong>OTHER</strong></th>
+			<th>Amount</th>
+			<th>Form</th>
+			<th>AA</th>
+			<th>Contributes</th>
+		</tr>
+		<tr ng-repeat="other in step.others">
+			<td><input type="text" ng-model="other.name"/></td>
+			<td><input type="text" ng-model="other.amount"/></td>
+			<td>{{fermentable.lovibond}}</td>
+			<td>{{fermentable.ppg}}</td>
+		</tr>
+	</table>
+	<button ng-click="addFermentableToStep(step)">Add Fermentable</button>
+	<button ng-click="addHopsToStep(step)">Add Hops</button>
+	<button ng-click="addYeastToStep(step)">Add Yeast</button>
