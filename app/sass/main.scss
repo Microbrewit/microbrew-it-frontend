@@ -177,18 +177,21 @@ a {
 		}
 	}
 	.add-step {
-		float:right;
+		//float:right;
+		display: block;
 		line-height: 50px;
 		font-size: 20px;
 		color: white;
-		margin: 25px 0;
+		padding: 0 10px;
+		// margin: 25px 0;
+		margin: 25px auto 0 auto;
 		border:0;
 	}
 	.mash {
 		background: #EEE4DB;
 		color: #705F58;
 		border-top: 1px solid #D8D2CA;
-		.step-number, tr:first-child, .add-step  {
+		.step-number, tr:first-child, .add-step, .add-ingredient  {
 			background: #705F58;
 		}
 	}
@@ -197,7 +200,7 @@ a {
 		color: #66743E;
 		border-top: 1px solid #D2D5C3;
 
-		.step-number, tr:first-child, .add-step  {
+		.step-number, tr:first-child, .add-step, .add-ingredient  {
 			background: #66743E;
 		}
 	}
@@ -206,7 +209,7 @@ a {
 		color: #592114;
 		border-top: 1px solid #D0D4C1;
 
-		.step-number, tr:first-child, .add-step  {
+		.step-number, tr:first-child, .add-step, .add-ingredient  {
 			background: #592114;
 		}
 	}
@@ -215,6 +218,13 @@ a {
 		@include col(8, 15px, false);
 		min-height: 100px;
 		margin: 0 auto;
+	}
+	.add-ingredient {
+		margin-top: 10px;
+		margin-right: 5px;
+		border: 0;
+		padding: 5px 10px;;
+		color: white;
 	}
 }
 
