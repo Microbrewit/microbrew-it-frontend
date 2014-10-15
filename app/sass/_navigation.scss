@@ -1,11 +1,12 @@
 #main-navigation {
 	width: 100%;
 	height: 50px;
-	background: rgba(255,255,255,0.85);
-	border-bottom: 1px solid #ccc;
+	line-height: 50px;
 	text-align: center;
 
 	ul {
+		background: rgba(255,255,255,0.85);
+		border-bottom: 1px solid #ccc;
 		display: table;
 		list-style: none;
 		@include col(12, 0, false);
@@ -27,6 +28,7 @@
 		display: block;
 		width: 100%;
 		height: 100%;
+		color: #333;
 
 		&:hover {
 			color: #fff;
