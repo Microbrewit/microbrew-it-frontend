@@ -1,0 +1,29 @@
+<article id="search">
+	<!-- <section class="search-input">
+		<div class="inner-wrapper">
+			<h2>Fermentables</h2><input id="searchQuery" class="big-search-box" placeholder="Search" ng-model="searchQuery"/>
+		</div>
+	</section> -->
+	<section class="search-results">
+		<div class="inner-wrapper">
+			<table class="fermentables" ng-show="results.length > 0">
+				<tr>
+					<th></th>
+					<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+					<th>Type</th>
+					<th>PPG</th>
+					<th>Colour</th>
+				</tr>
+				<tr ng-repeat="fermentable in results">
+					<td class="form-button">
+						<button class="add form-button" ng-click="addFermentableToStep(searchContext.step, fermentable)">Add</button>
+					</td>
+					<td>{{fermentable.name}}</td>
+					<td>{{fermentable.type}}</td>
+					<td>{{fermentable.lovibond}}</td>
+					<td>{{fermentable.ppg}}</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</article>

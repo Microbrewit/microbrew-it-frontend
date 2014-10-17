@@ -96,26 +96,25 @@ mbit.controller('RecipeController', [
 			$scope.recipe.fermentation.push(_.clone fermentProto)
 			updateStepNumbers()
 
-		$scope.addFermentableToStep = (step) ->
-			step.fermentables.push({ name: "lol" })
-		$scope.addHopsToStep = (step) ->
-			step.hops.push({ name: "lol" })
-		$scope.addYeastToStep = (step) ->
-			step.yeasts.push({ name: "lol" })
+		$scope.removeFromStep = (thing, thingArr) ->
+			index = thingArr.indexOf(thing)
+			thingArr.splice(index,1);
+			updateStepNumbers()
 
+		$scope.search = (step, type) ->
+			$scope.searchContext = {
+				active: true
+				endpoint: type 
+				step: step
+			}
 
-		# --- Convenience search methods ---
-		searchHops = (hop, elem) ->
-			mbSearch(hop, 'hops').async().then()
+		$scope.showSearch = false
 
-		searchMalt = (malt, elem) ->
-			mbSearch(malt, 'fermentables').async().then()
-
-		searchYeast = (yeast, elem) ->
-			mbSearch(yeast, 'yeasts').async().then(
-				(yeasts) ->
-
-			)
+		$scope.searchContext = {
+			active: false
+			endpoint: null 
+			step: null
+		}
 
 		# Setup default recipe
 		$scope.recipe = {}
@@ -127,33 +126,8 @@ mbit.controller('RecipeController', [
 				length: 60
 				volume: 20
 				temperature: 65
-				fermentables: [
-					{
-						id: "1377073452234"
-						href: "http://microbrew.it/ontology.owl#Boortmalt_Amber_Malt"
-						name: "Amber Malt"
-						colour: "20"
-						ppg: "34"
-						suppliedbyid: "http://microbrew.it/ontology.owl#Boortmalt"
-						origin: 'Germany'
-						suppliedBy: 'Boortmalt'
-						amount: 20,
-						colourContribution: 0
-					}
-				]
-				hops: [{
-						id: "1377073452234"
-						href: "http://microbrew.it/ontology.owl#Boortmalt_Amber_Malt"
-						name: "Some Hop"
-						aa: "20"
-						ppg: "34"
-						type: "pellet"
-						suppliedbyid: "http://microbrew.it/ontology.owl#Boortmalt"
-						origin: 'Germany'
-						suppliedBy: 'Boortmalt'
-						amount: 20,
-						colourContribution: 0
-					}]
+				fermentables: []
+				hops: []
 				spices: []
 				fruits: []
 				notes: ""
@@ -166,32 +140,7 @@ mbit.controller('RecipeController', [
 				length: 60
 				volume: 20
 				fermentables: []
-				hops: [
-					{
-						id: "1377073452234"
-						href: "http://microbrew.it/ontology.owl#Boortmalt_Amber_Malt"
-						name: "Some Hop"
-						aa: "20"
-						ppg: "34"
-						suppliedbyid: "http://microbrew.it/ontology.owl#Boortmalt"
-						origin: 'Germany'
-						suppliedBy: 'Boortmalt'
-						amount: 20,
-						colourContribution: 0
-					},
-					{
-						id: "1377073452234"
-						href: "http://microbrew.it/ontology.owl#Boortmalt_Amber_Malt"
-						name: "Some Hop"
-						aa: "20"
-						ppg: "34"
-						suppliedbyid: "http://microbrew.it/ontology.owl#Boortmalt"
-						origin: 'Germany'
-						suppliedBy: 'Boortmalt'
-						amount: 20,
-						colourContribution: 0
-					}
-				]
+				hops: []
 				spices: []
 				fruits: []
 				notes: ""

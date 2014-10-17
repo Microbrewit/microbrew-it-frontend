@@ -16,7 +16,12 @@
 		<div class="inner-wrapper">
 			<h2>Mash</h2>
 			<ul>
-				<li ng-repeat="step in recipe.mash">
+				<li class="step-wrapper" ng-repeat="step in recipe.mash">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Mash step</span>
+						<span class="values"></span>
+					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
@@ -32,6 +37,11 @@
 			<h2>Boil</h2>
 			<ul>
 				<li ng-repeat="step in recipe.boil">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Boil step</span>
+						<span class="values"></span>
+					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
@@ -44,6 +54,11 @@
 			<h2>Fermentation</h2>
 			<ul>
 				<li ng-repeat="step in recipe.fermentation">
+					<div class="step-number">{{step.number}}</div>
+					<div class="step-meta">
+						<span class="step-type">Fermentation step</span>
+						<span class="values"></span>
+					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
@@ -63,6 +78,14 @@
 	</section>
 
 	<section class="conclusion">
+	</section>
+
+	<section class="embedded-search" ng-show="searchContext.active">
+		<div class="inner-wrapper">
+			<div ng-controller="EmbeddedSearchController">
+				<div ng-include="'templates/recipe/fermentable.picker.html'"></div>
+			</div>
+		</div>
 	</section>
 
 </article>

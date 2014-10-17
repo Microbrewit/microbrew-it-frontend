@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/network/NetworkService', []).
-	value('ApiUrl', 'http://api.microbrew.it').
+	value('ApiUrl', 'http://microbrewit.asphaug.io').
 	factory('mbGet', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
