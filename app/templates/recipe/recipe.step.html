@@ -1,17 +1,13 @@
 	<table class="fermentables" ng-show="step.fermentables.length > 0">
 		<tr>
-			<th></th>
 			<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
-			<th>Amount</th>
+			<th width="60">Amount</th>
 			<th>Colour</th>
 			<th>PPG</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
-			<td class="form-button">
-				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button>
-			</td>
-			<td>{{fermentable.name}}</td>
+			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
 			<td><input type="text" ng-model="fermentable.amount"/></td>
 			<td>{{fermentable.lovibond}}</td>
 			<td>{{fermentable.ppg}}</td>
@@ -21,7 +17,6 @@
 
 	<table class="hops" ng-show="step.hops.length > 0">
 		<tr>
-			<th></th>
 			<th>Name of <strong>HOPS</strong></th>
 			<th>Amount</th>
 			<th>Form</th>
@@ -30,10 +25,7 @@
 			<th></th>
 		</tr>
 		<tr ng-repeat="hop in step.hops">
-			<td class="form-button">
-				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button>
-			</td>
-			<td>{{hop.name}}</td>
+			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
 			<td><input type="text" ng-model="hop.amount"/></td>
 			<td><select ng-model="hop.type" ng-options="type for type in hopTypes"></select></td>
 			<td><input type="text" ng-model="hop.aa"/></td>

@@ -20,7 +20,11 @@
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Mash step</span>
-						<span class="values"></span>
+						<span class="values">
+							<label for="length">Volume (Liters): </label><input type="text" id="volume" ng-model="step.volume"/>
+							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
+							<label for="length">Temperature (C): </label><input type="text" id="temperature" ng-model="step.temperature"/>
+						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
@@ -40,7 +44,13 @@
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
-						<span class="values"></span>
+						<span class="values">
+							<label for="length">Length: </label>
+							<input type="text" id="length" ng-model="length"/>
+
+							<label for="volume">Volume (L): </label>
+							<input type="text" id="volume" ng-model="length"/>
+						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>

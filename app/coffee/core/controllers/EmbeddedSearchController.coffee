@@ -12,6 +12,9 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet', 'fil
 		$scope.addYeastToStep = (step) ->
 			step.yeasts.push({ name: "lol" })
 
+		$scope.close = () -> 
+			$scope.searchContext.active = false
+
 		close = () ->
 			$scope.searchContext.active = false
 

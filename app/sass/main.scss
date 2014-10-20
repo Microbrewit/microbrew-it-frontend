@@ -140,6 +140,23 @@ a {
 		@include col(19/20, 0);
 		padding: 0 25px;
 
+		span {
+			padding:0;
+			display: inline-block;
+			margin:0;
+		}
+
+		.values {
+			float: right;
+			input {
+				width: 60px;
+				display: inline-block;
+			}
+			label {
+				margin-left: 15px;
+			}
+		}
+
 		.step-type {
 			font-size: 20px;
 			line-height: 50px;
@@ -279,7 +296,7 @@ button.form-button {
 	background-color: rgba(0,0,0,0.2);
 	color: white;
 	border: 0;
-	display: block;
+	display: inline-block;
 
 	&:hover {
 		background-color: rgba(0,0,0,0.1);
@@ -287,6 +304,7 @@ button.form-button {
 	}
 
 	&.edit {
+		margin-right: 15px;
 		// text-indent: -9999px;
 		//background: url(images/edit.svg);
 			// background-size: contain;
