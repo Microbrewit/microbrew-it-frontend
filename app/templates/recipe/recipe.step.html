@@ -4,13 +4,15 @@
 			<th width="60">Amount</th>
 			<th>Colour</th>
 			<th>PPG</th>
+			<th title="Gravity Points">Contributes</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
-			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
+			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}} mcu{{fermentable.mcu}} gp{{fermentable.gravityPoints}}</td>
 			<td><input type="text" ng-model="fermentable.amount"/></td>
-			<td>{{fermentable.lovibond}}</td>
+			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.finalVolume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box></td>
 			<td>{{fermentable.ppg}}</td>
+			<td title="Gravity Points"><mb-gravity-calc ingredient="fermentable" type="{{fermentable.type}}" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.finalVolume}}"></mb-gravity-calc></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>

@@ -5,11 +5,21 @@
 
 	<section class="meta-information">
 		<div class="inner-wrapper">
-
+			Name <input type="text" ng-model="recipe.name"/>
+			
 		</div>
 	</section>
 
 	<section class="meta-calculations">
+		<div class="inner-wrapper">
+			ABV {{recipe.abv}} 
+			Original Gravity {{recipe.og}} 
+			Final Gravity {{recipe.ef}} 
+			Bitterness {{recipe.ibu}} 
+			Colour {{recipe.srm}} 
+			Volume <input type="number" ng-model="recipe.finalVolume"/> 
+			Efficiency <input type="number" ng-model="recipe.efficiency"/>
+		</div>
 	</section>
 
 	<section class="mash steps">

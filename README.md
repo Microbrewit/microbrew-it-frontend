@@ -7,7 +7,7 @@ This repository contains the web frontend for Microbrew.it.
 The Microbrew.it frontend is an Angular.js application that acts as a GUI for the Microbrew.it API.
 
 ## Installation
-You need Node.js and NPM installled globally on your system.
+You need Node.js and NPM installed globally on your system.
 
 Open a terminal instance and navigate to the cloned microbrew-it.frontend directory and run the following commands:
 
@@ -19,6 +19,6 @@ Open a terminal instance and navigate to the cloned microbrew-it.frontend direct
 
 - ```bower install``` (gets frontend dependencies like for isntance Angular)
 
-- ```grunt``` (runs the build process, starts a node instance, and starts a watcher)
+- ```grunt``` (runs the build process, starts a node instance, and starts a watcher).
 
 Microbrew.it should now build, and a node instance serving the frontend should be started at http://localhost:3000.

@@ -117,7 +117,17 @@ mbit.controller('RecipeController', [
 		}
 
 		# Setup default recipe
-		$scope.recipe = {}
+		$scope.recipe = {
+			name: ''
+			brewer: {}
+			ibu: 0
+			abv: 0
+			srm: 0
+			og: 0
+			fg: 0
+			finalVolume: 20
+			efficiency: 70
+		}
 
 		$scope.recipe.mash = [
 			{
