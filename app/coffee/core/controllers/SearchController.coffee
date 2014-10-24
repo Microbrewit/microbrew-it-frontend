@@ -14,6 +14,7 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams',
 			"hops"
 			"yeasts"
 			"recipes"
+			"ingredients"
 		]
 
 		$scope.$watch('searchQuery', (query = "") ->
@@ -21,9 +22,13 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams',
 			$scope.query = query
 
 			# we only perform an API call if there are more than 3 characters supplied
+			if $scope.endpoint is "ingredients"
+				endpoint = "search/ingredients"
+			else 
+				endpoint = $scope.endpoint
 			if query? and query.length >= 3
-				search(query, $scope.endpoint).async().then((apiResponse) ->
-					if $scope.endpoint is "search"
+				search(query, endpoint).async().then((apiResponse) ->
+					if $scope.endpoint is "search" or $scope.endpoint is "ingredients"
 						$scope.results = apiResponse.hits.hits
 						console.log apiResponse.hits.hits
 					else
