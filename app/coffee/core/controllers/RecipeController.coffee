@@ -7,7 +7,10 @@ mbit.controller('RecipeController', [
 	'localStorage'
 	'sessionStorage'
 	'$stateParams'
-	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams) ->
+	'_'
+	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _) ->
+
+		console.log $scope.user
 
 		# Are we adding a clone?
 		if $stateParams.clone?
@@ -26,18 +29,45 @@ mbit.controller('RecipeController', [
 		# get ingredients
 		sessionId = "recipe-#{new Date().getTime()}"
 
-		$scope.$watch 'recipe', () ->
+		$scope.updateFermentableValues = () ->
+			totalMCU = 0
+			totalGP = 0
+
+			for step in $scope.recipe.mash 
+				for ingredient in step.fermentables
+					totalGP+=ingredient.gravityPoints
+					totalMCU+=ingredient.mcu
+
+			calcOG(totalGP)
+
+
+			console.log 'updateFermentableValues'
+
+		calcOG = (totalGP) ->
+			totalGP = parseInt(totalGP)
+			$scope.recipe.og = (1 + totalGP/1000).toFixed(3)
+			calcFG()
+		calcFG = ->
+			$scope.recipe.fg = (($scope.recipe.og-1)*(1-0.75)+1).toFixed(3)
+
+		calcBitterness = ->
+
+		calcColour = ->
+		# $scope.$watch('recipe', () ->
+
 			
-			sessionRecipes = sessionStorage.getItem('recipes')
+		# 	# sessionRecipes = sessionStorage.getItem('recipes')
 			
-			if typeof sessionRecipes is 'object'
-				if sessionRecipes?[sessionId]?
-					sessionRecipes[sessionId] = $scope.recipe
-					sessionStorage.setItem('recipes', sessionRecipes)
-			else
-				sessionRecipes = {}
-				sessionRecipes[sessionId] = $scope.recipe
-				sessionStorage.setItem('recipes', sessionRecipes)
+		# 	# if typeof sessionRecipes is 'object'
+		# 	# 	if sessionRecipes?[sessionId]?
+		# 	# 		sessionRecipes[sessionId] = $scope.recipe
+		# 	# 		sessionStorage.setItem('recipes', sessionRecipes)
+		# 	# else
+		# 	# 	sessionRecipes = {}
+		# 	# 	sessionRecipes[sessionId] = $scope.recipe
+		# 	# 	sessionStorage.setItem('recipes', sessionRecipes)
+		# , true)
+
 
 		# There must be a better way
 		updateStepNumbers = () ->
@@ -57,6 +87,7 @@ mbit.controller('RecipeController', [
 			hops: []
 			spices: []
 			fruits: []
+			yeasts: []
 			notes: ""
 		}
 		boilProto = {
@@ -66,6 +97,7 @@ mbit.controller('RecipeController', [
 			hops: []
 			spices: []
 			fruits: []
+			yeasts: []
 			notes: ""
 		}
 		fermentProto = {
@@ -77,7 +109,7 @@ mbit.controller('RecipeController', [
 			hops: []
 			spices: []
 			fruits: []
-			yeast: []
+			yeasts: []
 			notes: ""
 		}
 		# add 
@@ -107,6 +139,28 @@ mbit.controller('RecipeController', [
 				endpoint: type 
 				step: step
 			}
+
+		$scope.addIngredientToStep = (step, ingredient) ->
+			ingredient = _.clone(ingredient)
+
+			if ingredient.dataType is 'fermentable'
+				ingredient.amount = 0
+				ingredient.mcu = 0
+				ingredient.gravityPoints = 0
+
+				step.fermentables.push(ingredient)
+
+			else if ingredient.dataType is 'hop'
+				ingredient.amount = 0
+				ingredient.form = 'pellet'
+
+				step.hops.push(ingredient)
+
+			else if ingredient.dataType is 'yeast'
+
+				step.yeasts.push(ingredient)
+
+			updateStepNumbers()
 
 		$scope.showSearch = false
 
@@ -140,6 +194,7 @@ mbit.controller('RecipeController', [
 				hops: []
 				spices: []
 				fruits: []
+				yeasts: []
 				notes: ""
 			}
 		]
@@ -153,6 +208,7 @@ mbit.controller('RecipeController', [
 				hops: []
 				spices: []
 				fruits: []
+				yeasts: []
 				notes: ""
 			}
 		]
@@ -167,7 +223,7 @@ mbit.controller('RecipeController', [
 				hops: []
 				spices: []
 				fruits: []
-				yeast: []
+				yeasts: []
 				notes: ""
 			}
 		]

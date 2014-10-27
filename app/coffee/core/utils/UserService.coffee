@@ -1,5 +1,5 @@
 user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/network/NetworkService']).
-	service('login', ($http, $log, ApiUrl, $rootScope) ->
+	service('login', ['$http', '$log', 'ApiUrl', '$rootScope', ($http, $log, ApiUrl, $rootScope) ->
 		
 		# promise pattern (login.async().then(-> something))
 		doLogin = (username, password, authorization=false) ->
@@ -28,6 +28,7 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/network
 						)
 						.then((response) ->
 							$rootScope.user = response.data
+							console.log $rootScope.user
 							$rootScope.user.auth = authorization
 							$rootScope.token =
 								expires: new Date()
@@ -38,17 +39,17 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/network
 					return promise
 				
 			return request	
-	).
-	service('logout', ($http, $log, ApiUrl, $rootScope) ->
+	]).
+	service('logout', ['$http', '$log', 'ApiUrl', '$rootScope', ($http, $log, ApiUrl, $rootScope) ->
 		# Since we use tokens, we know that the token will be invalid soon and that it isnt stored anywhere else
 		# Therefore we only need to remove all references to the user object and the token
 		if $rootScope.user?.auth
 			$rootScope.user = null
 			$rootScope.token = null
 			$localStorage.removeItem('user')
-	).
-	service('updateUser', (ApiUrl, mbSet) ->
+	]).
+	service('updateUser', ['ApiUrl', 'mbSet', (ApiUrl, mbSet) ->
 		userUpdate = (userObject) ->
 			# TODO: Check user object for errors
 			return mbSet.set("#{ApiUrl}/users", userObject)
-	)
+	])

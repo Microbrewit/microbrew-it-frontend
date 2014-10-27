@@ -1,28 +1,28 @@
-<article id="search">
-	<!-- <section class="search-input">
+<article id="embedded-search">
+	<button class="form-button delete" style="float:right" ng-click="close()">Close</button>
+	<section class="search-input">
 		<div class="inner-wrapper">
-			<h2>Fermentables</h2><input id="searchQuery" class="big-search-box" placeholder="Search" ng-model="searchQuery"/>
+			<h2>Add Ingredients</h2><input type="text" class="small-search-box" placeholder="Search" ng-model="ingsearchQuery" ng-change="performSearch(ingsearchQuery)"/>
 		</div>
-	</section> -->
+	</section>
 	<section class="search-results">
 		<div class="inner-wrapper">
-			<button class="form-button delete" ng-click="close()">Close</button>
-			<table class="fermentables" ng-show="results.length > 0">
+			<table class="ingredients" ng-show="results.length > 0">
 				<tr>
 					<th></th>
-					<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+					<th>Name of <strong>INGREDIENT</strong></th>
 					<th>Type</th>
 					<th>PPG</th>
 					<th>Colour</th>
 				</tr>
-				<tr ng-repeat="fermentable in results">
+				<tr ng-repeat="ingredient in results">
 					<td class="form-button">
-						<button class="add form-button" ng-click="addFermentableToStep(searchContext.step, fermentable)">Add</button>
+						<button class="add form-button" ng-click="addIngredientToStep(searchContext.step, ingredient)">Add</button>
 					</td>
-					<td>{{fermentable.name}}</td>
-					<td>{{fermentable.type}}</td>
-					<td>{{fermentable.lovibond}}</td>
-					<td>{{fermentable.ppg}}</td>
+					<td>{{ingredient._source.name}}</td>
+					<td>{{ingredient._type}}</td>
+					<td>{{ingredient._source.lovibond}}</td>
+					<td>{{ingredient._source.ppg}}</td>
 				</tr>
 			</table>
 		</div>

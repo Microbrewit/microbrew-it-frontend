@@ -27,3 +27,19 @@
 	float:right;
 	@include offset(right, 1.5/10)
 }
+
+#embedded-search {
+	.search-input {
+		h2 {
+			margin: 0;
+			display: inline-block;
+		}
+		.search-box {
+			display: inline-block;
+		}
+		padding-bottom: 10px;
+	}
+	.search-results {
+		padding: 0;
+	}
+}

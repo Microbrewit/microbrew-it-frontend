@@ -350,7 +350,7 @@ module.exports = function (grunt) {
 		});
 
 		// Run sftp-deploy with dynamic config
-		grunt.task.run('sftp-deploy:versionDeploy');
+		//grunt.task.run('sftp-deploy:versionDeploy');
 		grunt.task.run('sftp-deploy:latestDeploy');
 	});
 

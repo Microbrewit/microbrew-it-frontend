@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/calculation/AbvCalc', []).
-	factory('abvCalc', ($log) ->
+	factory('abvCalc', ['$log', ($log) ->
 		abv = {}
 		# Dave Miller, 1988
 		abv.miller = (og, fg) ->
@@ -37,4 +37,4 @@ angular.module('Microbrewit/core/calculation/AbvCalc', []).
 				return null
 
 		return abv
-	)
+	])

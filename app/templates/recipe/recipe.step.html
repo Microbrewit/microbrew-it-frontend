@@ -1,15 +1,15 @@
 	<table class="fermentables" ng-show="step.fermentables.length > 0">
 		<tr>
 			<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
-			<th width="60">Amount</th>
+			<th>Amount</th>
 			<th>Colour</th>
 			<th>PPG</th>
 			<th title="Gravity Points">Contributes</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
-			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}} mcu{{fermentable.mcu}} gp{{fermentable.gravityPoints}}</td>
-			<td><input type="text" ng-model="fermentable.amount"/></td>
+			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
+			<td><input type="text" ng-model="fermentable.amount" ng-change="updateFermentableValues()"/>{{user.settings.measurements.weight.large.short}}</td>
 			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.finalVolume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box></td>
 			<td>{{fermentable.ppg}}</td>
 			<td title="Gravity Points"><mb-gravity-calc ingredient="fermentable" type="{{fermentable.type}}" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.finalVolume}}"></mb-gravity-calc></td>
@@ -23,22 +23,23 @@
 			<th>Amount</th>
 			<th>Form</th>
 			<th>AA</th>
+			<th>BA</th>
 			<th>Contributes</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="hop in step.hops">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
-			<td><input type="text" ng-model="hop.amount"/></td>
-			<td><select ng-model="hop.type" ng-options="type for type in hopTypes"></select></td>
-			<td><input type="text" ng-model="hop.aa"/></td>
-			<td></td>
+			<td><input type="text" ng-model="hop.amount"/>{{user.settings.measurements.weight.small.short}}</td>
+			<td><select ng-model="hop.form" ng-options="type for type in hopTypes"></select></td>
+			<td><input type="text" ng-model="hop.aa"/>%</td>
+			<td><input type="text" ng-model="hop.ba"/>%</td>
+			<td><mb-calc-bitterness ingredient="hop" boilVolume="20" boilGravity="1.08" boilTime="2" formula="{{user.settings.bitterness.formula}}"/></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>
 		</tr>
 	</table>
 
 	<table class="other" ng-show="step.others.length > 0">
 		<tr>
-			<th></th>
 			<th>Name of <strong>OTHER</strong></th>
 			<th>Amount</th>
 			<th>Form</th>
@@ -56,6 +57,27 @@
 			<td><button class="remove form-button" ng-click="removeFromStep(other, step.others)">X</button></td>
 		</tr>
 	</table>
-	<button class="add-ingredient" ng-click="search(step, 'fermentables')">Add Fermentable</button>
-	<button class="add-ingredient" ng-click="search(step, 'hops')">Add Hops</button>
-	<button class="add-ingredient" ng-click="addYeastToStep(step)">Add Yeast</button>
+
+	<table class="yeasts" ng-show="step.yeasts.length > 0">
+		<tr>
+			<th>Name of <strong>YEAST</strong></th>
+			<th>Amount</th>
+			<th>Attenuation</th>
+			<th>Flocculation</th>
+			<th>Alcohol Tolerance</th>
+			<th>Temperature</th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="yeast in step.yeasts">
+			<td>
+				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{yeast.name}} <span ng-show="yeast.productCode">({{yeast.productCode}})</span>
+			</td>
+			<td><input type="text" ng-model="yeast.amount"/></td>
+			<td>{{yeast.attenutionRange}}</td>
+			<td>{{yeast.flocculation}}</td>
+			<td>{{yeast.alcoholTolerance}}</td>
+			<td>{{yeast.temperatureLow}}{{user.settings.measurements.temperature.short}} - {{yeast.temperatureHigh}}{{user.settings.measurements.temperature.short}}</td>
+			<td><button class="remove form-button" ng-click="removeFromStep(other, step.others)">X</button></td>
+		</tr>
+	</table>
+	<button class="add-ingredient" ng-click="search(step, 'ingredients')">Add Ingredient</button>

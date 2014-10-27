@@ -1,16 +1,66 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet', 'filterFilter',
-	($scope, search, get, filterFilter) ->
+mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
+	($scope, search, get) ->
 
-		$scope.addFermentableToStep = (step, fermentable) ->
-			step.fermentables.push(fermentable)
+		$scope.results = []
+
+		$scope.addIngredientToStep = (step, ingredient) ->
+			# What kind of ingredient is it?
+			if ingredient._source.dataType is 'fermentable'
+				pushFermentable(step, ingredient._source)
+			else if ingredient._source.dataType is 'hop'
+				pushHop(step, ingredient._source)
+			else if ingredient._source.dataType is 'yeast'
+				pushYeast(step, ingredient._source)
+
 			close()
-		$scope.addHopsToStep = (step, hop) ->
-			step.hops.push(hop)
-			close()
-		$scope.addYeastToStep = (step) ->
-			step.yeasts.push({ name: "lol" })
+
+
+		pushFermentable = (step, ingredient) ->
+			push = true
+			for fermentable in step.fermentables
+				if ingredient.id is fermentable.id
+					push = false
+
+			if push
+				ingredient = _.clone ingredient
+				ingredient.amount = 0
+				ingredient.mcu = 0
+				ingredient.ppg = ingredient.pPG
+				ingredient.gravityPoints = 0
+				step.fermentables.push ingredient
+
+		pushHop = (step, ingredient) ->
+			push = true
+			for hop in step.hops
+				if ingredient.id is hop.id
+					push = false
+			if push
+				ingredient = _.clone ingredient
+				ingredient.amount = 0
+				ingredient.form = 'pellet'
+				ingredient.aa = (ingredient.aALow + ingredient.aAHigh) / 2
+				ingredient.ba = (ingredient.betaLow + ingredient.betaHigh) / 2
+				step.hops.push ingredient
+
+		pushYeast = (step, ingredient) ->
+			push = true
+
+			console.log 'loop'
+			for yeast in step.yeasts
+				if ingredient.id is yeast.id
+					push = false
+			console.log 'push'
+			if push
+				ingredient = _.clone ingredient
+				ingredient.amount = 0
+				if ingredient.alcoholTolerance.indexOf(',') isnt -1
+					alcoholTolerance = ingredient.alcoholTolerance.split(',')
+					ingredient.alcoholTolerance.replace(',', ' - ')
+					ingredient.alcoholToleranceRange = {low: alcoholTolerance[0], high: alcoholTolerance[1]}
+				step.yeasts.push ingredient
+		
 
 		$scope.close = () -> 
 			$scope.searchContext.active = false
@@ -18,16 +68,22 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet', 'fil
 		close = () ->
 			$scope.searchContext.active = false
 
-		$scope.$watch('searchContext', (newVal, oldVal) ->
-			$scope.query = ''
-			if newVal.endpoint isnt oldVal.endpoint
-				if newVal.endpoint is 'fermentables'
-					get.fermentables().async().then((apiResponse) ->
-						$scope.results = apiResponse.fermentables
-					)
-				else if newVal.endpoint is 'hops'
-					get.hops().async().then((apiResponse) ->
-						$scope.results = apiResponse.hops
-					)
-		, true)    
+		$scope.performSearch = (query) ->
+			console.log "searchQuery updated #{query}"
+			# save used query to scope
+
+			endpoint = "search/ingredients"
+
+			if query? and query.length >= 3
+				search(query, endpoint).async().then((apiResponse) ->
+					console.log 'success'
+					$scope.results = apiResponse.hits.hits
+					console.log apiResponse.hits.hits
+
+					#$scope.resultsNumber = $scope.results.length
+				, (error) ->
+					console.log 'error')
+			else
+				$scope.results = []
+				$scope.resultsNumber = 0   
 ])

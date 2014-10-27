@@ -4,7 +4,7 @@
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/network/NetworkService', []).
 	value('ApiUrl', 'http://microbrewit.asphaug.io').
-	factory('mbGet', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
+	factory('mbGet', ['$http', '$log', '$rootScope', 'sessionStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
 			console.log requestUrl
@@ -56,8 +56,8 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 		return factory
 
-	).
-	factory('mbSet', ($http, $log, ApiUrl, localStorage) ->
+	]).
+	factory('mbSet', ['$http', '$log', 'ApiUrl', 'localStorage', ($http, $log, ApiUrl, localStorage) ->
 		factory = {}
 		factory.set = (requestUrl, object) ->
 			auth = localStorage.getItem('user')
@@ -109,9 +109,9 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 
 		return factory
 
-	).
+	]).
 
-	service('mbSearch', ($http, $log, ApiUrl, $rootScope) ->
+	service('mbSearch', ['$http', '$log', 'ApiUrl', '$rootScope', ($http, $log, ApiUrl, $rootScope) ->
 		@search = (query, endpoint = "") ->
 			if query.length >= 3
 				promise = false
@@ -147,4 +147,4 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 						return promise
 				
 				return request	
-	)
+	])

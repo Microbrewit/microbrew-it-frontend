@@ -8,9 +8,9 @@ factory('bitternessCalc', () ->
 
 	calc.rager = (hopObj) ->
 		hopObj.boilGravity = hopObj.boilGravity or 1.000
-		utilisation = @ragerUtilisation(hopObj.boilTime)
-		mgl = @tinsethMgl(hopObj.amount, hopObj.aa, hopObj.boilVolume)
-		ibu = @ragerIbu(hopObj.amount, utilisation, hopObj.aa, hopObj.boilVolume, hopObj.boilGravity)
+		utilisation = ragerUtilisation(hopObj.boilTime)
+		mgl = tinsethMgl(hopObj.amount, hopObj.aa, hopObj.boilVolume)
+		ibu = ragerIbu(hopObj.amount, utilisation, hopObj.aa, hopObj.boilVolume, hopObj.boilGravity)
 		return {
 			ibu: ibu
 			utilisation: utilisation
@@ -19,9 +19,9 @@ factory('bitternessCalc', () ->
 
 	calc.tinseth = (hopObj) ->	
 		hopObj.boilGravity = hopObj.boilGravity or 1.000
-		mgl = @tinsethMgl(hopObj.amount, hopObj.aa, hopObj.boilVolume)
-		utilisation = @tinsethUtilisation(hopObj.boilGravity, hopObj.boilTime)
-		ibu = @tinsethIbu(utilisation, mgl)
+		mgl = tinsethMgl(hopObj.amount, hopObj.aa, hopObj.boilVolume)
+		utilisation = tinsethUtilisation(hopObj.boilGravity, hopObj.boilTime)
+		ibu = tinsethIbu(utilisation, mgl)
 		return {
 			ibu: ibu
 			utilisation: utilisation

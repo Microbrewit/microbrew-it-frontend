@@ -5,20 +5,26 @@
 
 	<section class="meta-information">
 		<div class="inner-wrapper">
-			Name <input type="text" ng-model="recipe.name"/>
-			
+			<input type="text" class="recipe-name" placeholder="Name of brew" ng-model="recipe.name"/>
+			<input type="text" class="recipe-style" placeholder="Style" ng-model="recipe.style"/>			
 		</div>
 	</section>
 
 	<section class="meta-calculations">
 		<div class="inner-wrapper">
-			ABV {{recipe.abv}} 
-			Original Gravity {{recipe.og}} 
-			Final Gravity {{recipe.ef}} 
-			Bitterness {{recipe.ibu}} 
-			Colour {{recipe.srm}} 
-			Volume <input type="number" ng-model="recipe.finalVolume"/> 
-			Efficiency <input type="number" ng-model="recipe.efficiency"/>
+			ABV <span class="beer-meta-value">
+				<mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> 
+			</span>
+			Original Gravity <span class="beer-meta-value">{{recipe.og}} </span>
+			Final Gravity <span class="beer-meta-value">{{recipe.fg}} </span>
+			Bitterness <span class="beer-meta-value">{{recipe.ibu}} </span>
+			Colour <span class="beer-meta-value">{{recipe.srm}} </span>
+			Volume <span class="beer-meta-value">
+			<input type="number" ng-model="recipe.finalVolume"/> 
+			</span>
+			Efficiency <span class="beer-meta-value">
+				<input type="number" ng-model="recipe.efficiency"/>
+			</span>
 		</div>
 	</section>
 

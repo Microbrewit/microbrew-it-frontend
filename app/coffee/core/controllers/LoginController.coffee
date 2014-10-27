@@ -14,7 +14,6 @@ mbit.controller('LoginController', ['$scope', 'login', '$stateParams', '$state',
 					if $scope.remember
 						localStorage.setItem('user', $scope.user)
 					
-
 					if $stateParams.redirect
 						$state.go($stateParams.redirect)
 					else
