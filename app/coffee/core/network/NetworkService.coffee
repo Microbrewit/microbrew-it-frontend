@@ -4,7 +4,7 @@
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/network/NetworkService', []).
 	value('ApiUrl', 'http://microbrewit.asphaug.io').
-	factory('mbGet', ['$http', '$log', '$rootScope', 'sessionStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
+	factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
 			console.log requestUrl
@@ -29,6 +29,14 @@ angular.module('Microbrewit/core/network/NetworkService', []).
 					return promise
 
 			return request
+
+		factory.user = (id = null) ->
+			if id
+				requestUrl = "#{ApiUrl}/users/#{id}?callback=JSON_CALLBACK"
+			else
+				requestUrl = "#{ApiUrl}/users?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
 
 		factory.fermentables = (id = null) ->
 			if id

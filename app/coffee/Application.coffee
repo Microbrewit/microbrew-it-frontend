@@ -72,8 +72,18 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			templateUrl: "templates/login.html"
 		})
 		.state('brewers', {
-			url: "/brewers"
-			templateUrl: "templates/login.html"
+			abstract: true
+			templateUrl: "templates/brewers/brewers.html"
+		})
+		.state('brewers.list', {
+			url: '/brewers'
+			controller: 'UserController'
+			templateUrl: "templates/brewers/brewers.list.html"
+		})
+		.state('brewers.single', {
+			url: '/brewers/{id}'
+			controller: 'UserController'
+			templateUrl: "templates/brewers/brewers.single.html"
 		})
 		.state('search', {
 			url: "/search"

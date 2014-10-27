@@ -1,0 +1,9 @@
+<article class="single-brewer">
+	<h1>Brewers</h1>
+	<div class="inner-wrapper">
+		<ul>
+			<li for="brewer in results">
+				<a ui-sref="fermentables.single({id:brewer.id})">{{brewer.username}}</a>
+			</li>
+		</ul>
+</article>

@@ -1,0 +1,19 @@
+<article class="single-brewer">
+	<h1><gravatar src="{{brewer.email}}" size="40"></gravatar> {{brewer.username}}</h1><div class="header-meta"><span class="bubble">{{brewer.beers.length}}</span> Brews {{brewer.settings.country}}</div>
+	<section class="brews">
+		<div class="inner-wrapper">
+			<h2>Brews</h2>
+
+			<ul class="brew-list search-result-block" ng-show="brewer.beers.length > 0">
+				<li class="brew" ng-repeat="brew in brewers.beers">
+					<h3>{{brew.name}}</h3>
+					<div class="beer-style">{{brew.style}}</div>
+					<span class="abv">{{brew.abv}}</span> - 
+					<span class="ibu">{{brew.ibu}}</span> - 
+					<span class="srm">{{brew.srm}}</span>
+				</li>
+			</ul>
+			<div ng-show="brewer.beers.length === 0">No brews =(</div>
+		</div>
+	</section>
+</article>
