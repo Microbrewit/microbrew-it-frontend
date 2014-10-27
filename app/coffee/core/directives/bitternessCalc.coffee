@@ -9,7 +9,7 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 			'unit': '@unit'
 		}
 		replace: true
-		template: '<span class="bitterness">{{bitterness}} {{unit}}</span>'
+		template: '<span class="bitterness">{{bitterness}} {{unit}} - {{ingredient.utilisation}} utilisation - {{ingredient.mgl}} mgl</span>'
 		link: (scope, element, attrs) ->
 			# Hop object:
 			# boilTime
@@ -18,7 +18,6 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 			# aa
 			# boilGravity
 			calcBitterness = () ->
-				scope.bitterness = 0
 				scope.unit = 'ibu'
 				console.log attrs
 				formula = if attrs.formula then attrs.formula else 'tinseth'
@@ -29,8 +28,6 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 					amount: parseFloat(scope.ingredient.amount)
 					aa: parseFloat(scope.ingredient.aa)
 
-				console.log calcObj
-
 				bitternessObj = bitternessCalc[formula](calcObj) if bitternessCalc[formula]?
 
 				scope.bitterness = bitternessObj.ibu.toFixed(2)
@@ -38,12 +35,12 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 				console.log bitternessObj
 
 				scope.ingredient.ibu = bitternessObj.ibu
-				scope.ingredient.utilisation = bitternessObj.utilisation
+				scope.ingredient.utilisation = bitternessObj.utilisation.toFixed(4)
 				scope.ingredient.mgl = bitternessObj.mgl
 
 			# Run only once every $digest
 			scope.$watch(->
-				return [attrs.boilTime, attrs.boilVolume, attrs.boilGravity, scope.ingredient.amount, scope.ingredient.aa, attrs.formula]
+				return [attrs.boiltime, attrs.boilvolume, attrs.boilgravity, scope.ingredient.amount, scope.ingredient.aa, attrs.formula]
 			, calcBitterness, true)
 	}
 )

@@ -61,11 +61,11 @@
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
 						<span class="values">
-							<label for="length">Length: </label>
-							<input type="text" id="length" ng-model="length"/>
+							<label for="length">Add at: </label>
+							<input type="text" id="length" ng-model="step.length"/>
 
 							<label for="volume">Volume (L): </label>
-							<input type="text" id="volume" ng-model="length"/>
+							<input type="text" id="volume" ng-model="step.volume"/>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -99,11 +99,47 @@
 		</div>
 	</section>
 
-	<section class="wrap-up">
-		<h2>Wrap up</h2>
+	<section class="wrap-up" ng-show="false">
+		<div class="inner-wrapper">
+			<h2>Wrap up</h2>
+			Bottling/kegging/whatever.
+		</div>
 	</section>
 
 	<section class="conclusion">
+		<div class="inner-wrapper">
+			<h2>Looks good!</h2>
+			ABV 
+			<span class="beer-meta-value">
+				<mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> 
+			</span>
+			
+			Original Gravity 
+			<span class="beer-meta-value">
+				{{recipe.og}}
+			</span>
+			
+			Final Gravity 
+			<span class="beer-meta-value">
+				{{recipe.fg}}
+			</span>
+
+			Bitterness 
+			<span class="beer-meta-value">
+				{{recipe.ibu}}
+			</span>
+
+			Colour
+			<span class="beer-meta-value">
+				{{recipe.srm}}
+			</span>
+
+			Volume
+			<span class="beer-meta-value">
+				{{recipe.finalVolume}}
+			</span>
+
+		</div>
 	</section>
 
 	<section class="embedded-search" ng-show="searchContext.active">

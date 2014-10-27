@@ -40,8 +40,10 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 				ingredient = _.clone ingredient
 				ingredient.amount = 0
 				ingredient.form = 'pellet'
-				ingredient.aa = (ingredient.aALow + ingredient.aAHigh) / 2
-				ingredient.ba = (ingredient.betaLow + ingredient.betaHigh) / 2
+				console.log 
+				ingredient.aa = (ingredient.aAHigh+ingredient.aALow)/2
+				ingredient.aa = ingredient.aALow if ingredient.aAHigh is 0
+				ingredient.beta = ingredient.betaHigh
 				step.hops.push ingredient
 
 		pushYeast = (step, ingredient) ->

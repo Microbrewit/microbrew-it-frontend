@@ -39,8 +39,6 @@ mbit.controller('RecipeController', [
 					totalMCU+=ingredient.mcu
 
 			calcOG(totalGP)
-
-
 			console.log 'updateFermentableValues'
 
 		calcOG = (totalGP) ->

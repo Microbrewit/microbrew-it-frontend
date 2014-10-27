@@ -9,10 +9,10 @@
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
-			<td><input type="text" ng-model="fermentable.amount" ng-change="updateFermentableValues()"/>{{user.settings.measurements.weight.large.short}}</td>
+			<td><input type="text" ng-model="fermentable.amount"/>{{user.settings.measurements.weight.large.short}}</td>
 			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.finalVolume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box></td>
 			<td>{{fermentable.ppg}}</td>
-			<td title="Gravity Points"><mb-gravity-calc ingredient="fermentable" type="{{fermentable.type}}" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.finalVolume}}"></mb-gravity-calc></td>
+			<td title="Gravity Points"><mb-gravity-calc change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="kg" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.finalVolume}}"></mb-gravity-calc></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>
@@ -32,8 +32,8 @@
 			<td><input type="text" ng-model="hop.amount"/>{{user.settings.measurements.weight.small.short}}</td>
 			<td><select ng-model="hop.form" ng-options="type for type in hopTypes"></select></td>
 			<td><input type="text" ng-model="hop.aa"/>%</td>
-			<td><input type="text" ng-model="hop.ba"/>%</td>
-			<td><mb-calc-bitterness ingredient="hop" boilVolume="20" boilGravity="1.08" boilTime="2" formula="{{user.settings.bitterness.formula}}"/></td>
+			<td><input type="text" ng-model="hop.beta"/>%</td>
+			<td><mb-calc-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}"/></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>
 		</tr>
 	</table>
