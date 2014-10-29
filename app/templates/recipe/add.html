@@ -11,20 +11,19 @@
 	</section>
 
 	<section class="meta-calculations">
-		<div class="inner-wrapper">
-			ABV <span class="beer-meta-value">
-				<mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> 
-			</span>
-			Original Gravity <span class="beer-meta-value">{{recipe.og}} </span>
-			Final Gravity <span class="beer-meta-value">{{recipe.fg}} </span>
-			Bitterness <span class="beer-meta-value">{{recipe.ibu}} </span>
-			Colour <span class="beer-meta-value">{{recipe.srm}} </span>
-			Volume <span class="beer-meta-value">
+		<div class="inner-wrapper recipe-beer-meta">
+			<div class="beer-meta-key">ABV</div> 
+			<div class="beer-meta-value"><mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-calc-abv>%</div>
+			<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
+			<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
+			<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
+			<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
+			<div class="beer-meta-key">Volume</div> <div class="beer-meta-value">
 			<input type="number" ng-model="recipe.finalVolume"/> 
-			</span>
-			Efficiency <span class="beer-meta-value">
+			</div>
+			<div class="beer-meta-key">Efficiency</div> <div class="beer-meta-value">
 				<input type="number" ng-model="recipe.efficiency"/>
-			</span>
+			</div>
 		</div>
 	</section>
 
@@ -109,36 +108,21 @@
 	<section class="conclusion">
 		<div class="inner-wrapper">
 			<h2>Looks good!</h2>
-			ABV 
-			<span class="beer-meta-value">
-				<mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> 
-			</span>
-			
-			Original Gravity 
-			<span class="beer-meta-value">
-				{{recipe.og}}
-			</span>
-			
-			Final Gravity 
-			<span class="beer-meta-value">
-				{{recipe.fg}}
-			</span>
 
-			Bitterness 
-			<span class="beer-meta-value">
-				{{recipe.ibu}}
-			</span>
+			<div class="recipe-beer-meta">
+				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-calc-abv>%</div>
+				<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
+				<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
+				<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
+				<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
 
-			Colour
-			<span class="beer-meta-value">
-				{{recipe.srm}}
-			</span>
+				<div class="beer-meta-key">Volume</div>
+				<div class="beer-meta-value">
+					{{recipe.finalVolume}}
+				</div>
+			</div>
 
-			Volume
-			<span class="beer-meta-value">
-				{{recipe.finalVolume}}
-			</span>
-
+			<button class="save" ng-click="submitRecipe()">Add</button>
 		</div>
 	</section>
 

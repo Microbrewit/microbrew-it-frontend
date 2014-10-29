@@ -8,12 +8,13 @@ mbit.directive('mbCalcAbv', (abvCalc) ->
 			'abv': '@abv'
 		}
 		replace: true
-		template: '<div class="abv">{{abv}}% ({{formula}})</div>'
+		template: '<span class="abv">{{abv}}</span>'
 		link: (scope, element, attr) ->
 			formulaToUse = ""
-
 			calcAbv = (og, fg) ->
-				abvCalc[formulaToUse](og, fg) if abvCalc[formulaToUse]?
+				abv = abvCalc[formulaToUse](og, fg) if abvCalc[formulaToUse]?
+				abv = 0 if isNaN(abv)
+				return abv
 
 			attr.$observe('formula', (formula) ->
 				formulaToUse = formula

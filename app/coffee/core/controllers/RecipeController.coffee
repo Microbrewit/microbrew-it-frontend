@@ -8,7 +8,8 @@ mbit.controller('RecipeController', [
 	'sessionStorage'
 	'$stateParams'
 	'_'
-	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _) ->
+	'colourCalc'
+	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
 
 		console.log $scope.user
 
@@ -38,8 +39,29 @@ mbit.controller('RecipeController', [
 					totalGP+=ingredient.gravityPoints
 					totalMCU+=ingredient.mcu
 
+			for step in $scope.recipe.boil 
+				for ingredient in step.fermentables
+					totalGP+=ingredient.gravityPoints
+					totalMCU+=ingredient.mcu
+
 			calcOG(totalGP)
+			calcColour(totalMCU)
 			console.log 'updateFermentableValues'
+
+		$scope.updateHopsValues = () ->
+			totalIBU = 0
+			
+			for step in $scope.recipe.mash 
+				for ingredient in step.hops
+					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
+
+					console.log ingredient.ibu
+
+			for step in $scope.recipe.boil 
+				for ingredient in step.hops
+					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
+			
+			$scope.recipe.ibu = parseInt(totalIBU)
 
 		calcOG = (totalGP) ->
 			totalGP = parseInt(totalGP)
@@ -50,7 +72,8 @@ mbit.controller('RecipeController', [
 
 		calcBitterness = ->
 
-		calcColour = ->
+		calcColour = (totalMCU) ->
+			$scope.recipe.srm = parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
 		# $scope.$watch('recipe', () ->
 
 			

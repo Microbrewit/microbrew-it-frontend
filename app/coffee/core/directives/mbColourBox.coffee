@@ -11,7 +11,7 @@ mbit.directive('mbColourBox', ['colourCalc', 'conversion', (colourCalc, conversi
 			srm: '@srm'
 		}
 		replace: true
-		template: '<div><span class="gravity" style="display:inline-block;width:39px;height:39px;padding:0;margin:0;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span>{{lovibond}}°L</div>'
+		template: '<span class="gravity" style="display:inline-block;width:39px;height:39px;padding:0;margin:0;border-radius:50%;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span></div>'
 		link: (scope, element, attrs) ->
 			
 			calcColour = ->
@@ -32,8 +32,8 @@ mbit.directive('mbColourBox', ['colourCalc', 'conversion', (colourCalc, conversi
 
 				# # Add 
 				# scope.ingredient.mcu = (((attrs.amount*2.205)*scope.lovibond)/attrs.volume*0.264).toFixed(2) 
-					
 
+			scope.lovibond = 0
 			# Run only once every $digest
 			scope.$watch(->
 				return if attrs.volume? then [attrs.type, attrs.colour, attrs.volume, attrs.amount] else [attrs.type, attrs.colour]

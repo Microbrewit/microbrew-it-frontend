@@ -7,6 +7,7 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 			'ingredient': '='
 			'bitterness': '@bitterness'
 			'unit': '@unit'
+			'change': '='
 		}
 		replace: true
 		template: '<span class="bitterness">{{bitterness}} {{unit}} - {{ingredient.utilisation}} utilisation - {{ingredient.mgl}} mgl</span>'
@@ -37,6 +38,8 @@ mbit.directive('mbCalcBitterness', (bitternessCalc) ->
 				scope.ingredient.ibu = bitternessObj.ibu
 				scope.ingredient.utilisation = bitternessObj.utilisation.toFixed(4)
 				scope.ingredient.mgl = bitternessObj.mgl
+
+				scope.change()
 
 			# Run only once every $digest
 			scope.$watch(->
