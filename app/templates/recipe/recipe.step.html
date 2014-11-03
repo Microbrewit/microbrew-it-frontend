@@ -10,10 +10,10 @@
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
 			<td><input type="text" ng-model="fermentable.amount"/>{{user.settings.measurements.weight.large.short}}</td>
-			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.finalVolume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
+			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
 				{{fermentable.lovibond}}°L</td>
 			<td>{{fermentable.ppg}}</td>
-			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="kg" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.finalVolume}}"></mb-gravity></td>
+			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="kg" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.volume}}"></mb-gravity></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>

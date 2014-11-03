@@ -19,7 +19,7 @@
 			<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
 			<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
 			<div class="beer-meta-key">Volume</div> <div class="beer-meta-value">
-			<input type="number" ng-model="recipe.finalVolume"/> 
+			<input type="number" ng-model="recipe.volume"/> 
 			</div>
 			<div class="beer-meta-key">Efficiency</div> <div class="beer-meta-value">
 				<input type="number" ng-model="recipe.efficiency"/>
@@ -31,7 +31,7 @@
 		<div class="inner-wrapper">
 			<h2>Mash</h2>
 			<ul>
-				<li class="step-wrapper" ng-repeat="step in recipe.mash">
+				<li class="step-wrapper" ng-repeat="step in recipe.mashSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Mash step</span>
@@ -55,7 +55,7 @@
 		<div class="inner-wrapper">
 			<h2>Boil</h2>
 			<ul>
-				<li ng-repeat="step in recipe.boil">
+				<li ng-repeat="step in recipe.boilSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
@@ -78,7 +78,7 @@
 		<div class="inner-wrapper">
 			<h2>Fermentation</h2>
 			<ul>
-				<li ng-repeat="step in recipe.fermentation">
+				<li ng-repeat="step in recipe.fermentationSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Fermentation step</span>
@@ -118,7 +118,7 @@
 
 				<div class="beer-meta-key">Volume</div>
 				<div class="beer-meta-value">
-					{{recipe.finalVolume}}
+					{{recipe.volume}}l
 				</div>
 			</div>
 

@@ -1,0 +1,10 @@
+<article class="single-brewer">
+	<h1>Beers</h1>
+	<div class="inner-wrapper">
+		{{brews.length}}
+		<ul>
+			<li ng-repeat="beer in brews">
+				<a ui-sref="brews.single({id:beer.id})">{{beer.name}}</a>
+			</li>
+		</ul>
+</article>

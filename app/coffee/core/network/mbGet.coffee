@@ -37,7 +37,7 @@ angular.module('Microbrewit/core/Network')
 
 			return @get(requestUrl)
 
-		factory.fermentables = (id = null) ->
+		factory.fermentables = (id = null, from = 0, size = 20) ->
 			if id
 				requestUrl = "#{ApiUrl}/fermentables/#{id}?callback=JSON_CALLBACK"
 			else
@@ -45,7 +45,7 @@ angular.module('Microbrewit/core/Network')
 
 			return @get(requestUrl)
 
-		factory.yeasts = (id = null) ->
+		factory.yeasts = (id = null, from = 0, size = 20) ->
 			if id
 				requestUrl = "#{ApiUrl}/yeasts/#{id}?callback=JSON_CALLBACK"
 			else
@@ -53,11 +53,40 @@ angular.module('Microbrewit/core/Network')
 
 			return @get(requestUrl)
 
-		factory.hops = (id = null) ->
+		factory.hops = (id = null, from = 0, size = 20) ->
 			if id
 				requestUrl = "#{ApiUrl}/hops/#{id}?callback=JSON_CALLBACK"
 			else
 				requestUrl = "#{ApiUrl}/hops?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.beers = (query) ->
+			# Get specific beer
+			if query.id
+				requestUrl = "#{ApiUrl}/beers/#{query.id}?callback=JSON_CALLBACK"
+
+			# Get beer with query string
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/beers?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			# Get latest added beers
+			else if query.latest
+				query.from ?= 0
+				query.size ?= 20
+				requestUrl = "#{ApiUrl}/beers/last?from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			# Get beers
+			else
+				requestUrl = "#{ApiUrl}/beers?callback=JSON_CALLBACK"
 
 			return @get(requestUrl)
 

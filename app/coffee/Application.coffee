@@ -97,6 +97,20 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			controller: 'UserController'
 			templateUrl: "templates/brewers/brewers.single.html"
 		})
+		.state('brews', {
+			abstract: true
+			templateUrl: "templates/brews/brews.html"
+		})
+		.state('brews.list', {
+			url: '/brews'
+			controller: 'BeerController'
+			templateUrl: "templates/brews/brews.list.html"
+		})
+		.state('brews.single', {
+			url: '/brews/{id:[0-9]{1,5}}'
+			controller: 'BeerController'
+			templateUrl: "templates/brews/brews.single.html"
+		})
 		.state('search', {
 			url: "/search"
 			templateUrl: "templates/search.html"
@@ -109,6 +123,11 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 		})
     	.state('add', {
 			url: "/add"
+			templateUrl: "templates/recipe/add.html"
+			controller: "RecipeController"
+		})
+		.state('fork', {
+			url: "/brews/:fork/fork"
 			templateUrl: "templates/recipe/add.html"
 			controller: "RecipeController"
 		})
