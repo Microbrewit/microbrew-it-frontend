@@ -8,7 +8,7 @@ mbit.controller('RecipeController', [
 	'sessionStorage'
 	'$stateParams'
 	'_'
-	'colourCalc'
+	'colour'
 	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
 
 		console.log $scope.user

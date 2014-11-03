@@ -1,0 +1,1 @@
+angular.module('Microbrewit/core/User', ['Microbrewit/core/Network'])

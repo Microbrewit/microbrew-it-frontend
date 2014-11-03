@@ -8,6 +8,7 @@
     "angular-lodash": "~0.1.0",
     "lattice": "https://github.com/Torthu/Lattice-2.git",
     "angular-md5": "~0.1.7",
-    "angular-loading-bar": "~0.6.0"
+    "angular-loading-bar": "~0.6.0",
+    "better-module": "https://gist.github.com/a0fea86616d968a706f6.git"
   }
 }
