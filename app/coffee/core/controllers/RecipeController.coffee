@@ -1,6 +1,7 @@
 mbit = angular.module('Microbrewit')
 
 mbit.controller('RecipeController', [
+	'$rootScope'
 	'$scope'
 	'mbGet'
 	'mbSet'
@@ -8,17 +9,24 @@ mbit.controller('RecipeController', [
 	'sessionStorage'
 	'$stateParams'
 	'_'
-	'colourCalc'
-	($scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
+	'colour'
+	($rootScope, $scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
 
 		console.log $scope.user
-
+		console.log '### STATEPARAMS'
+		console.log $stateParams
 		# Are we adding a clone?
 		if $stateParams.clone?
 			console.log 'BEER CLONE'
 
 		else if $stateParams.fork?
-			console.log 'FORK OF RECIPE'
+			if $rootScope.beerToFork?
+				$scope.recipe = _.clone $rootScope.beerToFork.recipe
+				$rootScope.beerToFork = undefined
+			else
+				mbGet.beers({id:$stateParams.fork}).async().then((response) ->
+					$scope.recipe = response.beers[0].recipe
+				)
 
 		$scope.hopTypes = ['pellet', 'flower']
 
@@ -34,15 +42,15 @@ mbit.controller('RecipeController', [
 			totalMCU = 0
 			totalGP = 0
 
-			for step in $scope.recipe.mash 
+			for step in $scope.recipe.mashSteps
 				for ingredient in step.fermentables
-					totalGP+=ingredient.gravityPoints
-					totalMCU+=ingredient.mcu
+					totalGP+=parseFloat ingredient.gravityPoints
+					totalMCU+=parseFloat ingredient.mcu
 
-			for step in $scope.recipe.boil 
+			for step in $scope.recipe.boilSteps
 				for ingredient in step.fermentables
-					totalGP+=ingredient.gravityPoints
-					totalMCU+=ingredient.mcu
+					totalGP+=parseFloat ingredient.gravityPoints
+					totalMCU+=parseFloat ingredient.mcu
 
 			calcOG(totalGP)
 			calcColour(totalMCU)
@@ -51,13 +59,13 @@ mbit.controller('RecipeController', [
 		$scope.updateHopsValues = () ->
 			totalIBU = 0
 			
-			for step in $scope.recipe.mash 
+			for step in $scope.recipe.mashSteps
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
 
 					console.log ingredient.ibu
 
-			for step in $scope.recipe.boil 
+			for step in $scope.recipe.boilSteps 
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
 			
@@ -73,6 +81,7 @@ mbit.controller('RecipeController', [
 		calcBitterness = ->
 
 		calcColour = (totalMCU) ->
+			console.log "totalMCU: #{totalMCU}"
 			$scope.recipe.srm = parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
 		# $scope.$watch('recipe', () ->
 
@@ -92,12 +101,12 @@ mbit.controller('RecipeController', [
 
 		# There must be a better way
 		updateStepNumbers = () ->
-			for i in [0...$scope.recipe.mash.length]
-				$scope.recipe.mash[i].number = i+1
-			for i in [0...$scope.recipe.boil.length]
-				$scope.recipe.boil[i].number = $scope.recipe.mash.length+i+1
-			for i in [0...$scope.recipe.fermentation.length]
-				$scope.recipe.fermentation[i].number = $scope.recipe.mash.length+$scope.recipe.boil.length+i+1
+			for i in [0...$scope.recipe.mashSteps.length]
+				$scope.recipe.mashSteps[i].number = i+1
+			for i in [0...$scope.recipe.boilSteps.length]
+				$scope.recipe.boilSteps[i].number = $scope.recipe.mashSteps.length+i+1
+			for i in [0...$scope.recipe.fermentationSteps.length]
+				$scope.recipe.fermentationSteps[i].number = $scope.recipe.mashSteps.length+$scope.recipe.boilSteps.length+i+1
 
 		mashProto = {
 			type: "infusion"
@@ -136,17 +145,17 @@ mbit.controller('RecipeController', [
 		# add 
 		$scope.addMashStep = () ->
 			console.log 'Add mash step'
-			$scope.recipe.mash.push(_.clone mashProto)
+			$scope.recipe.mashSteps.push(_.clone mashProto)
 			updateStepNumbers()
 
 		$scope.addBoilStep = () ->
 			console.log 'Add boil step'
-			$scope.recipe.boil.push(_.clone boilProto)
+			$scope.recipe.boilSteps.push(_.clone boilProto)
 			updateStepNumbers()
 		
 		$scope.addFermentationStep = () ->
 			console.log 'Add fermentation step'
-			$scope.recipe.fermentation.push(_.clone fermentProto)
+			$scope.recipe.fermentationSteps.push(_.clone fermentProto)
 			updateStepNumbers()
 
 		$scope.removeFromStep = (thing, thingArr) ->
@@ -191,71 +200,72 @@ mbit.controller('RecipeController', [
 			step: null
 		}
 
-		# Setup default recipe
-		$scope.recipe = {
-			name: ''
-			brewer: {}
-			ibu: 0
-			abv: 0
-			srm: 0
-			og: 0
-			fg: 0
-			finalVolume: 20
-			efficiency: 70
-		}
-
-		$scope.recipe.mash = [
-			{
-				number: 1
-				type: "infusion"
-				length: 60
+		unless $stateParams.fork
+			# Setup default recipe
+			$scope.recipe = {
+				name: ''
+				brewer: {}
+				ibu: 0
+				abv: 0
+				srm: 0
+				og: 0
+				fg: 0
 				volume: 20
-				temperature: 65
-				fermentables: []
-				hops: []
-				spices: []
-				fruits: []
-				yeasts: []
-				notes: ""
+				efficiency: 70
 			}
-		]
 
-		$scope.recipe.boil = [
-			{
-				number: $scope.recipe.mash.length+1
-				length: 60
-				volume: 20
-				fermentables: []
-				hops: []
-				spices: []
-				fruits: []
-				yeasts: []
-				notes: ""
-			}
-		]
+			$scope.recipe.mashSteps = [
+				{
+					number: 1
+					type: "infusion"
+					length: 60
+					volume: 20
+					temperature: 65
+					fermentables: []
+					hops: []
+					spices: []
+					fruits: []
+					yeasts: []
+					notes: ""
+				}
+			]
 
-		$scope.recipe.fermentation = [
-			{
-				number: 3
-				type: 'primary fermentation'
-				length: 14
-				temperature: 24
-				fermentables: []
-				hops: []
-				spices: []
-				fruits: []
-				yeasts: []
-				notes: ""
-			}
-		]
+			$scope.recipe.boilSteps = [
+				{
+					number: $scope.recipe.mashSteps.length+1
+					length: 60
+					volume: 20
+					fermentables: []
+					hops: []
+					spices: []
+					fruits: []
+					yeasts: []
+					notes: ""
+				}
+			]
 
-		$scope.recipe.priming = [
-			{
-				fermentables: []
-				notes: ''
-			}
-		]
+			$scope.recipe.fermentationSteps = [
+				{
+					number: 3
+					type: 'primary fermentation'
+					length: 14
+					temperature: 24
+					fermentables: []
+					hops: []
+					spices: []
+					fruits: []
+					yeasts: []
+					notes: ""
+				}
+			]
 
-		$scope.recipe.notes = ""
+			$scope.recipe.priming = [
+				{
+					fermentables: []
+					notes: ''
+				}
+			]
+
+			$scope.recipe.notes = ""
 
 ])

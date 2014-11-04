@@ -1,5 +1,9 @@
-angular.module('Microbrewit/core/utils/LocalStorage', []).
-	service('validJSON', () ->
+# LocalStorage and SessionStorage Directive
+#
+# @author Torstein Thune
+# @copyright 2014 Microbrew.it
+angular.module('Microbrewit/core/Utils')
+	.service('validJSON', () ->
 		tryParseJSON = (jsonString) ->
 			try 
 				o = JSON.parse(jsonString)
@@ -14,8 +18,8 @@ angular.module('Microbrewit/core/utils/LocalStorage', []).
 				return false
 
 			return false
-	).
-	factory('localStorage', (validJSON) ->
+	)
+	.factory('localStorage', (validJSON) ->
 		storageApi = {}
 
 		storageApi.getItem = (key) ->
@@ -43,8 +47,8 @@ angular.module('Microbrewit/core/utils/LocalStorage', []).
 			window.localStorage.removeItem(key)
 
 		return storageApi
-	).
-	factory('sessionStorage', (validJSON) ->
+	)
+	.factory('sessionStorage', (validJSON) ->
 		storageApi = {}
 
 		

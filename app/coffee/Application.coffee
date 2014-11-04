@@ -2,7 +2,19 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 
-mbit = angular.module('Microbrewit', ['ui.router', 'Microbrewit/core/network/NetworkService', 'Microbrewit/core/utils/Lodash', 'Microbrewit/core/calculation/AbvCalc', 'Microbrewit/core/UserService', 'Microbrewit/core/calculation/BitternessCalc', 'Microbrewit/core/utils/LocalStorage', 'Microbrewit/core/calculation/ConversionCalc', 'Microbrewit/core/utils/NotificationService', 'Microbrewit/core/calculation/ColourCalc', 'angular-loading-bar'])
+angular.module('Microbrewit/core/Utils', ['angular-md5'])
+mbit = angular.module('Microbrewit', 
+	[
+		'ui.router' # External
+		'angular-loading-bar' # External
+		'Microbrewit/core/Calculation'
+		'Microbrewit/core/Network'
+		'Microbrewit/core/utils/NotificationService' # Should be in utils?
+		'Microbrewit/core/Utils'
+		'Microbrewit/core/UserService' # Should be in Network
+	]
+)
+
 
 mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 	# Enable CORS
@@ -85,6 +97,20 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			controller: 'UserController'
 			templateUrl: "templates/brewers/brewers.single.html"
 		})
+		.state('brews', {
+			abstract: true
+			templateUrl: "templates/brews/brews.html"
+		})
+		.state('brews.list', {
+			url: '/brews'
+			controller: 'BeerController'
+			templateUrl: "templates/brews/brews.list.html"
+		})
+		.state('brews.single', {
+			url: '/brews/{id:[0-9]{1,5}}'
+			controller: 'BeerController'
+			templateUrl: "templates/brews/brews.single.html"
+		})
 		.state('search', {
 			url: "/search"
 			templateUrl: "templates/search.html"
@@ -97,6 +123,11 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 		})
     	.state('add', {
 			url: "/add"
+			templateUrl: "templates/recipe/add.html"
+			controller: "RecipeController"
+		})
+		.state('fork', {
+			url: "/brews/:fork/fork"
 			templateUrl: "templates/recipe/add.html"
 			controller: "RecipeController"
 		})
@@ -123,4 +154,8 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			url: "/user/settings"
 			templateUrl: "templates/users/settings.html"
 			controller: "UserSettingsController"
+		})
+		.state('privacyPolicy', {
+			url: "/privacy-policy"
+			templateUrl: "templates/company/privacy-policy.html"
 		})

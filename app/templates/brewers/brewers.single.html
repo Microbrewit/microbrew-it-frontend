@@ -1,5 +1,8 @@
 <article class="single-brewer">
-	<h1><gravatar src="{{brewer.email}}" size="40"></gravatar> {{brewer.username}}</h1><div class="header-meta"><span class="bubble">{{brewer.beers.length}}</span> Brews {{brewer.settings.country}}</div>
+	<header class="inner-wrapper">
+		<gravatar class="centered-block" src="{{brewer.email}}" size="40"></gravatar>
+		<h1>{{brewer.username}}</h1><div class="header-meta"><span class="bubble">{{brewer.beers.length}}</span> Brews {{brewer.settings.country}}</div>
+	</header>
 	<section class="brews">
 		<div class="inner-wrapper">
 			<h2>Brews</h2>

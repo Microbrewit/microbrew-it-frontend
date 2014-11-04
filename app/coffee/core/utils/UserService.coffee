@@ -1,4 +1,4 @@
-user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/network/NetworkService']).
+user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/Network']).
 	service('login', ['$http', '$log', 'ApiUrl', '$rootScope', ($http, $log, ApiUrl, $rootScope) ->
 		
 		# promise pattern (login.async().then(-> something))

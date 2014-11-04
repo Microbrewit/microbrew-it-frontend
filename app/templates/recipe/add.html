@@ -13,13 +13,13 @@
 	<section class="meta-calculations">
 		<div class="inner-wrapper recipe-beer-meta">
 			<div class="beer-meta-key">ABV</div> 
-			<div class="beer-meta-value"><mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-calc-abv>%</div>
+			<div class="beer-meta-value"><mb-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
 			<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
 			<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
 			<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
 			<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
 			<div class="beer-meta-key">Volume</div> <div class="beer-meta-value">
-			<input type="number" ng-model="recipe.finalVolume"/> 
+			<input type="number" ng-model="recipe.volume"/> 
 			</div>
 			<div class="beer-meta-key">Efficiency</div> <div class="beer-meta-value">
 				<input type="number" ng-model="recipe.efficiency"/>
@@ -31,14 +31,15 @@
 		<div class="inner-wrapper">
 			<h2>Mash</h2>
 			<ul>
-				<li class="step-wrapper" ng-repeat="step in recipe.mash">
+				<li class="step-wrapper" ng-repeat="step in recipe.mashSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Mash step</span>
 						<span class="values">
-							<label for="length">Volume (Liters): </label><input type="text" id="volume" ng-model="step.volume"/>
+							<label for="length">Volume </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
 							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
-							<label for="length">Temperature (C): </label><input type="text" id="temperature" ng-model="step.temperature"/>
+							<label for="length">Temperature: </label>
+							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -55,16 +56,14 @@
 		<div class="inner-wrapper">
 			<h2>Boil</h2>
 			<ul>
-				<li ng-repeat="step in recipe.boil">
+				<li ng-repeat="step in recipe.boilSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
 						<span class="values">
 							<label for="length">Add at: </label>
 							<input type="text" id="length" ng-model="step.length"/>
-
-							<label for="volume">Volume (L): </label>
-							<input type="text" id="volume" ng-model="step.volume"/>
+							<label for="volume">Volume: </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -78,7 +77,7 @@
 		<div class="inner-wrapper">
 			<h2>Fermentation</h2>
 			<ul>
-				<li ng-repeat="step in recipe.fermentation">
+				<li ng-repeat="step in recipe.fermentationSteps">
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Fermentation step</span>
@@ -110,7 +109,7 @@
 			<h2>Looks good!</h2>
 
 			<div class="recipe-beer-meta">
-				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-calc-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-calc-abv>%</div>
+				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
 				<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
 				<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
 				<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
@@ -118,7 +117,7 @@
 
 				<div class="beer-meta-key">Volume</div>
 				<div class="beer-meta-value">
-					{{recipe.finalVolume}}
+					{{recipe.volume}}l
 				</div>
 			</div>
 

@@ -1,0 +1,26 @@
+<article id="single-beer">
+	<header>
+		<h1>{{beer.name}}</h1>
+	</header>
+	<section class="beer-meta">
+		<div class="inner-wrapper">
+			<ul class="brewers">
+				<li ng-repeat="brewer in beer.brewers"><gravatar size="25px" src="{{brewer.email}}"></gravatar> {{brewer.username}}</li>
+			</ul>
+			<div class="beer-style">{{beer.beerStyle.name}}</div>
+
+			<button ng-click="fork()">Add my fork</button>
+		</div>
+	</section>
+	<section class="recipe">
+		<div class="inner-wrapper">
+			<h2>Recipe</h2>
+		</div>
+	</section>
+	<section class="forks">
+		<div class="inner-wrapper">
+			<h2>Forks</h2>
+			<span ng-show="forks.length === 0">No registered forks.</span>
+		</div>
+	</section>
+</article>
