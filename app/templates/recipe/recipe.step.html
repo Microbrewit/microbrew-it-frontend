@@ -10,8 +10,8 @@
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
 			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
-			<td><mb-colour-box amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
-				{{fermentable.lovibond}}°L</td>
+			<td><mb-colour-box style="float:left;" amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
+				<span style="display:inline-block;line-height: 50px;">{{fermentable.lovibond}}°L</span></td>
 			<td>{{fermentable.ppg}}</td>
 			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.volume}}"></mb-gravity></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
@@ -31,8 +31,8 @@
 		<tr ng-repeat="hop in step.hops">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
 			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
-			<td><select ng-model="hop.form" ng-options="type for type in hopTypes"></select></td>
-			<td><input type="text" ng-model="hop.aa"/>%</td>
+			<td><select ng-model="hop.hopForm.name" ng-options="type for type in hopTypes"></select></td>
+			<td><input type="text" ng-model="hop.aaValue"/>%</td>
 			<td><input type="text" ng-model="hop.beta"/>%</td>
 			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>

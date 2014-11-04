@@ -155,3 +155,7 @@ mbit.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
 			templateUrl: "templates/users/settings.html"
 			controller: "UserSettingsController"
 		})
+		.state('privacyPolicy', {
+			url: "/privacy-policy"
+			templateUrl: "templates/company/privacy-policy.html"
+		})

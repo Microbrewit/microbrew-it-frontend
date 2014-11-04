@@ -8,8 +8,6 @@ angular.module('Microbrewit/core/Calculation')
 			restrict: 'E'
 			scope: {
 				'ingredient': '='
-				'bitterness': '@bitterness'
-				'unit': '@unit'
 				'change': '='
 			}
 			replace: true
@@ -31,7 +29,7 @@ angular.module('Microbrewit/core/Calculation')
 						boilVolume: parseFloat(attrs.boilvolume)
 						boilGravity: parseFloat(attrs.boilgravity)
 						amount: parseFloat(scope.ingredient.amount)
-						aa: parseFloat(scope.ingredient.aa)
+						aa: parseFloat(scope.ingredient.aaValue)
 
 					# Generate bitternessObj (mgl, utilisation, ibu)
 					bitternessObj = bitterness[formula](calcObj)
@@ -51,7 +49,7 @@ angular.module('Microbrewit/core/Calculation')
 
 				# Run only once every $digest
 				scope.$watch(->
-					return [attrs.boiltime, attrs.boilvolume, attrs.boilgravity, scope.ingredient.amount, scope.ingredient.aa, attrs.formula]
+					return [attrs.boiltime, attrs.boilvolume, attrs.boilgravity, scope.ingredient.amount, scope.ingredient.aaValue, attrs.formula]
 				, calcBitterness, true)
 		}
 	])

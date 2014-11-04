@@ -9,8 +9,8 @@ angular.module('Microbrewit/core/Calculation')
 			scope: {
 				ingredient: '='
 			}
-			replace: true
-			template: '<span class="gravity" style="display:inline-block;width:39px;height:39px;padding:0;margin:0;border-radius:50%;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span></div>'
+			replace: false
+			template: '<span class="gravity" style="display:inline-block;width:39px;height:39px;padding:0;margin:0;border-radius:50%;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span>'
 			link: (scope, element, attrs) ->
 				
 				calcColour = ->
