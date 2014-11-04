@@ -27,7 +27,7 @@ angular.module('Microbrewit/core/Calculation')
 					scope.rgb = convert.convert(scope.srm, 'srm', 'rgb')
 
 					console.log 'find mcu'
-					scope.ingredient.mcu = colourCalc.mcu(attrs.amount, scope.lovibond, attrs.volume).toFixed(2) if scope.ingredient? and attrs.volume?
+					scope.ingredient.mcu = colourCalc.mcu(convert.convert(attrs.amount, attrs.weightunit, 'kg'), scope.lovibond, convert.convert(attrs.volume, attrs.liquidunit, 'liters')).toFixed(2) if scope.ingredient? and attrs.volume?
 
 				scope.lovibond = 0
 				# Run only once every $digest

@@ -36,9 +36,10 @@
 					<div class="step-meta">
 						<span class="step-type">Mash step</span>
 						<span class="values">
-							<label for="length">Volume (Liters): </label><input type="text" id="volume" ng-model="step.volume"/>
+							<label for="length">Volume </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
 							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
-							<label for="length">Temperature (C): </label><input type="text" id="temperature" ng-model="step.temperature"/>
+							<label for="length">Temperature: </label>
+							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -62,9 +63,7 @@
 						<span class="values">
 							<label for="length">Add at: </label>
 							<input type="text" id="length" ng-model="step.length"/>
-
-							<label for="volume">Volume (L): </label>
-							<input type="text" id="volume" ng-model="step.volume"/>
+							<label for="volume">Volume: </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>

@@ -9,11 +9,11 @@
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
-			<td><input type="text" ng-model="fermentable.amount"/>{{user.settings.measurements.weight.large.short}}</td>
-			<td><mb-colour-box amount="{{fermentable.amount}}" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
+			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
+			<td><mb-colour-box amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
 				{{fermentable.lovibond}}°L</td>
 			<td>{{fermentable.ppg}}</td>
-			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="kg" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.volume}}"></mb-gravity></td>
+			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.volume}}"></mb-gravity></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>
@@ -30,7 +30,7 @@
 		</tr>
 		<tr ng-repeat="hop in step.hops">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
-			<td><input type="text" ng-model="hop.amount"/>{{user.settings.measurements.weight.small.short}}</td>
+			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
 			<td><select ng-model="hop.form" ng-options="type for type in hopTypes"></select></td>
 			<td><input type="text" ng-model="hop.aa"/>%</td>
 			<td><input type="text" ng-model="hop.beta"/>%</td>

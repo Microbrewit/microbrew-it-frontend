@@ -51,10 +51,21 @@ angular.module('Microbrewit/core/Calculation')
 		conversionFormulas.celcius =
 			farenheit: (celcius) ->
 				return celcius*1.8 + 32
+			kelvin: (celcius) ->
+				return celcius + 273.15
 
 		conversionFormulas.farenheit =
 			celcius: (farenheit) ->
 				return (farenheit-32)/1.8
+			kelvin: (farenheit) ->
+				return (farenheit + 459.67) * 5/9
+
+		conversionFormulas.kelvin =
+			celcius: (kelvin) -> 
+				return kelvin - 273.15
+			farenheit: (kelvin) -> 
+				return (kelvin * 9/5) - 459.67
+
 
 		conversionFormulas.liters =
 			gallons: (liters) ->
@@ -106,13 +117,17 @@ angular.module('Microbrewit/core/Calculation')
 				return '0,0,0'
 
 		conversionFormulas.convert = (amount, from, to) ->
-			return amount if from is to
+			console.log "@[#{from}][#{to}](#{amount})"
+			return amount if from == to
 
 			# We actually want to convert
 			if typeof from is 'string' and typeof to is 'string' and @[from]?[to]?
 				convertedValue = @[from][to](amount)
 				console.log "@[#{from}][#{to}](#{amount}) = #{convertedValue}"
 				return convertedValue
+
+		conversionFormulas.available = (from) ->
+			return Object.keys(@[from])
 
 		return conversionFormulas
 	])
