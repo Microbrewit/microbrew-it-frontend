@@ -6,7 +6,7 @@
 	<section class="meta-information">
 		<div class="inner-wrapper">
 			<input type="text" class="recipe-name" placeholder="Name of brew" ng-model="recipe.name"/>
-			<input type="text" class="recipe-style" placeholder="Style" ng-model="recipe.style"/>			
+			<select ng-model="recipe.beerStyle" ng-options="value.name for value in beerStyles"></select>	
 		</div>
 	</section>
 
@@ -14,12 +14,23 @@
 		<div class="inner-wrapper recipe-beer-meta">
 			<div class="beer-meta-key">ABV</div> 
 			<div class="beer-meta-value"><mb-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
-			<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
-			<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
-			<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
-			<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
-			<div class="beer-meta-key">Volume</div> <div class="beer-meta-value">
-			<input type="number" ng-model="recipe.volume"/> 
+
+			<div class="beer-meta-key">Original Gravity</div> 
+			<div class="beer-meta-value">{{recipe.og}}</div>
+
+			<div class="beer-meta-key">Final Gravity</div> 
+			<div class="beer-meta-value">{{recipe.fg}}</div>
+
+			<div class="beer-meta-key">Bitterness</div> 
+			<div class="beer-meta-value">{{recipe.ibu}} IBU</div>
+
+			<div class="beer-meta-key">Colour</div> 
+			<div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
+
+			<div class="beer-meta-key">Volume</div> 
+			<div class="beer-meta-value">
+				<mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="recipe.volume"></mb-convert>
+				<input type="number" ng-model="recipe.volume"/>
 			</div>
 			<div class="beer-meta-key">Efficiency</div> <div class="beer-meta-value">
 				<input type="number" ng-model="recipe.efficiency"/>
@@ -81,7 +92,12 @@
 					<div class="step-number">{{step.number}}</div>
 					<div class="step-meta">
 						<span class="step-type">Fermentation step</span>
-						<span class="values"></span>
+						<span class="values">
+							<label for="length">Duration:</label>
+							<mb-convert modelunit="days" localunit="days" modelvalue="step.length"></mb-convert>
+							<label for="length">Temperature: </label>
+							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
@@ -120,7 +136,7 @@
 					{{recipe.volume}}l
 				</div>
 			</div>
-
+			<button class="save" ng-click="logRecipe()">LOG</button>
 			<button class="save" ng-click="submitRecipe()">Add</button>
 		</div>
 	</section>

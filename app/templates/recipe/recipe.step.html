@@ -43,18 +43,14 @@
 		<tr>
 			<th>Name of <strong>OTHER</strong></th>
 			<th>Amount</th>
-			<th>Form</th>
-			<th>AA</th>
-			<th>Contributes</th>
+			<th></th>
 		</tr>
 		<tr ng-repeat="other in step.others">
-			<td class="form-button">
+			<td>
 				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button>
+				{{other.name}} ({{other.type}})
 			</td>
-			<td><input type="text" ng-model="other.name"/></td>
-			<td><input type="text" ng-model="other.amount"/></td>
-			<td>{{fermentable.lovibond}}</td>
-			<td>{{fermentable.ppg}}</td>
+			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="other.amount"></mb-convert></td>
 			<td><button class="remove form-button" ng-click="removeFromStep(other, step.others)">X</button></td>
 		</tr>
 	</table>

@@ -30,6 +30,11 @@ mbit.controller('RecipeController', [
 
 		$scope.hopTypes = ['pellet', 'flower']
 
+		mbGet.beerstyles().async().then((response) ->
+			$scope.beerStyles = response.beerStyles
+			$scope.recipe.beerStyle = $scope.beerStyles[0]
+		)
+
 		# if $scope.user
 		# 	$scope.settings = $scope.user.settings
 		# else
@@ -54,7 +59,6 @@ mbit.controller('RecipeController', [
 
 			calcOG(totalGP)
 			calcColour(totalMCU)
-			console.log 'updateFermentableValues'
 
 		$scope.updateHopsValues = () ->
 			totalIBU = 0
@@ -63,13 +67,9 @@ mbit.controller('RecipeController', [
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
 
-					console.log ingredient.ibu
-
 			for step in $scope.recipe.boilSteps 
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
-			
-			$scope.recipe.ibu = parseInt(totalIBU)
 
 		calcOG = (totalGP) ->
 			totalGP = parseInt(totalGP)
@@ -78,26 +78,9 @@ mbit.controller('RecipeController', [
 		calcFG = ->
 			$scope.recipe.fg = (($scope.recipe.og-1)*(1-0.75)+1).toFixed(3)
 
-		calcBitterness = ->
-
 		calcColour = (totalMCU) ->
 			console.log "totalMCU: #{totalMCU}"
 			$scope.recipe.srm = parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
-		# $scope.$watch('recipe', () ->
-
-			
-		# 	# sessionRecipes = sessionStorage.getItem('recipes')
-			
-		# 	# if typeof sessionRecipes is 'object'
-		# 	# 	if sessionRecipes?[sessionId]?
-		# 	# 		sessionRecipes[sessionId] = $scope.recipe
-		# 	# 		sessionStorage.setItem('recipes', sessionRecipes)
-		# 	# else
-		# 	# 	sessionRecipes = {}
-		# 	# 	sessionRecipes[sessionId] = $scope.recipe
-		# 	# 	sessionStorage.setItem('recipes', sessionRecipes)
-		# , true)
-
 
 		# There must be a better way
 		updateStepNumbers = () ->
@@ -115,8 +98,7 @@ mbit.controller('RecipeController', [
 			temperature: 65
 			fermentables: []
 			hops: []
-			spices: []
-			fruits: []
+			others: []
 			yeasts: []
 			notes: ""
 		}
@@ -125,8 +107,7 @@ mbit.controller('RecipeController', [
 			volume: 20
 			fermentables: []
 			hops: []
-			spices: []
-			fruits: []
+			others: []
 			yeasts: []
 			notes: ""
 		}
@@ -137,8 +118,7 @@ mbit.controller('RecipeController', [
 			temperature: 24
 			fermentables: []
 			hops: []
-			spices: []
-			fruits: []
+			others: []
 			yeasts: []
 			notes: ""
 		}
@@ -162,6 +142,13 @@ mbit.controller('RecipeController', [
 			index = thingArr.indexOf(thing)
 			thingArr.splice(index,1);
 			updateStepNumbers()
+
+		$scope.submitRecipe = () ->
+			console.log 'submitRecipe'
+			mbSet.recipe($scope.recipe).async().then()
+
+		$scope.logRecipe = () ->
+			console.log JSON.stringify($scope.recipe,  null, '\t')
 
 		$scope.search = (step, type) ->
 			$scope.searchContext = {

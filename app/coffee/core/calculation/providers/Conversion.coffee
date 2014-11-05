@@ -116,6 +116,14 @@ angular.module('Microbrewit/core/Calculation')
 			rgb: (ebc) ->
 				return '0,0,0'
 
+		conversionFormulas.days = 
+			weeks: (days) ->
+				return days/7
+
+		conversionFormulas.weeks =
+			days: (weeks) ->
+				return weeks * 7
+
 		conversionFormulas.convert = (amount, from, to) ->
 			console.log "@[#{from}][#{to}](#{amount})"
 			return amount if from == to

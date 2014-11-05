@@ -6,21 +6,29 @@ angular.module('Microbrewit/core/Network')
 	.factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
-			console.log requestUrl
+			console.log "GET: #{requestUrl}"
 			promise = false
 			request = 
 				async: () ->
 					unless promise
 						$rootScope.loading++
-						$log.debug "fetching #{requestUrl}"
 
 						promise = $http.jsonp(requestUrl, {})
 							.error((data, status) ->
 								$rootScope.loading--
-								$log.error(data)
-								$log.error(status)
+								console.error(status)
+								console.error(data)
+
 							)
 							.then((response) ->
+
+								# Save auth token
+								authToken = response.headers('authorization-token')
+								if authToken?
+									$rootScope.token =
+										expires: new Date()
+										token: authToken
+
 								$rootScope.loading--
 								return response.data
 							)
@@ -66,30 +74,143 @@ angular.module('Microbrewit/core/Network')
 		# from
 		# size
 		# query
-		factory.beers = (query) ->
+		factory.beers = (query = {}) ->
+			endpoint = 'beers'
 			# Get specific beer
 			if query.id
-				requestUrl = "#{ApiUrl}/beers/#{query.id}?callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
 
 			# Get beer with query string
 			else if query.query?
 				query.from ?= 0
 				query.size ?= 20
 				
-				requestUrl = "#{ApiUrl}/beers?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
 
 			# Get latest added beers
 			else if query.latest
 				query.from ?= 0
 				query.size ?= 20
-				requestUrl = "#{ApiUrl}/beers/last?from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/#{endpoint}/last?from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
 
 			# Get beers
 			else
-				requestUrl = "#{ApiUrl}/beers?callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 
 			return @get(requestUrl)
 
+		# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.suppliers = (query = {}) ->
+			endpoint = 'suppliers'
+
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+				# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.beerstyles = (query = {}) ->
+			endpoint = 'beerstyles'
+
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.glasses = (query = {}) ->
+			endpoint = 'glasses'
+
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.origin = (query = {}) ->
+			endpoint = 'origins'
+
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		# Query Object:
+		# id
+		# from
+		# size
+		# query
+		factory.suppliers = (query = {}) ->
+			endpoint = 'suppliers'
+
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		
 		return factory
+
 
 	])
