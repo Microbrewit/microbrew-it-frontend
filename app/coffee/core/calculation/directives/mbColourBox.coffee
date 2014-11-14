@@ -10,8 +10,13 @@ angular.module('Microbrewit/core/Calculation')
 				ingredient: '='
 			}
 			replace: false
-			template: '<span class="gravity" style="display:inline-block;width:39px;height:39px;padding:0;margin:0;border-radius:50%;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span>'
+			template: '<span class="gravity" style="display:inline-block;width:{{size}};height:{{size}};padding:0;margin:0;border-radius:50%;margin-right: 5px;border:1px solid rgba(0,0,0,0.2);background:rgba({{rgb}},0.8);"></span>'
 			link: (scope, element, attrs) ->
+
+				if attrs.size?
+					scope.size = attrs.size
+				else
+					scope.size = "39px"
 				
 				calcColour = ->
 					if attrs.type is "lovibond"

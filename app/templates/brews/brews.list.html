@@ -2,9 +2,9 @@
 	<h1>Beers</h1>
 	<div class="inner-wrapper">
 		{{brews.length}}
-		<ul>
-			<li ng-repeat="beer in brews">
-				<a ui-sref="brews.single({id:beer.id})">{{beer.name}}</a>
+		<ul class="search-grid-results">
+			<li ng-repeat="result in brews">
+				<div ng-include="'templates/search/beer.html'"></div>
 			</li>
 		</ul>
 </article>

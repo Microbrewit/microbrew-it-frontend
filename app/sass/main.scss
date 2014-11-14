@@ -53,6 +53,7 @@ a {
 	margin: 0 auto;
 	text-align: center;
 }
+.right { float:right !important; }
 
 .loading {
 	width: 100%;
@@ -103,6 +104,8 @@ a {
 .inner-wrapper {
 	@extend .cf;
 	@include col(12, 0, false);
+	max-width: 1000px;
+	width: 100%;
 	margin: 25px auto;
 	clear: both;
 }

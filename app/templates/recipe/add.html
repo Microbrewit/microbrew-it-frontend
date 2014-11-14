@@ -51,6 +51,7 @@
 							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
 							<label for="length">Temperature: </label>
 							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -75,6 +76,7 @@
 							<label for="length">Add at: </label>
 							<input type="text" id="length" ng-model="step.length"/>
 							<label for="volume">Volume: </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
+							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
@@ -97,6 +99,7 @@
 							<mb-convert modelunit="days" localunit="days" modelvalue="step.length"></mb-convert>
 							<label for="length">Temperature: </label>
 							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>

@@ -22,13 +22,17 @@ angular.module('Microbrewit/core/Calculation')
 						scope.percent = Math.round((scope.ingredient.gravityPoints/totalGP)*100)
 
 				calcGravity = ->
-					console.log attrs.change
+					console.log 'GRAVITY ATTRS:'
+					console.log scope.ingredient
+					console.log attrs
 					if attrs.type.toLowerCase().indexOf "malt" isnt -1 or attrs.type.toLowerCase().indexOf "grain" isnt -1
 						efficiency = parseFloat(attrs.efficiency)/100
 					else
 						efficiency = 1
 					weight = convert.convert(parseFloat(attrs.amount), attrs.weightunit, 'lbs') # convert to lbs
-					ppg = parseFloat(attrs.ppg)
+					ppg = parseFloat(scope.ingredient.ppg)
+					if isNaN(ppg)
+						ppg = parseFloat(scope.ingredient.pgg)
 					volume = convert.convert(parseFloat(attrs.volume), attrs.fluidunit, 'gallons')
 
 					console.log "weight #{weight} ppg #{ppg} volume #{volume}"

@@ -23,11 +23,11 @@ angular.module('Microbrewit/core/Network')
 							.then((response) ->
 
 								# Save auth token
-								authToken = response.headers('authorization-token')
-								if authToken?
+								if response.headers('access_token')
 									$rootScope.token =
-										expires: new Date()
-										token: authToken
+										expires: new Date(response.headers('.expires')).getTime()
+										token: response.headers('access_token')
+										refresh: response.headers('refresh_token')
 
 								$rootScope.loading--
 								return response.data
@@ -185,6 +185,11 @@ angular.module('Microbrewit/core/Network')
 			else
 				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 
+			return @get(requestUrl)
+
+		factory.hopForms = () ->
+			endpoint = 'hops/forms'
+			requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 			return @get(requestUrl)
 
 		# Query Object:

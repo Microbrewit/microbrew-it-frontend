@@ -1,0 +1,8 @@
+<div class="single-beer search-grid-result">
+	<a ui-sref="brews.single({id:result.id})" class="content">
+		<div class="top-circle"><mb-colour-box type="srm" colour="{{result.srm.standard}}" size="50px"></mb-colour-box></div>
+		<h3>{{result.name}}</h3>
+		<div class="type">{{result.beerStyle.name}}</div>
+		<div class="meta">{{result.abv.standard}}% - {{result.ibu.tinseth}} IBU - {{result.srm.standard}} SRM</div>
+	</a>
+</div>

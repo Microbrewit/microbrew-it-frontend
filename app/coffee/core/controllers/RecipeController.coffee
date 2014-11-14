@@ -28,7 +28,11 @@ mbit.controller('RecipeController', [
 					$scope.recipe = response.beers[0].recipe
 				)
 
-		$scope.hopTypes = ['pellet', 'flower']
+		$scope.hopTypes = []
+
+		mbGet.hopForms().async().then((response) ->
+			$scope.hopTypes = response
+		)
 
 		mbGet.beerstyles().async().then((response) ->
 			$scope.beerStyles = response.beerStyles
@@ -92,10 +96,12 @@ mbit.controller('RecipeController', [
 				$scope.recipe.fermentationSteps[i].number = $scope.recipe.mashSteps.length+$scope.recipe.boilSteps.length+i+1
 
 		mashProto = {
+			number: 1
 			type: "infusion"
 			length: 60
 			volume: 20
 			temperature: 65
+			stepType: "mashSteps"
 			fermentables: []
 			hops: []
 			others: []
@@ -103,8 +109,10 @@ mbit.controller('RecipeController', [
 			notes: ""
 		}
 		boilProto = {
+			number: 2
 			length: 60
 			volume: 20
+			stepType: "boilSteps"
 			fermentables: []
 			hops: []
 			others: []
@@ -113,6 +121,7 @@ mbit.controller('RecipeController', [
 		}
 		fermentProto = {
 			number: 3
+			stepType: "fermentationSteps"
 			type: 'primary fermentation'
 			length: 14
 			temperature: 24
@@ -136,6 +145,11 @@ mbit.controller('RecipeController', [
 		$scope.addFermentationStep = () ->
 			console.log 'Add fermentation step'
 			$scope.recipe.fermentationSteps.push(_.clone fermentProto)
+			updateStepNumbers()
+
+		$scope.removeStep = (step) ->
+			index = $scope.recipe[step.stepType].indexOf(step)
+			$scope.recipe[step.stepType].splice(index,1)
 			updateStepNumbers()
 
 		$scope.removeFromStep = (thing, thingArr) ->
@@ -169,7 +183,7 @@ mbit.controller('RecipeController', [
 
 			else if ingredient.dataType is 'hop'
 				ingredient.amount = 0
-				ingredient.form = 'pellet'
+				ingredient.hopForm = $scope.hopTypes[0]
 
 				step.hops.push(ingredient)
 
@@ -201,50 +215,14 @@ mbit.controller('RecipeController', [
 				efficiency: 70
 			}
 
-			$scope.recipe.mashSteps = [
-				{
-					number: 1
-					type: "infusion"
-					length: 60
-					volume: 20
-					temperature: 65
-					fermentables: []
-					hops: []
-					spices: []
-					fruits: []
-					yeasts: []
-					notes: ""
-				}
-			]
+			$scope.recipe.mashSteps = []
+			$scope.recipe.mashSteps.push _.clone mashProto
 
-			$scope.recipe.boilSteps = [
-				{
-					number: $scope.recipe.mashSteps.length+1
-					length: 60
-					volume: 20
-					fermentables: []
-					hops: []
-					spices: []
-					fruits: []
-					yeasts: []
-					notes: ""
-				}
-			]
+			$scope.recipe.boilSteps = []
+			$scope.recipe.boilSteps.push _.clone boilProto
 
-			$scope.recipe.fermentationSteps = [
-				{
-					number: 3
-					type: 'primary fermentation'
-					length: 14
-					temperature: 24
-					fermentables: []
-					hops: []
-					spices: []
-					fruits: []
-					yeasts: []
-					notes: ""
-				}
-			]
+			$scope.recipe.fermentationSteps = []
+			$scope.recipe.fermentationSteps.push _.clone fermentProto
 
 			$scope.recipe.priming = [
 				{

@@ -13,9 +13,22 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 				pushHop(step, ingredient._source)
 			else if ingredient._source.dataType is 'yeast'
 				pushYeast(step, ingredient._source)
+			else
+				pushOther(step, ingredient._source)
 
 			close()
 
+		pushOther = (step, ingredient) ->
+			push = true
+			for other in step.others
+				if ingredient.id is other.id
+					push = false
+
+			if push
+				ingredient = _clone ingredient
+				ingredient.otherId = ingredient.id
+				delete ingredient['$$hashKey']
+				step.others.push ingredient
 
 		pushFermentable = (step, ingredient) ->
 			push = true
@@ -25,9 +38,11 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 
 			if push
 				ingredient = _.clone ingredient
+				delete ingredient['$$hashKey']
+				ingredient.fermentableId = ingredient.id
 				ingredient.amount = 0
 				ingredient.mcu = 0
-				ingredient.ppg = ingredient.pPG
+				ingredient.ppg = ingredient.ppg
 				ingredient.gravityPoints = 0
 				step.fermentables.push ingredient
 
@@ -38,8 +53,10 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 					push = false
 			if push
 				ingredient = _.clone ingredient
+				delete ingredient['$$hashKey']
 				ingredient.amount = 0
 				ingredient.form = 'pellet'
+				ingredient.hopId = ingredient.id
 				console.log 
 				ingredient.aaValue = (ingredient.aAHigh+ingredient.aALow)/2
 				ingredient.aaValue = ingredient.aALow if ingredient.aAHigh is 0
@@ -56,7 +73,9 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 			console.log 'push'
 			if push
 				ingredient = _.clone ingredient
+				delete ingredient['$$hashKey']
 				ingredient.amount = 0
+				ingredient.yeastId = ingredient.id
 				if ingredient.alcoholTolerance.indexOf(',') isnt -1
 					alcoholTolerance = ingredient.alcoholTolerance.split(',')
 					ingredient.alcoholTolerance.replace(',', ' - ')

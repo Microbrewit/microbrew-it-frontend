@@ -10,6 +10,7 @@ mbit.controller('FermentablesController', ['$scope', 'mbGet', '$stateParams', '_
 		if $stateParams.id
 			get.fermentables($stateParams.id).async().then((apiResponse) ->
 				# $scope.loading--
+				console.log apiResponse.fermentables[0]
 				$scope.fermentable = apiResponse.fermentables[0]
 			)
 		# We are displaying all hops

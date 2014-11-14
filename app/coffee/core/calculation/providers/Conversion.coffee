@@ -125,13 +125,13 @@ angular.module('Microbrewit/core/Calculation')
 				return weeks * 7
 
 		conversionFormulas.convert = (amount, from, to) ->
-			console.log "@[#{from}][#{to}](#{amount})"
+			#console.log "@[#{from}][#{to}](#{amount})"
 			return amount if from == to
 
 			# We actually want to convert
 			if typeof from is 'string' and typeof to is 'string' and @[from]?[to]?
 				convertedValue = @[from][to](amount)
-				console.log "@[#{from}][#{to}](#{amount}) = #{convertedValue}"
+				#console.log "@[#{from}][#{to}](#{amount}) = #{convertedValue}"
 				return convertedValue
 
 		conversionFormulas.available = (from) ->

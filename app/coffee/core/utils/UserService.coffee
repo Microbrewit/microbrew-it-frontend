@@ -1,5 +1,8 @@
 user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/Network']).
-	service('login', ['$http', '$log', 'ApiUrl', '$rootScope', ($http, $log, ApiUrl, $rootScope) ->
+	service('login', ['$http', '$log', 'ApiUrl', 'ClientUrl', '$rootScope', ($http, $log, ApiUrl, ClientUrl, $rootScope) ->
+
+
+		$http.defaults.headers.options = { 'user_id' : ClientUrl }
 		
 		# promise pattern (login.async().then(-> something))
 		doLogin = (username, password, authorization=false) ->
@@ -11,11 +14,16 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/Network
 				async: () ->
 					unless promise
 						promise = $http({
-							url: "#{ApiUrl}/users/login"
+							url: "#{ApiUrl}/token"
 							method: "POST"
-							withCredentials: true
+							#withCredentials: true
+							client_id: ClientUrl
 							headers: {
-								'Authorization': "Basic #{authorization}"
+								# 'Authorization': "Basic #{authorization}"
+								"grant_type": "password"
+								"username": username
+								"password": password
+								"client_id": ClientUrl
 							}
 						})
 						.error((data, status) ->
@@ -31,8 +39,9 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/Network
 							console.log $rootScope.user
 							$rootScope.user.auth = authorization
 							$rootScope.token =
-								expires: new Date()
-								token: response.headers('authorization-token')
+								expires: new Date(response.headers('.expires')).getTime()
+								token: response.headers('access_token')
+								refresh: response.headers('refresh_token')
 							return response
 						)
 					

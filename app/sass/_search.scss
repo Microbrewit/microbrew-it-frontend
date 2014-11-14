@@ -28,6 +28,76 @@
 	@include offset(right, 1.5/10)
 }
 
+.search-grid-results {
+	list-style: none;
+	padding: 0;
+
+	li {
+		padding: 0;
+		@include col(1/4, 0, false);
+		padding: 5px;
+		display: inline-block;
+	}
+}
+
+.search-grid-result {
+	padding: 0;
+	padding-bottom: 25px;
+
+	.content {
+		display: block;
+		background: white;
+		border-radius: 5px;
+		border: 1px solid #E9E9E9;
+		text-align:center;
+		padding: 0;
+		padding-bottom: 25px;
+		position: relative;
+
+		&:hover {
+			background: #eee;
+
+			&:before {
+				top: -32px;
+			}
+			.top-circle {
+				margin-top: -27px;
+			}
+		}
+
+		&:before {
+			position: absolute;
+			top: -30px;
+			left: 50%;
+			width: 60px;
+			height: 60px;
+			margin-left: -33px;
+			background: white;
+			border: 1px solid #E9E9E9;
+			border-radius: 50%;
+			z-index: 1;
+			content: '';
+		}
+	}
+
+	h3 {
+		text-transform: uppercase;
+		color: #333;
+		margin-bottom: 5px;
+	}
+
+	.meta, .type {
+		color: #666;
+	}
+
+	.top-circle {
+		margin-top: -25px;
+		position: relative;
+		z-index: 2;
+
+	}
+}
+
 #embedded-search {
 	.search-input {
 		h2 {

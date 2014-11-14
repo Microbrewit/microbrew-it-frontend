@@ -17,6 +17,6 @@ mbit.controller('UserController', ['$scope', 'mbGet', '$stateParams', '_'
 			get.user().async().then((apiResponse) ->
 				console.log apiResponse
 				# $scope.loading--
-				$scope.results = _.sortBy(apiResponse.users, (user) -> return user.username)
+				$scope.results = apiResponse #_.sortBy(apiResponse.users, (user) -> return user.username)
 			)
 ])
