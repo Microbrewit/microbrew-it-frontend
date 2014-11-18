@@ -18,12 +18,10 @@ user = angular.module('Microbrewit/core/UserService', ['Microbrewit/core/Network
 							method: "POST"
 							#withCredentials: true
 							client_id: ClientUrl
+							data:  "grant_type=password&username=" + username + "&password=" + password + "&client_id=" + ClientUrl
 							headers: {
-								# 'Authorization': "Basic #{authorization}"
-								"grant_type": "password"
-								"username": username
-								"password": password
-								"client_id": ClientUrl
+								"Content-Type": "application/x-www-form-urlencoded"
+								
 							}
 						})
 						.error((data, status) ->
