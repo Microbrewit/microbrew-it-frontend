@@ -23,7 +23,7 @@ angular.module('Microbrewit/core/Network')
 							{
 								withCredentials: true
 								headers: {
-									'authorization-token': $rootScope.token.token
+									"Authorization": "Bearer #{$rootScope.token.token}"
 								}
 							}
 						)
@@ -182,7 +182,6 @@ angular.module('Microbrewit/core/Network')
 			console.log JSON.stringify postRecipe, null, '\t'
 
 			return @set("#{ApiUrl}/beers", postRecipe)
-
 
 		return factory
 
