@@ -1,9 +1,8 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('UserSettingsController', ['mbAvailable', 'updateUser', '$scope', '$stateParams', '_'
-	(mbAvailable, updateUser, $scope, $stateParams, _) ->
+mbit.controller('UserSettingsController', ['updateUser', '$scope', '$stateParams', '_'
+	(updateUser, $scope, $stateParams, _) ->
 		$scope.newSettings = {}
-		$scope.available = mbAvailable
 
 		$scope.$watch('user', (user) ->
 			$scope.newSettings = _.clone(user)
