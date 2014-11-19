@@ -1,12 +1,11 @@
 <nav id="main-navigation">
 	<ul>
 		<li class="logo-text"><a ui-sref="home">Microbrew.it</a></li>
-		<li><a ui-sref="add">Add</a></li>
-		<li><a ui-sref="brews.list">Beer</a></li>
-		<li><a ui-sref="brewers.list">Brewers</a></li>
-		<li class="right search"><form><input type="text" ng-model="searchTerm" placeholder="search microbrewit"/><button ng-submit="search(searchTerm); searchTerm=''" ng-click="search(searchTerm); searchTerm=''">Search</button></form></li>
-		<li class="right"><a ui-sref="more">More</a></li>
-		<li ng-show="!user" class="right"><a ui-sref="login">Login</a></li>
-		<li ng-show="user" class="right"><a ui-sref="userSettings"><gravatar src="{{user.email}}" size="25px"></gravatar> Me</a></li>
+		<li class="add"><a ui-sref="add">Add</a></li>
+		<li><a ui-sref="brews.list">Discover</a></li>
+		<li class="search"><form><input type="text" ng-model="searchTerm" placeholder="search microbrewit"/><button ng-submit="search(searchTerm); searchTerm=''" ng-click="search(searchTerm); searchTerm=''">Search</button></form></li>
+		<li ng-show="!user"><a ui-sref="login">Login</a></li>
+		<li ng-show="user"><a ui-sref="userSettings"><gravatar src="{{user.email}}" size="25px"></gravatar></a></li>
+		<li><a ui-sref="more">More</a></li>
 	</ul>
 </nav>

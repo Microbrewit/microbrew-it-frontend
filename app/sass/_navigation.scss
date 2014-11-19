@@ -1,8 +1,21 @@
 #main-navigation {
 	width: 100%;
-	height: 50px;
-	line-height: 50px;
+	height: 60px;
+	line-height: 60px;
 	text-align: center;
+	background: rgba(255,255,255,0.4);
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	font-size: 20px;
+
+	.add a {
+		background: #CC2F2F;
+		color: white;
+	}
+
+	.logo-text {
+		font-family: Kingthings Petrock;
+		font-size: 30px;
+	}
 
 	ul {
 		@extend .cf;
@@ -10,19 +23,24 @@
 		border-bottom: 1px solid #ccc;
 		//display: table;
 		list-style: none;
-		@include col(12, 0, false);
-		margin: 0 auto;
+		padding:0;
 		text-align: center;
+		display: inline-block;
+		margin: 0 auto;
 	}
 	li {
-		//display: table-cell;
-		//display: inline-block;
 		float:left;
 		height: 60px;
 		line-height: 60px;
-		border-right: 1px solid #ccc;
+		border-left: 1px solid rgba(0,0,0,0.2);
+		text-transform: uppercase;
 
-		.search {
+		&:first-child {
+			text-transform: capitalize;
+			border-left: none;
+		}
+
+		&.search {
 			padding: 0 15px;
 		}
 	}
