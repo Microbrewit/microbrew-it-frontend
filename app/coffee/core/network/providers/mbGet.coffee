@@ -8,32 +8,32 @@ angular.module('Microbrewit/core/Network')
 		factory.get = (requestUrl) ->
 			console.log "GET: #{requestUrl}"
 			promise = false
-			request = 
+			request = { 
 				async: () ->
 					unless promise
 						$rootScope.loading++
-
+						console.log 'yup'
 						promise = $http.jsonp(requestUrl, {})
 							.error((data, status) ->
 								$rootScope.loading--
 								console.error(status)
 								console.error(data)
-
 							)
 							.then((response) ->
-
+								console.log 'then'
 								# Save auth token
-								if response.headers('access_token')
-									$rootScope.token =
-										expires: new Date(response.headers('.expires')).getTime()
-										token: response.headers('access_token')
-										refresh: response.headers('refresh_token')
+								# if response.headers('access_token')
+								# 	$rootScope.token =
+								# 		expires: new Date(response.headers('.expires')).getTime()
+								# 		token: response.headers('access_token')
+								# 		refresh: response.headers('refresh_token')
 
 								$rootScope.loading--
 								return response.data
 							)
 
 					return promise
+			}
 
 			return request
 
