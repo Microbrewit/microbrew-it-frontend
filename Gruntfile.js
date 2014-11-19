@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 			compile: {
 				options: {
 					bare: true,
-					sourceMap: true
+					sourceMap: false
 				},
 				files: [{
 					expand: true,					// Enable dynamic expansion
@@ -120,12 +120,12 @@ module.exports = function (grunt) {
 				report: false,
 				mangle: true,
 				compress: true,
-				sourceMap: function (path) {
-					return path.replace(/build\/(.*).min.js/, "build/$1.map.js");
-				},
-				sourceMappingURL: function (path) {
-					return path.replace(/build\/(.*).min.js/, "build/$1.map.js");
-				}
+				// sourceMap: function (path) {
+				// 	return path.replace(/build\/(.*).min.js/, "build/$1.map.js");
+				// },
+				// sourceMappingURL: function (path) {
+				// 	return path.replace(/build\/(.*).min.js/, "build/$1.map.js");
+				// }
 			},
 			prod: {
 				files: {
