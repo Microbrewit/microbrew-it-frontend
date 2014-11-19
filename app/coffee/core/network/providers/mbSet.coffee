@@ -35,11 +35,14 @@ angular.module('Microbrewit/core/Network')
 								console.error(data)
 							)
 							.then((response) ->
-								# Save new auth token
-								$rootScope.token =
+								token = 
 									expires: new Date(response.headers('.expires')).getTime()
 									token: response.headers('access_token')
 									refresh: response.headers('refresh_token')
+
+								# Save new auth token
+								$rootScope.token = token
+								localStorage.setItem('token', token)
 
 								$rootScope.loading--
 								return response.data
