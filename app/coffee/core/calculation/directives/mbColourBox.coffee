@@ -19,20 +19,23 @@ angular.module('Microbrewit/core/Calculation')
 					scope.size = "39px"
 				
 				calcColour = ->
-					if attrs.type is "lovibond"
-						scope.lovibond = attrs.colour 
-						scope.srm = (convert.convert(attrs.colour, 'lovibond', 'srm')).toFixed(1)
-						console.log 'converted l to srm'
+					if attrs.absolutecolour?
+						scope.rgb = attrs.absolutecolour
+					else	
+						if attrs.type is "lovibond"
+							scope.lovibond = attrs.colour 
+							scope.srm = (convert.convert(attrs.colour, 'lovibond', 'srm')).toFixed(1)
+							console.log 'converted l to srm'
 
-					else if attrs.type is "srm"
-						scope.lovibond = Math.round(convert.convert(attrs.colour, 'srm', 'lovibond'))
-						scope.srm = attrs.colour
+						else if attrs.type is "srm"
+							scope.lovibond = Math.round(convert.convert(attrs.colour, 'srm', 'lovibond'))
+							scope.srm = attrs.colour
 
-					console.log 'find rgb'
-					scope.rgb = convert.convert(scope.srm, 'srm', 'rgb')
+						console.log 'find rgb'
+						scope.rgb = convert.convert(scope.srm, 'srm', 'rgb')
 
-					console.log 'find mcu'
-					scope.ingredient.mcu = colourCalc.mcu(convert.convert(attrs.amount, attrs.weightunit, 'kg'), scope.lovibond, convert.convert(attrs.volume, attrs.liquidunit, 'liters')).toFixed(2) if scope.ingredient? and attrs.volume?
+						console.log 'find mcu'
+						scope.ingredient.mcu = colourCalc.mcu(convert.convert(attrs.amount, attrs.weightunit, 'kg'), scope.lovibond, convert.convert(attrs.volume, attrs.liquidunit, 'liters')).toFixed(2) if scope.ingredient? and attrs.volume?
 
 				scope.lovibond = 0
 				# Run only once every $digest
