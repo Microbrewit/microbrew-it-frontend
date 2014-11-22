@@ -10,7 +10,7 @@
 					<th>Maltster</th>
 				</tr>
 				<tr ng-repeat="fermentable in fermentables">
-					<td><a ui-sref="fermentables.single({id:fermentable.id})">{{fermentable.name}} ({{fermentable.supplier.origin.name}})</a></td>
+					<td><a ui-sref="fermentables.single({id:fermentable.fermentableId})">{{fermentable.name}} ({{fermentable.supplier.origin.name}})</a></td>
 					<td>{{fermentable.lovibond}}</td>
 					<td>{{fermentable.ppg}}</td>
 					<td>{{fermentable.supplier.name}}</td>

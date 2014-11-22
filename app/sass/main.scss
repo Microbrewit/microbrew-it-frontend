@@ -49,6 +49,10 @@ a {
 	text-decoration:none;
 }
 
+%shadow {
+	box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
 .center {
 	margin: 0 auto;
 	text-align: center;
@@ -143,6 +147,49 @@ a {
 	text-transform: uppercase;
 	font-weight: 100;
 	border: 0;
+}
+
+.header-bubble {
+
+	margin-top: 35px;
+	position: relative;
+
+	&:before {
+		position: absolute;
+		height: 1px;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		border-top: 1px solid #ccc;
+		content: "";
+	}
+	.icon {
+		width: 98px;
+		height: 78px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 10;
+
+		background: #FBFBFB;
+	}
+	.colour-box {
+		.gravity {
+			@extend %shadow;
+		}
+		left: 10px;
+		position:absolute;
+	}
+	img {
+		left: 10px;
+		position: absolute;
+		z-index:2;
+	}
+
+	&+h1 {
+		margin-top: 25px;
+		font-weight: normal;
+		font-size: 50px;
+	}
 }
 
 @import "navigation";
