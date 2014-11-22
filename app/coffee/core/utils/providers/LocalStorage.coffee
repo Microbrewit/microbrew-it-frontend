@@ -36,12 +36,11 @@ angular.module('Microbrewit/core/Utils')
 				return value
 
 		storageApi.setItem = (key, value) ->
-			console.log 'setItem'
 			# Since we can only store strings, we need to stringify objects
 			if typeof value is "object"
 				value = JSON.stringify value
 
-			window.localStorage.setItem key, value
+			window.localStorage.setItem(key, value)
 
 		storageApi.removeItem = (key) ->
 			window.localStorage.removeItem(key)

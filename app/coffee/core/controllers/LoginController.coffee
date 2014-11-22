@@ -8,14 +8,15 @@ mbit.controller('LoginController', ['$scope', 'login', '$stateParams', '$state',
 
 		$scope.login = () ->
 			if $scope.username isnt "" and $scope.password isnt ""
-				login($scope.username, $scope.password).async().then((response) ->
+				login($scope.username, $scope.password).async().then((user) ->
 
 					# remember login
 					if $scope.remember
-						localStorage.setItem('user', $scope.user)
+						localStorage.setItem('user', user)
 					
 					if $stateParams.redirect
 						$state.go($stateParams.redirect)
+
 					else
 						$state.go('home')
 				)

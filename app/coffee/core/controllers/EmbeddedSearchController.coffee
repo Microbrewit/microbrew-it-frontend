@@ -21,7 +21,7 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 		pushOther = (step, ingredient) ->
 			push = true
 			for other in step.others
-				if ingredient.id is other.id
+				if ingredient.otherId is other.otherId
 					push = false
 
 			if push
@@ -33,13 +33,12 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 		pushFermentable = (step, ingredient) ->
 			push = true
 			for fermentable in step.fermentables
-				if ingredient.id is fermentable.id
+				if ingredient.fermentableId is fermentable.fermentableId
 					push = false
 
 			if push
 				ingredient = _.clone ingredient
 				delete ingredient['$$hashKey']
-				ingredient.fermentableId = ingredient.id
 				ingredient.amount = 0
 				ingredient.mcu = 0
 				ingredient.ppg = ingredient.ppg
@@ -49,17 +48,16 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 		pushHop = (step, ingredient) ->
 			push = true
 			for hop in step.hops
-				if ingredient.id is hop.id
+				if ingredient.hopId is hop.hopId
 					push = false
 			if push
 				ingredient = _.clone ingredient
 				delete ingredient['$$hashKey']
 				ingredient.amount = 0
-				ingredient.form = 'pellet'
-				ingredient.hopId = ingredient.id
+				ingredient.hopForm = $scope.hopForms[0]
 				console.log 
-				ingredient.aaValue = (ingredient.aAHigh+ingredient.aALow)/2
-				ingredient.aaValue = ingredient.aALow if ingredient.aAHigh is 0
+				ingredient.aaValue = (ingredient.aaHigh+ingredient.aaLow)/2
+				ingredient.aaValue = ingredient.aaLow if ingredient.aaHigh is 0
 				ingredient.beta = ingredient.betaHigh
 				step.hops.push ingredient
 
@@ -68,14 +66,13 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 
 			console.log 'loop'
 			for yeast in step.yeasts
-				if ingredient.id is yeast.id
+				if ingredient.yeastId is yeast.yeastId
 					push = false
 			console.log 'push'
 			if push
 				ingredient = _.clone ingredient
 				delete ingredient['$$hashKey']
 				ingredient.amount = 0
-				ingredient.yeastId = ingredient.id
 				if ingredient.alcoholTolerance.indexOf(',') isnt -1
 					alcoholTolerance = ingredient.alcoholTolerance.split(',')
 					ingredient.alcoholTolerance.replace(',', ' - ')

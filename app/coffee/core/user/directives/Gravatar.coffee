@@ -3,27 +3,21 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/User')
-	.directive('gravatar', (md5) ->
+	.directive('gravatar', () ->
 		return {
 			restrict: 'E'
 			scope: {
-				'src': '@src'
-				'size': '@size'
 			}
 			replace: true
-			template: '<div class="avatar gravatar"><img src="http://www.gravatar.com/avatar/{{src}}" style="width:{{size}};height:{{size}}" alt="" /></div>'
-			link: (scope, element, attr) ->
-				scope.size = attr.size
+			template: '<div class="avatar gravatar"><img src="{{url}}" style="width:{{size}};height:{{size}}" alt="" /></div>'
+			link: (scope, element, attrs) ->
+				scope.size = attrs.size
 				
-				attr.$observe('src', (current_value) -> 
-					console.log "src has changed in gravatar"
-
-					if current_value?
-						console.log "current_value: #{current_value}"
-						scope.src = md5.createHash(current_value.replace(/\s+/g, '').toLowerCase())
-						
+				attrs.$observe('url', (current_value) ->
+					if attrs.url
+						scope.url = "#{attrs.url}?d=retro"
 					else
-						scope.src = "lol"
+						scope.url = "http://gravatar.com/avatar/loltrololol?d=mm"
 				)
 		}
 	)

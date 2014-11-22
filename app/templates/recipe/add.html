@@ -1,11 +1,16 @@
 <article class="add-beer-recipe">
 	<header>
-		<h1>New Recipe</h1>
+		<div class="header-bubble inner-wrapper">
+		<div class="icon">
+			<mb-colour-box class="colour-box" type="srm" colour="{{recipe.srm}}" size="76px"></mb-colour-box>
+			<img src="images/fermentable-large.png" alt="Malt"/>
+		</div>
+	</div>
+		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="recipe.name"/></h1>
 	</header>
 
 	<section class="meta-information">
 		<div class="inner-wrapper">
-			<input type="text" class="recipe-name" placeholder="Name of brew" ng-model="recipe.name"/>
 			<select ng-model="recipe.beerStyle" ng-options="value.name for value in beerStyles"></select>	
 		</div>
 	</section>

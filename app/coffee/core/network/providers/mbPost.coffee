@@ -71,12 +71,12 @@ angular.module('Microbrewit/core/Network')
 				name: recipe.name
 				brewers: [
 					{
-						username: $rootScope.user.username
+						username: $rootScope.user.userName
 					}
 				],
 				beerStyle: {
 					name: recipe.beerStyle.name
-					id: recipe.beerStyle.id
+					id: recipe.beerStyle.beerStyleId
 				}
 				recipe: {
 					volume: recipe.volume

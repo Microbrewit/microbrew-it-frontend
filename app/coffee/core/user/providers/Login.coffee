@@ -1,8 +1,5 @@
 angular.module('Microbrewit/core/User')
-	.service('login', ['$http', '$log', 'ApiUrl', 'ClientUrl', '$rootScope', ($http, $log, ApiUrl, ClientUrl, $rootScope) ->
-
-
-		$http.defaults.headers.options = { 'user_id' : ClientUrl }
+	.service('login', ['$http', '$log', 'ApiUrl', 'ClientUrl', '$rootScope', 'localStorage', ($http, $log, ApiUrl, ClientUrl, $rootScope, localStorage) ->
 		
 		# promise pattern (login.async().then(-> something))
 		doLogin = (username, password, token=false) ->
@@ -12,13 +9,7 @@ angular.module('Microbrewit/core/User')
 
 			# AUTH using token
 			if token
-				# We still have a valid token
-				if new Date().getTime() < token.expires
-					dataPayload = "grant_type=token&token=#{token.token}"
-
-				# We need to use a refresh token
-				else
-					dataPayload = "grant_type=refresh&token=#{token.refresh}"
+				dataPayload = "grant_type=refresh_token&refresh_token=#{token.refresh}"
 
 			# AUTH using un/pw
 			else if username and password
@@ -46,18 +37,25 @@ angular.module('Microbrewit/core/User')
 							console.log data
 						)
 						.then((response) ->
-							$rootScope.user = response.data
-							console.log $rootScope.user
+							# Save Token
 							token = 
-								expires: new Date(response.headers('.expires')).getTime()
-								token: response.headers('access_token')
-								refresh: response.headers('refresh_token')
+								expires: new Date(response.data['.expires']).getTime()
+								token: response.data['access_token']
+								refresh: response.data['refresh_token']
 
-							# Save new auth token
 							$rootScope.token = token
 							localStorage.setItem('token', token)
 
-							return response
+							# Save user
+							user = 
+								userName: response.data.userName
+								gravatar: response.data.gravatar
+								settings: response.data.settings
+
+							$rootScope.user = user
+
+
+							return user
 						)
 					
 					return promise

@@ -4,15 +4,17 @@
 		<div class="inner-wrapper">
 			<table class="yeasts-list" cellspacing="0">
 				<tr>
-					<th>Name (code)</th>
+					<th>Code</th>
+					<th>Name</th>
 					<th>Supplier</th>
 					<th>Type</th>
-					<th>Temperature range</th>
+					<th>Temperature</th>
 					<th>Flocculation</th>
 					<th>Alcohol Tolerance</th>
 				</tr>
 				<tr ng-repeat="yeast in yeasts">
-					<td><a ui-sref="yeasts.single({id:yeast.id})">{{yeast.name}} ({{yeast.productcode}})</a></td>
+					<td>{{yeast.productCode}}</td>
+					<td><a ui-sref="yeasts.single({id:yeast.yeastId})">{{yeast.name}}</a></td>
 					<td>{{yeast.supplier.name}}</td>
 					<td>{{yeast.type}}</td>
 					<td>{{yeast.temperaturelow}} - {{yeast.temperaturehigh}}</td>

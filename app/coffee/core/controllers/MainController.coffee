@@ -38,8 +38,13 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$
 
 		# should we log in a remembered user?
 		user = localStorage.getItem('user')
-		if true or (user and user.auth isnt "")
-			login('torstein', 'SuperPass', false).async().then(
+		if user
+			$rootScope.user = user
+
+		token = localStorage.getItem('token')
+		console.log token
+		if token
+			login(false, false, token).async().then(
 				(response) => 
 					$rootScope.user.settings = 
 						measurements:

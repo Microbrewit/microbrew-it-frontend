@@ -1,5 +1,10 @@
 <article class="user-settings">
-	<h1><gravatar size="50px" src="{{user.email}}"></gravatar> {{user.username}}</h1>
+	<div class="header-bubble inner-wrapper">
+		<div class="icon">
+			<gravatar url="{{user.gravatar}}" size="78px"></gravatar>
+		</div>
+	</div>
+	<h1>{{user.userName}}</h1>
 	<form>
 		<section class="content profile">
 			<div class="inner-wrapper">

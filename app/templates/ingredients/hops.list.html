@@ -13,8 +13,8 @@
 				<tr ng-repeat="hop in hops">
 					<td><a ui-sref="hops.single({id:hop.hopId})">{{hop.name}}</a></td>
 					<td>{{hop.origin.name}}</td>
-					<td>{{hop.aalow}}% - {{hop.aahigh}}%</td>
-					<td>{{hop.betalow}}% - {{hop.betahigh}}%</td>
+					<td>{{hop.aaLow}}% - {{hop.aaHigh}}%</td>
+					<td>{{hop.betaLow}}% - {{hop.betaHigh}}%</td>
 					<td>{{hop.flavours.join(',')}}</td>
 				</tr>
 			</table>

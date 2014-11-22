@@ -31,7 +31,7 @@
 		<tr ng-repeat="hop in step.hops">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
 			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
-			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopTypes"></select></td>
+			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
 			<td><input type="text" ng-model="hop.aaValue"/>%</td>
 			<td><input type="text" ng-model="hop.beta"/>%</td>
 			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>

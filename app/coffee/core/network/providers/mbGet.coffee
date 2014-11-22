@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Network')
-	.factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage) ->
+	.factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', 'localStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage, localStorage) ->
 		factory = {}
 		factory.get = (requestUrl) ->
 			console.log "GET: #{requestUrl}"

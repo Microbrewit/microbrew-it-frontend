@@ -39,8 +39,10 @@ body {
 }
 
 h1 {
-	text-transform: uppercase;
+	margin-top: 10px;
+	text-transform: capitalize;
 	font-size: 50px;
+	font-weight: normal;
 	text-align:center;
 }
 
@@ -90,6 +92,11 @@ a {
 	padding: 50px 0;
 	background: #eee;
 	border-top: 1px solid #ddd;
+}
+
+.frontpage {
+	background: url('../images/background.jpg');
+	background-size: cover;
 }
 
 .main {
@@ -153,6 +160,7 @@ a {
 
 	margin-top: 35px;
 	position: relative;
+	margin-bottom: 0;
 
 	&:before {
 		position: absolute;
@@ -183,12 +191,6 @@ a {
 		left: 10px;
 		position: absolute;
 		z-index:2;
-	}
-
-	&+h1 {
-		margin-top: 25px;
-		font-weight: normal;
-		font-size: 50px;
 	}
 }
 

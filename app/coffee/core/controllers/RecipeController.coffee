@@ -31,7 +31,7 @@ mbit.controller('RecipeController', [
 		$scope.hopTypes = []
 
 		mbGet.hopForms().async().then((response) ->
-			$scope.hopTypes = response
+			$scope.hopForms = response
 		)
 
 		mbGet.beerstyles().async().then((response) ->

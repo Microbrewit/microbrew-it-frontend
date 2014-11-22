@@ -1,16 +1,7 @@
-.gravatar.centered-block {
-	display: block;
-	text-align: center;
-	margin-top: 25px;
-}
-.centered-block + h1 {
-	margin-top: 20px;
-}
-
 .gravatar {
-	display: inline-block;
 	
 	img {
+		@extend %shadow;
 		border-radius: 50%;
 		vertical-align: sub;
 	}
