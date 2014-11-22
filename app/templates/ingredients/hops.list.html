@@ -11,7 +11,7 @@
 					<th>Flavours</th>
 				</tr>
 				<tr ng-repeat="hop in hops">
-					<td><a ui-sref="hops.single({id:hop.id})">{{hop.name}}</a></td>
+					<td><a ui-sref="hops.single({id:hop.hopId})">{{hop.name}}</a></td>
 					<td>{{hop.origin.name}}</td>
 					<td>{{hop.aalow}}% - {{hop.aahigh}}%</td>
 					<td>{{hop.betalow}}% - {{hop.betahigh}}%</td>
