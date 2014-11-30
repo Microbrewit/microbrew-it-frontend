@@ -1,11 +1,12 @@
 #main-navigation {
 	@extend %shadow;
-	
+	position: relative;
+	z-index: 10;
 	width: 100%;
 	height: 50px;
 	line-height: 50px;
 	text-align: center;
-	background: rgba(255,255,255,0.4);
+	background: rgba(255,255,255,0.6);
 	border-bottom: 1px solid rgba(0,0,0,0.2);
 
 	.add a {
@@ -20,10 +21,7 @@
 	}
 
 	ul {
-		@extend .cf;
-		background: rgba(255,255,255,0.85);
-		border-bottom: 1px solid #ccc;
-		//display: table;
+		@extend .cf;		//display: table;
 		list-style: none;
 		padding:0;
 		text-align: center;
