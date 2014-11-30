@@ -31,22 +31,31 @@
 .search-grid-results {
 	list-style: none;
 	padding: 0;
+	margin:0;
 
 	li {
 		padding: 0;
 		@include col(1/4, 0, false);
-		padding: 5px;
+		padding: 0 5px;
 		display: inline-block;
 	}
 }
 
 .search-grid-result {
 	padding: 0;
+	margin:0;
 	padding-bottom: 25px;
 
+	li {
+		margin:0;
+		padding:0;
+	}
+
 	.content {
+		@extend %shadow;
 		display: block;
 		background: white;
+		margin-top: 32px;
 		border-radius: 5px;
 		border: 1px solid #E9E9E9;
 		text-align:center;
@@ -66,6 +75,7 @@
 		}
 
 		&:before {
+			@extend %shadow;
 			position: absolute;
 			top: -30px;
 			left: 50%;
@@ -94,7 +104,6 @@
 		margin-top: -25px;
 		position: relative;
 		z-index: 2;
-
 	}
 }
 
