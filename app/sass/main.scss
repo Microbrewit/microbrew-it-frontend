@@ -12,6 +12,14 @@
 	}
 }
 
+@mixin filter($var) {
+	-webkit-filter: $var;
+	-moz-filter: $var;
+	-ms-filter: $var;
+	-o-filter: $var;
+	filter: $var;
+}
+
 $normal-font-size: 15px;
 $font-recipe-name: 20px;
 $link-color: #00ABD6;
@@ -44,6 +52,13 @@ h1 {
 	font-size: 50px;
 	font-weight: normal;
 	text-align:center;
+}
+
+h2 {
+	text-align:center;
+	font-size: 30px;
+	font-weight: normal;
+	margin-bottom: 25px;
 }
 
 a {
@@ -89,14 +104,95 @@ a {
 }
 
 .content {
-	padding: 50px 0;
+	padding: 25px 0;
 	background: #eee;
 	border-top: 1px solid #ddd;
 }
 
 .frontpage {
-	background: url('../images/background.jpg');
-	background-size: cover;
+	header {
+		width: 100%;
+		margin-top: -60px;
+		padding: 130px 0;
+		position: relative;
+
+		&:before {
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: url('../images/background.jpg');
+			background-size: cover;
+			
+			@include filter(blur(2px) saturate(80%));
+			// @include filter(saturate, 90%);
+			content: '';
+		}
+
+		h1 {
+			position: relative;
+			z-index: 10;
+			color: white;
+			text-transform: uppercase;
+			text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			margin-bottom: 0;
+		}
+
+		.subheader {
+			position: relative;
+			z-index: 10;
+			text-align:center;
+			color: white;
+			opacity: 0.9;
+			text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			font-size: 25px;
+		}
+	}
+
+	.call-to-action {
+		position: relative;
+		z-index: 10;
+		width: 250px;
+		height: 50px;
+		font-size: 25px;
+		text-transform: uppercase;
+		opacity: 0.9;
+		text-align:center;
+		line-height: 45px;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&.create {
+			color: white;
+			display: block;
+			margin: 25px auto;
+			// margin-right: 25px;
+			background: #CC2F2F;
+			height: 46px;
+			border: 0;
+			border-bottom: 4px solid #AD2727;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		&.discover {
+			background: white;
+		}
+	}
+
+	.content {
+		position: relative;
+		z-index: 9;
+		border-top: 0;
+		margin-top: -60px;
+		background: linear-gradient(to bottom, rgba(238,238,238,0.8) 0%,rgba(238,238,238,1) 60px,rgba(238,238,238,1) 100%);
+	} 
+
 }
 
 .main {
