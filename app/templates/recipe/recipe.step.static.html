@@ -1,0 +1,70 @@
+	<table class="fermentables" ng-show="step.fermentables.length > 0">
+		<tr>
+			<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
+			<th>Amount</th>
+			<th>Colour</th>
+			<th>PPG</th>
+			<th title="Gravity Points">Contributes</th>
+		</tr>
+		<tr ng-repeat="fermentable in step.fermentables">
+			<td>{{::fermentable.name}}</td>
+			<td><mb-convert editable="false" modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
+			<td><mb-colour-box style="float:left;" amount="{{::fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{::beer.recipe.volume}}" type="lovibond" colour="{{::fermentable.lovibond}}"></mb-colour-box>
+				<span style="display:inline-block;line-height: 50px;">{{::fermentable.lovibond}}°L</span></td>
+			<td>{{::fermentable.ppg}}</td>
+			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{::fermentable.type}}" og="{{::beer.recipe.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{::fermentable.ppg}}" amount="{{::fermentable.amount}}" efficiency="{{::beer.recipe.efficiency}}" volume="{{::beer.recipe.volume}}"></mb-gravity></td>
+		</tr>
+	</table>
+
+	<table class="hops" ng-show="step.hops.length > 0">
+		<tr>
+			<th>Name of <strong>HOPS</strong></th>
+			<th>Amount</th>
+			<th>Form</th>
+			<th>AA</th>
+			<th>BA</th>
+			<th>Contributes</th>
+		</tr>
+		<tr ng-repeat="hop in step.hops">
+			<td>{{hop.name}}</td>
+			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
+			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
+			<td><input type="text" ng-model="hop.aaValue"/>%</td>
+			<td><input type="text" ng-model="hop.beta"/>%</td>
+			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
+		</tr>
+	</table>
+
+	<table class="other" ng-show="step.others.length > 0">
+		<tr>
+			<th>Name of <strong>OTHER</strong></th>
+			<th>Amount</th>
+		</tr>
+		<tr ng-repeat="other in step.others">
+			<td>
+				{{other.name}} ({{other.type}})
+			</td>
+			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="other.amount"></mb-convert></td>
+		</tr>
+	</table>
+
+	<table class="yeasts" ng-show="step.yeasts.length > 0">
+		<tr>
+			<th>Name of <strong>YEAST</strong></th>
+			<th>Amount</th>
+			<th>Attenuation</th>
+			<th>Flocculation</th>
+			<th>Alcohol Tolerance</th>
+			<th>Temperature</th>
+		</tr>
+		<tr ng-repeat="yeast in step.yeasts">
+			<td>
+				{{yeast.name}} <span ng-show="yeast.productCode">({{yeast.productCode}})</span>
+			</td>
+			<td><input type="text" ng-model="yeast.amount"/></td>
+			<td>{{yeast.attenutionRange}}</td>
+			<td>{{yeast.flocculation}}</td>
+			<td>{{yeast.alcoholTolerance}}</td>
+			<td>{{yeast.temperatureLow}}{{user.settings.measurements.temperature.short}} - {{yeast.temperatureHigh}}{{user.settings.measurements.temperature.short}}</td>
+		</tr>
+	</table>

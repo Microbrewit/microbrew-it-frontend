@@ -1,176 +1,178 @@
-.add-beer-recipe {
-	.recipe-beer-meta {
-		text-align:center;
-		input[type="number"] {
-			line-height: 40px;
-			font-size: 24px;
-			width: 45px;
-			font-weight: 100;
-			text-align: center;
-		}
+.recipe-beer-meta {
+	text-align:center;
+	input[type="number"] {
+		line-height: 40px;
+		font-size: 24px;
+		width: 45px;
+		font-weight: 100;
+		text-align: center;
+	}
 
-		.beer-meta-value {
-			font-size: 26px;
-			font-weight: 300;
-			line-height: 50px;
-			display: inline-block;
-			margin-right: 15px;
-		}
-		.beer-meta-key {
-			display: inline-block;
-			line-height: 40px;
-			height: 50px;
-			vertical-align:middle;
-			margin-right: 5px;
-		}
+	.value {
+		display: inline-block;
 	}
-	.conclusion .recipe-beer-meta {
-		border-top: 1px solid #ccc;
-		border-bottom: 1px solid #ccc;
-		margin-bottom: 50px;
-		padding: 25px 0;
 
-		.beer-meta-value {
-			font-size: 26px;
-			font-weight: 300;
-			line-height: 50px;
-			display: inline-block;
-			margin-right: 15px;
-		}
-		.beer-meta-key {
-			line-height: 40px;
-			height: 50px;
-			margin-right: 15px;
-			display: inline-block;
-		}
-	}
-	.meta-information {
-		.recipe-name {
-			margin-bottom: 25px;
-		}
-		.recipe-name, .recipe-style {
-			width: 100%;
-			height: 50px;
-			padding: 0 10px;
-			font-size: $font-recipe-name;
-		}
-		.inner-wrapper {
-			padding: 50px 0;
-		}
-		background: #eee;
-		padding: 25px;
-		border-top: 1px solid #ccc;
-	}
 	.beer-meta-value {
-		font-size: 20px;
-		font-weight: bold;
+		font-size: 26px;
+		font-weight: 300;
+		line-height: 50px;
+		display: inline-block;
+		margin-right: 15px;
 	}
-	h2 {
-		text-align:center;
-		font-size: 50px;
-		font-weight: normal;
+	.beer-meta-key {
+		display: inline-block;
+		line-height: 40px;
+		height: 50px;
+		vertical-align:middle;
+		margin-right: 5px;
 	}
-	ul, li {
-		list-style: none;
+}
+.conclusion .recipe-beer-meta {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 50px;
+	padding: 25px 0;
+
+	.beer-meta-value {
+		font-size: 26px;
+		font-weight: 300;
+		line-height: 50px;
+		display: inline-block;
+		margin-right: 15px;
+	}
+	.beer-meta-key {
+		line-height: 40px;
+		height: 50px;
+		margin-right: 15px;
+		display: inline-block;
+	}
+}
+.meta-information {
+	.recipe-name {
+		margin-bottom: 25px;
+	}
+	.recipe-name, .recipe-style {
+		width: 100%;
+		height: 50px;
+		padding: 0 10px;
+		font-size: $font-recipe-name;
+	}
+	.inner-wrapper {
+		padding: 50px 0;
+	}
+	background: #eee;
+	padding: 25px;
+	border-top: 1px solid #ccc;
+}
+.beer-meta-value {
+	font-size: 20px;
+	font-weight: bold;
+}
+h2 {
+	text-align:center;
+	font-size: 50px;
+	font-weight: normal;
+}
+ul, li {
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+.step-number {
+	color: white;
+	font-size: 40px;
+	text-align:center;
+	line-height: 50px;
+	@include col(1/20, 0);
+}
+.step-meta {
+	background: rgba(0,0,0,0.1);
+	line-height: 46px;
+	@include col(19/20, 0);
+	padding: 0 25px;
+
+	span {
 		padding:0;
+		display: inline-block;
 		margin:0;
 	}
-	.step-number {
-		color: white;
-		font-size: 40px;
-		text-align:center;
-		line-height: 50px;
-		@include col(1/20, 0);
-	}
-	.step-meta {
-		background: rgba(0,0,0,0.1);
-		line-height: 46px;
-		@include col(19/20, 0);
-		padding: 0 25px;
 
-		span {
-			padding:0;
+	.values {
+		float: right;
+		input {
+			width: 60px;
 			display: inline-block;
-			margin:0;
 		}
-
-		.values {
-			float: right;
-			input {
-				width: 60px;
-				display: inline-block;
-			}
-			label {
-				margin-left: 15px;
-			}
-		}
-
-		.step-type {
-			font-size: 20px;
-			line-height: 50px;
-			padding: 0;
-			margin: 0;
+		label {
+			margin-left: 15px;
 		}
 	}
-	.step-wrapper {
-		margin-bottom: 25px;
-	}
 
-	.add-step {
-		//float:right;
-		display: block;
-		line-height: 50px;
+	.step-type {
 		font-size: 20px;
-		color: white;
-		font-weight: normal;
-		padding: 0 10px;
-		// margin: 25px 0;
-		// margin: 25px auto 0 auto;
-		// margin-top: 25px;
-		float:right;
-		border:0;
+		line-height: 50px;
+		padding: 0;
+		margin: 0;
 	}
-	.mash {
-		background: #EEE4DB;
-		color: #705F58;
-		border-top: 1px solid #D8D2CA;
-		.step-number, tr:first-child, .add-step, .add-ingredient  {
-			background: #705F58;
-		}
-	}
-	.boil {
-		background: #DFE4CD;
-		color: #66743E;
-		border-top: 1px solid #D2D5C3;
+}
+.step-wrapper {
+	margin-bottom: 25px;
+}
 
-		.step-number, tr:first-child, .add-step, .add-ingredient  {
-			background: #66743E;
-		}
+.add-step {
+	//float:right;
+	display: block;
+	line-height: 50px;
+	font-size: 20px;
+	color: white;
+	font-weight: normal;
+	padding: 0 10px;
+	// margin: 25px 0;
+	// margin: 25px auto 0 auto;
+	// margin-top: 25px;
+	float:right;
+	border:0;
+}
+.mash {
+	background: #EEE4DB;
+	color: #705F58;
+	border-top: 1px solid #D8D2CA;
+	.step-number, tr:first-child, .add-step, .add-ingredient  {
+		background: #705F58;
 	}
-	.fermentation {
-		background: #FCF1EF;
-		color: #592114;
-		border-top: 1px solid #D0D4C1;
+}
+.boil {
+	background: #DFE4CD;
+	color: #66743E;
+	border-top: 1px solid #D2D5C3;
 
-		.step-number, tr:first-child, .add-step, .add-ingredient  {
-			background: #592114;
-		}
+	.step-number, tr:first-child, .add-step, .add-ingredient  {
+		background: #66743E;
 	}
-	.recipe-notes {
-		display: block;
-		@include col(8, 15px, false);
-		min-height: 100px;
-		margin: 0 auto;
-	}
-	.add-ingredient {
-		margin-top: 10px;
-		margin-right: 5px;
-		margin-bottom: 25px;
+}
+.fermentation {
+	background: #FCF1EF;
+	color: #592114;
+	border-top: 1px solid #D0D4C1;
 
-		border: 0;
-		padding: 5px 10px;;
-		color: white;
+	.step-number, tr:first-child, .add-step, .add-ingredient  {
+		background: #592114;
 	}
+}
+.recipe-notes {
+	display: block;
+	@include col(8, 15px, false);
+	min-height: 100px;
+	margin: 0 auto;
+}
+.add-ingredient {
+	margin-top: 10px;
+	margin-right: 5px;
+	margin-bottom: 25px;
+
+	border: 0;
+	padding: 5px 10px;;
+	color: white;
 }
 
 .embedded-search {

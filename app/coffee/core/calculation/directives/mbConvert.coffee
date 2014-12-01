@@ -11,13 +11,20 @@ angular.module('Microbrewit/core/Calculation')
 				'modelvalue': '=modelvalue'
 			}
 			replace: false
-			template: '<span><div><input type="text" ng-model="localvalue"/><select style="width:auto;display: inline-block;" ng-model="localunit" ng-options="value for value in conversions"></select></div></span>'
+			template: '<span><div><input type="text" ng-model="localvalue" ng-show="editable"/><span style="margin-right: 10px;font-size: 16px;font-weight: bold;" ng-show="!editable">{{localvalue}}</span><select style="width:auto;display: inline-block;" ng-model="localunit" ng-options="value for value in conversions"></select></div></span>'
 			link: (scope, element, attrs) ->
 
 				# Get available conversion options (based on available formulas in convert)
 				available = convert.available(attrs.modelunit)
 				available.unshift attrs.modelunit
 				scope.conversions = available
+
+				console.log "editable= #{attrs.editable}"
+
+				scope.editable = true
+
+				console.log  "editable type" + typeof attrs.editable
+				scope.editable = (attrs.editable == 'true') if scope.editable?
 
 				updateLocalValue = ->
 					scope.localvalue = +(convert.convert(scope.modelvalue, attrs.modelunit, scope.localunit)).toFixed(2)

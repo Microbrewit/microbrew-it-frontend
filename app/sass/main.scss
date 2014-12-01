@@ -109,6 +109,13 @@ a {
 	border-top: 1px solid #ddd;
 }
 
+.subheader {
+	text-align:center;
+	color: #444;
+	text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+	font-size: 25px;
+}
+
 .frontpage {
 	header {
 		width: 100%;
@@ -143,12 +150,11 @@ a {
 		.subheader {
 			position: relative;
 			z-index: 10;
-			text-align:center;
 			color: white;
 			opacity: 0.9;
-			text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-			font-size: 25px;
 		}
+
+		
 	}
 
 	.call-to-action {
@@ -290,6 +296,7 @@ a {
 	}
 }
 
+@import "single-beer";
 @import "navigation";
 @import "footer";
 @import "search";

@@ -1,0 +1,71 @@
+#single-beer {
+	.beer-meta {
+		background: #eee;
+		border-top: 1px solid #fff;
+		position: relative;
+
+		&:before {
+			position: absolute;
+			top:-2px;
+			left:0;
+			right:0;
+			border-top: 1px solid #ddd;
+			content:'';
+		}
+	}
+
+	.abv-wrapper,.og-wrapper,.fg-wrapper,.bitterness-wrapper,.colour-wrapper {
+		display: inline-block;
+		padding: 0 10px;
+	}
+
+	.beer-meta-key {
+		display: block;	
+		line-height: 1;
+		height: auto;
+		text-align:left;	
+	}
+	.beer-meta-value {
+		height: auto;
+		line-height: 1.1;
+		text-align:left;
+	}
+
+	.meta-line {
+		font-size: 25px;
+		padding: 25px 0;
+		padding-top: 0;
+		border-bottom: 1px solid #ccc;
+		text-align:center;
+	}
+
+	.brewers {
+		list-style:none;
+		line-height: 50px;
+		font-size: 25px;
+		text-transform: capitalize;
+		color: #333;
+		text-align:center;
+		margin-left: 0;
+		margin-top: 0;
+		padding: 25px 0;
+		width: 100%;
+		border-bottom: 1px solid #ccc;
+
+		li {
+			padding: 0 25px;
+		}
+
+		img {
+			vertical-align: middle;
+			margin-right: 10px;
+			margin-top: -4px;
+		}
+	}
+
+	.actions {
+		padding: 25px 0;
+		border-bottom: 1px solid #ccc;
+		text-align:center;
+	}
+}
