@@ -5,7 +5,7 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '$
 
 		# We are displaying information about a single beer
 		if $stateParams.id
-			get.beers({id: $stateParams.id}).async().then((apiResponse) ->
+			get.beers({id: $stateParams.id}).then((apiResponse) ->
 				console.log "apiResponse"
 				console.log apiResponse.beers[0]
 
@@ -27,7 +27,7 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '$
 
 		# We are on the beer listing/discovery page
 		else
-			get.beers({latest:true}).async().then((apiResponse) ->
+			get.beers({latest:true}).then((apiResponse) ->
 				$scope.brews = apiResponse
 			)
 ])

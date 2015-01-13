@@ -63,14 +63,14 @@
 				<h3>Mash</h3>
 				<ul>
 					<li class="step-wrapper" ng-repeat="step in beer.recipe.mashSteps">
-						<div class="step-number">{{step.number}}</div>
+						<div class="step-number">{{step.stepNumber}}</div>
 						<div class="step-meta">
 							<span class="step-type">Mash step</span>
 							<span class="values">
-								<label for="length">Volume </label><mb-convert editable="false" id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
-								<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
+								<label for="length">Volume </label><mb-unit id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-unit>
+								<label for="length">Length: </label>{{step.length}}
 								<label for="length">Temperature: </label>
-								<mb-convert editable="false" id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+								<mb-unit id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-unit>
 							</span>
 						</div>
 						<div ng-include="'templates/recipe/recipe.step.static.html'"></div>
@@ -84,13 +84,13 @@
 				<h3>Boil</h3>
 				<ul>
 					<li ng-repeat="step in beer.recipe.boilSteps">
-						<div class="step-number">{{step.number}}</div>
+						<div class="step-number">{{step.stepNumber}}</div>
 						<div class="step-meta">
 							<span class="step-type">Boil step</span>
 							<span class="values">
 								<label for="length">Add at: </label>
-								<input type="text" id="length" ng-model="step.length"/>
-								<label for="volume">Volume: </label><mb-convert editable="false" id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
+								{{step.length}}
+								<label for="volume">Volume: </label><mb-unit id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-unit>
 							</span>
 						</div>
 						<div ng-include="'templates/recipe/recipe.step.static.html'"></div>
@@ -104,14 +104,14 @@
 				<h3>Fermentation</h3>
 				<ul>
 					<li ng-repeat="step in beer.recipe.fermentationSteps">
-						<div class="step-number">{{step.number}}</div>
+						<div class="step-number">{{step.stepNumber}}</div>
 						<div class="step-meta">
 							<span class="step-type">Fermentation step</span>
 							<span class="values">
 								<label for="length">Duration:</label>
-								<mb-convert editable="false" modelunit="days" localunit="days" modelvalue="step.length"></mb-convert >
+								<mb-unit modelunit="days" localunit="days" modelvalue="step.length"></mb-unit>
 								<label for="length">Temperature: </label>
-								<mb-convert editable="false" id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+								<mb-unit id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-unit>
 							</span>
 						</div>
 						<div ng-include="'templates/recipe/recipe.step.static.html'"></div>
@@ -123,7 +123,6 @@
 	<section class="forks" ng-show="beer.forks.length > 0">
 		<div class="inner-wrapper">
 			<h2>Forks</h2>
-			<span ng-show="forks.length === 0">No registered forks.</span>
 		</div>
 	</section>
 </article>

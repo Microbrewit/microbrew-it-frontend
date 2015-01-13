@@ -29,10 +29,6 @@ angular.module('Microbrewit',
 				url: "/"
 				templateUrl: "templates/home.html"
 			})
-			.state('beer', {
-				url: "/beer"
-				templateUrl: "templates/login.html"
-			})
 			.state('hops', {
 				abstract: true
 				templateUrl: "templates/ingredients/hops.html"
@@ -98,12 +94,12 @@ angular.module('Microbrewit',
 				templateUrl: "templates/brews/brews.html"
 			})
 			.state('brews.list', {
-				url: '/brews'
+				url: '/beers'
 				controller: 'BeerController'
 				templateUrl: "templates/brews/brews.list.html"
 			})
 			.state('brews.single', {
-				url: '/brews/{id:[0-9]{1,5}}'
+				url: '/beers/{id:[0-9]{1,5}}'
 				controller: 'BeerController'
 				templateUrl: "templates/brews/brews.single.html"
 			})

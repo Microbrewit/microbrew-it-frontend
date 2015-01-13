@@ -1,7 +1,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Calculation')
-	.factory('abv', (convert) ->
+	.factory('abv', (convert, _) ->
 		formulas = {}
 
 		formulas.available = () ->
@@ -19,6 +19,7 @@ angular.module('Microbrewit/core/Calculation')
 			return (og-fg)*131.25
 
 		formulas.alternativeSimple = (og, fg) ->
+
 			return ((1.05/0.79)*((og-fg/fg))*100)
 
 		formulas.advanced = (og, fg) ->
@@ -32,10 +33,10 @@ angular.module('Microbrewit/core/Calculation')
 
 	
 		formulas.calc = (og, fg, formula) ->
-			if @[formula]
-				return @[formula](og, fg)
-			else
-				return @['microbrewit'](og, fg)
+			formula = 'microbrewit' unless @[formula]
+
+			calc = @[formula](og, fg)
+			return if not _.isNaN(calc) then calc else 0
 
 		return formulas
 	)

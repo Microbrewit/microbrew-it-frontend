@@ -29,12 +29,12 @@ angular.module('Microbrewit/core/User')
 								"Content-Type": "application/x-www-form-urlencoded"
 						})
 						.error((data, status) ->
-							$log.error(data)
-							$log.error(status)
 
-							console.log 'ERROR'
-							console.log status
-							console.log data
+							$rootScope.token = null
+							localStorage.removeItem('token')
+
+							$rootScope.user = null
+
 						)
 						.then((response) ->
 							# Save Token

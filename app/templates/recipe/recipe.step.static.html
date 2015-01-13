@@ -8,7 +8,7 @@
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td>{{::fermentable.name}}</td>
-			<td><mb-convert editable="false" modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
+			<td><mb-unit editable="false" modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-unit></td>
 			<td><mb-colour-box style="float:left;" amount="{{::fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{::beer.recipe.volume}}" type="lovibond" colour="{{::fermentable.lovibond}}"></mb-colour-box>
 				<span style="display:inline-block;line-height: 50px;">{{::fermentable.lovibond}}°L</span></td>
 			<td>{{::fermentable.ppg}}</td>
@@ -26,11 +26,11 @@
 			<th>Contributes</th>
 		</tr>
 		<tr ng-repeat="hop in step.hops">
-			<td>{{hop.name}}</td>
-			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
+			<td>{{::hop.name}}</td>
+			<td><mb-unit modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-unit></td>
 			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
-			<td><input type="text" ng-model="hop.aaValue"/>%</td>
-			<td><input type="text" ng-model="hop.beta"/>%</td>
+			<td>{{::hop.aaValue}}%</td>
+			<td>{{::hop.beta}}%</td>
 			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
 		</tr>
 	</table>
@@ -44,7 +44,7 @@
 			<td>
 				{{other.name}} ({{other.type}})
 			</td>
-			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="other.amount"></mb-convert></td>
+			<td><mb-unit modelunit="grams" localunit="grams" modelvalue="other.amount"></mb-unit></td>
 		</tr>
 	</table>
 
@@ -61,7 +61,7 @@
 			<td>
 				{{yeast.name}} <span ng-show="yeast.productCode">({{yeast.productCode}})</span>
 			</td>
-			<td><input type="text" ng-model="yeast.amount"/></td>
+			<td>{{yeast.amount}}</td>
 			<td>{{yeast.attenutionRange}}</td>
 			<td>{{yeast.flocculation}}</td>
 			<td>{{yeast.alcoholTolerance}}</td>

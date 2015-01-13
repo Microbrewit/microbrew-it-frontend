@@ -44,6 +44,10 @@ html {
 body {
 	background: #333;
 	margin: 0;
+
+	.modal {
+		overflow: hidden;
+	}
 }
 
 h1 {

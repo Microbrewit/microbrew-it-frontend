@@ -4,5 +4,5 @@
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Network', [])
 	# Define the API endpoint
-	.value('ApiUrl', 'http://microbrewit.asphaug.io')
+	.value('ApiUrl', 'http://dev.asphaug.io')
 	.value('ClientUrl', 'localhost:3000')

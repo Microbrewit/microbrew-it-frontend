@@ -101,7 +101,7 @@ angular.module('Microbrewit/core/Calculation')
 				if srm > 40
 					return "3,4,3"
 				if srm <= 0
-					return "255,255,255"
+					return "248,248,230"
 
 				# We need to do some parsing of the srm values due to limits in the srmRgbMap
 				srm = parseFloat(srm)
@@ -131,7 +131,9 @@ angular.module('Microbrewit/core/Calculation')
 			# We actually want to convert
 			if typeof from is 'string' and typeof to is 'string' and @[from]?[to]?
 				convertedValue = @[from][to](amount)
-				#console.log "@[#{from}][#{to}](#{amount}) = #{convertedValue}"
+
+				convertedValue = 0 if _.isNaN(convertedValue)
+				
 				return convertedValue
 
 		conversionFormulas.available = (from) ->

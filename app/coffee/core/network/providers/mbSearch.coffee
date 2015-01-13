@@ -29,10 +29,6 @@ angular.module('Microbrewit/core/Network')
 								)
 								.then((response) ->
 									$rootScope.loading--
-									if response.data.hits?
-										for i in [0...response.data.hits.hits.length]
-											response.data.hits.hits[i].endpoint = response.data.hits.hits[i]._type.replace('dto', 's')
-
 									return response.data
 								)
 						

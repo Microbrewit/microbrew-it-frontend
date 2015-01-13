@@ -2,43 +2,61 @@
 	<header>
 		<div class="header-bubble inner-wrapper">
 		<div class="icon">
-			<mb-colour-box class="colour-box" type="srm" colour="{{recipe.srm}}" size="76px"></mb-colour-box>
+			<mb-colour-box class="colour-box" type="srm" colour="{{beer.recipe.srm}}" size="76px"></mb-colour-box>
 			<img src="images/fermentable-large.png" alt="Malt"/>
 		</div>
 	</div>
-		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="recipe.name"/></h1>
+		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.recipe.name"/></h1>
 	</header>
 
 	<section class="meta-information">
-		<div class="inner-wrapper">
-			<select ng-model="recipe.beerStyle" ng-options="value.name for value in beerStyles"></select>	
-		</div>
+		<select class="beerstyle" ng-model="beer.recipe.beerStyle" ng-options="value.name for value in beerStyles"></select>	
 	</section>
 
 	<section class="meta-calculations">
 		<div class="inner-wrapper recipe-beer-meta">
-			<div class="beer-meta-key">ABV</div> 
-			<div class="beer-meta-value"><mb-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
-
-			<div class="beer-meta-key">Original Gravity</div> 
-			<div class="beer-meta-value">{{recipe.og}}</div>
-
-			<div class="beer-meta-key">Final Gravity</div> 
-			<div class="beer-meta-value">{{recipe.fg}}</div>
-
-			<div class="beer-meta-key">Bitterness</div> 
-			<div class="beer-meta-value">{{recipe.ibu}} IBU</div>
-
-			<div class="beer-meta-key">Colour</div> 
-			<div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
-
-			<div class="beer-meta-key">Volume</div> 
-			<div class="beer-meta-value">
-				<mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="recipe.volume"></mb-convert>
-				<input type="number" ng-model="recipe.volume"/>
+			<div class="abv-wrapper">
+				<div class="beer-meta-key">ABV</div> 
+				<div class="beer-meta-value"><mb-abv og="{{beer.recipe.og}}" fg="{{beer.recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
 			</div>
-			<div class="beer-meta-key">Efficiency</div> <div class="beer-meta-value">
-				<input type="number" ng-model="recipe.efficiency"/>
+
+			<div class="og-wrapper">
+				<div class="beer-meta-key">OG</div> 
+				<div class="beer-meta-value">{{beer.recipe.og}}</div>
+			</div>
+			
+			<div class="fg-wrapper">
+				<div class="beer-meta-key">FG</div> 
+				<div class="beer-meta-value">{{beer.recipe.fg}}</div>
+			</div>
+			
+			<div class="bitterness-wrapper">
+				<div class="beer-meta-key">Bitterness</div> 
+				<div class="beer-meta-value">{{beer.ibu.tinseth}} IBU</div>
+			</div>
+			
+			<div class="colour-wrapper">
+				<div class="beer-meta-key">Colour</div> 
+				<div class="beer-meta-value">
+					<mb-colour-box type="srm" colour="{{beer.recipe.srm}}"></mb-colour-box> 
+					{{beer.srm.standard}} SRM
+				</div>
+			</div>
+
+			<div class="volume-wrapper">
+				<div class="beer-meta-key">Volume</div>
+				<div class="beer-meta-value">
+					<mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="beer.recipe.volume"></mb-convert>
+					<input type="number" ng-model="beer.recipe.volume"/>
+				</div>
+			</div>
+
+			<div class="efficiency-wrapper">
+				<div class="beer-meta-key">Efficiency</div>
+				<div class="beer-meta-value">
+					<input type="number" ng-model="beer.recipe.efficiency"/>
+				</div>
+
 			</div>
 		</div>
 	</section>
@@ -47,8 +65,8 @@
 		<div class="inner-wrapper">
 			<h2>Mash</h2>
 			<ul>
-				<li class="step-wrapper" ng-repeat="step in recipe.mashSteps">
-					<div class="step-number">{{step.number}}</div>
+				<li class="step-wrapper" ng-repeat="step in beer.recipe.mashSteps">
+					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
 						<span class="step-type">Mash step</span>
 						<span class="values">
@@ -73,8 +91,8 @@
 		<div class="inner-wrapper">
 			<h2>Boil</h2>
 			<ul>
-				<li ng-repeat="step in recipe.boilSteps">
-					<div class="step-number">{{step.number}}</div>
+				<li ng-repeat="step in beer.recipe.boilSteps">
+					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
 						<span class="values">
@@ -95,8 +113,8 @@
 		<div class="inner-wrapper">
 			<h2>Fermentation</h2>
 			<ul>
-				<li ng-repeat="step in recipe.fermentationSteps">
-					<div class="step-number">{{step.number}}</div>
+				<li ng-repeat="step in beer.recipe.fermentationSteps">
+					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
 						<span class="step-type">Fermentation step</span>
 						<span class="values">
@@ -117,7 +135,7 @@
 	<section class="notes steps">
 		<div class="inner-wrapper">
 			<h2>Recipe notes</h2>
-			<textarea class="recipe-notes" ng-model="recipe.notes" placeholder="notes"></textarea>
+			<textarea class="recipe-notes" ng-model="beer.recipe.notes" placeholder="notes"></textarea>
 		</div>
 	</section>
 
@@ -133,15 +151,15 @@
 			<h2>Looks good!</h2>
 
 			<div class="recipe-beer-meta">
-				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-abv og="{{recipe.og}}" fg="{{recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
-				<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{recipe.og}}</div>
-				<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{recipe.fg}}</div>
-				<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{recipe.ibu}} IBU</div>
-				<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{recipe.srm}}"></mb-colour-box> {{recipe.srm}} SRM</div>
+				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-abv og="{{beer.recipe.og}}" fg="{{beer.recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
+				<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{beer.recipe.og}}</div>
+				<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{beer.recipe.fg}}</div>
+				<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{beer.recipe.ibu}} IBU</div>
+				<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{beer.recipe.srm}}"></mb-colour-box> {{beer.recipe.srm}} SRM</div>
 
 				<div class="beer-meta-key">Volume</div>
 				<div class="beer-meta-value">
-					{{recipe.volume}}l
+					{{beer.recipe.volume}}l
 				</div>
 			</div>
 			<button class="save" ng-click="logRecipe()">LOG</button>

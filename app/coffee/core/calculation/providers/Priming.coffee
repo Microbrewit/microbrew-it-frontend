@@ -5,12 +5,12 @@ angular.module('Microbrewit/core/Calculation')
 		formulas = {}
 
 		formulas.dme = (wantedCarbonation, beerVolume, currentCarbonation) ->
-			currentCarbonation = currentCarbonation || 0
+			currentCarbonation ?= 0
 
 			# mDME =  + 1/((0.5 * 0.82 * 0.80 * / beerVolume)/wantedCarbonation-currentCarbonation);
 			# wantedCarbonation = currentCarbonation  + 0.5 * 0.82 * 0.80 * mDME / beerVolume;
 		formulas.caneSugar = (wantedCarbonation, beerVolume, currentCarbonation) ->
-			currentCarbonation = currentCarbonation || 0
+			currentCarbonation ?= 0
 
 			# wantedCarbonation = currentCarbonation + 0.5 * canesugar /beerVolume;
 			# canesugar = ((wantedCarbonation - currentCarbonation)/0.5)*beerVolume);
