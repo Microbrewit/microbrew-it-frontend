@@ -7,35 +7,29 @@ angular.module('Microbrewit/core/Network')
 		factory = {}
 		factory.get = (requestUrl) ->
 			console.log "GET: #{requestUrl}"
-			promise = false
-			request = { 
-				async: () ->
-					unless promise
-						$rootScope.loading++
-						console.log 'yup'
-						promise = $http.jsonp(requestUrl, {})
-							.error((data, status) ->
-								$rootScope.loading--
-								console.error(status)
-								console.error(data)
-							)
-							.then((response) ->
-								console.log 'then'
-								# Save auth token
-								# if response.headers('access_token')
-								# 	$rootScope.token =
-								# 		expires: new Date(response.headers('.expires')).getTime()
-								# 		token: response.headers('access_token')
-								# 		refresh: response.headers('refresh_token')
+			$rootScope.loading++
 
-								$rootScope.loading--
-								return response.data
-							)
+			# Create promise
+			promise = $http.jsonp(requestUrl, {})
+				.error((data, status) ->
+					$rootScope.loading--
+					console.error(status)
+					console.error(data)
+				)
+				.then((response) ->
+					console.log 'then'
+					# Save auth token
+					if response.headers('access_token')
+						$rootScope.token =
+							expires: new Date(response.headers('.expires')).getTime()
+							token: response.headers('access_token')
+							refresh: response.headers('refresh_token')
 
-					return promise
-			}
+					$rootScope.loading--
+					return response.data
+				)
 
-			return request
+			return promise
 
 		factory.user = (id = null) ->
 			if id
@@ -46,6 +40,10 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.fermentables = (id = null, from = 0, size = 20) ->
+			# Check if we have cache
+			cache = localStorage.getItem('fermentables') unless id
+			return new Promise((fulfill) -> fulfill(cache)) if cache
+
 			if id
 				requestUrl = "#{ApiUrl}/fermentables/#{id}?callback=JSON_CALLBACK"
 			else
@@ -54,6 +52,10 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.yeasts = (id = null, from = 0, size = 20) ->
+			# Check if we have cache
+			cache = localStorage.getItem('yeasts') unless id
+			return new Promise((fulfill) -> fulfill(cache)) if cache
+
 			if id
 				requestUrl = "#{ApiUrl}/yeasts/#{id}?callback=JSON_CALLBACK"
 			else
@@ -62,6 +64,10 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.hops = (id = null, from = 0, size = 20) ->
+			# Check if we have cache
+			cache = localStorage.getItem('yeasts') unless id
+			return new Promise((fulfill) -> fulfill(cache)) if cache
+
 			if id
 				requestUrl = "#{ApiUrl}/hops/#{id}?callback=JSON_CALLBACK"
 			else
@@ -139,6 +145,11 @@ angular.module('Microbrewit/core/Network')
 				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
 
 			else
+				
+				# Do we have this cached?
+				cache = localStorage.getItem('beerstyles')
+				return new Promise((fulfill) -> fulfill(cache)) if cache
+				
 				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 
 			return @get(requestUrl)
@@ -161,6 +172,11 @@ angular.module('Microbrewit/core/Network')
 				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
 
 			else
+
+				# Do we have this cached?
+				cache = localStorage.getItem('beerstyles') unless id
+				return new Promise((fulfill) -> fulfill(cache)) if cache
+				
 				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 
 			return @get(requestUrl)
@@ -188,6 +204,10 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.hopForms = () ->
+			# Do we have this cached?
+			cache = localStorage.getItem('hopForms')
+			return new Promise((fulfill) -> fulfill(cache)) if cache
+
 			endpoint = 'hops/forms'
 			requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
 			return @get(requestUrl)

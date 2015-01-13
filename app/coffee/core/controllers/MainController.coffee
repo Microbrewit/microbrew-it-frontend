@@ -1,7 +1,7 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$stateParams', '$state', 'localStorage', 'notification'
-	($rootScope, $scope, login, logout, $stateParams, $state, localStorage, notification) ->
+mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$stateParams', '$state', 'localStorage', 'notification', 'mbGet',
+	($rootScope, $scope, login, logout, $stateParams, $state, localStorage, notification, mbGet) ->
 		$rootScope.loading = 0
 
 		# $rootScope.user = {}
@@ -35,6 +35,33 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$
 		# 		unit:
 		# 			name: 'srm'
 		# 			short: 'srm'
+
+		# Download and store default ingredients
+		# These are used in recipe generation and calculators
+		unless localStorage.getItem('fermentables')
+			mbGet.fermentables().then((fermentables) ->
+				localStorage.setItem('fermentables', fermentables)
+			)
+		unless localStorage.getItem('hops')
+			mbGet.hops().then((hops) ->
+				console.log 'Storing hops'
+				localStorage.setItem('hops', hops)
+			)
+		unless localStorage.getItem('yeasts')
+			mbGet.yeasts().then((yeasts) ->
+				console.log 'Storing yeasts'
+				localStorage.setItem('yeasts', yeasts)
+			)
+		unless localStorage.getItem('beerstyles')
+			mbGet.beerstyles().then((beerstyles) ->
+				console.log 'Storing beerstyles'
+				localStorage.setItem('beerstyles', beerstyles)
+			)
+		unless localStorage.getItem('hopForms')
+			mbGet.hopForms().then((hopForms) ->
+				console.log 'Storing beerstyles'
+				localStorage.setItem('hopForms', hopForms)
+			)
 
 		# should we log in a remembered user?
 		user = localStorage.getItem('user')
