@@ -11,43 +11,6 @@ mbit.controller('RecipeController', [
 	'_'
 	'colour'
 	($rootScope, $scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
-		mashProto = {
-			stepNumber: 1
-			type: "infusion"
-			length: 60
-			volume: 20
-			temperature: 65
-			stepType: "mashSteps"
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
-		boilProto = {
-			stepNumber: 2
-			length: 60
-			volume: 20
-			stepType: "boilSteps"
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
-		fermentProto = {
-			stepNumber: 3
-			stepType: "fermentationSteps"
-			type: 'primary fermentation'
-			length: 14
-			temperature: 24
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
-
 		$scope.searchContext = {
 			active: false
 			endpoint: null 
@@ -61,11 +24,12 @@ mbit.controller('RecipeController', [
 
 		if $stateParams.fork?
 			if $rootScope.beerToFork?
-				$scope.beer.recipe = _.clone $rootScope.beerToFork.recipe
+				# Deep clone the original recipe
+				$scope.beer.recipe = JSON.parse(JSON.stringify($rootScope.beerToFork.recipe))
 				$rootScope.beerToFork = undefined
 			else
 				mbGet.beers({id:$stateParams.fork}).then((response) ->
-					$scope.beer.recipe = response.beers[0].recipe
+					$scope.beer.recipe = JSON.parse(JSON.stringify(response.beers[0].recipe))
 				)
 
 		else
@@ -107,21 +71,16 @@ mbit.controller('RecipeController', [
 					efficiency: 70
 					volume: 30
 					dataType: 'recipe'
-
-			$scope.beer.recipe.mashSteps = []
-
-			$scope.beer.recipe.boilSteps = []
-
-			$scope.beer.recipe.fermentationSteps = []
-
-			$scope.beer.recipe.priming = [
-				{
-					fermentables: []
-					notes: ''
-				}
-			]
-
-			$scope.beer.recipe.notes = ""
+					mashSteps: []
+					boilSteps: []
+					fermentationSteps: []
+					priming: [
+						{
+							fermentables: []
+							notes: ''
+						}
+					]
+					notes: ""
 		
 		# get ingredients
 		sessionId = "recipe-#{new Date().getTime()}"
@@ -140,7 +99,7 @@ mbit.controller('RecipeController', [
 					totalGP+=parseFloat ingredient.gravityPoints
 					totalMCU+=parseFloat ingredient.mcu
 
-			calcOG(totalGP)
+			calcGravity(totalGP)
 			calcColour(totalMCU)
 			calcAbv()
 
@@ -193,7 +152,6 @@ mbit.controller('RecipeController', [
 			stepNumber = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps.length-1]?.stepNumber + 1
 			stepNumber or= 1
 
-			newMashStep = _.clone mashProto
 			$scope.beer.recipe.mashSteps.push
 				stepNumber: stepNumber
 				type: type
