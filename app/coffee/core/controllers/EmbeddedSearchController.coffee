@@ -1,20 +1,33 @@
 mbit = angular.module('Microbrewit')
 
 mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
-	($scope, search, get) ->
+	($scope, search, mbGet) ->
 
 		$scope.results = []
 
+		$scope.goToHops = () ->
+			mbGet.hops().then((res) -> 
+				$scope.results = res.hops
+			)
+
+		$scope.goToFermentables = () ->
+			mbGet.fermentables().then((res) -> $scope.results = res.fermentables)
+
+		$scope.goToYeasts = () ->
+			mbGet.yeasts().then((res) -> $scope.results = res.yeasts)
+
+		$scope.goToFermentables()
+
 		$scope.addIngredientToStep = (step, ingredient) ->
 			# What kind of ingredient is it?
-			if ingredient._source.dataType is 'fermentable'
-				pushFermentable(step, ingredient._source)
-			else if ingredient._source.dataType is 'hop'
-				pushHop(step, ingredient._source)
-			else if ingredient._source.dataType is 'yeast'
-				pushYeast(step, ingredient._source)
+			if ingredient.dataType is 'fermentable'
+				pushFermentable(step, ingredient)
+			else if ingredient.dataType is 'hop'
+				pushHop(step, ingredient)
+			else if ingredient.dataType is 'yeast'
+				pushYeast(step, ingredient)
 			else
-				pushOther(step, ingredient._source)
+				pushOther(step, ingredient)
 
 			close()
 
@@ -79,29 +92,28 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 					ingredient.alcoholToleranceRange = {low: alcoholTolerance[0], high: alcoholTolerance[1]}
 				step.yeasts.push ingredient
 		
-
 		$scope.close = () -> 
 			$scope.searchContext.active = false
 
 		close = () ->
 			$scope.searchContext.active = false
 
-		$scope.performSearch = (query) ->
-			console.log "searchQuery updated #{query}"
-			# save used query to scope
+		# $scope.performSearch = (query) ->
+		# 	console.log "searchQuery updated #{query}"
+		# 	# save used query to scope
 
-			endpoint = "search/ingredients"
+		# 	endpoint = "search/ingredients"
 
-			if query? and query.length >= 3
-				search(query, endpoint).async().then((apiResponse) ->
-					console.log 'success'
-					$scope.results = apiResponse.hits.hits
-					console.log apiResponse.hits.hits
+		# 	if query? and query.length >= 3
+		# 		search(query, endpoint).async().then((apiResponse) ->
+		# 			console.log 'success'
+		# 			$scope.results = apiResponse.hits.hits
+		# 			console.log apiResponse.hits.hits
 
-					#$scope.resultsNumber = $scope.results.length
-				, (error) ->
-					console.log 'error')
-			else
-				$scope.results = []
-				$scope.resultsNumber = 0   
+		# 			#$scope.resultsNumber = $scope.results.length
+		# 		, (error) ->
+		# 			console.log 'error')
+		# 	else
+		# 		$scope.results = []
+		# 		$scope.resultsNumber = 0   
 ])
