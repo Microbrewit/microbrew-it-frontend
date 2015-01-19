@@ -8,13 +8,20 @@ mbit.controller('EmbeddedSearchController', ['$scope', 'mbSearch', 'mbGet',
 		$scope.goToHops = () ->
 			mbGet.hops().then((res) -> 
 				$scope.results = res.hops
+				$scope.$apply()
 			)
 
 		$scope.goToFermentables = () ->
-			mbGet.fermentables().then((res) -> $scope.results = res.fermentables)
+			mbGet.fermentables().then((res) -> 
+				$scope.results = res.fermentables
+				$scope.$apply()
+			)
 
 		$scope.goToYeasts = () ->
-			mbGet.yeasts().then((res) -> $scope.results = res.yeasts)
+			mbGet.yeasts().then((res) -> 
+				$scope.results = JSON.parse(JSON.stringify(res.yeasts))
+				$scope.$apply()
+			)
 
 		$scope.goToFermentables()
 
