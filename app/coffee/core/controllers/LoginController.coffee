@@ -2,9 +2,9 @@ mbit = angular.module('Microbrewit')
 
 mbit.controller('LoginController', ['$scope', 'login', '$stateParams', '$state', 'localStorage'
 	($scope, login, $stateParams, $state, localStorage) ->
-		$scope.username = "torstein"
-		$scope.password = "test"
-		$scope.remember = false
+		$scope.username = ""
+		$scope.password = ""
+		$scope.remember = true
 
 		$scope.login = () ->
 			if $scope.username isnt "" and $scope.password isnt ""
