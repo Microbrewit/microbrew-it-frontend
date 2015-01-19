@@ -11,11 +11,53 @@ mbit.controller('RecipeController', [
 	'_'
 	'colour'
 	($rootScope, $scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
+		mashProto = {
+			stepNumber: 1
+			type: "infusion"
+			length: 60
+			volume: 20
+			temperature: 65
+			stepType: "mashSteps"
+			fermentables: []
+			hops: []
+			others: []
+			yeasts: []
+			notes: ""
+		}
+		boilProto = {
+			stepNumber: 2
+			length: 60
+			volume: 20
+			stepType: "boilSteps"
+			fermentables: []
+			hops: []
+			others: []
+			yeasts: []
+			notes: ""
+		}
+		fermentProto = {
+			stepNumber: 3
+			stepType: "fermentationSteps"
+			type: 'primary fermentation'
+			length: 14
+			temperature: 24
+			fermentables: []
+			hops: []
+			others: []
+			yeasts: []
+			notes: ""
+		}
+
 		$scope.searchContext = {
 			active: false
 			endpoint: null 
 			step: null
 		}
+		$scope.hopTypes = []
+		mbGet.hopForms().then((response) ->
+			$scope.hopForms = response
+			$scope.hopTypes = response
+		)
 
 		if $stateParams.fork?
 			if $rootScope.beerToFork?
@@ -26,17 +68,60 @@ mbit.controller('RecipeController', [
 					$scope.beer.recipe = response.beers[0].recipe
 				)
 
+		else
+			mbGet.beerstyles().then((response) ->
+				$scope.beerStyles = response.beerStyles
+				$scope.beer.recipe.beerStyle = $scope.beerStyles[0]
+			)
 
-		$scope.hopTypes = []
+			$scope.beer = 
+				name: ''
+				mcu: 0
+				abv:
+					standard: 0
+					miller: 0
+					advanced: 0
+					advancedAlternative: 0
+					simple: 0
+					alternativeSimple: 0
+				ibu:
+					standard: 0
+					tinseth: 0
+					rager: 0
+				srm: 
+					standard: 0
+					mosher: 0
+					daniels: 0
+					morey: 0
+				beerStyle: 
+					id: 0
+					name: ''
+				forkOf: null
+				breweries: []
+				brewers: []
 
-		mbGet.hopForms().then((response) ->
-			$scope.hopForms = response
-		)
+				recipe:
+					notes: ''
+					og: 0
+					fg: 0
+					efficiency: 70
+					volume: 30
+					dataType: 'recipe'
 
-		mbGet.beerstyles().then((response) ->
-			$scope.beerStyles = response.beerStyles
-			$scope.beer.recipe.beerStyle = $scope.beerStyles[0]
-		)
+			$scope.beer.recipe.mashSteps = []
+
+			$scope.beer.recipe.boilSteps = []
+
+			$scope.beer.recipe.fermentationSteps = []
+
+			$scope.beer.recipe.priming = [
+				{
+					fermentables: []
+					notes: ''
+				}
+			]
+
+			$scope.beer.recipe.notes = ""
 		
 		# get ingredients
 		sessionId = "recipe-#{new Date().getTime()}"
@@ -94,57 +179,70 @@ mbit.controller('RecipeController', [
 			for i in [0...$scope.beer.recipe.fermentationSteps.length]
 				$scope.beer.recipe.fermentationSteps[i].stepNumber = $scope.beer.recipe.mashSteps.length+$scope.beer.recipe.boilSteps.length+i+1
 
-		mashProto = {
-			stepNumber: 1
-			type: "infusion"
-			length: 60
-			volume: 20
-			temperature: 65
-			stepType: "mashSteps"
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
-		boilProto = {
-			stepNumber: 2
-			length: 60
-			volume: 20
-			stepType: "boilSteps"
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
-		fermentProto = {
-			stepNumber: 3
-			stepType: "fermentationSteps"
-			type: 'primary fermentation'
-			length: 14
-			temperature: 24
-			fermentables: []
-			hops: []
-			others: []
-			yeasts: []
-			notes: ""
-		}
 		# add 
 		$scope.addMashStep = () ->
-			console.log 'Add mash step'
-			$scope.beer.recipe.mashSteps.push(_.clone mashProto)
-			updateStepNumbers()
+			volume = parseInt($scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps?.length-1]?.volume,10)
+			volume or= parseInt($scope.beer.recipe.volume*0.66, 10)
+
+			temperature = parseInt($scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps?.length-1]?.temperature,10)
+			temperature or= 65
+
+			type = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps?.length-1]?.type
+			type or= "infusion"
+
+			stepNumber = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps.length-1]?.stepNumber + 1
+			stepNumber or= 1
+
+			newMashStep = _.clone mashProto
+			$scope.beer.recipe.mashSteps.push
+				stepNumber: stepNumber
+				type: type
+				length: 60
+				volume: volume
+				temperature: temperature
+				stepType: "mashSteps"
+				fermentables: []
+				hops: []
+				others: []
+				yeasts: []
+				notes: ""
+
+		$scope.addMashStep()
 
 		$scope.addBoilStep = () ->
-			console.log 'Add boil step'
-			$scope.beer.recipe.boilSteps.push(_.clone boilProto)
-			updateStepNumbers()
-		
+			stepNumber = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps.length-1]?.stepNumber + 1
+			stepNumber or= 1
+
+			$scope.beer.recipe.boilSteps.push
+				stepNumber: stepNumber
+				length: 60
+				volume: 20
+				stepType: "boilSteps"
+				fermentables: []
+				hops: []
+				others: []
+				yeasts: []
+				notes: ""
+
+		$scope.addBoilStep()
+
 		$scope.addFermentationStep = () ->
-			console.log 'Add fermentation step'
-			$scope.beer.recipe.fermentationSteps.push(_.clone fermentProto)
-			updateStepNumbers()
+			stepNumber = $scope.beer.recipe.boilSteps?[$scope.beer.recipe.boilSteps.length-1]?.stepNumber + 1
+			stepNumber or= 1
+
+			$scope.beer.recipe.fermentationSteps.push
+				stepNumber: stepNumber
+				stepType: "fermentationSteps"
+				type: 'primary fermentation'
+				length: 14
+				temperature: 24
+				fermentables: []
+				hops: []
+				others: []
+				yeasts: []
+				notes: ""
+
+		$scope.addFermentationStep()
 
 		$scope.removeStep = (step) ->
 			index = $scope.beer.recipe[step.stepType].indexOf(step)
@@ -163,14 +261,14 @@ mbit.controller('RecipeController', [
 		$scope.logRecipe = () ->
 			console.log JSON.stringify($scope.beer.recipe,  null, '\t')
 
+		$scope.change =() ->
+
 		$scope.search = (step, type) ->
 			$scope.searchContext = {
 				active: true
 				endpoint: type 
 				step: step
 			}
-
-		$rootScope.modal = $scope.searchContext.active
 
 		$scope.addIngredientToStep = (step, ingredient) ->
 			ingredient = _.clone(ingredient)
@@ -189,63 +287,9 @@ mbit.controller('RecipeController', [
 				step.hops.push(ingredient)
 
 			else if ingredient.dataType is 'yeast'
-
 				step.yeasts.push(ingredient)
 
-			updateStepNumbers()
-
-		unless $stateParams.fork
-
-			$scope.beer = 
-				name: ''
-				mcu: 0
-				abv:
-					standard: 0
-					miller: 0
-					advanced: 0
-					advancedAlternative: 0
-					simple: 0
-					alternativeSimple: 0
-				ibu:
-					standard: 0
-					tinseth: 0
-					rager: 0
-				srm: 
-					standard: 0
-					mosher: 0
-					daniels: 0
-					morey: 0
-				beerStyle: 
-					id: 0
-					name: ''
-				forkOf: null
-				breweries: []
-				brewers: []
-
-				recipe:
-					notes: ''
-					og: 0
-					fg: 0
-					efficiency: 70
-					volume: 30
-					dataType: 'recipe'
-
-			$scope.beer.recipe.mashSteps = []
-			$scope.beer.recipe.mashSteps.push _.clone mashProto
-
-			$scope.beer.recipe.boilSteps = []
-			$scope.beer.recipe.boilSteps.push _.clone boilProto
-
-			$scope.beer.recipe.fermentationSteps = []
-			$scope.beer.recipe.fermentationSteps.push _.clone fermentProto
-
-			$scope.beer.recipe.priming = [
-				{
-					fermentables: []
-					notes: ''
-				}
-			]
-
-			$scope.beer.recipe.notes = ""
+			else
+				step.other.push(ingredient)
 
 ])
