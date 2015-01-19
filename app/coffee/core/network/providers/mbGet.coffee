@@ -65,7 +65,7 @@ angular.module('Microbrewit/core/Network')
 
 		factory.hops = (id = null, from = 0, size = 20) ->
 			# Check if we have cache
-			cache = localStorage.getItem('yeasts') unless id
+			cache = localStorage.getItem('hops') unless id
 			return new Promise((fulfill) -> fulfill(cache)) if cache
 
 			if id
