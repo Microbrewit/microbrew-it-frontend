@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Calculation')
-	.directive('mbGravity', ['convert', (convert) ->
+	.directive('mbGravity', ['convert', '_', (convert, _) ->
 		return {
 			restrict: 'EA'
 			scope: {
@@ -22,17 +22,25 @@ angular.module('Microbrewit/core/Calculation')
 						scope.percent = Math.round((scope.ingredient.gravityPoints/totalGP)*100)
 
 				calcGravity = ->
-					if attrs.type.toLowerCase().indexOf "malt" isnt -1 or attrs.type.toLowerCase().indexOf "grain" isnt -1
+					if (attrs.type.toLowerCase().indexOf "malt" isnt -1 or attrs.type.toLowerCase().indexOf "grain" isnt -1)
 						efficiency = parseFloat(attrs.efficiency)/100
 					else
 						efficiency = 1
+					
+					efficiency = 1 if isNaN(efficiency)
+
 					weight = convert.convert(parseFloat(attrs.amount), attrs.weightunit, 'lbs') # convert to lbs
+
 					ppg = parseFloat(scope.ingredient.ppg)
+
 					if isNaN(ppg)
 						ppg = parseFloat(scope.ingredient.pgg)
+
 					volume = convert.convert(parseFloat(attrs.volume), attrs.fluidunit, 'gallons')
 
+					console.log weight + ' ' + ppg + ' ' + efficiency + ' ' + volume
 					scope.ingredient.gravityPoints = Math.round((weight*ppg*efficiency)/volume)
+
 
 					scope.change()
 

@@ -101,9 +101,17 @@ mbit.controller('RecipeController', [
 
 			calcGravity(totalGP)
 			calcColour(totalMCU)
-			calcAbv()
 
 		$scope.updateHopsValues = () ->
+			console.log '?'
+			calcIbu()
+
+		calcGravity = (totalGP) ->
+			totalGP = parseInt(totalGP)
+			$scope.beer.recipe.og = (1 + totalGP/1000).toFixed(3)
+			$scope.beer.recipe.fg = (($scope.beer.recipe.og-1)*(1-0.75)+1).toFixed(3)
+
+		calcIbu = () ->
 			totalIBU = 0
 			
 			for step in $scope.beer.recipe.mashSteps
@@ -114,20 +122,12 @@ mbit.controller('RecipeController', [
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
 
-		calcGravity = (totalGP) ->
-			totalGP = parseInt(totalGP)
-			$scope.beer.recipe.og = (1 + totalGP/1000).toFixed(3)
-			$scope.beer.recipe.fg = (($scope.beer.recipe.og-1)*(1-0.75)+1).toFixed(3)
-
-		calcAbv = () ->
-
-		calcIbu = () ->
-
+			console.log totalIBU
+			$scope.beer.ibu.tinseth = parseInt(totalIBU, 10)
 		
 		calcColour = (totalMCU) ->
 			$scope.beer.mcu = totalMCU
-			$scope.beer.srm = 
-				parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
+			$scope.beer.srm.standard = parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
 
 		# There must be a better way
 		updateStepNumbers = () ->

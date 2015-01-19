@@ -10,10 +10,10 @@
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
 			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
-			<td><mb-colour-box style="float:left;" amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
+			<td><mb-colour-box style="float:left;" amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{beer.recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
 				<span style="display:inline-block;line-height: 50px;">{{fermentable.lovibond}}°L</span></td>
 			<td>{{fermentable.ppg}}</td>
-			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{recipe.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{recipe.efficiency}}" volume="{{recipe.volume}}"></mb-gravity></td>
+			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{beer.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{beer.recipe.efficiency}}" volume="{{beer.recipe.volume}}"></mb-gravity></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>
