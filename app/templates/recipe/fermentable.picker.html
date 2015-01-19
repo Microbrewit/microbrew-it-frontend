@@ -17,20 +17,20 @@
 				<tr ng-repeat="ingredient in results">
 					<td ng-show="{{ingredient.dataType == 'fermentable'}}">
 						<button class="add form-button" style="float:left;margin-right: 10px;" ng-click="addIngredientToStep(searchContext.step, ingredient)">Add</button>
-						<div style="line-height:50px;float:left;margin-right:10px;">{{ingredient.name}} ({{ingredient.type}} from {{ingredient.supplier.origin.name}} by {{ingredient.supplier.name}} with {{ingredient.ppg}} PPG)</div> 
-						<mb-colour-box style="line-height:50px;float:left;" class="colour-box" type="lovibond" colour="{{ingredient.lovibond}}" size="25px"></mb-colour-box>({{ingredient.lovibond}}°L)
+						<div style="line-height:50px;float:left;margin-right:10px;">{{::ingredient.name}} ({{::ingredient.type}} from {{::ingredient.supplier.origin.name}} by {{::ingredient.supplier.name}} with {{::ingredient.ppg}} PPG)</div> 
+						<mb-colour-box style="line-height:50px;float:left;" class="colour-box" type="lovibond" colour="{{ingredient.lovibond}}" size="25px"></mb-colour-box>({{::ingredient.lovibond}}°L)
 					</td>
 					<td ng-show="{{ingredient.dataType == 'hop'}}">
 						<button class="add form-button" ng-click="addIngredientToStep(searchContext.step, ingredient)">Add</button>
-						{{ingredient.name}} (Hop) (aa: {{ingredient.aaLow}}-{{ingredient.aaHigh}}%, ba: {{ingredient.baLow}}-{{ingredient.baHigh}}%)
+						{{::ingredient.name}} (Hop) (aa: {{::ingredient.aaLow}}-{{::ingredient.aaHigh}}%, ba: {{::ingredient.baLow}}-{{::ingredient.baHigh}}%)
 					</td>
 					<td ng-show="{{ingredient.dataType == 'yeast'}}">
 						<button class="add form-button" ng-click="addIngredientToStep(searchContext.step, ingredient)">Add</button>
-						{{ingredient.name}} ({{ingredient.type}})
+						{{::ingredient.name}} ({{::ingredient.type}})
 					</td>
 					<td ng-show="{{ingredient.dataType == 'other'}}">
 						<button class="add form-button" ng-click="addIngredientToStep(searchContext.step, ingredient)">Add</button>
-						{{ingredient.name}}
+						{{::ingredient.name}}
 					</td>
 				</tr>
 			</table>
