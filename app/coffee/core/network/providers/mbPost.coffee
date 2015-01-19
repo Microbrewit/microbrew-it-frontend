@@ -91,6 +91,7 @@ angular.module('Microbrewit/core/Network')
 			i = 0
 			for step in recipe.mashSteps
 				postRecipe.recipe.mashSteps.push({
+					stepNumber: step.stepNumber
 					temperature: step.temperature
 					type: step.type
 					length: step.length
@@ -121,7 +122,7 @@ angular.module('Microbrewit/core/Network')
 			i = 0
 			for step in recipe.boilSteps
 				postRecipe.recipe.boilSteps.push({
-					number: step.number
+					stepNumber: step.stepNumber
 					length: step.length
 					volume: step.volume
 					notes: step.notes
@@ -150,7 +151,7 @@ angular.module('Microbrewit/core/Network')
 			i = 0 
 			for step in recipe.fermentationSteps
 				postRecipe.recipe.fermentationSteps.push({
-					number: step.number
+					stepNumber: step.stepNumber
 					length: step.length
 					volume: step.volume
 					temperature: step.temperature
