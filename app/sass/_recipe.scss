@@ -254,6 +254,103 @@ ul, li {
 	}	
 }
 
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+		clear:both;
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	tr:first-child { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc;height: auto !important; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50% !important; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	.fermentables {
+		td:nth-of-type(1):before { content: "Malt name"; }
+		td:nth-of-type(2):before { content: "Amount"; }
+		td:nth-of-type(3):before { content: "Colour"; }
+		td:nth-of-type(4):before { content: "PPG"; }
+		td:nth-of-type(5):before { content: "Contributes"; }
+	}
+	.fermentables-list {
+		td:nth-of-type(1):before { content: "Malt name"; }
+		td:nth-of-type(2):before { content: "Type"; }
+		td:nth-of-type(3):before { content: "Maltster"; }
+		td:nth-of-type(4):before { content: "Origin"; }
+		td:nth-of-type(5):before { content: "PPG"; }
+		td:nth-of-type(6):before { content: "Colour"; }
+	}
+	.hops {
+		td:nth-of-type(1):before { content: "Hop name"; }
+		td:nth-of-type(2):before { content: "Amount"; }
+		td:nth-of-type(3):before { content: "Type"; }
+		td:nth-of-type(4):before { content: "Alpha"; }
+		td:nth-of-type(5):before { content: "Beta"; }
+		td:nth-of-type(6):before { content: "Contribution"; }
+	}
+	.hops-list {
+		td:nth-of-type(1):before { content: "Hop name"; }
+		td:nth-of-type(2):before { content: "Origin"; }
+		td:nth-of-type(3):before { content: "Alpha Acids"; }
+		td:nth-of-type(4):before { content: "Beta Acids"; }
+		td:nth-of-type(5):before { content: "Flavours"; }
+	}
+	.other {
+		td:nth-of-type(1):before { content: "Additive name"; }
+		td:nth-of-type(2):before { content: "Amount"; }
+	}
+	.yeasts {
+		td:nth-of-type(1):before { content: "Yeast name"; }
+		td:nth-of-type(2):before { content: "Amount"; }
+		td:nth-of-type(3):before { content: "Attenuation"; }
+		td:nth-of-type(4):before { content: "Flocculation"; }
+		td:nth-of-type(5):before { content: "Alcohol tolerance"; }
+		td:nth-of-type(6):before { content: "Temperature"; }
+	}
+	.yeasts-list {
+		td:nth-of-type(1):before { content: "Code"; }
+		td:nth-of-type(2):before { content: "Name"; }
+		td:nth-of-type(3):before { content: "Supplier"; }
+		td:nth-of-type(4):before { content: "Type"; }
+		td:nth-of-type(5):before { content: "Temperature"; }
+		td:nth-of-type(6):before { content: "Flocculation"; }
+		td:nth-of-type(6):before { content: "Alcohol Tolerance"; }
+	}
+}
+
 td.form-button {
 	padding:0;
 	padding-right: 10px;
