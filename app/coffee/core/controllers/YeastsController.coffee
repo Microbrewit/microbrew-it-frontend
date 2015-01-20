@@ -1,8 +1,10 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('YeastsController', ['$scope', 'mbGet', '$stateParams', '_'
-	($scope, get, $stateParams, _) ->
+mbit.controller('YeastsController', ['$scope', 'mbGet','mbPut','mbDelete', '$stateParams', '_'
+	($scope, get, put, mbDelete, $stateParams, _) ->
 		console.log 'YeastsController'
+		console.log $scope
+		console.log $stateParams
 		# $scope.loading++
 
 		# We are displaying information about a single hop
@@ -16,4 +18,13 @@ mbit.controller('YeastsController', ['$scope', 'mbGet', '$stateParams', '_'
 
 				$scope.yeasts = _.sortBy(apiResponse.yeasts, (yeast) -> return yeast.Name)
 			)
+
+		$scope.updateYeast = () ->
+			console.log 'update yeast'
+			put.yeasts($scope.yeast).async().then()
+
+		$scope.deleteYeast = () ->
+			console.log 'delete yeast'
+			mbDelete.yeasts($scope.yeast).async().then()
+
 ])
