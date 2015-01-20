@@ -1,0 +1,25 @@
+<article class="single-yeast">
+	<section class="meta">
+		<h1>{{yeast.name}}</h1>
+		<div class="inner-wrapper">
+			<p>Yeast Id: {{yeast.yeastId}}</p>
+			<p>Name: <input type="text" ng-model="yeast.name"/></p>
+			<p>Product Code: <input type="text" ng-model="yeast.productCode"/></p>
+			<p>Temperature High: <input type="text" ng-model="yeast.temperatureHigh"/></p>
+			<p>Temperature Low:  <input type="text" ng-model="yeast.temperatureLow"/></p>
+			<p>Flocculation:  <input type="text" ng-model="yeast.flocculation"/></p>
+			<p>Alcohol Tolerance:  <input type="text" ng-model="yeast.alcoholTolerance"/></p>
+			<p>Product Code:  <input type="text" ng-model="yeast.productCode"/></p>
+			<p>Notes:  <input type="text" ng-model="yeast.notes"/></p>
+			<p>Type:  <input type="text" ng-model="yeast.type"/></p>
+			<p>Brewery Source:  <input type="text" ng-model="yeast.brewerySource"/></p>
+			<p>Species:  <input type="text" ng-model="yeast.species"/></p>
+			<p>Attenution Range:  <input type="text" ng-model="yeast.attenutionRange"/></p>
+			<p>Pitching Fermentation Notes:  <input type="text" ng-model="yeast.pitchingFermentationNotes"/></p>
+			<p>Supplier:  <input type="text" ng-model="yeast.supplier"/></p>
+			<p>Custom:  <input type="text" ng-model="yeast.custom"/></p>
+			<button class="save" ng-click="updateYeast()">Add</button>
+			<button class="save" ng-click="deleteYeast()">Delete</button>
+		</div>
+	</section>
+</article>
