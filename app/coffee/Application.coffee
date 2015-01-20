@@ -71,6 +71,11 @@ angular.module('Microbrewit',
 				controller: 'YeastsController'
 				templateUrl: "templates/ingredients/yeast.single.html"
 			})
+			.state('yeasts.edit', {
+				url: '/yeasts/edit/{id:[0-9]{1,4}}'
+				controller: 'YeastsController'
+				templateUrl: "templates/ingredients/yeast.edit.html"
+			})
 			.state('breweries', {
 				url: "/breweries"
 				templateUrl: "templates/login.html"
