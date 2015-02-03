@@ -71,7 +71,7 @@ angular.module('Microbrewit/core/Network')
 				name: recipe.name
 				brewers: [
 					{
-						username: $rootScope.user.userName
+						username: $rootScope.user.userId
 					}
 				],
 				beerStyle: {

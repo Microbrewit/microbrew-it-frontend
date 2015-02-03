@@ -1,12 +1,11 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams',
-	($scope, search, $stateParams) ->
+mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams', '$state', '$rootScope',
+	($scope, search, $stateParams, $state, $rootScope) ->
 		console.log 'CONTROLLER ACTIVE'
 
 		$scope.searchQuery = $stateParams.searchTerm if $stateParams.searchTerm
-
-		$scope.endpoint = "search"
+		$rootScope.showNav = true
 
 		$scope.endpoints = [
 			"search"
@@ -15,7 +14,20 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams',
 			"yeasts"
 			"recipes"
 			"ingredients"
+			"beers"
 		]
+
+		# Set endpoint
+		switch $state.current.name
+			when "brewers.search" then $scope.endpoint = "users"
+			when "ingredients.search" then $scope.endpoint = "ingredients"
+			when "brews.search" then $scope.endpoint = "beers"
+			when "yeasts.search" then $scope.endpoint = "yeasts"
+			when "hops.search" then $scope.endpoint = "hops"
+			when "fermentables.search" then $scope.endpoint = "fermentables"
+			else $scope.endpoint = "search"
+
+		$rootScope.title = $scope.endpoint
 
 		$scope.$watch('searchQuery', (query = "") ->
 			# save used query to scope

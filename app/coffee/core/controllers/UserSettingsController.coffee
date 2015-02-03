@@ -15,10 +15,6 @@ mbit.controller('UserSettingsController', ['updateUser', '$scope', '$stateParams
 			localStorage.removeItem('hopForms')
 			localStorage.removeItem('beerstyles')
 
-		$scope.logout = () ->
-			localStorage.removeItem('user')
-			localStorage.removeItem('token')
-
 		$scope.save = () ->
 			updateUser($scope.newSettings).async().then(() -> $scope.user = $scope.newSettings)
 			console.log 'save'

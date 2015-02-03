@@ -1,26 +1,16 @@
-<article id="single-beer">
-	<header>
-		<div class="header-bubble inner-wrapper">
-			<div class="icon">
-				<mb-colour-box class="colour-box" type="lovibond" colour="{{::beer.srm.standard}}" size="76px"></mb-colour-box>
-				<img src="images/fermentable-large.png" alt="Malt"/>
-			</div>
-		</div>
-		<h1>{{::beer.name}}</h1>
-	</header>
+<section id="single-beer">
+
+	<div class="actions">
+		<button ng-click="fork()">Add my fork</button>
+	</div>
+
 	<section class="beer-meta">
 		<div class="inner-wrapper">
 			<div class="meta-line">
 				<div class="beer-style">{{::beer.beerStyle.name}}</div>
 			</div>
-			
-			<div class="actions">
-				<button ng-click="fork()">Add my fork</button>
-			</div>
-
-			
 			<ul class="brewers">
-				<li ng-repeat="brewer in beer.brewers" class="brewer"><gravatar style="display: inline-block;"size="50px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.userName}}</li>
+				<li ng-repeat="brewer in beer.brewers" class="brewer"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</li>
 			</ul>
 
 
@@ -125,4 +115,4 @@
 			<h2>Forks</h2>
 		</div>
 	</section>
-</article>
+</section>

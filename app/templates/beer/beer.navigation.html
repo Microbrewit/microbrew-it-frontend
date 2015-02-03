@@ -1,0 +1,7 @@
+<nav class="sub-nav">
+	<ul>
+		<li><a ui-sref="brews.list" ng-class="{active: is('brews.list')}">Latest</a></li>
+		<li ng-show="user"><a ui-sref="brewers({id:user.userId})">My Beers</a></li>
+		<li><a ui-sref="brews.search" ng-class="{active: is('brews.search')}">Search</a></li>
+	</ul>
+</nav>

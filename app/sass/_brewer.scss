@@ -1,7 +1,6 @@
-.gravatar {
-	
+.gravatar {	
 	img {
-		@extend %shadow;
+		//@extend %shadow;
 		border-radius: 50%;
 		vertical-align: sub;
 	}

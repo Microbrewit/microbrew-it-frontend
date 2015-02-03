@@ -1,10 +1,10 @@
 <article class="user-settings">
 	<div class="header-bubble inner-wrapper">
 		<div class="icon">
-			<gravatar url="{{user.gravatar}}" size="78px"></gravatar>
+			<gravatar url="{{::user.gravatar}}" size="78px"></gravatar>
 		</div>
 	</div>
-	<h1>{{user.userName}}</h1>
+	<h1>{{::user.username}}</h1>
 	<button ng-click="invalidateCache()">Invalidate Cache</button>
 	<button ng-click="logout()">Logout</button>
 	<form>

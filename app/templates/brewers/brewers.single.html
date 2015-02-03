@@ -1,27 +1,15 @@
 <article class="single-brewer">
-	<div class="header-bubble inner-wrapper">
-		<div class="icon">
-			<gravatar url="{{brewer.gravatar}}" size="78px"></gravatar>
-		</div>
-	</div>
-	
-	<h1>{{brewer.username}}</h1>
-	<div class="header-meta">
-		<span class="bubble">{{brewer.beers.length}}</span> 
-		Brews {{brewer.settings.country}}
-	</div>
-
-	<section class="brews">
+	<section class="brews" ng-show="brewer.beers.length > 0">
 		<div class="inner-wrapper">
 			<h2>Brews</h2>
 
-			<ul class="brew-list search-result-block" ng-show="brewer.beers.length > 0">
-				<li class="brew" ng-repeat="brew in brewers.beers">
+			<ul class="brew-list search-result-block">
+				<li class="brew" ng-repeat="beer in brewers.beers">
 					<h3>{{brew.name}}</h3>
-					<div class="beer-style">{{brew.style}}</div>
-					<span class="abv">{{brew.abv}}</span> - 
-					<span class="ibu">{{brew.ibu}}</span> - 
-					<span class="srm">{{brew.srm}}</span>
+					<div class="beer-style">{{beer.style}}</div>
+					<span class="abv">{{beer.abv}}</span> - 
+					<span class="ibu">{{beer.ibu}}</span> - 
+					<span class="srm">{{beer.srm}}</span>
 				</li>
 			</ul>
 			<div ng-show="brewer.beers.length === 0">No brews =(</div>

@@ -64,6 +64,7 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.hops = (id = null, from = 0, size = 20) ->
+			console.log "APIURL: #{ApiUrl}"
 			# Check if we have cache
 			cache = localStorage.getItem('hops') unless id
 			return new Promise((fulfill) -> fulfill(cache)) if cache
@@ -82,6 +83,31 @@ angular.module('Microbrewit/core/Network')
 		# query
 		factory.beers = (query = {}) ->
 			endpoint = 'beers'
+			# Get specific beer
+			if query.id
+				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"
+
+			# Get beer with query string
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{ApiUrl}/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			# Get latest added beers
+			else if query.latest
+				query.from ?= 0
+				query.size ?= 20
+				requestUrl = "#{ApiUrl}/#{endpoint}/last?from=#{query.from}&size=#{query.size}&callback=JSON_CALLBACK"
+
+			# Get beers
+			else
+				requestUrl = "#{ApiUrl}/#{endpoint}?callback=JSON_CALLBACK"
+
+			return @get(requestUrl)
+
+		factory.breweries = (query = {}) ->
+			endpoint = 'breweries'
 			# Get specific beer
 			if query.id
 				requestUrl = "#{ApiUrl}/#{endpoint}/#{query.id}?callback=JSON_CALLBACK"

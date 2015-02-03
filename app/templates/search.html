@@ -1,7 +1,7 @@
 <article id="search">
 	<section class="search-input">
 		<div class="inner-wrapper">
-			<input id="searchQuery" class="big-search-box" placeholder="Search Microbrew.it" ng-model="searchQuery"/>
+			<input id="searchQuery" class="big-search-box" placeholder="Find {{endpoint}}" ng-model="searchQuery"/>
 			<select class="search-endpoint" ng-model="endpoint" ng-options="endpoint for endpoint in endpoints"></select>
 			<div class="results-number" ng-show="resultsNumber !== undefined">Number of results: {{ resultsNumber }}</div>
 		</div>

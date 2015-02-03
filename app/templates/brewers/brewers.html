@@ -1,1 +1,15 @@
-<div ui-view></div>
+<article class="brewers">
+	<header>
+		<div class="header-bubble inner-wrapper">
+			<div class="icon">
+				<gravatar url="{{bubble}}" size="78px"></gravatar>
+			</div>
+		</div>
+	
+		<h1>{{title.toUpperCase()}}</h1>
+	</header>
+	<div ng-show="showNav" ng-include="'templates/brewers/user.navigation.html'"></div>
+	<div class="the-content">
+		<div ui-view></div>
+	</div>
+</article>

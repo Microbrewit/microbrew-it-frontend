@@ -5,9 +5,10 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '$
 
 		# We are displaying information about a single beer
 		if $stateParams.id
+			$rootScope.showNav = false
 			get.beers({id: $stateParams.id}).then((apiResponse) ->
-
 				$scope.beer = apiResponse.beers[0]
+				$rootScope.title = $scope.beer.name
 				$scope.recipe = $scope.beer.recipe
 
 				if $scope.recipe.mashSteps[0].number is 0
@@ -22,6 +23,8 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '$
 
 		# We are on the beer listing/discovery page
 		else
+			$rootScope.showNav = true
+			$rootScope.title = "Beers"
 			get.beers({latest:true}).then((apiResponse) ->
 				$scope.brews = apiResponse
 			)

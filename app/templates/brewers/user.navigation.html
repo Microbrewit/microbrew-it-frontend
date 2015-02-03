@@ -1,0 +1,7 @@
+<nav class="sub-nav">
+	<ul>
+		<li ng-show="userIsLogged"><a ui-sref="brewers({id:user.userId})">My Beers</a></li>
+		<li ng-show="userIsLogged"><a ui-sref="brews.list" ng-class="{active: is('user.settings')}">Settings</a></li>
+		<li ng-show="userIsLogged"><a ng-click="logout()">Logout</a></li>
+	</ul>
+</nav>

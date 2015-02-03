@@ -9,12 +9,6 @@
 	background: rgba(255,255,255,0.6);
 	border-bottom: 1px solid rgba(0,0,0,0.2);
 
-	.add a {
-		background: rgba(0,0,0,0.3);
-		color: white;
-		border: 0;
-	}
-
 	.logo-text {
 		font-family: Kingthings Petrock;
 		font-size: 30px;
@@ -25,7 +19,7 @@
 		list-style: none;
 		padding:0;
 		text-align: center;
-		display: inline-block;
+		display: block;
 		margin: 0 auto;
 	}
 	li {
@@ -35,8 +29,12 @@
 		border-left: 1px solid rgba(0,0,0,0.2);
 		text-transform: uppercase;
 
+		&.right {
+			float:right;
+		}
+
 		&:first-child {
-			text-transform: capitalize;
+			text-transform: none;
 			border-left: none;
 		}
 
@@ -59,8 +57,50 @@
 			background: #555;
 		}
 		&.active {
+			color: white;
 			background: #333;
 		}
+	}
+}
+
+.sub-nav {
+	// @extend .inner-wrapper;
+	// margin: 0 auto;
+	// padding: 0;
+	height: 50px;
+	border-top: 1px solid #ccc;
+	text-align:center;
+	background: white;
+	margin-top: -1px;
+
+	ul {
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+		list-style: none;
+	}
+	li {
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+
+		a {
+			border-left: 1px solid #ccc;
+			display: block;
+			color: #333;
+			padding: 0 10px;
+			margin:0;
+			line-height: 50px;
+
+			&.active, &:hover {
+				color: white;
+				background: #333;
+			}
+		}
+		&:last-child a {
+			border-right: 1px solid #ccc;
+		}
+
 	}
 }
 

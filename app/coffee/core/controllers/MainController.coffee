@@ -4,6 +4,19 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$
 	($rootScope, $scope, login, logout, $stateParams, $state, localStorage, notification, mbGet) ->
 		$rootScope.loading = 0
 
+		$scope.is = (name) ->
+			return $state.is(name)
+
+		$scope.includes = (name)->
+			return $state.includes(name)
+
+		$scope.logout = () ->
+			localStorage.removeItem('user')
+			localStorage.removeItem('token')
+			$rootScope.user = false
+			$rootScope.token = null
+			$state.go('home')
+
 		# $rootScope.user = {}
 		# $rootScope.user.settings = 
 		# 	measurements:

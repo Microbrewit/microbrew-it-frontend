@@ -29,18 +29,19 @@ angular.module('Microbrewit',
 				url: "/"
 				templateUrl: "templates/home.html"
 			})
+
 			.state('hops', {
 				abstract: true
 				templateUrl: "templates/ingredients/hops.html"
 			})
 			.state('hops.list', {
-				url: '/hops'
-				controller: 'HopsController'
+				url: '/ingredients/hops'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/hops.list.html"
 			})
 			.state('hops.single', {
-				url: '/hops/{id:[0-9]{1,4}}'
-				controller: 'HopsController'
+				url: '/ingredients/hops/{id:[0-9]{1,4}}'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/hops.single.html"
 			})
 			.state('fermentables', {
@@ -48,13 +49,13 @@ angular.module('Microbrewit',
 				templateUrl: "templates/ingredients/fermentables.html"
 			})
 			.state('fermentables.list', {
-				url: '/fermentables'
-				controller: 'FermentablesController'
+				url: '/ingredients/fermentables'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/fermentables.list.html"
 			})
 			.state('fermentables.single', {
-				url: '/fermentables/{id:[0-9]{1,4}}'
-				controller: 'FermentablesController'
+				url: '/ingredients/fermentables/{id:[0-9]{1,4}}'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/fermentables.single.html"
 			})
 			.state('yeasts', {
@@ -62,47 +63,85 @@ angular.module('Microbrewit',
 				templateUrl: "templates/ingredients/yeast.html"
 			})
 			.state('yeasts.list', {
-				url: '/yeasts'
-				controller: 'YeastsController'
+				url: '/ingredients/yeasts'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/yeast.list.html"
 			})
 			.state('yeasts.single', {
-				url: '/yeasts/{id:[0-9]{1,4}}'
-				controller: 'YeastsController'
+				url: '/ingredients/yeasts/{id:[0-9]{1,4}}'
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/yeast.single.html"
 			})
+
+			# Breweries
 			.state('breweries', {
-				url: "/breweries"
-				templateUrl: "templates/login.html"
+				abstract: true
+				templateUrl: "templates/brewers/brewers.html"
 			})
+			.state('breweries.list', {
+				url: '/breweries'
+				controller: 'BreweriesController'
+				templateUrl: "templates/breweries/breweries.list.html"
+			})
+			.state('breweries.single', {
+				url: '/breweries/{id}'
+				controller: 'BreweriesController'
+				templateUrl: "templates/breweries/breweries.single.html"
+			})
+
+			# Brewers (user) states
 			.state('brewers', {
 				abstract: true
 				templateUrl: "templates/brewers/brewers.html"
 			})
 			.state('brewers.list', {
 				url: '/brewers'
-				controller: 'UserController'
+				controller: 'BrewerController'
 				templateUrl: "templates/brewers/brewers.list.html"
 			})
 			.state('brewers.single', {
 				url: '/brewers/{id}'
-				controller: 'UserController'
+				controller: 'BrewerController'
 				templateUrl: "templates/brewers/brewers.single.html"
 			})
+
+			.state('user', {
+				abstract: true
+				templateUrl: "templates/brewers/brewers.html"
+			})
+			.state('user.login', {
+				url: '/user/login'
+				controller: 'UserController'
+				templateUrl: "templates/brewers/user.login.html"
+			})
+			.state('user.register', {
+				url: '/user/register'
+				controller: 'UserController'
+				templateUrl: "templates/brewers/user.login.html"
+			})
+
+			# Beer states
 			.state('brews', {
 				abstract: true
-				templateUrl: "templates/brews/brews.html"
+				templateUrl: "templates/beer/beer.html"
 			})
 			.state('brews.list', {
 				url: '/beers'
 				controller: 'BeerController'
-				templateUrl: "templates/brews/brews.list.html"
+				templateUrl: "templates/beer/beer.list.html"
 			})
 			.state('brews.single', {
-				url: '/beers/{id:[0-9]{1,5}}'
+				url: '/beers/show/{id:[0-9]{1,5}}'
 				controller: 'BeerController'
-				templateUrl: "templates/brews/brews.single.html"
+				templateUrl: "templates/beer/beer.single.html"
 			})
+			.state('brews.search', {
+				url: '/beers/search'
+				controller: 'SearchController'
+				templateUrl: "templates/search.html"
+			})
+
+			# Plain search
 			.state('search', {
 				url: "/search"
 				templateUrl: "templates/search.html"
@@ -123,30 +162,8 @@ angular.module('Microbrewit',
 				templateUrl: "templates/recipe/add.html"
 				controller: "RecipeController"
 			})
-			.state('add.beer', {
-				url: "/beer"
-			})
-			.state('add.brewery', {
-				url: "/brewery"
-			})
-			.state('add.ingredient', {
-				url: "/ingredient"
-			})
-			.state('abv-calculator', {
-				url: "/calculators/abv"
-				templateUrl: "templates/calculators/abv.html"
-				controller: "CalculatorController"
-			})
-			.state('login', {
-				url: "/login"
-				templateUrl: "templates/users/login.html"
-				controller: "LoginController"
-			})
-			.state('userSettings', {
-				url: "/user/settings"
-				templateUrl: "templates/users/settings.html"
-				controller: "UserSettingsController"
-			})
+
+			
 			.state('privacyPolicy', {
 				url: "/privacy-policy"
 				templateUrl: "templates/company/privacy-policy.html"

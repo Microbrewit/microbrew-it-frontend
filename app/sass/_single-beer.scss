@@ -40,6 +40,14 @@
 	}
 
 	.brewers {
+		// &:before {
+		// 	display: block;
+		// 	width: 100%;
+		// 	font-size: 0.6em;
+		// 	text-transform: lowercase;
+		// 	margin: -5px 0;
+		// 	content: "by";
+		// }
 		list-style:none;
 		line-height: 50px;
 		font-size: 25px;
@@ -53,12 +61,12 @@
 		border-bottom: 1px solid #ccc;
 
 		li {
+			display: inline-block;
 			padding: 0 25px;
 		}
 
 		img {
 			vertical-align: middle;
-			margin-right: 10px;
 			margin-top: -4px;
 		}
 	}

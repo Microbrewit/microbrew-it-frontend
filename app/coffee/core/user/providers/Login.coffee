@@ -46,16 +46,7 @@ angular.module('Microbrewit/core/User')
 							$rootScope.token = token
 							localStorage.setItem('token', token)
 
-							# Save user
-							user = 
-								userName: response.data.userName
-								gravatar: response.data.gravatar
-								settings: response.data.settings
-
-							$rootScope.user = user
-
-
-							return user
+							return response.data.userName
 						)
 					
 					return promise
