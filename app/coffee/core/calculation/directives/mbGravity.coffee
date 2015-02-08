@@ -42,7 +42,7 @@ angular.module('Microbrewit/core/Calculation')
 					scope.ingredient.gravityPoints = Math.round((weight*ppg*efficiency)/volume)
 
 
-					scope.change()
+					scope.change?()
 
 				# Run only once every $digest
 				scope.$watch(->
