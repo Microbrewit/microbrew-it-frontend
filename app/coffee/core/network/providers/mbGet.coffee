@@ -3,9 +3,11 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Network')
-	.factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', 'localStorage', ($http, $log, ApiUrl, $rootScope, sessionStorage, localStorage) ->
+	.factory('mbGet', ['$http', '$log', 'ApiUrl', '$rootScope', 'sessionStorage', 'localStorage', 'notification', ($http, $log, ApiUrl, $rootScope, sessionStorage, localStorage, notification) ->
 		factory = {}
+
 		factory.get = (requestUrl) ->
+			requestUrl = "#{requestUrl}"
 			console.log "GET: #{requestUrl}"
 			$rootScope.loading++
 
@@ -15,27 +17,43 @@ angular.module('Microbrewit/core/Network')
 					$rootScope.loading--
 					console.error(status)
 					console.error(data)
+					notification.add
+						title: 'Error' # required
+						body: 'Could not get data from server' # optional
+						type: 'error'
+						#icon: 'url/to/icon' # optional
+						#onClick: callback # optional
+						#onClose: callback # optional
+						time: 5000 # default: null, ms until autoclose
+						#medium: 'native' # default: null, native = browser Notification API
 				)
 				.then((response) ->
-					console.log 'then'
+
 					# Save auth token
 					if response.headers('access_token')
-						$rootScope.token =
+						token = 
 							expires: new Date(response.headers('.expires')).getTime()
 							token: response.headers('access_token')
 							refresh: response.headers('refresh_token')
+						
+						$rootScope.token = token
+
+						# We only store the token in localstorage if the user chose to be remembered on login
+						if localStorage.getItem('token')
+							localStorage.setItem('token', token)
 
 					$rootScope.loading--
+					console.log response.data
 					return response.data
 				)
 
 			return promise
 
-		factory.user = (id = null) ->
+		factory.brewery = (id = null) ->
 			if id
-				requestUrl = "#{ApiUrl}/users/#{id}?callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/breweries/#{id}?callback=JSON_CALLBACK"
 			else
-				requestUrl = "#{ApiUrl}/users?callback=JSON_CALLBACK"
+				requestUrl = "#{ApiUrl}/breweries?callback=JSON_CALLBACK"
 
 			return @get(requestUrl)
 
