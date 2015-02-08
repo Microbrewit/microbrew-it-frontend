@@ -1,4 +1,4 @@
-<article class="add-beer-recipe">
+<form class="add-beer-recipe" ng-submit="submitRecipe()">
 	<header>
 		<div class="header-bubble inner-wrapper">
 		<div class="icon">
@@ -6,7 +6,7 @@
 			<img src="images/fermentable-large.png" alt="Malt"/>
 		</div>
 	</div>
-		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.recipe.name"/></h1>
+		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.recipe.name" required/></h1>
 	</header>
 
 	<section class="meta-information">
@@ -163,7 +163,7 @@
 				</div>
 			</div>
 			<button class="save" ng-click="logRecipe()">LOG</button>
-			<button class="save" ng-click="submitRecipe()">Add</button>
+			<button class="submit" type="submit">Add</button>
 		</div>
 	</section>
 
@@ -175,5 +175,5 @@
 		</div>
 	</section>
 
-</article>
+</form>
 

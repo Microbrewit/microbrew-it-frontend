@@ -5,11 +5,11 @@
 		<li><a ui-sref="brews.list" ng-class="{active: includes('brews')}">Beer</a></li>
 		<li><a ui-sref="breweries.list" ng-class="{active: includes('breweries')}">Breweries</a></li>
 		<li><a ui-sref="brewers.list" ng-class="{active: includes('brewers')}">Brewers</a></li>
-		<li><a ui-sref="ingredients.list" ng-class="{active: includes('ingredients') || includes('fermentables') || includes('hops') || includes('yeasts')}">Ingredients</a></li>
+		<li><a ui-sref="ingredients.search" ng-class="{active: includes('ingredients') || includes('fermentables') || includes('hops') || includes('yeasts')}">Ingredients</a></li>
 		<li><a ui-sref="search" ng-class="{active: is('search')}">Search</a></li>
 		<!-- <li class="search"><form><input type="text" ng-model="searchTerm" placeholder="search microbrewit"/><button ng-submit="search(searchTerm); searchTerm=''" ng-click="search(searchTerm); searchTerm=''">Search</button></form></li> -->
 		<li class="right" ng-show="!user"><a ui-sref="user.login" ng-class="{active: includes('user')}">Login</a></li>
-		<li class="right" ng-show="user" ng-class="{active: includes('breweries')}"><a ui-sref="brewers.single({id:user.username})" ng-class="{active: includes('user')}"><gravatar url="{{user.gravatar}}" size="25px" style="display: inline-block"></gravatar>{{::user.username}}</a></li>
+		<li class="right" ng-show="user" ng-class="{active: includes('breweries')}"><a ui-sref="brewers.single({id:user.username})" ng-class="{active: includes('user')}"><gravatar url="{{user.gravatar}}" size="20px" style="display: inline-block;margin-right: 5px;"></gravatar>{{::user.username}}</a></li>
 		<!-- <li><a ui-sref="more">More</a></li> -->
 	</ul>
 </nav>

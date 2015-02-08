@@ -1,7 +1,7 @@
 <article class="single-hops">
 	<h1>{{hop.name}}</h1>
-
-	<section class="meta">
+	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
+	<section class="the-content">
 		<div class="inner-wrapper">
 			<div class="alpha-acid" title="Alpha acids contribute bitterness in addition to having a mild anti bacterial effect.">Alpha <strong>{{hop.aaLow}}% - {{hop.aaHigh}}%</strong></div>
 			<div class="beta-acid" title="Beta acids contribute to a beer's aroma. over Time they may oxidise into compounds that can give beer off-flavours.">Beta <strong>{{hop.betaLow}}% - {{hop.betaHigh}}%</strong></div>

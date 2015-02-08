@@ -1,14 +1,15 @@
 <article class="login">
 	<section class="login-form">
 		<div class="inner-wrapper">
-			<form>
+			<div class="form-error error" ng-show="loginFormError">{{loginFormError}}</div>
+			<form ng-submit="login($event)">
 				<label for="username">Username</label>
-				<input type="text" id="password" ng-model="username" placeholder="username"/>
+				<input type="text" id="password" ng-model="username" placeholder="username" required/>
 				<label for="password">Password</label>
-				<input type="text" id="password" ng-model="password" placeholder="password"/>
+				<input type="text" id="password" ng-model="password" placeholder="password" required/>
 				<label for="remember">keep logged in</label>
 				<input type="checkbox" id="remember" ng-model="remember"/>
-				<button ng-click="login()">Login</button>
+				<button class="submit" type="submit">Login</button>
 			</form>
 		</div>
 	</section>

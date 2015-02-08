@@ -1,6 +1,10 @@
 .login {
 	//text-align:center;
-
+	.submit {
+		float:right;
+		@include offset(right, 2/8);
+	
+	}
 	.login-form {
 		background: #eee;
 		border-top: #ccc;
@@ -24,15 +28,5 @@
 		@include push(1/4);
 		margin-bottom: 5px;
 		color: #999;
-	}
-	button {
-		@include col(1/8, 5px, false);
-		float: right;
-		@include offset(right, 2/8);
-		height: 50px;
-		font-size: 15px;
-		line-height: 25px;
-		background: #CD2729;
-		color: white;border:0;
 	}
 }

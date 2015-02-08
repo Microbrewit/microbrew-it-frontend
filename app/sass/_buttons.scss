@@ -1,0 +1,69 @@
+button {
+	transition: 0.5s;
+}
+
+button.submit {
+	@include col(1/8, 5px, false);
+	margin: 0 auto;
+	height: 50px;
+	font-size: 15px;
+	line-height: 25px;
+	background: #CD2729;
+	color: white;border:0;
+}
+
+button.loading, .ng-submitted button.submit {
+	background: #ccc;
+	border: #aaa;
+	color: #666;
+
+	padding-right: 20px;
+
+	background-image: url(images/spinner.gif) no-repeat right center;
+}
+
+.success {
+	background: #7AB95B !important;
+	border: #7AB95B !important;
+
+	&:hover {
+		background: #54853B !important;
+		border: #54853B !important;
+	}
+}
+
+.warning {
+	background: #E2AE49 !important;
+	border: #E2AE49 !important;
+	color: white !important;
+	&:hover {
+		background: #E2AE49 !important;
+		border: #E2AE49 !important;
+	}
+}
+
+.error, .error.ng-submitted button.submit {
+	background: #d9534f !important;
+	border: #d9534f !important;
+	color: white !important;
+
+	&:hover {
+		background: #BC4137 !important;
+		border: #BC4137 !important;
+	}
+}
+
+// --- FORMS ---
+.ng-touched.ng-invalid {
+	border: 2px solid #d9534f;
+}
+
+.ng-invalid button.submit {
+	background: #ccc;
+	color: #666;
+}
+
+.form-error {
+	padding: 10px;
+	text-align:center;
+}

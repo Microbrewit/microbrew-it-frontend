@@ -1,0 +1,24 @@
+<article class="brewery">
+	<header>
+		<div class="header-bubble inner-wrapper">
+			<div class="icon">
+				<mb-colour-box class="colour-box" type="srm" colour="{{header.bubble}}" size="76px"></mb-colour-box>
+				<img src="images/fermentable-large.png" alt="Malt"/>
+			</div>
+		</div>
+		<h1>{{header.title.toUpperCase()}}</h1>
+		<div class="subheader" ng-show="header.subHeader">{{header.subHeader}}</div>
+		<div class="description" ng-show="header.description">{{header.description}}</div>
+	</header>
+
+	<div ng-show="header.navigation.length > 0" ng-include="'templates/breweries/breweries.navigation.html'"></div>
+
+	<div class="loading" ng-show="loading > 0">
+		<div class="inner">Loading<br/><img src="images/spinner.gif"/></div>
+	</div>
+	
+	<div class="the-content">
+		<div ui-view></div>
+	</div>
+	
+</article>

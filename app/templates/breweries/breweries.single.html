@@ -2,7 +2,7 @@
 	<section class="brews" ng-show="brewer.beers.length > 0">
 		<div class="inner-wrapper">
 			<ul class="brew-list search-result-block search-grid-results">
-				<li class="brew" ng-repeat="result in brewer.beers">
+				<li class="brew" ng-repeat="result in brewery.beers">
 					<div ng-include="'templates/beer/beer.gridItem.html'"></div>
 			</ul>
 		</div>

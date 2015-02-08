@@ -19,8 +19,9 @@
 <head>
 	<meta charset="utf-8">
 	<title>Microbrew.it prealpha</title>
+	<link rel="icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/main.css"/>
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
 </head>
 <body ng-class="{modal: modalOpened == true}">
 	<div style="position:fixed;bottom:10px;right:10px;padding: 5px;color:white;background:#333;z-index:100;">ALPHA BUILD</div>
@@ -28,7 +29,7 @@
 	<div class="main" ng-controller="MainController">
 		<div ng-include src="'templates/header.html'"></div>
 		<div mb-message></div>
-		<div ui-view></div>
+		<div class="ui-view-container" ui-view></div>
 	</div>
 	<div ng-include src="'templates/footer.html'"></div>
 

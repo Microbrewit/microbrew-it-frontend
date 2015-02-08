@@ -6,7 +6,8 @@
 </div>
 <article class="single-fermentable">
 	<h1>{{fermentable.name}}</h1>
-	<section class="meta">
+	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
+	<section class="the-content">
 		<div class="inner-wrapper">
 			<div class="type" title="">Type <strong>{{fermentable.type}}</strong></div>
 			<div class="origin">Country <strong>{{fermentable.supplier.origin.name}}</strong></div>

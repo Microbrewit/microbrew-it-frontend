@@ -1,7 +1,7 @@
 <article id="search">
 	<section class="search-input">
 		<div class="inner-wrapper">
-			<input id="searchQuery" class="big-search-box" placeholder="Find {{endpoint}}" ng-model="searchQuery"/>
+			<input id="searchQuery" class="big-search-box" placeholder="Find {{endpoint}}" ng-model="searchQuery" ng-model-options="{ debounce: 500 }"/>
 			<select class="search-endpoint" ng-model="endpoint" ng-options="endpoint for endpoint in endpoints"></select>
 			<div class="results-number" ng-show="resultsNumber !== undefined">Number of results: {{ resultsNumber }}</div>
 		</div>
@@ -12,6 +12,7 @@
 			<div ng-show="query.length >= 3 && resultsNumber == 0" class="center">Found no {{endpoint}} called "{{query}}"</div>
 			<ul>
 				<li ng-repeat="result in results"> 
+					{{result._source.dataType}}
 					<span ng-show="!result._source"><a ui-sref="{{endpoint}}.single({id:result.id})">{{ result.name }}</a></span>
 					<span ng-show="result._source"><a ui-sref="{{result.endpoint}}.single({id:result._source.id})">{{ result._source.name }}</a></span>
 				</li>

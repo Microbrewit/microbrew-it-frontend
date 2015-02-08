@@ -12,35 +12,74 @@
 	margin: 0 auto;
 }
 
-.recipe-beer-meta {
-	text-align:center;
-	input[type="number"] {
-		line-height: 40px;
-		font-size: 24px;
-		width: 45px;
-		font-weight: 100;
-		text-align: center;
-	}
+.beer-meta {
+	background: #eee;
+	border-top: 1px solid #fff;
+	position: relative;
 
-	.value {
-		display: inline-block;
-	}
-
-	.beer-meta-value {
-		font-size: 26px;
-		font-weight: 300;
-		line-height: 50px;
-		display: inline-block;
-		margin-right: 15px;
-	}
-	.beer-meta-key {
-		display: inline-block;
-		line-height: 40px;
-		height: 50px;
-		vertical-align:middle;
-		margin-right: 5px;
+	&:before {
+		position: absolute;
+		top:-2px;
+		left:0;
+		right:0;
+		border-top: 1px solid #ddd;
+		content:'';
 	}
 }
+
+.abv-wrapper,.og-wrapper,.fg-wrapper,.bitterness-wrapper,.colour-wrapper,.volume-wrapper,.efficiency-wrapper {
+	display: inline-block;
+	padding: 0 10px;
+}
+
+.beer-meta-key {
+	display: block;	
+	line-height: 1;
+	height: auto;
+	text-align:left;	
+}
+.beer-meta-value {
+	height: auto;
+	line-height: 1.1;
+	text-align:left;
+}
+.meta-line {
+	font-size: 25px;
+	padding: 25px 0;
+	padding-top: 0;
+	border-bottom: 1px solid #ccc;
+	text-align:center;
+}
+
+// .recipe-beer-meta {
+// 	text-align:center;
+// 	input[type="number"] {
+// 		line-height: 40px;
+// 		font-size: 24px;
+// 		width: 45px;
+// 		font-weight: 100;
+// 		text-align: center;
+// 	}
+
+// 	.value {
+// 		display: inline-block;
+// 	}
+
+// 	.beer-meta-value {
+// 		font-size: 26px;
+// 		font-weight: 300;
+// 		line-height: 50px;
+// 		display: inline-block;
+// 		margin-right: 15px;
+// 	}
+// 	.beer-meta-key {
+// 		display: inline-block;
+// 		line-height: 40px;
+// 		height: 50px;
+// 		vertical-align:middle;
+// 		margin-right: 5px;
+// 	}
+// }
 .conclusion .recipe-beer-meta {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
@@ -78,10 +117,7 @@
 	padding: 25px;
 	border-top: 1px solid #ccc;
 }
-.beer-meta-value {
-	font-size: 20px;
-	font-weight: bold;
-}
+
 h2 {
 	text-align:center;
 	font-size: 50px;
