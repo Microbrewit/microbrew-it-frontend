@@ -23,7 +23,6 @@ angular.module('Microbrewit/core/Utils')
 		storageApi = {}
 
 		storageApi.getItem = (key) ->
-			console.log 'getITem'
 			value = window.localStorage.getItem key
 
 			# validJSON returns parsed JSON if it is valid, false if not
