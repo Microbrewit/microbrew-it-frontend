@@ -3,9 +3,10 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Network')
-	.factory('mbSet', ['$http', '$rootScope', '$log', 'ApiUrl', 'ClientUrl', 'localStorage', ($http, $rootScope, $log, ApiUrl, ClientUrl, localStorage) ->
+	.factory('mbPost', ['$http', '$rootScope', '$log', 'ApiUrl', 'ClientUrl', 'localStorage', ($http, $rootScope, $log, ApiUrl, ClientUrl, localStorage) ->
 		factory = {}
 		factory.set = (requestUrl, object) ->
+			requestUrl = "#{ApiUrl}#{requestUrl}"
 			#auth = localStorage.getItem('user')
 			console.log 'factory.set'
 			promise = false
@@ -29,12 +30,24 @@ angular.module('Microbrewit/core/Network')
 						)
 							.error((data, status) ->
 								$rootScope.loading--
-								$log.error(data)
-								$log.error(status)
-								console.error(status)
-								console.error(data)
+								notification.add
+									title: 'Error' # required
+									body: 'Could not save data' # optional
+									type: 'error'
+									#icon: 'url/to/icon' # optional
+									#onClick: callback # optional
+									#onClose: callback # optional
+									time: 50000 # default: null, ms until autoclose
+									#medium: 'native' # default: null, native = browser Notification API
 							)
 							.then((response) ->
+
+								notification.add
+									title: 'Saved'
+									body: 'Successfully saved to cloud'
+									type: 'success'
+									time: 5000
+									
 								token = 
 									expires: new Date(response.headers('.expires')).getTime()
 									token: response.headers('access_token')
