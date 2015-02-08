@@ -1,10 +1,18 @@
-mbit = angular.module('Microbrewit')
+# Controller for user
+#
+# In charge of register and login
+#
+# @author Torstein Thune
+# @copyright 2014 Microbrew.it
+angular.module('Microbrewit').controller('UserController', [
+	'$scope'
+	'mbUser'
+	'$state'
+	'localStorage'
+	'$rootScope'
+	($scope, mbUser, $state, localStorage, $rootScope) ->
 
-mbit.controller('UserController', ['$scope', 'login', 'mbGet', '$stateParams', '$state', 'localStorage', '$rootScope',
-	($scope, login, mbGet, $stateParams, $state, localStorage, $rootScope) ->
-
-		$scope.username = ""
-		$scope.password = ""
+		
 		$scope.remember = true
 
 		# We are in login state
@@ -13,32 +21,34 @@ mbit.controller('UserController', ['$scope', 'login', 'mbGet', '$stateParams', '
 			$rootScope.title = 'Login'
 			$rootScope.bubble = ''
 
-			# Login
-			$scope.login = () ->
-				if $scope.username isnt "" and $scope.password isnt ""
-					login($scope.username, $scope.password).async().then((userId) ->
-
-						mbGet.user(userId).then((response) ->
-							user = response.users[0]
-							$rootScope.user = user
-							
-							if $scope.remember
-								localStorage.setItem('user', user)
-							
-							if $stateParams.redirect
-								$state.go($stateParams.redirect)
-
-							else
-								$state.go('home')
-							
-						)
-					)
-
 		# We are in register state
 		else if $state.current.name is 'user.register'
 			$scope.register = () ->
-				$rootScope.title = 'Register'
-				$rootScope.bubble = ''
+				$scope.title = 'Register'
+				$scope.bubble = ''
+
+		# Login
+		$scope.login = () ->
+
+			mbUser.login($scope.username, $scope.password).then((userId) ->
+				console.log userId
+				mbUser.get(userId).then((response) ->
+					user = response.users[0]
+					$rootScope.user = user
+					
+					if $state.params.redirect
+						$state.go($state.params.redirect)
+
+					else
+						$state.go('home')
+					
+				)
+			)
+			.catch((err) ->
+				console.log err 
+				$scope.loginFormError = "Authentication failed: #{err.data.error_description}"
+			)
+
 
 		
 ])
