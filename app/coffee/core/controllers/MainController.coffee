@@ -1,53 +1,19 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$stateParams', '$state', 'localStorage', 'notification', 'mbGet',
-	($rootScope, $scope, login, logout, $stateParams, $state, localStorage, notification, mbGet) ->
+mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$stateParams', '$state', 'localStorage', 'notification', 'mbGet',
+	($rootScope, $scope, mbUser, $stateParams, $state, localStorage, notification, mbGet) ->
 		$rootScope.loading = 0
 
+		# Convenience method for checking state
 		$scope.is = (name) ->
 			return $state.is(name)
-
+		# Convenience method for checking partial state match
 		$scope.includes = (name)->
 			return $state.includes(name)
-
+		# Convenience method for logging out
 		$scope.logout = () ->
-			localStorage.removeItem('user')
-			localStorage.removeItem('token')
-			$rootScope.user = false
-			$rootScope.token = null
+			mbUser.logout()
 			$state.go('home')
-
-		# $rootScope.user = {}
-		# $rootScope.user.settings = 
-		# 	measurements:
-		# 		weight:
-		# 			large: 
-		# 				name: 'kilograms'
-		# 				short: 'kg'
-		# 			small: 
-		# 				name: 'grams'
-		# 				short: 'g'
-		# 		liquids: 
-		# 			name: 'liters'
-		# 			short: 'l'
-		# 		temperature: 
-		# 			name: 'Celcius'
-		# 			short: '°C'
-		# 	abv:
-		# 		formula: 'microbrewit'
-		# 		unit: 
-		# 			name: 'specific-gravity'
-		# 			short: 'sg'
-		# 	bitterness:
-		# 		formula: 'tinseth'
-		# 		unit: 
-		# 			name: 'ibu'
-		# 			short: 'ibu'
-		# 	colour:
-		# 		formula: 'morey'
-		# 		unit:
-		# 			name: 'srm'
-		# 			short: 'srm'
 
 		# Download and store default ingredients
 		# These are used in recipe generation and calculators
@@ -76,16 +42,13 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$
 				localStorage.setItem('hopForms', hopForms)
 			)
 
-		# should we log in a remembered user?
-		user = localStorage.getItem('user')
-		if user
-			$rootScope.user = user
-
+		# Autologin if stored token
 		token = localStorage.getItem('token')
-		console.log token
 		if token
-			login(false, false, token).async().then(
-				(response) => 
+			$rootScope.token = token
+			mbUser.login(false, false, token).then((userId) -> 
+				mbUser.get(userId).then((response) ->
+					$rootScope.user = response.users[0]
 					$rootScope.user.settings = 
 						measurements:
 							weight:
@@ -116,11 +79,7 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'login', 'logout', '$
 							unit:
 								name: 'srm'
 								short: 'srm'
+				)
 			)
 
-
-
-		# search logic
-		$scope.search = (searchTerm) ->
-			$state.go('searchWithTerm', { searchTerm: searchTerm })
 ])
