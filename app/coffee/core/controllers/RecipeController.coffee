@@ -4,13 +4,15 @@ mbit.controller('RecipeController', [
 	'$rootScope'
 	'$scope'
 	'mbGet'
-	'mbSet'
+	'mbPost'
 	'localStorage'
 	'sessionStorage'
 	'$stateParams'
 	'_'
 	'colour'
-	($rootScope, $scope, mbGet, mbSet, localStorage, sessionStorage, $stateParams, _, colourCalc) ->
+	'$state'
+	'mbUser'
+	($rootScope, $scope, mbGet, mbPost, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser) ->
 		$scope.searchContext = {
 			active: false
 			endpoint: null 
@@ -22,13 +24,13 @@ mbit.controller('RecipeController', [
 			$scope.hopTypes = response
 		)
 
-		if $stateParams.fork?
+		if $state.is('brew.fork')
 			if $rootScope.beerToFork?
 				# Deep clone the original recipe
 				$scope.beer.recipe = JSON.parse(JSON.stringify($rootScope.beerToFork.recipe))
 				$rootScope.beerToFork = undefined
 			else
-				mbGet.beers({id:$stateParams.fork}).then((response) ->
+				mbGet.beers({id:$state.params.fork}).then((response) ->
 					$scope.beer.recipe = JSON.parse(JSON.stringify(response.beers[0].recipe))
 				)
 
@@ -213,8 +215,20 @@ mbit.controller('RecipeController', [
 			updateStepNumbers()
 
 		$scope.submitRecipe = () ->
+
 			console.log 'submitRecipe'
-			mbSet.recipe($scope.beer.recipe).async().then()
+
+			# well fuck
+			if not $scope.token?
+				# we need username and password
+
+			else if $scope.token?.token?.expires <= new Date().getTime()
+				# We need to refresh token
+				mbUser.login(false,false,$scope.token).then(mbPost.recipe($scope.beer.recipe).async().then())
+			
+			else
+				# Alles in order
+				mbPost.recipe($scope.beer.recipe).async().then()
 
 		$scope.logRecipe = () ->
 			console.log JSON.stringify($scope.beer.recipe,  null, '\t')
