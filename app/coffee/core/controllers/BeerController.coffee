@@ -1,31 +1,59 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '$stateParams', '_'
-	($rootScope, $scope, $state, get, $stateParams, _) ->
+mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_'
+	($rootScope, $scope, $state, get, _) ->
+		$scope.bubble = 19
 
-		# We are displaying information about a single beer
-		if $stateParams.id
-			$rootScope.showNav = false
-			get.beers({id: $stateParams.id}).then((apiResponse) ->
-				$scope.beer = apiResponse.beers[0]
-				$rootScope.title = $scope.beer.name
-				$scope.recipe = $scope.beer.recipe
+		# Set the state of the controller
+		# BeerController is used as a main controller for all beer-related things
+		setControllerState = (event, toState, toParams, fromState, fromParams) ->
+			console.log 'BeerController.setControllerState' 
+			$scope.bubble = 19
+			# Clean up scope state
+			$scope.isUserRecipe = false
+			$scope.showNav = true
+			$scope.fork = null
+			$scope.beerToFork = null
 
-				if $scope.recipe.mashSteps[0].number is 0
-					$scope.recipe.mashSteps[0].number = 1
+			currentState = toState?.name 
+			currentState ?= $state?.current?.name
 
-				console.log $scope.recipe.mashSteps
-			)
-			$scope.fork = () ->
+			# We are displaying information about a single beer
+			if currentState is 'brews.single'
+				beerId = toParams?.id
+				beerId ?= $state.params.id
+
+				get.beers({id: beerId}).then((apiResponse) ->
+
+					$scope.beer = apiResponse.beers[0]
+					$scope.bubble = $scope.beer.srm.standard or= 19
+					if $scope.user 
+						for user in $scope.beer.brewers
+							$scope.isUserRecipe = true  if user.username is $scope.user.username
+
+					$scope.title = $scope.beer.name
+					$scope.recipe = $scope.beer.recipe
+
+					if $scope.recipe.mashSteps[0].number is 0
+						$scope.recipe.mashSteps[0].number = 1
+
+				)
 				$rootScope.beerToFork = $scope.beer
-				$state.go('fork', { "fork": $stateParams.id })
-			$scope.forks = []
+				$rootScope.fork = () ->
+					$state.go('brews.fork', { "fork": $stateParams.id })
+				$scope.forks = []
 
-		# We are on the beer listing/discovery page
-		else
-			$rootScope.showNav = true
-			$rootScope.title = "Beers"
-			get.beers({latest:true}).then((apiResponse) ->
-				$scope.brews = apiResponse
-			)
+			# We are on the beer listing/discovery page
+			else if currentState is 'brews.list'
+				$scope.title = "Beers"
+				get.beers({latest:true}).then((apiResponse) ->
+					$scope.brews = apiResponse.beers
+					console.log $scope.brews
+				)
+			else if currentState is 'brews.search'
+				$scope.title = "Beers"
+
+
+		setControllerState()
+		$rootScope.$on('$stateChangeStart', setControllerState)
 ])

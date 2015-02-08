@@ -3,17 +3,49 @@ mbit = angular.module('Microbrewit')
 mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet', '$stateParams', '_'
 	($rootScope, $scope, $state, get, $stateParams, _) ->
 
-		# We are displaying information about a single beer
-		if $stateParams.id
-			get.breweries({id: $stateParams.id}).then((apiResponse) ->
-				$scope.brewery = apiResponse.beers[0]
-				$rootScope.title = $scope.brewery.name
-			)
+				# Set the state of the controller
+		# BeerController is used as a main controller for all beer-related things
+		setControllerState = (event, toState, toParams, fromState, fromParams) ->
+			currentState = toState?.name 
+			currentState ?= $state?.current?.name
 
-		# We are on the beer listing/discovery page
-		else
-			$rootScope.title = "Beers"
-			get.breweries({latest:true}).then((apiResponse) ->
-				$scope.breweries = apiResponse
-			)
+			$scope.header =
+				bubble: ""
+				title: "breweries"
+				subHeader: ""
+				description: ""
+				navigation: [
+					{title:'Latest', sref:'breweries.list'}
+					{title:'Search', sref:'breweries.search'}
+				]
+			
+			# We are displaying information about a single user
+			if currentState is 'breweries.single'
+				breweryId = toParams?.id
+				breweryId ?= $state.params.id
+				get.brewery(breweryId).then((apiResponse) ->
+					# $scope.loading--
+					$scope.brewery = apiResponse.breweries[0]
+
+					$scope.header = 
+						title: $scope.brewery.name
+						bubble: ''
+						subHeader: $scope.brewery.type
+						description: $scope.brewery.description
+						navigation: [
+							{ title: 'Beers', sref: 'breweries.single.beers' }
+						]
+
+					$scope.header.navigation.push({ title: 'Brewers', sref: 'breweries.single.brewers' }) if $scope.brewery.members.length >= 0
+				)
+
+			# User search page
+			else if currentState is 'breweries.list'
+				
+				get.brewery().then((apiResponse) ->
+					$scope.breweries = apiResponse.breweries
+				)
+
+		setControllerState()
+		$rootScope.$on('$stateChangeStart', setControllerState)
 ])
