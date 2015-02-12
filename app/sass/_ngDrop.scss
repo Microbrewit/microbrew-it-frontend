@@ -1,0 +1,211 @@
+.dropdown {
+	width: inherit;
+	border: 1px solid #ccc;
+	position: relative;
+	@extend .cf;
+	.glow {
+		@extend .cf;
+		box-shadow: 0px 0px 5px #333;
+	}
+	.search {
+		width: 100%;
+		border-bottom: 1px solid #ccc;
+		padding: 10px;
+		position: relative;
+
+		.search-input {
+			display: inline-block;
+			box-sizing: border-box;
+			width:100%;
+			height: 45px;
+			line-height: 25px;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+		}
+
+		.search-icon {
+			position: absolute;
+			top: 50%;
+			margin-top: -18px;
+			right: 20px;
+			background-image: url(data:image/png;base64,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);
+			background-size: 25px 25px;
+			width: 25px;
+			height: 25px;
+		}
+	}
+
+	.group {
+		.group-name {
+			font-size: 15px;
+			color: #666;
+			font-weight: bold;
+			text-transform: uppercase;
+			background: #eee;
+			padding: 10px 0;
+			margin: 0;
+		}
+
+		hr {
+			display: none;
+		}
+
+		li {
+			font-size: 15px;
+			color: #333;
+			padding: 10px 0;
+			border-top: 1px solid #eee;
+
+			&:hover {
+				background: #eee;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.dropdown-selector {
+		&.grayed {
+			color: #999;
+		}
+
+		&:hover {
+			background: #eee;
+			cursor: pointer;
+		}
+
+		.arrow-down {
+			position: absolute;
+			right: 10px;
+			top: 15px;
+			width: 0; 
+			height: 0; 
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			
+			border-top: 8px solid #666;
+		}
+	}
+
+	.dropdown-wrapper {
+		@extend .cf;
+		border: 1px solid #ccc;
+		position: absolute;
+		left:0;
+		right: 0;
+		background: white;
+		width: inherit;
+
+		height: 300px;
+		overflow: auto;
+	}
+}
+
+// .dropdown .dropdown-wrapper{
+// 	position: absolute;
+// 	border: solid 1px #ccc; 
+// 	border-radius: 4px;
+// 	width: inherit;
+// 	background: #fff;
+// }
+
+// .dropdown .dropdown-selector{
+// 	background: #fff;
+// 	border: solid 1px #ccc;
+// 	border-radius: 4px;
+// 	padding: 5px 10px 5px 10px;
+// 	position: relative;
+// }
+// .dropdown .dropdown-selector > span{
+// 	padding-left:10px;
+// 	cursor: default;
+// }
+
+// .dropdown .dropdown-selector > span.grayed {
+// 	color:#ccc;
+// }
+
+// .dropdown .dropdown-wrapper .search{
+// 	margin: 5px 5px 10px 5px; 
+// 	padding: 1px;
+// 	/*height: 25px;*/
+
+// }
+
+// .dropdown .box *{
+// 	cursor: default;
+// 	list-style-type: none;
+// 	padding: 0;
+// }
+
+// .dropdown .box{
+// 	position: relative;
+// 	/*/top: 70px;*/
+// 	background: #fff;
+// 	height: 150px;
+// 	overflow-x: hidden;
+	
+// 	list-style-type: none;
+// 	margin: 0;
+// 	padding: 10px 10px 10px 20px;
+// }
+
+// .dropdown .box hr {
+// 	display: block; 
+// 	height: 1px;
+//     border: 0; 
+//     border-top: 1px solid #ccc;
+//     margin: 5px 0; 
+//     padding: 0; 
+// }
+// .dropdown .box .group{
+// 	margin-bottom: 10px;
+// }
+
+// .dropdown .box .group .group-name {
+// 	text-align: center;
+// 	font-weight: bold;
+// 	color: #aaa;
+// }
+
+// .dropdown .box .group .group-list{
+// 	padding-left: 5px;
+// }
+
+// .dropdown .box .group .group-list hr {
+// 	border-color: #eee;
+// }
+
+// .dropdown .box .group  .group-list .item {
+// 	padding: 2px;	
+// }
+
+// .dropdown .box .group  .group-list .item b {
+// 	color: red;
+// }
+
+// .dropdown .box .group .group-list .item:hover{
+// 	background: rgba(82, 168, 236, 0.3);
+// 	border-radius: 4px;
+// }
+
+// .dropdown .arrow-down {
+// 	position: absolute;
+// 	right: 10px;
+// 	top: 10px;
+// 	width: 0; 
+// 	height: 0; 
+// 	border-left: 4px solid transparent;
+// 	border-right: 4px solid transparent;
+	
+// 	border-top: 8px solid #000;
+// }
+
+.dropdown .glow {
+	border-color: rgba(82, 168, 236, 0.8);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	outline: 0;
+	outline: thin dotted \9;
+}
