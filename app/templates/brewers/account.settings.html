@@ -1,0 +1,69 @@
+<article class="account-settings">
+	<section class="measurements">
+		<h2>Measurements</h2>
+		<div class="meta weight">
+			<strong>Weight</strong>
+			<span>
+				Large weights:
+				<select ng-model="settings.largeWeight" ng-options="value for value in weightAvailable"></select>
+			</span>
+			<span>
+				Small weights: 
+				<select ng-model="settings.smallWeight" ng-options="value for value in weightAvailable"></select>
+			</span>
+		</div>
+
+		<div class="meta liquids">
+			<strong>Liquids</strong>
+		</div>
+
+		<div class="meta temperature">
+			<strong>Temperature</strong>
+		</div>
+	</section>
+	<section class="formulas">
+		<h2>Formulas</h2>
+		<div class="meta abv">
+			<strong>ABV</strong>
+		</div>
+		<div class="meta abv">
+			<strong>Bitterness</strong>
+		</div>
+		<div class="meta abv">
+			<strong>Colour</strong>
+		</div>
+	</section>
+</article>
+
+
+$rootScope.user.settings = 
+						measurements:
+							weight:
+								large: 
+									name: 'kilograms'
+									short: 'kg'
+								small: 
+									name: 'grams'
+									short: 'g'
+							liquids: 
+								name: 'liters'
+								short: 'l'
+							temperature: 
+								name: 'Celcius'
+								short: '°C'
+						abv:
+							formula: 'microbrewit'
+							unit: 
+								name: 'specific-gravity'
+								short: 'sg'
+						bitterness:
+							formula: 'tinseth'
+							unit: 
+								name: 'ibu'
+								short: 'ibu'
+						colour:
+							formula: 'morey'
+							unit:
+								name: 'srm'
+								short: 'srm'
+				)

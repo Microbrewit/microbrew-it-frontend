@@ -1,0 +1,26 @@
+<article class="brewers">
+	<header>
+		<div class="header-bubble inner-wrapper">
+			<div class="icon">
+				<gravatar url="{{bubble}}" size="78px"></gravatar>
+			</div>
+		</div>
+	
+		<h1>{{user.username}}</h1>
+		<div class="subheader">Account and settings</div>
+	</header>
+	
+	<nav class="sub-nav">
+		<ul>
+			<li><a ui-sref="account.beers" ng-class="{active: is('account.beers')}">My Beers</a></li>
+			<li><a ui-sref="account.breweries" ng-class="{active: is('account.breweries')}">My Breweries</a></li>
+			<li><a ui-sref="account.settings" ng-class="{active: is('account.settings')}">Account settings</a></li>
+			<li><a ng-click="clearCache()">Clear cache</a></li>
+			<li><a ng-click="logout()">Logout</a></li>
+		</ul>
+	</nav>
+
+	<div class="the-content">
+		<div ui-view></div>
+	</div>
+</article>
