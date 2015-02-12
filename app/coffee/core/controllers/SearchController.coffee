@@ -4,7 +4,7 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams', '$sta
 	($scope, search, $stateParams, $state, $rootScope) ->
 		console.log 'CONTROLLER ACTIVE'
 
-		$scope.searchQuery = $stateParams.searchTerm if $stateParams.searchTerm
+		$scope.searchQuery = $state.params.searchTerm if $state.params.searchTerm
 		$rootScope.showNav = true
 
 		$scope.endpoints = [
@@ -19,6 +19,7 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams', '$sta
 
 		# Set endpoint
 		switch $state.current.name
+			when "breweries.search" then $scope.endpoint = "breweries"
 			when "brewers.search" then $scope.endpoint = "users"
 			when "ingredients.search" then $scope.endpoint = "ingredients"
 			when "brews.search" then $scope.endpoint = "beers"

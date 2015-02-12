@@ -1,14 +1,44 @@
 <article class="single-yeast">
-	<h1>{{yeast.name}}</h1>
-	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
+	<h1>{{yeast.name}} <small ng-show="yeast.productCode">({{yeast.productCode}})</small></h1>
+	
+	<div class="subheader">
+		<span ng-show="yeast.supplier.name">{{yeast.supplier.name}} / {{yeast.brewerySource}}</span>
+	</div>
+
+	<nav class="sub-nav" ng-show="user || user.role === 'admin'">
+		<ul>
+			<li><a ui-sref="yeasts.edit({id:yeast.yeastId})">Edit</a></li>
+		</ul>
+	</nav>
+
 	<section class="the-content">
 		<div class="inner-wrapper">
-			<div class="code" title="">Code <strong>{{yeast.productcode}}</strong></div>
-			<div class="type" title="">Type <strong>{{yeast.type}}</strong></div>
-			<div class="supplier">Supplier <strong>{{yeast.supplier.name}}</strong></div>
-			<div class="temperature-range" title="">Temperature <strong>{{yeast.temperaturelow}} - {{yeast.temperaturehigh}}</strong></div>
-			<div class="flocculation" title="">Flocculation <strong>{{yeast.flocculation}}</strong></div>
-			<div class="alcohol-tolerance">Tolerance <strong>{{yeast.alcoholtolerance}}</strong></div>
+			<div class="meta">
+				<span class="species" ng-show="yeast.species">Yeast species: <strong>{{yeast.species}}</strong></span>
+				<span class="supplier" ng-show="yeast.supplier.name">Supplier: <strong><a ui-sref="ingredients.search({searchTerm:yeast.supplier.name})">{{yeast.supplier.name}}</a></strong></span>
+				<span class="brewerySource" ng-show="yeast.brewerySource">Source brewery: <strong><a ui-sref="breweries.search({searchTerm:yeast.brewerySource})">{{yeast.brewerySource}}</a></strong></span>
+			</div>
+
+			<div class="meta">
+				<span class="flocculation" ng-show="yeast.flocculation">Flocculation: <strong>{{yeast.flocculation}}</strong></span>
+				<span class="alcohol-tolerance" ng-show="yeast.alcoholTolerance">Alcohol tolerance: <strong>{{yeast.alcoholTolerance}}</strong></span>
+				<span class="attenuation-range" ng-show="yeast.attenuationRange">Attenuation: <strong>{{yeast.attenuationRange}}</strong></span>
+				<span class="temperature-range" ng-show="yeast.temperatureLow || yeast.temperatureHigh">Temperature range: <strong>{{yeast.temperatureLow}} - {{yeast.temperatureHigh}}</strong></span>
+			</div>
+
+			<div class="meta">
+				<p ng-show="yeast.pitchingFermentationNotes">{{yeast.pitchingFermentationNotes}}</p>
+				<p ng-show="yeast.notes">{{yeast.notes}}</p>
+			</div>
 		</div>
 	</section>
+
+	<section class="substitutes">
+		<h2>Substitutes</h2>
+		<div class="inner-wrapper">
+			<div class="center">Sorry, there are no substitutes registered for <strong>{{yeast.name}}</strong>.</div>
+		</div>
+	</section>
+
+
 </article>

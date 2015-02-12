@@ -11,7 +11,7 @@ angular.module('Microbrewit/core/Calculation')
 				'change': '='
 			}
 			replace: true
-			template: '<span class="bitterness">{{bitterness}} {{unit}} - {{ingredient.utilisation}} utilisation - {{ingredient.mgl}} mgl</span>'
+			template: '<span class="bitterness" title="MGL: {{ingredient.mgl}}, Utilisation: {{ingredient.utilisation}}%">{{bitterness}} {{unit.toUpperCase()}}</span>'
 			link: (scope, element, attrs) ->
 				# Hop object:
 				# boilTime
@@ -39,9 +39,9 @@ angular.module('Microbrewit/core/Calculation')
 
 					# Set values on ingredient if we have an ingredient
 					if scope.ingredient?
-						scope.ingredient.ibu = bitternessObj.ibu
-						scope.ingredient.utilisation = bitternessObj.utilisation.toFixed(4)
-						scope.ingredient.mgl = bitternessObj.mgl
+						scope.ingredient.ibu = bitternessObj.ibu.toFixed(2)
+						scope.ingredient.utilisation = bitternessObj.utilisation.toFixed(2)
+						scope.ingredient.mgl = bitternessObj.mgl.toFixed(2)
 
 					# Call change function if we have one
 					if scope.change?

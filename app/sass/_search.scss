@@ -32,12 +32,14 @@
 	list-style: none;
 	padding: 0;
 	margin:0;
+	display: inline-block;
 
 	li {
 		padding: 0;
 		@include col(1/4, 0, false);
 		padding: 0 5px;
-		display: inline-block;
+		display: block;
+		float:left;
 	}
 }
 
@@ -52,58 +54,123 @@
 	}
 
 	.content {
-		@extend %shadow;
+		// @extend %shadow;
 		display: block;
 		background: white;
 		margin-top: 32px;
 		border-radius: 5px;
-		border: 1px solid #E9E9E9;
+		border: 0;
+		border-right: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
 		text-align:center;
-		padding: 0;
-		padding-bottom: 25px;
+		padding: 10px 0 0 0;
 		position: relative;
 
 		&:hover {
-			background: #eee;
 
-			&:before {
-				top: -32px;
+			h3 {
+				color: $link-color;
 			}
-			.top-circle {
-				margin-top: -27px;
-			}
+
+			// &:before {
+			// 	top: -32px;
+			// }
+			// .top-circle {
+			// 	margin-top: -27px;
+			// }
+		}
+		&:active {
+			border:0;
+			border-left: 1px solid #ccc;
+			border-top: 1px solid #ccc;
 		}
 
-		&:before {
-			@extend %shadow;
-			position: absolute;
-			top: -30px;
-			left: 50%;
-			width: 60px;
-			height: 60px;
-			margin-left: -33px;
-			background: white;
-			border: 1px solid #E9E9E9;
-			border-radius: 50%;
-			z-index: 1;
-			content: '';
-		}
+		// &:before {
+		// 	@extend %shadow;
+		// 	position: absolute;
+		// 	top: -30px;
+		// 	left: 50%;
+		// 	width: 60px;
+		// 	height: 60px;
+		// 	margin-left: -33px;
+		// 	background: white;
+		// 	border: 1px solid #E9E9E9;
+		// 	border-radius: 50%;
+		// 	z-index: 1;
+		// 	content: '';
+		// }
 	}
 
 	h3 {
 		text-transform: uppercase;
 		color: #333;
+		margin-top: 5px;
 		margin-bottom: 5px;
 	}
 
-	.meta, .type {
+	// .half {
+	// 	width: 50%;
+	// }
+	// .third {
+	// 	width: 33%;
+	// }
+
+	.meta {
+		border-top: 1px solid #ededed !important;
 		color: #666;
+		padding: 0;
+		margin: 10px 0px 0 0px;
+
+		.meta-table {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+		}
+
+		.meta-cell {
+			display: table-cell;
+			border-right: 1px solid #ededed;
+			padding: 5px 0;
+
+			&:last-child {
+				border:0;
+			}
+		}
+	}
+	.type {
+		color: #666;
+		font-weight: bold;
+		min-height: 40px;
 	}
 
 	.top-circle {
-		margin-top: -25px;
+		//margin-top: -25px;
 		position: relative;
 		z-index: 2;
+
+		img {
+			position: relative;
+			z-index: 3;
+		}
+
+		&:before {
+			border-top: 1px solid #ededed;
+			position: absolute;
+			top: 50%;
+			left: 15px;
+			right: calc(50% + 33px);
+			z-index: 1;
+			content: '';
+		}
+		&:after {
+			border-top: 1px solid #ededed;
+			position: absolute;
+			top: 50%;
+			left: calc(50% + 30px);
+			right: 15px;
+			z-index: 1;
+			content: '';
+		}
 	}
 }
 

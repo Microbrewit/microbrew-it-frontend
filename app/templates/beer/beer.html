@@ -6,7 +6,8 @@
 				<img src="images/fermentable-large.png" alt="Malt"/>
 			</div>
 		</div>
-		<h1>{{title.toUpperCase()}}</h1>
+		<h1>{{headers.title}}</h1>
+		<div ng-show="headers.subheader" class="subheader">{{headers.subheader}}</div>
 	</header>
 
 	<div ng-show="showNav" ng-include="'templates/beer/beer.navigation.html'"></div>

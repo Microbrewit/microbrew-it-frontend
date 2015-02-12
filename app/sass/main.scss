@@ -12,6 +12,13 @@
 	}
 }
 
+.no-margin {
+	margin:0 !important;
+}
+.no-padding {
+	padding:0 !important;
+}
+
 @mixin filter($var) {
 	-webkit-filter: $var;
 	-moz-filter: $var;
@@ -103,6 +110,14 @@ a {
 		top: 50%;
 	}
 
+}
+
+.the-content {
+	@extend .cf;
+}
+
+h2:first-child {
+	margin: 25px;
 }
 
 .content {
@@ -237,7 +252,6 @@ h1 + .subheader {
 .the-content {
 	background: #eee;
 	border-top: 1px solid #ccc;
-	min-height: 300px;
 
 	&:before {
 		border-top: 1px solid white;
@@ -249,6 +263,7 @@ h1 + .subheader {
 	}
 }
 
+@import "ngDrop";
 @import "buttons";
 @import "frontpage";
 @import "single-beer";
@@ -260,5 +275,8 @@ h1 + .subheader {
 @import "yeasts";
 @import "users";
 @import "brewer";
+@import "brewery";
 @import "recipe";
 @import "angular-loading-bar";
+
+// External dependencies

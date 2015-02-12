@@ -32,11 +32,7 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 						bubble: ''
 						subHeader: $scope.brewery.type
 						description: $scope.brewery.description
-						navigation: [
-							{ title: 'Beers', sref: 'breweries.single.beers' }
-						]
-
-					$scope.header.navigation.push({ title: 'Brewers', sref: 'breweries.single.brewers' }) if $scope.brewery.members.length >= 0
+						navigation: false
 				)
 
 			# User search page

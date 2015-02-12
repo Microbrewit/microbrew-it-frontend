@@ -24,6 +24,9 @@ mbit.controller('RecipeController', [
 			$scope.hopTypes = response
 		)
 
+		window.log = () ->
+			console.log $scope
+
 		if $state.is('brew.fork')
 			if $rootScope.beerToFork?
 				# Deep clone the original recipe
@@ -36,8 +39,21 @@ mbit.controller('RecipeController', [
 
 		else
 			mbGet.beerstyles().then((response) ->
+				filtered = _.filter(response.beerStyles, (style) ->
+					style.superBeerStyle?.name?
+				)
+				grouped = _.groupBy(response.beerStyles, (style) ->  
+					return style.superBeerStyle.name if style.superBeerStyle?.name?
+					return style.name
+				)
+
+				grouped = _.pairs(grouped)
+# => {1: [1.3], 2: [2.1, 2.4]}
 				$scope.beerStyles = response.beerStyles
-				$scope.beer.recipe.beerStyle = $scope.beerStyles[0]
+				$scope.beerStylesGrouped = grouped
+
+				console.log grouped
+				$scope.beer.beerStyle = $scope.beerStyles[0]
 			)
 
 			$scope.beer = 

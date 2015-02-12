@@ -11,7 +11,7 @@ angular.module('Microbrewit/core/Calculation')
 				'modelvalue': '=modelvalue'
 			}
 			replace: false
-			template: '<span><div><span style="margin-right: 10px;font-size: 16px;font-weight: bold;" ng-show="!editable">{{localvalue}}</span>{{localunit}}</div></span>'
+			template: '<span><div><span style="font-size: 16px;font-weight: bold;" ng-show="!editable">{{localvalue}}</span> {{localunit}}</div></span>'
 			link: (scope, element, attrs) ->
 
 				updateLocalValue = ->

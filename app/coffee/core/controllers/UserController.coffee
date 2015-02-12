@@ -10,9 +10,31 @@ angular.module('Microbrewit').controller('UserController', [
 	'$state'
 	'localStorage'
 	'$rootScope'
-	($scope, mbUser, $state, localStorage, $rootScope) ->
+	'convert'
+	($scope, mbUser, $state, localStorage, $rootScope, convert) ->
 
-		
+		setupSettings = () ->
+			console.log 'weightLarge: ' + $rootScope.user?.settings?.largeWeight
+			$scope.weightAvailable = [$scope.user?.settings?.largeWeight].concat(convert.available($scope.user?.settings?.largeWeight))
+
+			$scope.settings = {
+				largeWeight: $scope.weightAvailable[0]
+				smallWeight: $scope.weightAvailable[$scope.weightAvailable.indexOf($scope.user?.settings?.smallWeight)]
+			}
+
+			$scope.liquidAvailable = convert.available('liters').concat(['liters'])
+
+		if $state.current.name is 'account.settings'
+
+			if $scope.user?.settings?
+				setupSettings()
+			else
+				watcher = $scope.$watch('user.settings', (newValue, oldValue) ->
+					if newValue
+						watcher()
+						setupSettings()
+				)
+
 		$scope.remember = true
 
 		# We are in login state
@@ -28,10 +50,9 @@ angular.module('Microbrewit').controller('UserController', [
 				$scope.bubble = ''
 
 		# Login
-		$scope.login = () ->
-
+		$scope.login = (thise) ->
+			console.log thise
 			mbUser.login($scope.username, $scope.password).then((userId) ->
-				console.log userId
 				mbUser.get(userId).then((response) ->
 					user = response.users[0]
 					$rootScope.user = user
@@ -39,13 +60,12 @@ angular.module('Microbrewit').controller('UserController', [
 					if $state.params.redirect
 						$state.go($state.params.redirect)
 
-					else
-						$state.go('home')
+					else if $state.is('account.login') or $state.is('user.login')
+						$state.transitionTo('home')
 					
 				)
 			)
 			.catch((err) ->
-				console.log err 
 				$scope.loginFormError = "Authentication failed: #{err.data.error_description}"
 			)
 

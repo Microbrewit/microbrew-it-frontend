@@ -82,10 +82,16 @@ angular.module('Microbrewit/core/Network')
 			return @get(requestUrl)
 
 		factory.hops = (id = null, from = 0, size = 20) ->
-			console.log "APIURL: #{ApiUrl}"
 			# Check if we have cache
 			cache = localStorage.getItem('hops') unless id
-			return new Promise((fulfill) -> fulfill(cache)) if cache
+
+			if cache
+				console.log 'hops cache'
+				console.log cache
+				try
+					return new Promise((fulfill) -> fulfill(cache))
+				catch e 
+					console.log e
 
 			if id
 				requestUrl = "#{ApiUrl}/hops/#{id}?callback=JSON_CALLBACK"

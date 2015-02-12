@@ -1,0 +1,23 @@
+.brewery {
+	
+	.members {
+		@extend .cf;
+		background: #fff;
+		border-top: 1px solid #ccc;
+		text-align:center;
+		padding-bottom: 25px;
+		ul {
+			display: inline-block;
+		}
+	}
+	.beers {
+		@extend .cf;
+		background: #eee;
+		border-top: 1px solid #ccc;
+		text-align:center;
+		padding-bottom: 25px;
+		ul {
+			display: inline-block;
+		}
+	}
+}

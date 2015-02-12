@@ -1,10 +1,34 @@
 <article class="single-brewer">
-	<section class="brews" ng-show="brewer.beers.length > 0">
+	<section class="the-content">
+		<div class="meta">
+			<span class="number-of-beers">Number of brews <strong>{{brewery.beers.length}}</strong></span>
+			<span class="number-of-members">Number of members <strong>{{brewery.members.length}}</strong></span>
+		</div>
+		<div class="meta" ng-show="brewery.description">
+			<p>{{brewery.description}}</p>
+		</div>
+		<div class="meta" ng-show="brewery.social">
+			Social
+		</div>
+	</section>
+	<section class="members" ng-show="brewery.members.length > 0">
 		<div class="inner-wrapper">
-			<ul class="brew-list search-result-block search-grid-results">
+			<h2>Brewers</h2>
+			<ul ng-show="brewery.members.length > 0" style="display: inline-block" class="center brew-list search-result-block search-grid-results">
+				<li class="brew" ng-repeat="result in brewery.members">
+					<div ng-include="'templates/brewers/brewers.gridItem.html'"></div>
+			</ul>
+		</div>
+	</section>
+	<section class="beers">
+		<div class="inner-wrapper">
+			<h2>Beers</h2>
+			<div class="center" ng-show="brewery.beers.length === 0"><strong>{{brewery.name}}</strong> has no registered beers.</div>
+			<ul ng-show="brewery.beers.length > 0" class="brew-list search-result-block search-grid-results">
 				<li class="brew" ng-repeat="result in brewery.beers">
 					<div ng-include="'templates/beer/beer.gridItem.html'"></div>
 			</ul>
 		</div>
 	</section>
+
 </article>

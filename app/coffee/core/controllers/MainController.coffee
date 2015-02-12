@@ -4,6 +4,15 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 	($rootScope, $scope, mbUser, $stateParams, $state, localStorage, notification, mbGet) ->
 		$rootScope.loading = 0
 
+		#Custom $off function to un-register the listener.
+		$rootScope.$off = (name, listener)  ->
+			namedListeners = $rootScope.$$listeners[name]
+			if (namedListeners) 
+				# Loop through the array of named listeners and remove them from the array.
+				for i in [0...namedListeners.length]
+					if namedListeners[i] is listener
+						return namedListeners.splice(i, 1)
+
 		# Convenience method for checking state
 		$scope.is = (name) ->
 			return $state.is(name)
@@ -50,35 +59,19 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 				mbUser.get(userId).then((response) ->
 					$rootScope.user = response.users[0]
 					$rootScope.user.settings = 
-						measurements:
-							weight:
-								large: 
-									name: 'kilograms'
-									short: 'kg'
-								small: 
-									name: 'grams'
-									short: 'g'
-							liquids: 
-								name: 'liters'
-								short: 'l'
-							temperature: 
-								name: 'Celcius'
-								short: '°C'
+						largeWeight: 'kg'
+						smallWeight: 'grams'
+						liquids: 'liters'
+						temperature: 'celcius'
 						abv:
 							formula: 'microbrewit'
-							unit: 
-								name: 'specific-gravity'
-								short: 'sg'
+							unit: 'sg'
 						bitterness:
 							formula: 'tinseth'
-							unit: 
-								name: 'ibu'
-								short: 'ibu'
+							unit: 'ibu'
 						colour:
 							formula: 'morey'
-							unit:
-								name: 'srm'
-								short: 'srm'
+							unit: 'srm'
 				)
 			)
 

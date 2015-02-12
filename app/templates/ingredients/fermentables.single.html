@@ -5,15 +5,26 @@
 	</div>
 </div>
 <article class="single-fermentable">
+
 	<h1>{{fermentable.name}}</h1>
-	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
+	
+	<div class="subheader">
+		<span ng-show="fermentable.name">{{fermentable.type}}</span>
+	</div>
+
+	<nav class="sub-nav" ng-show="user || user.role === 'admin'">
+		<ul>
+			<li><a ui-sref="fermentables.edit({id:fermentable.fermentableId})">Edit</a></li>
+		</ul>
+	</nav>
+
 	<section class="the-content">
 		<div class="inner-wrapper">
-			<div class="type" title="">Type <strong>{{fermentable.type}}</strong></div>
-			<div class="origin">Country <strong>{{fermentable.supplier.origin.name}}</strong></div>
-			<div class="lovibond" title="">Lovibond <strong>{{fermentable.lovibond}}</strong></div>
-			<div class="ppg" title="">PPG <strong>{{fermentable.ppg}}</strong></div>
-			<div class="supplier">Supplier <strong>{{fermentable.supplier.name}}</strong></div>
+			<div class="meta">
+				<span class="lovibond" title="Lovibond is a measure of a grain's colour.">Colour: <strong>{{fermentable.lovibond}}°L <mb-colour-box class="colour-box" type="lovibond" colour="{{fermentable.lovibond}}" size="20px"></mb-colour-box></strong></span>
+				<span class="ppg" title="PPG descripbes the sugar contents of a malt">PPG: <strong>{{fermentable.ppg}}</strong></span>
+			</div>
 		</div>
 	</section>
+
 </article>

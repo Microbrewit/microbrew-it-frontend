@@ -9,6 +9,7 @@ angular.module('Microbrewit',
 		'Microbrewit/core/Network'
 		'Microbrewit/core/Notifications'
 		'Microbrewit/core/Utils'
+		'ngDrop'
 	]
 )
 	.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
@@ -31,16 +32,15 @@ angular.module('Microbrewit',
 
 			.state('hops', {
 				abstract: true
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/hops.html"
 			})
 			.state('hops.list', {
 				url: '/ingredients/hops'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/hops.list.html"
 			})
 			.state('hops.single', {
 				url: '/ingredients/hops/{id:[0-9]{1,4}}'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/hops.single.html"
 			})
 			.state('ingredients', {
@@ -48,37 +48,39 @@ angular.module('Microbrewit',
 				templateUrl: "templates/ingredients/ingredients.html"
 			})
 			.state('ingredients.search', {
-				url: '/ingredients'
+				url: '/ingredients/search/{searchTerm}'
 				controller: 'SearchController'
 				templateUrl: "templates/search.html"
 			})
 			.state('fermentables', {
 				abstract: true
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/fermentables.html"
 			})
 			.state('fermentables.list', {
 				url: '/ingredients/fermentables'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/fermentables.list.html"
 			})
 			.state('fermentables.single', {
 				url: '/ingredients/fermentables/{id:[0-9]{1,4}}'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/fermentables.single.html"
 			})
 			.state('yeasts', {
 				abstract: true
+				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/yeast.html"
 			})
 			.state('yeasts.list', {
 				url: '/ingredients/yeasts'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/yeast.list.html"
 			})
 			.state('yeasts.single', {
 				url: '/ingredients/yeasts/{id:[0-9]{1,4}}'
-				controller: 'IngredientController'
 				templateUrl: "templates/ingredients/yeast.single.html"
+			})
+			.state('yeasts.edit', {
+				url: '/yeasts/edit/{id:[0-9]{1,4}}'
+				templateUrl: "templates/ingredients/yeast.edit.html"
 			})
 
 			# Breweries
@@ -92,8 +94,13 @@ angular.module('Microbrewit',
 				templateUrl: "templates/breweries/breweries.list.html"
 			})
 			.state('breweries.single', {
-				url: '/breweries/{id}'
+				url: '/breweries/{id:[0-9]{1,4}}'
 				templateUrl: "templates/breweries/breweries.single.html"
+			})
+			.state('breweries.search', {
+				url: '/breweries/search/{searchTerm}'
+				controller: 'SearchController'
+				templateUrl: "templates/search.html"
 			})
 
 			# Brewers (user) states
@@ -125,6 +132,17 @@ angular.module('Microbrewit',
 				controller: 'UserController'
 				templateUrl: "templates/brewers/user.login.html"
 			})
+
+			.state('account', {
+				abstract: true
+				templateUrl: "templates/brewers/account.html"
+				controller: 'UserController'
+			})
+			.state('account.settings', {
+				url: '/user/settings'
+				templateUrl: "templates/brewers/account.settings.html"
+			})
+
 
 			# Beer states
 			.state('brews', {
@@ -174,4 +192,8 @@ angular.module('Microbrewit',
 			.state('privacyPolicy', {
 				url: "/privacy-policy"
 				templateUrl: "templates/company/privacy-policy.html"
+			})
+			.state('termsOfService', {
+				url: "/terms-of-service"
+				templateUrl: "templates/company/terms-of-service.html"
 			})

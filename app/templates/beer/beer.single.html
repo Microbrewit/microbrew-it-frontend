@@ -1,51 +1,27 @@
 <section id="single-beer">
 	<section class="beer-meta">
 		<div class="inner-wrapper">
-			<div class="meta-line">
-				<div class="beer-style">{{::beer.beerStyle.name}}</div>
-			</div>
-			<ul class="brewers">
+			<ul class="meta brewers">
 				<li ng-repeat="brewer in beer.brewers" class="brewer"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</li>
 			</ul>
 
-
 			<section class="meta-calculations">
-			<div class="inner-wrapper recipe-beer-meta">
-				<div class="abv-wrapper">
-					<div class="beer-meta-key">ABV</div> 
-					<div class="beer-meta-value"><mb-abv og="{{::beer.recipe.og}}" fg="{{::beer.recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
+				<div class="meta">
+					<span class="abv" title="ABV or alcohol by volume is how many % of the beer's volume that consists of alcohol.">Alcohol: <strong><mb-abv og="{{::beer.recipe.og}}" fg="{{::beer.recipe.fg}}" formula="microbrewit"/></mb-abv>%</strong></span>
+					<span class="og" title="OG or original gravity is the boyency of the liquid after the mash. It is used to calculate ABV.">Original Gravity: <strong>{{::beer.recipe.og.toFixed(3)}}</strong></span>
+					<span class="fg" title="FG or final gravity is the boyency of the beer after fermentation. It is used to calculate ABV.">Final Gravity: <strong>{{::beer.recipe.fg.toFixed(3)}}</strong></span>
+					<span class="bitterness" title="IBU/EBU is a measure of the bitterness of the beer.">Bitterness: <strong>{{::beer.ibu.tinseth}} IBU</strong></span>
+					<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong>{{::beer.srm.standard}} SRM</strong></span>
 				</div>
-
-				<div class="og-wrapper">
-					<div class="beer-meta-key">OG</div> 
-					<div class="beer-meta-value">{{::beer.recipe.og}}</div>
-				</div>
-				
-				<div class="fg-wrapper">
-					<div class="beer-meta-key">FG</div> 
-					<div class="beer-meta-value">{{::beer.recipe.fg}}</div>
-				</div>
-				
-				<div class="bitterness-wrapper">
-					<div class="beer-meta-key">Bitterness</div> 
-					<div class="beer-meta-value">{{::beer.ibu.tinseth}} IBU</div>
-				</div>
-				
-				<div class="colour-wrapper">
-					<div class="beer-meta-key">Colour</div> 
-					<div class="beer-meta-value">{{::beer.srm.standard}} SRM</div>
-				</div>
-			</div>
-		</section>
-
+			</section>
 			
 		</div>
 	</section>
+
 	<section class="recipe">
-		<h2>Recipe</h2>
 		<section class="mash steps">
 			<div class="inner-wrapper">
-				<h3>Mash</h3>
+				<h2>Mash</h2>
 				<ul>
 					<li class="step-wrapper" ng-repeat="step in beer.recipe.mashSteps">
 						<div class="step-number">{{step.stepNumber}}</div>
@@ -66,7 +42,7 @@
 
 		<section class="boil steps">
 			<div class="inner-wrapper">
-				<h3>Boil</h3>
+				<h2>Boil</h2>
 				<ul>
 					<li ng-repeat="step in beer.recipe.boilSteps">
 						<div class="step-number">{{step.stepNumber}}</div>
@@ -86,7 +62,7 @@
 
 		<section class="fermentation steps">
 			<div class="inner-wrapper">
-				<h3>Fermentation</h3>
+				<h2>Fermentation</h2>
 				<ul>
 					<li ng-repeat="step in beer.recipe.fermentationSteps">
 						<div class="step-number">{{step.stepNumber}}</div>

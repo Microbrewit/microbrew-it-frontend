@@ -1,12 +1,39 @@
-<article class="single-hops">
+<article class="single-hop">
 	<h1>{{hop.name}}</h1>
-	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
+	
+	<div class="subheader">
+		<span ng-show="hop.origin.name">{{hop.origin.name}}</span>
+	</div>
+
+	<nav class="sub-nav" ng-show="user || user.role === 'admin'">
+		<ul>
+			<li><a ui-sref="hops.edit({id:hop.hopId})">Edit</a></li>
+		</ul>
+	</nav>
+
 	<section class="the-content">
 		<div class="inner-wrapper">
-			<div class="alpha-acid" title="Alpha acids contribute bitterness in addition to having a mild anti bacterial effect.">Alpha <strong>{{hop.aaLow}}% - {{hop.aaHigh}}%</strong></div>
-			<div class="beta-acid" title="Beta acids contribute to a beer's aroma. over Time they may oxidise into compounds that can give beer off-flavours.">Beta <strong>{{hop.betaLow}}% - {{hop.betaHigh}}%</strong></div>
-			<div class="origin">Origin <strong>{{hop.origin.name}}</strong></div>
-			<div class="description">{{hop.description}}</div>
+			<div class="meta">
+				<span class="alpha-acids" title="Alpha acids contribute bitterness in addition to having a mild anti bacterial effect." ng-show="hop.aaLow || hop.aaHigh">Alpha acids: <strong>{{hop.aaLow}} - {{hop.aaHigh}}%</strong></span>
+				<span class="beta-acids" title="Beta acids contribute to a beer's aroma. over Time they may oxidise into compounds that can give beer off-flavours." ng-show="hop.betaLow || hop.betaHigh">Beta acids: <strong>{{hop.betaLow}} - {{hop.betaHigh}}%</strong></span>
+			</div>
+
+			<div class="meta" ng-show="hop.flavours.length > 0">
+				<span class="flavours">Tastes of <strong ng-repeat="flavour in hop.flavours">{{flavour}}, </strong></span>
+			</div>
+
+			<div class="meta" ng-show="hop.flavourDescription">
+				<p>{{hop.flavourDescription}}</p>
+			</div>
 		</div>
 	</section>
+
+	<section class="substitutes">
+		<h2>Substitutes</h2>
+		<div class="inner-wrapper">
+			<div class="center">Sorry, there are no substitutes registered for <strong>{{hop.name}}</strong>.</div>
+		</div>
+	</section>
+
+
 </article>

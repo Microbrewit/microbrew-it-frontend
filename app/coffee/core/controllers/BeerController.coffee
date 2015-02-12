@@ -15,6 +15,10 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 			$scope.fork = null
 			$scope.beerToFork = null
 
+			$scope.headers =
+				title: 'Beer'
+				subheader: false
+
 			currentState = toState?.name 
 			currentState ?= $state?.current?.name
 
@@ -31,7 +35,10 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 						for user in $scope.beer.brewers
 							$scope.isUserRecipe = true  if user.username is $scope.user.username
 
-					$scope.title = $scope.beer.name
+					$scope.headers =
+						title: $scope.beer.name
+						subheader: $scope.beer.beerStyle.name
+
 					$scope.recipe = $scope.beer.recipe
 
 					if $scope.recipe.mashSteps[0].number is 0
@@ -45,13 +52,14 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 
 			# We are on the beer listing/discovery page
 			else if currentState is 'brews.list'
-				$scope.title = "Beers"
+
 				get.beers({latest:true}).then((apiResponse) ->
 					$scope.brews = apiResponse.beers
-					console.log $scope.brews
 				)
 			else if currentState is 'brews.search'
-				$scope.title = "Beers"
+				$scope.headers = 
+					title: 'Beer'
+					subheader: 'Find beer'
 
 
 		setControllerState()

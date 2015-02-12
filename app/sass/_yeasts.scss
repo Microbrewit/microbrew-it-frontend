@@ -1,30 +1,34 @@
-.single-yeast {
+$yeastBg: #FCF1EF;
+$yeastColour: #592114;
+$yeastBorder: rgba(0, 0, 0, 0.1);
 
-	.inner-wrapper {
-		strong {
-			display: block;
-		}
-		// span {
-		// 	text-align: left;
-		// 	display: inline-block;
-		// 	margin: 0 auto;
-		// }
-		@include col(6/10, 0, false);
-	}
-	.code,.type,.supplier,.temperature-range,.flocculation,.alcohol-tolerance {
-		@include col(2/10);
-		border: 1px solid #ccc;
-		text-align: center;
-	}
-	.temperature-range,.flocculation,.alcohol-tolerance {
-		border-top: 0;
-	}
-	.type,.supplier,.flocculation,.alcohol-tolerance {
-		border-left: 0;
-	}
+.single-yeast {
+	
 	.meta {
-		padding: 50px 0;
-		border-top: #ccc;
-		background: #eee;
+		padding: 25px 50px;
+		border-bottom: 1px solid #ccc;
+		text-align:center;
+
+		span {
+			display: inline-block;
+			padding: 0 25px;
+
+			strong {
+				display: block;
+				font-size: 160%;
+			}
+		}
+
+		&:last-child {
+			border:0;
+		}
+	}
+
+	.substitutes {
+		@extend .cf;
+		border-top: 1px solid $yeastBorder;
+		background: $yeastBg;
+		padding-bottom: 25px;
+		color: $yeastColour;
 	}
 }

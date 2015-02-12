@@ -10,7 +10,7 @@ angular.module('Microbrewit/core/Calculation')
 				'abv': '@abv'
 			}
 			replace: true
-			template: '<span class="abv">{{abv}}</span>'
+			template: '<span class="abv no-margin no-padding">{{abv}}</span>'
 			link: (scope, element, attrs) ->
 
 				calcAbv = (og, fg) ->
