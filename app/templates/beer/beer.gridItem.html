@@ -3,6 +3,12 @@
 		<div class="top-circle"><mb-colour-box type="srm" colour="{{::result.srm.standard}}" size="50px"></mb-colour-box></div>
 		<h3>{{::result.name}}</h3>
 		<div class="type">{{::result.beerStyle.name}}</div>
-		<div class="meta">{{::result.abv.standard}}% - {{::result.ibu.tinseth}} IBU - {{::result.srm.standard}} SRM</div>
+		<div class="meta">
+			<div class="meta-table">
+				<div class="meta-cell third">{{::result.abv.standard.toFixed(1)}}% ABV</div>
+				<div class="meta-cell third">{{::result.ibu.tinseth}} IBU</div>
+				<div class="meta-cell third">{{::result.srm.standard}} SRM</div>
+			</div>
+		</div>
 	</a>
 </div>

@@ -3,6 +3,11 @@
 		<div class="top-circle"><gravatar url="{{::result.gravatar}}" size="50px"></gravatar></div>
 		<h3>{{::result.username}}</h3>
 		<div class="type">Brewer</div>
-		<div class="meta">{{::result.beers.length}} Beers - {{::result.breweries.length}} Breweries</div>
+		<div class="meta">
+			<div class="meta-table">
+				<div class="meta-cell half">{{::result.beers.length}} Brews</div>
+				<div class="meta-cell half">{{::result.breweries.length}} Brewery</div>
+			</div>
+		</div>
 	</a>
 </div>
