@@ -52,7 +52,10 @@ angular.module('Microbrewit').controller('UserController', [
 		# Login
 		$scope.login = (thise) ->
 			console.log thise
-			mbUser.login($scope.username, $scope.password).then((userId) ->
+			username = $scope.username or $scope.$$childHead.username
+			password = $scope.password or $scope.$$childHead.password
+			console.log $scope
+			mbUser.login(username, password).then((userId) ->
 				mbUser.get(userId).then((response) ->
 					user = response.users[0]
 					$rootScope.user = user
