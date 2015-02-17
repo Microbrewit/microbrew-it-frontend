@@ -3,7 +3,7 @@
 # @author Torstein Thune
 # @copyright 2014 Microbrew.it
 angular.module('Microbrewit/core/Network')
-	.factory('mbPost', ['$http', '$rootScope', '$log', 'ApiUrl', 'ClientUrl', 'localStorage', ($http, $rootScope, $log, ApiUrl, ClientUrl, localStorage) ->
+	.factory('mbPost', ['$http', '$rootScope', '$log', 'ApiUrl', 'ClientUrl', 'localStorage', 'notification', ($http, $rootScope, $log, ApiUrl, ClientUrl, localStorage, notification) ->
 		factory = {}
 		factory.set = (requestUrl, object) ->
 			requestUrl = "#{ApiUrl}#{requestUrl}"
@@ -30,9 +30,22 @@ angular.module('Microbrewit/core/Network')
 						)
 							.error((data, status) ->
 								$rootScope.loading--
+								console.log data
+
+								for key, value of data.ModelState
+									title = 'Error: ' + value[0]
+									body = value[1]
+
+								status = status + ""
+
+								title = "Error" unless title
+								title += " (HTTP #{status})" unless status[0] is '4'
+								body = "Could not save data." unless body
+								body = "We are experiencing server issues. Try again later." if status[0] is '5'
+
 								notification.add
-									title: 'Error' # required
-									body: 'Could not save data' # optional
+									title: title # required
+									body: body # optional
 									type: 'error'
 									#icon: 'url/to/icon' # optional
 									#onClick: callback # optional
@@ -76,33 +89,33 @@ angular.module('Microbrewit/core/Network')
 		factory.hops = (id = null) ->
 		factory.yeasts = (id = null) ->
 
-		factory.recipe = (recipe) ->
+		factory.recipe = (beer) ->
 
 			# Recreate the recipe object
 			# to make sure that we are not posting unwated stuff
 			postRecipe = {
-				name: recipe.name
+				name: beer.name
 				brewers: [
 					{
 						username: $rootScope.user.userId
 					}
 				],
-				beerStyle: {
-					name: recipe.beerStyle.name
-					id: recipe.beerStyle.beerStyleId
-				}
+				beerStyle: beer.beerStyle
 				recipe: {
-					volume: recipe.volume
-					efficiency: recipe.efficiency
-					fg: recipe.fg
+					volume: beer.recipe.volume
+					efficiency: beer.recipe.efficiency
+					og: beer.recipe.og
+					fg: beer.recipe.fg
 					mashSteps: []
 					boilSteps: []
 					fermentationSteps: []
 				}
 			}
 
+			postRecipe.forkOf = beer.forkOf.id if beer.forkOf?
+
 			i = 0
-			for step in recipe.mashSteps
+			for step in beer.recipe.mashSteps
 				postRecipe.recipe.mashSteps.push({
 					stepNumber: step.stepNumber
 					temperature: step.temperature
@@ -133,7 +146,7 @@ angular.module('Microbrewit/core/Network')
 						postRecipe.recipe.mashSteps[i].yeasts.push ingredient
 				i++
 			i = 0
-			for step in recipe.boilSteps
+			for step in beer.recipe.boilSteps
 				postRecipe.recipe.boilSteps.push({
 					stepNumber: step.stepNumber
 					length: step.length
@@ -162,7 +175,7 @@ angular.module('Microbrewit/core/Network')
 						postRecipe.recipe.boilSteps[i].yeasts.push ingredient
 				i++
 			i = 0 
-			for step in recipe.fermentationSteps
+			for step in beer.recipe.fermentationSteps
 				postRecipe.recipe.fermentationSteps.push({
 					stepNumber: step.stepNumber
 					length: step.length
@@ -195,7 +208,7 @@ angular.module('Microbrewit/core/Network')
 
 			console.log JSON.stringify postRecipe, null, '\t'
 
-			return @set("#{ApiUrl}/beers", postRecipe)
+			return @set("/beers", postRecipe)
 
 		return factory
 
