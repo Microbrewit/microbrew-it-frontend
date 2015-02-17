@@ -2,26 +2,6 @@ $hopBg: #DFE4CD;
 $hopBorder: #ccc;
 
 .single-hop {
-	
-	.meta {
-		padding: 25px 50px;
-		border-bottom: 1px solid #ccc;
-		text-align:center;
-
-		span {
-			display: inline-block;
-			padding: 0 25px;
-
-			strong {
-				display: block;
-				font-size: 160%;
-			}
-		}
-
-		&:last-child {
-			border:0;
-		}
-	}
 
 	.substitutes {
 		@extend .cf;

@@ -3,27 +3,6 @@ $yeastColour: #592114;
 $yeastBorder: rgba(0, 0, 0, 0.1);
 
 .single-yeast {
-	
-	.meta {
-		padding: 25px 50px;
-		border-bottom: 1px solid #ccc;
-		text-align:center;
-
-		span {
-			display: inline-block;
-			padding: 0 25px;
-
-			strong {
-				display: block;
-				font-size: 160%;
-			}
-		}
-
-		&:last-child {
-			border:0;
-		}
-	}
-
 	.substitutes {
 		@extend .cf;
 		border-top: 1px solid $yeastBorder;

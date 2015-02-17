@@ -9,7 +9,8 @@
 
 		strong {
 			display: block;
-			font-size: 160%;
+			font-size: 180%;
+			font-weight: normal;
 		}
 	}
 
@@ -30,12 +31,6 @@
 	font-weight: normal;
 }
 
-.beerstyle {
-	font-size: 25px;
-	display: block;
-	margin: 0 auto;
-}
-
 .beer-meta {
 	background: #eee;
 	border-top: 1px solid #fff;
@@ -51,22 +46,6 @@
 	}
 }
 
-.abv-wrapper,.og-wrapper,.fg-wrapper,.bitterness-wrapper,.colour-wrapper,.volume-wrapper,.efficiency-wrapper {
-	display: inline-block;
-	padding: 0 10px;
-}
-
-.beer-meta-key {
-	display: block;	
-	line-height: 1;
-	height: auto;
-	text-align:left;	
-}
-.beer-meta-value {
-	height: auto;
-	line-height: 1.1;
-	text-align:left;
-}
 .meta-line {
 	font-size: 25px;
 	padding: 25px 0;
@@ -190,7 +169,26 @@ ul, li {
 	}
 }
 .step-wrapper {
+	@extend .cf;
 	margin-bottom: 25px;
+}
+
+.meta-values-input input[type=number],  .meta-values-input input[type=text] {
+	width: 40px;
+	padding: 0 5px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: center;
+	background: rgba(255,255,255,0.5);
+	border: 1px solid rgba(0,0,0,0.1);
+
+	&:hover {
+		background: rgba(255,255,255,0.8)
+	}
+	&:active {
+		background: white;
+	}
 }
 
 .add-step {
@@ -201,11 +199,19 @@ ul, li {
 	color: white;
 	font-weight: normal;
 	padding: 0 10px;
-	// margin: 25px 0;
-	// margin: 25px auto 0 auto;
-	// margin-top: 25px;
-	float:right;
+	margin: 0 auto;
 	border:0;
+	border-bottom: 1px solid rgba(0,0,0,0.7);
+	border-right: 1px solid rgba(0,0,0,0.7);
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:active {
+		border-top: 1px solid rgba(0,0,0,0.7);
+		border-left: 1px solid rgba(0,0,0,0.7);
+	}
 }
 .mash {
 	background: #EEE4DB;
@@ -233,6 +239,17 @@ ul, li {
 		background: #592114;
 	}
 }
+
+.step-notes {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 15px;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid rgba(0,0,0,0.1);
+	background: rgba(255,255,255,0.3);
+}
 .recipe-notes {
 	display: block;
 	@include col(8, 15px, false);
@@ -240,13 +257,21 @@ ul, li {
 	margin: 0 auto;
 }
 .add-ingredient {
-	margin-top: 10px;
-	margin-right: 5px;
-	margin-bottom: 25px;
-
+	display: inline-block;
+	margin: 25px 5px;
 	border: 0;
-	padding: 5px 10px;;
+	padding: 5px 10px;
 	color: white;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+.add-ingredient-wrapper {
+	text-align:center;
+	padding-bottom: 25;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	margin-bottom: 25px;
 }
 
 .embedded-search {
@@ -296,6 +321,11 @@ ul, li {
 		padding-right: 1px;
 		margin:0;
 	}
+
+	th {
+		padding: 0 10px;
+	}
+
 	input[type='text'] {
 		display: inline-block;
 		width: 50px;
