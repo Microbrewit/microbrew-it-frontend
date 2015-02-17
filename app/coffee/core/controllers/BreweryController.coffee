@@ -26,11 +26,12 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 				get.brewery(breweryId).then((apiResponse) ->
 					# $scope.loading--
 					$scope.brewery = apiResponse.breweries[0]
-
+					subHeader = $scope.brewery.type
+					subHeader += " since #{$scope.brewery.established}" if $scope.brewery.established?
 					$scope.header = 
 						title: $scope.brewery.name
 						bubble: ''
-						subHeader: $scope.brewery.type
+						subHeader: subHeader
 						description: $scope.brewery.description
 						navigation: false
 				)

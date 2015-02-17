@@ -1,14 +1,19 @@
 <article class="single-brewer">
 	<section class="the-content">
-		<div class="meta">
-			<span class="number-of-beers">Number of brews <strong>{{brewery.beers.length}}</strong></span>
-			<span class="number-of-members">Number of members <strong>{{brewery.members.length}}</strong></span>
-		</div>
-		<div class="meta" ng-show="brewery.description">
-			<p>{{brewery.description}}</p>
-		</div>
-		<div class="meta" ng-show="brewery.social">
-			Social
+		<div class="inner-wrapper">
+			<div class="meta">
+				<span class="number-of-beers">Number of brews <strong>{{brewery.beers.length}}</strong></span>
+				<span class="number-of-members">Number of members <strong>{{brewery.members.length}}</strong></span>
+			</div>
+			<div class="meta" ng-show="brewery.description">
+				<p>{{brewery.description}}</p>
+			</div>
+			<div class="meta" ng-show="brewery.socials">
+				<ul class="socials">
+					<li ng-show="brewery.website"><a class="website" title="Visit {{::brewery.name}}'s website" href="{{::brewery.website}}">Website</a></li>
+					<li ng-repeat="(type, url) in brewery.socials"><a class="{{::type}}" href="{{::url}}" title="See {{::brewery.name}} on {{::type}}">{{::type}}</a></li>
+				</ul>
+			</div>
 		</div>
 	</section>
 	<section class="members" ng-show="brewery.members.length > 0">
