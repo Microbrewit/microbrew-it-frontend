@@ -4,11 +4,9 @@
 # @copyright 2015 Microbrew.it
 angular.module('Microbrewit/core/Network')
 .factory('mbFermentable', [
-	'mbGet'
-	'mbPost'
-	'mbPut'
+	'mbRequest'
 	'notification'
-	(mbGet, mbPost, mbPut, notification) ->
+	(mbRequest, notification) ->
 ])
 
 get = (id = null, from = 0, size = 20) ->
