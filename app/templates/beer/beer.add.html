@@ -9,7 +9,7 @@
 	<div ng-include="'templates/brewers/user.login.html'" ng-controller="UserController"></div>
 </div>
 
-<form class="add-beer-recipe" ng-submit="submitRecipe()">
+<form class="add-beer add-beer-recipe">
 	<header>
 		<div class="header-bubble inner-wrapper">
 			<div class="icon">
@@ -17,26 +17,22 @@
 				<img src="images/fermentable-large.png" alt="Malt"/>
 			</div>
 		</div>
-		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.recipe.name" required/></h1>
+		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.name"/></h1>
 		<div class="subheader inner-wrapper">
-			<dropdown class="beerstyle" dropdown-model="beer.beerStyle" dropdown-placeholder="{{beer.beerStyle.name}}">
-
-				<div ng-repeat="groups in beerStylesGrouped">
-					<dropdown-group name="{{groups[0]}}">
-						<div ng-repeat="style in groups[1]">
-							<dropdown-item ng-repeat="style in groups[1]" model="style">{{style.name}}</dropdown-item>
-						</div>
-					</dropdown-group>
+				<div class="beerstyle">
+					<ui-select ng-model="beer.beerStyle" ng-disabled="disabled" style="min-width: 300px;" title="Choose a beerStyle">
+						<ui-select-match placeholder="Select a BeerStyle in the list or search">{{$select.selected.name}}</ui-select-match>
+						<ui-select-choices group-by="groupBeerstyles" ng-show="$select.open && " repeat="result in beerStyles | filter: {name: $select.search}">
+							<!-- <div ng-bind-html="hoporg.name | highlight: $select.search"> -->
+								{{result.name}}
+							<!-- </div> -->
+						</ui-select-choices>
+					</ui-select>
 				</div>
-
-			</dropdown>
 		</div>
 	</header>
 
 	<section class="meta-information">
-		<div class="meta">
-			<!-- <select class="beerstyle" ng-model="beer.recipe.beerStyle" ng-options="value.name for value in beerStyles"></select> -->
-		</div>
 
 		<ul class="meta brewers" ng-show="user">
 			<li class="brewer"><gravatar style="display: inline-block;"size="25px" url="{{user.gravatar}}"></gravatar> {{user.username}}</li>
@@ -49,8 +45,10 @@
 				<span class="fg" title="FG or final gravity is the boyency of the beer after fermentation. It is used to calculate ABV.">Final Gravity: <strong>{{beer.recipe.fg}}</strong></span>
 				<span class="bitterness" title="IBU/EBU is a measure of the bitterness of the beer.">Bitterness: <strong>{{beer.ibu.tinseth}} IBU</strong></span>
 				<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong><mb-colour-box type="srm" colour="{{beer.srm.standard}}" size="20px"></mb-colour-box> {{beer.srm.standard}} SRM</strong></span>
-				<span>Volume: <strong><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="beer.recipe.volume"></mb-convert></strong></span>
-				<span> Efficiency <strong><input type="number" ng-model="beer.recipe.efficiency"/></strong>
+			</div>
+			<div class="meta">
+				<span>Volume: <strong><mb-convert id="volume" class="meta-values-input" modelunit="liters" localunit="liters" modelvalue="beer.recipe.volume"></mb-convert></strong></span>
+				<span class="meta-values-input"> Efficiency <strong><input type="number" ng-model="beer.recipe.efficiency"/>%</strong>
 			</div>
 		</div>
 	</section>
@@ -82,7 +80,7 @@
 		<div class="inner-wrapper">
 			<h2>Boil</h2>
 			<ul>
-				<li ng-repeat="step in beer.recipe.boilSteps">
+				<li class="step-wrapper" ng-repeat="step in beer.recipe.boilSteps">
 					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
 						<span class="step-type">Boil step</span>
@@ -104,7 +102,7 @@
 		<div class="inner-wrapper">
 			<h2>Fermentation</h2>
 			<ul>
-				<li ng-repeat="step in beer.recipe.fermentationSteps">
+				<li class="step-wrapper" ng-repeat="step in beer.recipe.fermentationSteps">
 					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
 						<span class="step-type">Fermentation step</span>
@@ -142,27 +140,18 @@
 			<h2>Looks good!</h2>
 
 			<div class="recipe-beer-meta">
-				<div class="beer-meta-key">ABV</div> <div class="beer-meta-value"><mb-abv og="{{beer.recipe.og}}" fg="{{beer.recipe.fg}}" formula="microbrewit"/> </mb-abv>%</div>
-				<div class="beer-meta-key">Original Gravity</div> <div class="beer-meta-value">{{beer.recipe.og}}</div>
-				<div class="beer-meta-key">Final Gravity</div> <div class="beer-meta-value">{{beer.recipe.fg}}</div>
-				<div class="beer-meta-key">Bitterness</div> <div class="beer-meta-value">{{beer.recipe.ibu}} IBU</div>
-				<div class="beer-meta-key">Colour</div> <div class="beer-meta-value"><mb-colour-box type="srm" colour="{{beer.recipe.srm}}"></mb-colour-box> {{beer.recipe.srm}} SRM</div>
-
-				<div class="beer-meta-key">Volume</div>
-				<div class="beer-meta-value">
-					{{beer.recipe.volume}}l
+				<div class="meta">
+					<span class="abv" title="ABV or alcohol by volume is how many % of the beer's volume that consists of alcohol.">Alcohol: <strong><mb-abv og="{{beer.recipe.og}}" fg="{{beer.recipe.fg}}" formula="microbrewit"/></mb-abv>%</strong></span>
+					<span class="og" title="OG or original gravity is the boyency of the liquid after the mash. It is used to calculate ABV.">Original Gravity: <strong>{{beer.recipe.og}}</strong></span>
+					<span class="fg" title="FG or final gravity is the boyency of the beer after fermentation. It is used to calculate ABV.">Final Gravity: <strong>{{beer.recipe.fg}}</strong></span>
+					<span class="bitterness" title="IBU/EBU is a measure of the bitterness of the beer.">Bitterness: <strong>{{beer.ibu.tinseth}} IBU</strong></span>
+					<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong>{{beer.srm.standard}} SRM</strong></span>
+					<span class="volume" title="Volume of finished beer.">Volume: <strong>{{beer.recipe.volume}}l</strong></span>
 				</div>
 			</div>
-			<button class="submit" type="submit">Add</button>
+			<button class="submit" ng-click="submitRecipe()">Add</button>
 		</div>
 	</section>
 
-	<section class="embedded-search" ng-show="searchContext.active">
-		<div class="inner-wrapper">
-			<div ng-controller="EmbeddedSearchController">
-				<div ng-include="'templates/recipe/fermentable.picker.html'"></div>
-			</div>
-		</div>
-	</section>
 </form>
 

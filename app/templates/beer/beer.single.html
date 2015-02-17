@@ -2,7 +2,7 @@
 	<section class="beer-meta">
 		<div class="inner-wrapper">
 			<ul class="meta brewers">
-				<li ng-repeat="brewer in beer.brewers" class="brewer"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</li>
+				<li ng-repeat="brewer in beer.brewers" class="brewer"><a ui-sref="brewers.single({id:brewer.username})"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</a></li>
 			</ul>
 
 			<section class="meta-calculations">
@@ -44,7 +44,7 @@
 			<div class="inner-wrapper">
 				<h2>Boil</h2>
 				<ul>
-					<li ng-repeat="step in beer.recipe.boilSteps">
+					<li class="step-wrapper" ng-repeat="step in beer.recipe.boilSteps">
 						<div class="step-number">{{step.stepNumber}}</div>
 						<div class="step-meta">
 							<span class="step-type">Boil step</span>
@@ -64,7 +64,7 @@
 			<div class="inner-wrapper">
 				<h2>Fermentation</h2>
 				<ul>
-					<li ng-repeat="step in beer.recipe.fermentationSteps">
+					<li class="step-wrapper" ng-repeat="step in beer.recipe.fermentationSteps">
 						<div class="step-number">{{step.stepNumber}}</div>
 						<div class="step-meta">
 							<span class="step-type">Fermentation step</span>

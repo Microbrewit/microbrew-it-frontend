@@ -1,0 +1,138 @@
+.beerstyle {
+ 	width: 60%;
+ 	margin: 15px auto 25px auto;
+ 	position: relative;
+
+ 	.ui-select-search {
+		text-align:center !important;
+		box-sizing: border-box;
+		width:100% !important;
+	}
+
+	.ui-select-toggle {
+		display: block;
+	  	width:100%;
+		text-align: center;
+		border: 1px solid #ccc;
+		position: relative;
+		font-size: 25px;
+		color: #444;
+		&:hover {
+			background: #eee;
+			cursor: pointer;
+		}
+
+		&:after {
+			position: absolute;
+			right: 10px;
+			top: 15px;
+			width: 0; 
+			height: 0; 
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			
+			border-top: 8px solid #666;
+			content: '';
+		}
+	}
+}
+
+
+/* Style when highlighting a search. */
+.ui-select-highlight {
+	font-weight: bold;
+}
+
+.ui-select-offscreen {
+	clip: rect(0 0 0 0) !important;
+	width: 1px !important;
+	height: 1px !important;
+	border: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	position: absolute !important;
+	outline: 0 !important;
+	left: 0px !important;
+	top: 0px !important;
+}
+
+.dropdown-header {
+	font-size: 15px;
+	color: #666;
+	font-weight: bold;
+	text-transform: uppercase;
+	background: #eee;
+	padding: 10px 0;
+	padding-left: 10px;
+	margin: 0;
+}
+
+.ui-select-choices {
+	@extend .cf;
+	border: 1px solid #ccc;
+	position: absolute;
+	z-index: 100;
+	left:0;
+	right: 0;
+	background: white;
+	width: inherit;
+
+	height: 300px;
+	overflow: auto;
+}
+
+.ui-select-choices-row-inner {
+	display: block;
+	font-size: 15px;
+	color: #333;
+	padding: 10px;
+	border-top: 1px solid #eee;
+
+	&:hover {
+		background: #eee;
+		cursor: pointer;
+	}
+}
+
+.btn-default-focus {
+	display: block;
+}
+
+.ui-select-search {
+	text-align:left !important;
+	display: block !important;
+	box-sizing: border-box;
+	width:100% !important;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+
+.ui-select-toggle {
+	display: block;
+  	width:100%;
+	height: 40px;
+	line-height: 40px;
+	background: rgba(255, 255, 255, 0.3);
+	text-align:left;
+	border: 0;
+	padding-left: 10px;
+	position: relative;
+	&:hover {
+		background: #eee;
+		cursor: pointer;
+	}
+
+	&:after {
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		width: 0; 
+		height: 0; 
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		
+		border-top: 8px solid #666;
+		content: '';
+	}
+}

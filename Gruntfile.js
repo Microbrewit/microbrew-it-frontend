@@ -218,7 +218,7 @@ module.exports = function (grunt) {
 		var fileExt = filepath.split('.');
 		fileExt = fileExt[fileExt.length-1];
 	
-		if(fileExt === "coffee") {
+		if(fileExt === "coffee" || fileExt === "js") {
 			grunt.log.writeln('#### DETECTED COFFEE CHANGE - COMMENCING REBUILD ####');
 			// run coffee only on changed files, for some reason coffee needs exact filepath in order to be able to write the file
 

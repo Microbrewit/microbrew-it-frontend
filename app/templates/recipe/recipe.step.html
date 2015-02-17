@@ -8,12 +8,21 @@
 			<th></th>
 		</tr>
 		<tr ng-repeat="fermentable in step.fermentables">
-			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{fermentable.name}}</td>
-			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="fermentable.amount"></mb-convert></td>
+			<td style="position:relative">
+				<ui-select ng-model="fermentable.original" on-select="refreshIngredient(fermentable, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a fermentable">
+					<ui-select-match placeholder="Select a fermentable in the list or search">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices group-by="groupFermentables" ng-show="$select.open && " repeat="result in fermentables | filter: {name: $select.search}">
+						<!-- <div ng-bind-html="hoporg.name | highlight: $select.search"> -->
+							{{result.name}}
+						<!-- </div> -->
+					</ui-select-choices>
+				</ui-select>
+			</td>
+			<td><mb-convert modelunit="grams" localunit="grams" ingredient="fermentable" modelvalue="fermentable.amount"></mb-convert></td>
 			<td><mb-colour-box style="float:left;" amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{beer.recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
 				<span style="display:inline-block;line-height: 50px;">{{fermentable.lovibond}}°L</span></td>
 			<td>{{fermentable.ppg}}</td>
-			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{beer.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{beer.recipe.efficiency}}" volume="{{beer.recipe.volume}}"></mb-gravity></td>
+			<td title="Gravity Points"><mb-gravity change="updateFermentableValues" ingredient="fermentable" type="{{fermentable.type}}" og="{{beer.recipe.og}}" fluidUnit="liters" weightUnit="grams" ppg="{{fermentable.ppg}}" amount="{{fermentable.amount}}" efficiency="{{beer.recipe.efficiency}}" volume="{{beer.recipe.volume}}"></mb-gravity></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>
@@ -29,11 +38,20 @@
 			<th></th>
 		</tr>
 		<tr ng-repeat="hop in step.hops">
-			<td><button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{hop.name}}</td>
+			<td style="position:relative">
+				<ui-select ng-model="hop.original" theme="bootstrap" on-select="refreshIngredient(hop, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a hop">
+					<ui-select-match placeholder="Select a hop in the list or search">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices group-by="groupHops" ng-show="$select.open && " repeat="result in hops | filter: {name: $select.search}">
+						<!-- <div ng-bind-html="result.name | highlight: $select.search"> -->
+							{{result.name}} ({{result.aaLow}} - {{result.aaHigh}} % AA)
+						<!-- </div> -->
+					</ui-select-choices>
+				</ui-select>
+			</td>
 			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
 			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
 			<td><input type="text" ng-model="hop.aaValue"/>%</td>
-			<td><input type="text" ng-model="hop.beta"/>%</td>
+			<td><input type="text" ng-model="hop.betaValue"/>%</td>
 			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>
 		</tr>
@@ -66,8 +84,15 @@
 			<th></th>
 		</tr>
 		<tr ng-repeat="yeast in step.yeasts">
-			<td>
-				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button> {{yeast.name}} <span ng-show="yeast.productCode">({{yeast.productCode}})</span>
+			<td style="position:relative">
+				<ui-select ng-model="yeast.original" on-select="refreshIngredient(yeast, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a yest">
+					<ui-select-match placeholder="Select a yeast in the list or search">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices group-by="groupYeasts" ng-show="$select.open && " repeat="result in yeasts | filter: {name: $select.search}">
+						<!-- <div ng-bind-html="hoporg.name | highlight: $select.search"> -->
+							{{result.name}}
+						<!-- </div> -->
+					</ui-select-choices>
+				</ui-select>
 			</td>
 			<td><input type="text" ng-model="yeast.amount"/></td>
 			<td>{{yeast.attenutionRange}}</td>
@@ -77,4 +102,11 @@
 			<td><button class="remove form-button" ng-click="removeFromStep(other, step.others)">X</button></td>
 		</tr>
 	</table>
-	<button class="add-ingredient" ng-click="search(step, 'ingredients')">Add Ingredient</button>
+
+	<textarea class="step-notes" ng-model="step.notes" placeholder="notes"></textarea>
+
+	<div class="add-ingredient-wrapper">
+		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'fermentable')" title="Malt/Sugar/Extract">Add Fermentable</span>
+		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'hop')" title="">Add Hop</span>
+		<span class="add-ingredient" ng-show="step.stepType === 'fermentationSteps'" ng-click="addIngredientToStep(step, 'yeast')">Add Yeast</span>
+	</div>

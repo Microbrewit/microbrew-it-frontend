@@ -1,10 +1,10 @@
 angular.module('ngDrop', [])
-	.directive('dropdown', function($document){
+	.directive('dropdown', function($document, $rootScope){
 		return {
 			restrict: "E",
 			transclude: true,
 			template: 
-			   "<div class='dropdown'><div ng-click='show = !show' class='dropdown-selector' ng-class='{glow: show}'> \
+				"<div class='dropdown'><div ng-click='show = !show' class='dropdown-selector' ng-class='{glow: show}'> \
 						<span ng-class='{grayed: !dropdownModel}'>{{dropdownPlaceholder}}</span> \
 						<div class='arrow-down'></div>\
 					</div> \
@@ -14,15 +14,35 @@ angular.module('ngDrop', [])
 				</div></div>",
 			scope: {
 				dropdownModel: "=",
-				dropdownPlaceholder: '@'
+				dropdownPlaceholder: '@',
+				dropdownOnSelect: "="
 			},
-			controller: function($scope){
+			controller: function($scope, $attrs, $parse){
 				$scope.show = false;
+
+				this.onSelectCallback = $parse($attrs.dropdownOnSelect);
+
+
 				this.setModel = function(model, value){
 					$scope.dropdownModel = model;
+
+					$scope.dropdownOnSelect()
+					
+					if(typeof $scope.dropdownUpdate === "function") {
+						$scope.dropdownOnSelect();
+					}
+
+					if(typeof $scope.$parent[$attrs.dropdownModel] !== "undefined" && $scope.$parent[$attrs.dropdownModel] !== $scope.dropdownModel) {
+						$scope.$parent[$attrs.dropdownModel] = $scope.dropdownModel;
+					}
+					console.log($scope.$parent);
+					// console.log($scope.dropdownModel);
 					$scope.dropdownPlaceholder = value;
 					$scope.show = false;
 					$scope.searchText = '';
+					console.log('DIGEST FFS');
+					//$scope.$digest();
+
 				};
 			},
 			link: function(scope, element, attrs){
@@ -54,7 +74,8 @@ angular.module('ngDrop', [])
 
 				$document.bind('click', function(event){
 					scope.show = false;
-					scope.$apply();
+					//scope.$apply();
+
 				});
 			}
 		};
@@ -71,29 +92,22 @@ angular.module('ngDrop', [])
 		};
 	})
 
-	.directive('dropdownItem', function(){
-		return {
-			restrict: "E",
-			transclude: true,
-			require: "^dropdown",
-			template: "<li class='item' ng-transclude ng-click='setValue()'></li>",
-			scope: {
-				model: "="
-			},
-			link: function(scope, elem, attrs, dropdown){
-				scope.setValue = function(){
-					try {
-						console.log('Hello?');
-						console.log(attrs);
-						console.log(scope);
-					} catch(e) {
-						console.log(e);
-					}
-					dropdown.setModel(scope.model, elem.text());
-				};
-			},
-		};
-	})
+	.directive('dropdownItem', ['_', function(_){
+			return {
+				restrict: "E",
+				transclude: true,
+				require: "^dropdown",
+				template: "<li class='item' ng-transclude ng-click='setValue()'></li>",
+				scope: {
+					model: "="
+				},
+				link: function(scope, elem, attrs, dropdown){
+					scope.setValue = function(){
+						dropdown.setModel(JSON.parse(JSON.stringify(scope.model)), elem.text());
+					};
+				},
+			};
+		}])
 	.directive('search', function(){
 		return {
 			restrict: "E",
