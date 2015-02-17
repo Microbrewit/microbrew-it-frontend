@@ -263,7 +263,54 @@ h1 + .subheader {
 	}
 }
 
-@import "ngDrop";
+.pre-beta-frontpage {
+	background: url('../images/background.jpg');
+	background-size: cover;
+
+	.frontpage-alpha-wrapper {
+		position: absolute;
+		right: 50px;
+		bottom: 50px;
+	}
+
+	header {
+		text-align: right !important;
+		color: white !important;
+		h1 {
+			text-align: right;
+		}
+		.subheader {
+			text-align:right;
+			color: white !important;
+		}
+	}
+	.login-form {
+		text-align:right;
+		padding:0 !important;
+		background: none !important;
+		color: white !important;
+
+		.submit {
+			float: right !important;
+			clear:both;
+			margin: 0 auto !important;
+		}
+
+		#username, #password {
+			float:right;
+			clear:both;
+		}
+
+	}
+	.login {
+		label, #remember {
+			display: none;
+		}
+	}
+}
+
+//@import "ngDrop";
+@import "ui-select";
 @import "buttons";
 @import "frontpage";
 @import "single-beer";

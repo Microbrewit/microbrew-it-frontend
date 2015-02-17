@@ -17,21 +17,31 @@
 -->
 <html lang="en" ng-app="Microbrewit">
 <head>
+	<base href="/">
 	<meta charset="utf-8">
 	<title>Microbrew.it prealpha</title>
 	<link rel="icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon">
 	<link rel="shortcut icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/main.css"/>
 </head>
-<body ng-class="{modal: modalOpened == true}">
+<body ng-class="{'pre-beta-frontpage': !user}">
 	<div style="position:fixed;bottom:10px;right:10px;padding: 5px;color:white;background:#333;z-index:100;">ALPHA BUILD</div>
 
-	<div class="main" ng-controller="MainController">
-		<div ng-include src="'templates/header.html'"></div>
+	<div class="frontpage-alpha-wrapper" ng-if="!user">
+
+		<header>
+			<h1 class="logo-text">Microbrew.it</h1>
+			<div class="subheader">Closed alpha, please sign in</div>
+		</header>
+		<div class="login-wrapper" ng-controller="UserController" ng-include="'templates/brewers/user.login.html'"></div>
+
+	</div>
+	<div ng-if="user" class="main" ng-controller="MainController">
+		<div  ng-include src="'templates/header.html'"></div>
 		<div mb-message></div>
 		<div class="ui-view-container" ui-view></div>
 	</div>
-	<div ng-include src="'templates/footer.html'"></div>
+	<div ng-if="user" ng-include src="'templates/footer.html'"></div>
 
 	<!-- script includes -->
 	<script src="build.js" async></script>
