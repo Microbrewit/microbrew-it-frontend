@@ -12,7 +12,8 @@ mbit.controller('RecipeController', [
 	'colour'
 	'$state'
 	'mbUser'
-	($rootScope, $scope, mbGet, mbPost, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser) ->
+	'mbBeer'
+	($rootScope, $scope, mbGet, mbPost, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
 		$scope.searchContext = {
 			active: false
 			endpoint: null 
@@ -27,33 +28,95 @@ mbit.controller('RecipeController', [
 		window.log = () ->
 			console.log $scope
 
-		if $state.is('brew.fork')
+		if $state.is('fork')
 			if $rootScope.beerToFork?
-				# Deep clone the original recipe
-				$scope.beer.recipe = JSON.parse(JSON.stringify($rootScope.beerToFork.recipe))
+				$scope.beer = JSON.parse(JSON.stringify($rootScope.beerToFork)) # Deep clone the original recipe
 				$rootScope.beerToFork = undefined
 			else
-				mbGet.beers({id:$state.params.fork}).then((response) ->
-					$scope.beer.recipe = JSON.parse(JSON.stringify(response.beers[0].recipe))
+				mbBeer.getSingle($state.params.id).then((response) ->
+					$scope.beer = JSON.parse(JSON.stringify(response.beers[0]))
+
+					for step in $scope.beer.recipe.mashSteps
+						for ingredient in step.fermentables
+							ingredient.original = _.clone ingredient
+						for ingredient in step.hops
+							ingredient.original = _.clone ingredient
+						for ingredient in step.others
+							ingredient.original = _.clone ingredient
+
+					for step in $scope.beer.recipe.boilSteps
+						for ingredient in step.fermentables
+							ingredient.original = _.clone ingredient
+						for ingredient in step.hops
+							ingredient.original = _.clone ingredient
+						for ingredient in step.others
+							ingredient.original = _.clone ingredient
+
+					for step in $scope.beer.recipe.fermentationSteps
+						for ingredient in step.fermentables
+							ingredient.original = _.clone ingredient
+						for ingredient in step.hops
+							ingredient.original = _.clone ingredient
+						for ingredient in step.others
+							ingredient.original = _.clone ingredient
+						for ingredient in step.yeasts
+							ingredient.original = _.clone ingredient
+
+					
+					# This is a fork
+					$scope.beer.forkOf = 
+						id: $scope.beer.id
+						name: $scope.beer.name
+
+					# Edit name and remove id since it is a fork
+					$scope.beer.name += ' fork'
+					$scope.beer.id = undefined
 				)
+
+		else if $state.is('edit')
+			console.log 'mbBeer.get ' + mbBeer.get?
+			console.log 'mbBeer.getSingle ' + mbBeer.getSingle?
+			mbBeer.getSingle($state.params.id).then((response) ->
+				$scope.beer = JSON.parse(JSON.stringify(response.beers[0]))
+				for step in $scope.beer.recipe.mashSteps
+					for ingredient in step.fermentables
+						ingredient.original = _.clone ingredient
+					for ingredient in step.hops
+						ingredient.original = _.clone ingredient
+					for ingredient in step.others
+						ingredient.original = _.clone ingredient
+
+				for step in $scope.beer.recipe.boilSteps
+					for ingredient in step.fermentables
+						ingredient.original = _.clone ingredient
+					for ingredient in step.hops
+						ingredient.original = _.clone ingredient
+					for ingredient in step.others
+						ingredient.original = _.clone ingredient
+
+				for step in $scope.beer.recipe.fermentationSteps
+					for ingredient in step.fermentables
+						ingredient.original = _.clone ingredient
+					for ingredient in step.hops
+						ingredient.original = _.clone ingredient
+					for ingredient in step.others
+						ingredient.original = _.clone ingredient
+					for ingredient in step.yeasts
+						ingredient.original = _.clone ingredient
+			)
+
+			$scope.submitRecipe = () ->
+				mbBeer.update($scope.beer).then()
 
 		else
 			mbGet.beerstyles().then((response) ->
-				filtered = _.filter(response.beerStyles, (style) ->
-					style.superBeerStyle?.name?
-				)
-				grouped = _.groupBy(response.beerStyles, (style) ->  
+
+				$scope.beerStyles = response.beerStyles
+				$scope.beer.beerStyle = $scope.beerStyles[0]
+
+				$scope.groupBeerstyles = (style)->
 					return style.superBeerStyle.name if style.superBeerStyle?.name?
 					return style.name
-				)
-
-				grouped = _.pairs(grouped)
-# => {1: [1.3], 2: [2.1, 2.4]}
-				$scope.beerStyles = response.beerStyles
-				$scope.beerStylesGrouped = grouped
-
-				console.log grouped
-				$scope.beer.beerStyle = $scope.beerStyles[0]
 			)
 
 			$scope.beer = 
@@ -103,6 +166,35 @@ mbit.controller('RecipeController', [
 		# get ingredients
 		sessionId = "recipe-#{new Date().getTime()}"
 
+		mbGet.fermentables().then((response) ->
+			$scope.fermentables = response.fermentables
+			$scope.groupFermentables = (fermentable)->
+				return fermentable.type
+		)
+
+		mbGet.hops().then((response) ->
+			for hop in response.hops
+				hop.aaValue = hop.aaLow
+				if hop.aaHigh isnt 0
+					hop.aaValue = (hop.aaValue + hop.aaLow) / 2
+				hop.betaValue = hop.betaLow
+				if hop.betaHigh isnt 0
+					hop.betaValue = (hop.betaValue+ hop.aaLow) / 2
+				hop.hopForm = $scope.hopForms[0]
+
+			$scope.hops = response.hops
+			$scope.groupHops = (hops)->
+				return hops.origin.name if hops.origin?.name?
+				return 'other'
+		)
+
+		mbGet.yeasts().then((response) ->
+			$scope.yeasts = response.yeasts
+			$scope.groupYeasts = (yeast)->
+				return yeast.supplier.name if yeast.supplier?.name?
+				return 'Other'
+		)
+
 		$scope.updateFermentableValues = () ->
 			totalMCU = 0
 			totalGP = 0
@@ -121,7 +213,6 @@ mbit.controller('RecipeController', [
 			calcColour(totalMCU)
 
 		$scope.updateHopsValues = () ->
-			console.log '?'
 			calcIbu()
 
 		calcGravity = (totalGP) ->
@@ -140,12 +231,13 @@ mbit.controller('RecipeController', [
 				for ingredient in step.hops
 					totalIBU+=ingredient.ibu if ingredient.ibu and not isNaN(ingredient.ibu)
 
-			console.log totalIBU
+			console.log "total IBU: #{totalIBU}"
 			$scope.beer.ibu.tinseth = parseInt(totalIBU, 10)
 		
 		calcColour = (totalMCU) ->
 			$scope.beer.mcu = totalMCU
 			$scope.beer.srm.standard = parseInt(1.4922 * Math.pow(totalMCU, 0.6859))
+
 
 		# There must be a better way
 		updateStepNumbers = () ->
@@ -167,11 +259,8 @@ mbit.controller('RecipeController', [
 			type = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps?.length-1]?.type
 			type or= "infusion"
 
-			stepNumber = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps.length-1]?.stepNumber + 1
-			stepNumber or= 1
-
 			$scope.beer.recipe.mashSteps.push
-				stepNumber: stepNumber
+				stepNumber: 0
 				type: type
 				length: 60
 				volume: volume
@@ -183,14 +272,13 @@ mbit.controller('RecipeController', [
 				yeasts: []
 				notes: ""
 
-		$scope.addMashStep()
+			updateStepNumbers()
+
 
 		$scope.addBoilStep = () ->
-			stepNumber = $scope.beer.recipe.mashSteps?[$scope.beer.recipe.mashSteps.length-1]?.stepNumber + 1
-			stepNumber or= 1
 
 			$scope.beer.recipe.boilSteps.push
-				stepNumber: stepNumber
+				stepNumber: 0
 				length: 60
 				volume: 20
 				stepType: "boilSteps"
@@ -200,14 +288,12 @@ mbit.controller('RecipeController', [
 				yeasts: []
 				notes: ""
 
-		$scope.addBoilStep()
+			updateStepNumbers()
+
 
 		$scope.addFermentationStep = () ->
-			stepNumber = $scope.beer.recipe.boilSteps?[$scope.beer.recipe.boilSteps.length-1]?.stepNumber + 1
-			stepNumber or= 1
-
 			$scope.beer.recipe.fermentationSteps.push
-				stepNumber: stepNumber
+				stepNumber: 0
 				stepType: "fermentationSteps"
 				type: 'primary fermentation'
 				length: 14
@@ -218,7 +304,12 @@ mbit.controller('RecipeController', [
 				yeasts: []
 				notes: ""
 
-		$scope.addFermentationStep()
+			updateStepNumbers()
+
+		if $state.is('add')
+			$scope.addMashStep()
+			$scope.addBoilStep()
+			$scope.addFermentationStep()
 
 		$scope.removeStep = (step) ->
 			index = $scope.beer.recipe[step.stepType].indexOf(step)
@@ -230,24 +321,23 @@ mbit.controller('RecipeController', [
 			thingArr.splice(index,1);
 			updateStepNumbers()
 
-		$scope.submitRecipe = () ->
+		unless $scope.submitRecipe?
+			$scope.submitRecipe = () ->
 
-			console.log 'submitRecipe'
+				console.log 'submitRecipe'
 
-			# well fuck
-			if not $scope.token?
-				# we need username and password
+				# well fuck
+				if not $scope.token?
+					# we need username and password
+					mbUser.login($scope.username,$scope.password,false).then(mbPost.recipe($scope.beer).async().then())
 
-			else if $scope.token?.token?.expires <= new Date().getTime()
-				# We need to refresh token
-				mbUser.login(false,false,$scope.token).then(mbPost.recipe($scope.beer.recipe).async().then())
-			
-			else
-				# Alles in order
-				mbPost.recipe($scope.beer.recipe).async().then()
-
-		$scope.logRecipe = () ->
-			console.log JSON.stringify($scope.beer.recipe,  null, '\t')
+				else if $scope.token?.token?.expires <= new Date().getTime()
+					# We need to refresh token
+					mbUser.login(false,false,$scope.token).then(mbPost.recipe($scope.beer).async().then())
+				
+				else
+					# Alles in order
+					mbPost.recipe($scope.beer).async().then()
 
 		$scope.change =() ->
 
@@ -257,27 +347,63 @@ mbit.controller('RecipeController', [
 				endpoint: type 
 				step: step
 			}
+		# Refresh scope var
+		$scope.refreshIngredient = (ingredient, model) ->
+			console.log 'refresh ingredient'
 
+			allowedKeys = [
+				'name'
+				'fermentableId'
+				'ppg'
+				'lovibond'
+
+				'hopId'
+				'aaValue'
+				'betaValue'
+				'flavours'
+
+				'yeastId'
+				'temperatureHigh'
+				'temperatureLow'
+				'flocculation'
+				'alcoholTolerance'
+				'productCode'
+				'notes'
+				'type'
+				'brewerySource'
+				'species'
+				'attenutionRange'
+				'pitchingFermentationNotes'
+				'supplier'
+				'dataType'
+			]
+			for key,val of model
+				if key in allowedKeys
+					ingredient[key] = val
+
+			unless ingredient.localId
+				ingredient.localId = new Date().getTime()
 		$scope.addIngredientToStep = (step, ingredient) ->
-			ingredient = _.clone(ingredient)
 
-			if ingredient.dataType is 'fermentable'
-				ingredient.amount = 0
-				ingredient.mcu = 0
-				ingredient.gravityPoints = 0
+			if ingredient is 'fermentable'
+				step.fermentables.push
+					amount: 0
+					ppg: 0
+					lovibond: 0
 
-				step.fermentables.push(ingredient)
 
-			else if ingredient.dataType is 'hop'
-				ingredient.amount = 0
-				ingredient.hopForm = $scope.hopTypes[0]
+			else if ingredient is 'hop'
+				step.hops.push
+					aaValue: 0
+					betaValue: 0
+					amount: 0
+					hopForm: $scope.hopTypes[0]	
 
-				step.hops.push(ingredient)
-
-			else if ingredient.dataType is 'yeast'
+			else if ingredient is 'yeast'
+				ingredient = {}
 				step.yeasts.push(ingredient)
 
-			else
-				step.other.push(ingredient)
+			# else
+			# 	step.other.push(ingredient)
 
 ])

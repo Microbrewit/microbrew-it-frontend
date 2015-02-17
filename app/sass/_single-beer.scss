@@ -39,15 +39,25 @@
 		text-align:center;
 	}
 
+
+	.actions {
+		padding: 25px 0;
+		border-bottom: 1px solid #ccc;
+		text-align:center;
+	}
+}
+#single-beer, .add-beer {
+
 	.brewers {
-		// &:before {
-		// 	display: block;
-		// 	width: 100%;
-		// 	font-size: 0.6em;
-		// 	text-transform: lowercase;
-		// 	margin: -5px 0;
-		// 	content: "by";
-		// }
+		&:before {
+			display: block;
+			width: 100%;
+			opacity: 0.6;
+			font-size: 0.6em;
+			text-transform: lowercase;
+			margin: -15px 0;
+			content: "by";
+		}
 		list-style:none;
 		line-height: 50px;
 		font-size: 25px;
@@ -69,11 +79,5 @@
 			vertical-align: middle;
 			margin-top: -4px;
 		}
-	}
-
-	.actions {
-		padding: 25px 0;
-		border-bottom: 1px solid #ccc;
-		text-align:center;
 	}
 }

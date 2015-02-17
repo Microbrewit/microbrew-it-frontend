@@ -1,7 +1,7 @@
 <nav class="sub-nav">
 	<ul ng-show="is('brews.single')">
-		<li><a ng-click="fork()">Add my fork</a></li>
-		<li ng-show="isUserRecipe"><a ng-click="edit()">Edit this recipe</a></li>
+		<li><a ui-sref="fork({id:beer.id})">Add my fork</a></li>
+		<li ng-show="isUserRecipe"><a ui-sref="edit({id:beer.id})">Edit this recipe</a></li>
 	</ul>
 	<ul ng-show="!is('brews.single')">
 		<li><a ui-sref="brews.list" ng-class="{active: is('brews.list')}">Latest</a></li>

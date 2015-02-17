@@ -165,11 +165,6 @@ angular.module('Microbrewit',
 				controller: 'SearchController'
 				templateUrl: "templates/search.html"
 			})
-			.state('brews.fork', {
-				url: "/brews/:fork/fork"
-				templateUrl: "templates/recipe/add.html"
-				controller: "RecipeController"
-			})
 
 			# Plain search
 			.state('search', {
@@ -184,6 +179,16 @@ angular.module('Microbrewit',
 			})
 			.state('add', {
 				url: "/add"
+				templateUrl: "templates/beer/beer.add.html"
+				controller: "RecipeController"
+			})
+			.state('fork', {
+				url: "/beers/fork/:id"
+				templateUrl: "templates/beer/beer.add.html"
+				controller: "RecipeController"
+			})
+			.state('edit', {
+				url: "/beers/edit/:id"
 				templateUrl: "templates/beer/beer.add.html"
 				controller: "RecipeController"
 			})
