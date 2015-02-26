@@ -8,7 +8,6 @@
 			<th title="Gravity Points">Contributes</th>
 			<th></th>
 		</tr>
-		<tr class="drop" ng-show="step.fermentables.length === 0"><td>No Fermentables</td></tr>
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td style="position:relative">
 				<ui-select ng-model="fermentable.original" on-select="refreshIngredient(fermentable, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a fermentable">
@@ -40,7 +39,6 @@
 			<th>Contributes</th>
 			<th></th>
 		</tr>
-		<tr class="drop" ng-show="step.fermentables.length === 0"><td>No Hops</td></tr>
 		<tr ng-repeat="hop in step.hops">
 			<td style="position:relative">
 				<ui-select ng-model="hop.original" on-select="refreshIngredient(hop, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a hop">

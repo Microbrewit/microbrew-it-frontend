@@ -1,6 +1,9 @@
 <div class="single-beer search-grid-result">
 	<a ui-sref="brews.single({id:result.id})" class="content">
-		<div class="top-circle"><mb-colour-box type="srm" colour="{{::result.srm.standard}}" size="50px"></mb-colour-box></div>
+		<div class="top-circle">
+			<mb-colour-box type="srm" colour="{{::result.srm.standard}}" size="50px"></mb-colour-box>
+			<img src="images/tulip-large.png" width="50" height="50" alt="Beer"/>
+		</div>
 		<h3>{{::result.name}}</h3>
 		<div class="type">{{::result.beerStyle.name}}</div>
 		<div class="meta">

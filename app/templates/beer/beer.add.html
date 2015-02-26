@@ -1,20 +1,9 @@
-<div ng-show="false">
-	<div class="header-bubble inner-wrapper">
-		<div class="icon">
-			<mb-colour-box class="colour-box" type="srm" colour="{{beer.srm.standard}}" size="76px"></mb-colour-box>
-			<img src="images/fermentable-large.png" alt="Malt"/>
-		</div>
-	</div>
-	<h1>Please sign in</h1>
-	<div ng-include="'templates/brewers/user.login.html'" ng-controller="UserController"></div>
-</div>
-
 <form class="add-beer add-beer-recipe" ng-show="beer">
 	<header>
 		<div class="header-bubble inner-wrapper">
 			<div class="icon">
 				<mb-colour-box class="colour-box" type="srm" colour="{{beer.srm.standard}}" size="76px"></mb-colour-box>
-				<img src="images/fermentable-large.png" alt="Malt"/>
+				<img src="images/tulip-large.png" alt="Malt"/>
 			</div>
 		</div>
 		<h1><input type="text" class="recipe-name" placeholder="New Recipe" ng-model="beer.name"/></h1>
@@ -149,7 +138,10 @@
 					<span class="volume" title="Volume of finished beer.">Volume: <strong>{{beer.recipe.volume}}l</strong></span>
 				</div>
 			</div>
-			<button class="submit" ng-click="submitRecipe()">Add</button>
+			<h2>Please sign in</h2>
+			<h3>You need to sign in before saving the recipe <small>(don't worry, you'll stay right here)</small></h3>
+			<div ng-include="'templates/brewers/user.login.html'" ng-if="!user.username" ng-controller="UserController"></div>
+			<button class="submit" ng-if="user.username" ng-click="submitRecipe()">Save</button>
 		</div>
 	</section>
 
