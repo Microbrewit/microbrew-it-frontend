@@ -42,8 +42,16 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams', '$sta
 			if query? and query.length >= 3
 				search(query, endpoint).async().then((apiResponse) ->
 					if $scope.endpoint is "search" or $scope.endpoint is "ingredients"
-						$scope.results = apiResponse.hits.hits
-						console.log apiResponse.hits.hits
+
+						parsed = []
+
+						for result in apiResponse.hits.hits
+							res = result._source
+							res._source = result._source
+							parsed.push res
+
+						$scope.results = parsed
+						
 					else
 						$scope.results = apiResponse[$scope.endpoint]
 					$scope.resultsNumber = $scope.results.length
