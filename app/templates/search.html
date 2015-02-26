@@ -10,11 +10,22 @@
 		<div class="inner-wrapper">
 			<div ng-show="query.length < 3" class="center">Query must contain at least 3 characters</div>
 			<div ng-show="query.length >= 3 && resultsNumber == 0" class="center">Found no {{endpoint}} called "{{query}}"</div>
-			<ul>
-				<li ng-repeat="result in results"> 
-					{{result._source.dataType}}
-					<span ng-show="!result._source"><a ui-sref="{{endpoint}}.single({id:result.id})">{{ result.name }}</a></span>
-					<span ng-show="result._source"><a ui-sref="{{result.endpoint}}.single({id:result._source.id})">{{ result._source.name }}</a></span>
+			<ul class="search-grid-results">
+				<li ng-repeat="result in results" ng-if="result.dataType != 'origin' && result.dataType != 'supplier' && result.dataType != 'beerstyle'">
+					<!-- ({{result._source.dataType}} - {{ result.name }}) -->
+
+					<div ng-if="result.dataType === 'beer'" ng-include="'templates/beer/beer.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'user'" ng-include="'templates/brewers/brewer.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'brewery'" ng-include="'templates/breweries/brewery.gridItem.html'"></div>
+
+					<div ng-if="result.dataType === 'fermentable'" ng-include="'templates/ingredients/fermentable.gridItem.html'"></div>	
+					<div ng-if="result.dataType === 'hop'" ng-include="'templates/ingredients/hop.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'yeast'" ng-include="'templates/ingredients/yeast.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'other'" ng-include="'templates/ingredients/other.gridItem.html'"></div>
+
+					<div ng-if="result.dataType === 'beerstyle'" ng-include="'templates/brewers/brewer.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'supplier'" ng-include="'templates/brewers/brewer.gridItem.html'"></div>
+					<div ng-if="result.dataType === 'origin'" ng-include="'templates/brewers/brewer.gridItem.html'"></div>	
 				</li>
 			</ul>
 		</div>
