@@ -1,5 +1,6 @@
-	<table class="fermentables" ng-show="step.fermentables.length > 0">
-		<tr>
+<div ng-model="step.fermentables">
+	<table class="fermentables">
+		<tr ng-show="step.fermentables.length > 0" >
 			<th>Name of <strong>FERMENTABLE</strong> (malt/sugars)</th>
 			<th>Amount</th>
 			<th>Colour</th>
@@ -7,6 +8,7 @@
 			<th title="Gravity Points">Contributes</th>
 			<th></th>
 		</tr>
+		<tr class="drop" ng-show="step.fermentables.length === 0"><td>No Fermentables</td></tr>
 		<tr ng-repeat="fermentable in step.fermentables">
 			<td style="position:relative">
 				<ui-select ng-model="fermentable.original" on-select="refreshIngredient(fermentable, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a fermentable">
@@ -18,7 +20,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td><mb-convert modelunit="grams" localunit="grams" ingredient="fermentable" modelvalue="fermentable.amount"></mb-convert></td>
+			<td><mb-convert modelunit="grams" localunit="{{user.settings.largeWeight}}" ingredient="fermentable" modelvalue="fermentable.amount"></mb-convert></td>
 			<td><mb-colour-box style="float:left;" amount="{{fermentable.amount}}" weightUnit="grams" liquidUnit="liters" ingredient="fermentable" volume="{{beer.recipe.volume}}" type="lovibond" colour="{{fermentable.lovibond}}"></mb-colour-box>
 				<span style="display:inline-block;line-height: 50px;">{{fermentable.lovibond}}°L</span></td>
 			<td>{{fermentable.ppg}}</td>
@@ -26,9 +28,10 @@
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(fermentable, step.fermentables)">X</button></td>
 		</tr>
 	</table>
-
-	<table class="hops" ng-show="step.hops.length > 0">
-		<tr>
+</div>
+<div ng-model="step.fermentables">
+	<table class="hops">
+		<tr ng-show="step.hops.length > 0">
 			<th>Name of <strong>HOPS</strong></th>
 			<th>Amount</th>
 			<th>Form</th>
@@ -37,9 +40,10 @@
 			<th>Contributes</th>
 			<th></th>
 		</tr>
+		<tr class="drop" ng-show="step.fermentables.length === 0"><td>No Hops</td></tr>
 		<tr ng-repeat="hop in step.hops">
 			<td style="position:relative">
-				<ui-select ng-model="hop.original" theme="bootstrap" on-select="refreshIngredient(hop, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a hop">
+				<ui-select ng-model="hop.original" on-select="refreshIngredient(hop, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a hop">
 					<ui-select-match placeholder="Select a hop in the list or search">{{$select.selected.name}}</ui-select-match>
 					<ui-select-choices group-by="groupHops" ng-show="$select.open && " repeat="result in hops | filter: {name: $select.search}">
 						<!-- <div ng-bind-html="result.name | highlight: $select.search"> -->
@@ -48,7 +52,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="hop.amount"></mb-convert></td>
+			<td><mb-convert modelunit="grams" localunit="{{user.settings.smallWeight}}" modelvalue="hop.amount"></mb-convert></td>
 			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
 			<td><input type="text" ng-model="hop.aaValue"/>%</td>
 			<td><input type="text" ng-model="hop.betaValue"/>%</td>
@@ -56,7 +60,7 @@
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>
 		</tr>
 	</table>
-
+</div>
 	<table class="other" ng-show="step.others.length > 0">
 		<tr>
 			<th>Name of <strong>OTHER</strong></th>
@@ -68,7 +72,7 @@
 				<button class="edit form-button" ng-click="editFermentable(fermentable)">Edit</button>
 				{{other.name}} ({{other.type}})
 			</td>
-			<td><mb-convert modelunit="grams" localunit="grams" modelvalue="other.amount"></mb-convert></td>
+			<td><mb-convert modelunit="grams" localunit="{{user.settings.smallWeight}}" modelvalue="other.amount"></mb-convert></td>
 			<td><button class="remove form-button" ng-click="removeFromStep(other, step.others)">X</button></td>
 		</tr>
 	</table>
