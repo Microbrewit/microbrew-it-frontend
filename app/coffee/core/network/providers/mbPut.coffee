@@ -11,7 +11,7 @@ angular.module('Microbrewit/core/Network')
 			console.log 'factory.set'
 			$rootScope.loading++
 			request = $http.put(
-				requestUrl, 
+				"#{ApiUrl}#{requestUrl}", 
 				object,
 				{
 					withCredentials: true
