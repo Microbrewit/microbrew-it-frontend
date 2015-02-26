@@ -1,12 +1,12 @@
 <article class="frontpage">
 	<header>
-		<div ng-show="!user" class="header-content-wrapper">
+		<div ng-if="!user.username" class="header-content-wrapper">
 			<h1>A home for brewers</h1>
 			<div class="subheader">Create, discover and share great beer recipes</div>
 
 			<button class="call-to-action create" ui-sref="add">CREATE</button>
 		</div>
-		<div ng-show="user" class="header-content-wrapper">
+		<div ng-if="user.username" class="header-content-wrapper">
 			<h1>Welcome back, {{::user.username}}!</h1>
 			<div class="subheader">Create, discover and share great beer recipes</div>
 
@@ -16,14 +16,14 @@
 
 	<div class="the-content">
 
-		<div ng-show="!user">
+		<div ng-if="!user.username">
 			<h2 style="margin-bottom: 0">Currently in closed alpha<br /><small>Please sign in!</small></h2>
 			<div ng-controller="UserController" style="margin-top: -25px;">
 			<div ng-include="'templates/brewers/user.login.html'"></div>
 		</div>
 		</div>
 
-		<div ng-show="user" class="inner-wrapper">
+		<div ng-if="user.username" class="inner-wrapper">
 			<h2>Alpha testing phase</h2>
 			<p>Microbrew.it is currently in an early alpha stage. That means not all features we plan for a minimum viable product (MVP) is here yet. It also means that the server and code can be unstable.</p>
 			<p>Thank you for helping us create Microbrew.it!</p>
