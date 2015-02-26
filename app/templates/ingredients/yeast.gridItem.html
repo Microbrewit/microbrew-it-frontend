@@ -1,0 +1,16 @@
+<div class="single-brewer search-grid-result">
+	<a ui-sref="yeasts.single({id:result.yeastId})" class="content">
+		<div class="top-circle">
+			<mb-colour-box class="colour-box" absolutecolour="231,200,126" size="50px"></mb-colour-box>
+			<img src="images/yeast-large.png" width="50" height="50" alt="Yeast"/>
+		</div>
+		<h3>{{::result.name}}</h3>
+		<div class="type">{{::result.species}} Yeast</div>
+		<div class="meta">
+			<div class="meta-table">
+				<div class="meta-cell">{{::result.productCode}}</div>
+				<div class="meta-cell">{{::result.supplier.name}}</div>
+			</div>
+		</div>
+	</a>
+</div>

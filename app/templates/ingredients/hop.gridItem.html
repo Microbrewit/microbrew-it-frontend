@@ -1,0 +1,16 @@
+<div class="single-brewer search-grid-result">
+	<a ui-sref="hops.single({id:result.hopId})" class="content">
+		<div class="top-circle">
+			<mb-colour-box class="colour-box" absolutecolour="0,128,64" size="50px"></mb-colour-box>
+			<img src="images/hops-large.png" width="50" height="50" alt="Hop"/>
+		</div>
+		<h3>{{::result.name}}</h3>
+		<div class="type">Hop</div>
+		<div class="meta">
+			<div class="meta-table">
+				<div class="meta-cell">{{::result.aaLow}} - {{::result.aaHigh}}% AA</div>
+				<div class="meta-cell">{{::result.betaLow}} - {{::result.betaHigh}}% Beta</div>
+			</div>
+		</div>
+	</a>
+</div>

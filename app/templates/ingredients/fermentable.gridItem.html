@@ -1,0 +1,16 @@
+<div class="single-brewer search-grid-result">
+	<a ui-sref="fermentables.single({id:result.fermentableId})" class="content">
+		<div class="top-circle">
+			<mb-colour-box class="colour-box" type="lovibond" colour="{{result.lovibond}}" size="50px"></mb-colour-box>
+			<img src="images/fermentable-large.png" width="50" height="50" alt="Malt"/>
+		</div>
+		<h3>{{::result.name}}</h3>
+		<div class="type">Fermentable</div>
+		<div class="meta">
+			<div class="meta-table">
+				<div class="meta-cell">{{::result.lovibond}}°L</div>
+				<div class="meta-cell">{{::result.ppg}} PPG</div>
+			</div>
+		</div>
+	</a>
+</div>
