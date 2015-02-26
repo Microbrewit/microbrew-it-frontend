@@ -20,17 +20,20 @@ angular.module('Microbrewit/core/Calculation')
 				scope.conversions = available
 
 				updateLocalValue = ->
-					scope.localvalue = +(convert.convert(scope.modelvalue, attrs.modelunit, scope.localunit)).toFixed(2)
+					if scope.modelvalue? and attrs.modelunit? and scope.localunit?
+						value = +(convert.convert(scope.modelvalue, attrs.modelunit, scope.localunit))
+						scope.localvalue = value if value?
 
 				updateModelValue = ->
-					scope.modelvalue = convert.convert(scope.localvalue, scope.localunit, attrs.modelunit)
+					if scope.localvalue?
+						scope.modelvalue = convert.convert(scope.localvalue, scope.localunit, attrs.modelunit)
 
-				updateLocalValue()
-				updateModelValue()
+				#updateLocalValue()
+				#updateModelValue()
 
 				# # modelunit will never change (it will always be the same as the server)
 				scope.$watch(->
-					return [scope.localunit, attrs.modelvalue]
+					return [scope.localunit, scope.modelvalue]
 				, updateLocalValue, true) 
 
 				scope.$watch(->
