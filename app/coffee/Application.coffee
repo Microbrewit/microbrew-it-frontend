@@ -145,6 +145,16 @@ angular.module('Microbrewit',
 				url: '/user/settings'
 				templateUrl: "templates/brewers/account.settings.html"
 			})
+			.state('account.beers', {
+				url: '/user/beers'
+				controller: 'BeerController'
+				templateUrl: "templates/beer/beer.list.html"
+			})
+			.state('account.breweries', {
+				url: '/user/breweries'
+				controller: 'BreweryController'
+				templateUrl: "templates/breweries/breweries.list.html"
+			})
 
 
 			# Beer states
