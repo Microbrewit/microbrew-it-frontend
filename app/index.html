@@ -1,20 +1,4 @@
 <!doctype html>
-<!-- 
-	Hello and welcone to the Microbrew.it frontend source code.
-
-	You are looking at the index HTML. 
-
-	If you are using Chrome or Firefox you'll be better off using the inspector, since most HTML is included dynamically.
-
-	Depending on the build you can either find some reasonable CSS and Javascript files referenced,
-	or, if you are unlucky, just some minified and uglified files.
-
-	The raw source (Coffee, SASS, HTML + dependencies and Gruntfile) is available at:
-	https://github.com/Microbrewit/microbrew-it-frontend
-	
-	I hope you enjoy your stay!
-	- Torstein Thune, frontend guy.
--->
 <html lang="en" ng-app="Microbrewit">
 <head>
 	<base href="/">
@@ -23,25 +7,25 @@
 	<link rel="icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon">
 	<link rel="shortcut icon" href="http://beta.microbrew.it/images/favicon.ico" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/main.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=1" />
 </head>
-<body ng-class="{'pre-beta-frontpage': !user}">
+<body >
 	<div style="position:fixed;bottom:10px;right:10px;padding: 5px;color:white;background:#333;z-index:100;">ALPHA BUILD</div>
 
-	<div class="frontpage-alpha-wrapper" ng-if="!user">
-
-		<header>
+	<div ng-show="loading > 0" class="main-loading" style="position:absolute;z-index:200;top:0;left:0;right:0;bottom:0;background:white;color:#333;">
+		<header style="text-align:center;position:fixed;left:0;right:0;top:40%;">
 			<h1 class="logo-text">Microbrew.it</h1>
-			<div class="subheader">Closed alpha, please sign in</div>
+			<div class="subheader">Loading...</div>
+			<div class="spinner-icon center"></div>
 		</header>
-		<div class="login-wrapper" ng-controller="UserController" ng-include="'templates/brewers/user.login.html'"></div>
-
 	</div>
-	<div ng-if="user" class="main" ng-controller="MainController">
-		<div  ng-include src="'templates/header.html'"></div>
+
+	<div class="main" ng-controller="MainController">
 		<div mb-message></div>
+		<div ng-include src="'templates/header.html'"></div>
 		<div class="ui-view-container" ui-view></div>
 	</div>
-	<div ng-if="user" ng-include src="'templates/footer.html'"></div>
+	<div ng-include src="'templates/footer.html'"></div>
 
 	<!-- script includes -->
 	<script src="build.js" async></script>
