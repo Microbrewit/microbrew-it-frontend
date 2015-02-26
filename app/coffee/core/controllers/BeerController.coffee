@@ -63,5 +63,5 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 
 
 		setControllerState()
-		$rootScope.$on('$stateChangeStart', setControllerState)
+		$scope.$on('$stateChangeStart', setControllerState)
 ])

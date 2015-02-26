@@ -46,5 +46,5 @@ angular.module('Microbrewit').controller('BrewerController', [
 				)
 
 		setControllerState()
-		$rootScope.$on('$stateChangeStart', setControllerState)
+		$scope.$on('$stateChangeStart', setControllerState)
 ])
