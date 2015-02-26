@@ -24,6 +24,17 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 			mbUser.logout()
 			$state.go('home')
 
+		# notification.add
+		# 	type: 'question'
+		# 	title: 'Test'
+		# 	body: 'Test body'
+		# 	accept: (index) -> 
+		# 		console.log('test accept')
+		# 		$scope.$$childHead.closeAlert(index)
+		# 	decline: (index) -> 
+		# 		console.log('test decline')
+		# 		$scope.$$childHead.closeAlert(index)
+
 		# Download and store default ingredients
 		# These are used in recipe generation and calculators
 		unless localStorage.getItem('fermentables')
@@ -51,6 +62,23 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 				localStorage.setItem('hopForms', hopForms)
 			)
 
+		unless $rootScope.user?.settings is {}
+			$rootScope.user =
+				settings: 
+					largeWeight: 'kg'
+					smallWeight: 'grams'
+					liquid: 'liters'
+					temperature: 'celcius'
+					abv:
+						formula: 'microbrewit'
+						unit: 'sg'
+					bitterness:
+						formula: 'tinseth'
+						unit: 'ibu'
+					colour:
+						formula: 'morey'
+						unit: 'srm'
+
 		# Autologin if stored token
 		token = localStorage.getItem('token')
 		if token
@@ -58,20 +86,21 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 			mbUser.login(false, false, token).then((userId) -> 
 				mbUser.get(userId).then((response) ->
 					$rootScope.user = response.users[0]
-					$rootScope.user.settings = 
-						largeWeight: 'kg'
-						smallWeight: 'grams'
-						liquids: 'liters'
-						temperature: 'celcius'
-						abv:
-							formula: 'microbrewit'
-							unit: 'sg'
-						bitterness:
-							formula: 'tinseth'
-							unit: 'ibu'
-						colour:
-							formula: 'morey'
-							unit: 'srm'
+					unless $rootScope.user.settings?.largeWeight?
+						$rootScope.user.settings = 
+							largeWeight: 'kg'
+							smallWeight: 'grams'
+							liquid: 'liters'
+							temperature: 'celcius'
+							abv:
+								formula: 'microbrewit'
+								unit: 'sg'
+							bitterness:
+								formula: 'tinseth'
+								unit: 'ibu'
+							colour:
+								formula: 'morey'
+								unit: 'srm'
 				)
 			)
 
