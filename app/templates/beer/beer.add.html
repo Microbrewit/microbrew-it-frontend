@@ -9,7 +9,7 @@
 	<div ng-include="'templates/brewers/user.login.html'" ng-controller="UserController"></div>
 </div>
 
-<form class="add-beer add-beer-recipe">
+<form class="add-beer add-beer-recipe" ng-show="beer">
 	<header>
 		<div class="header-bubble inner-wrapper">
 			<div class="icon">
@@ -47,7 +47,7 @@
 				<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong><mb-colour-box type="srm" colour="{{beer.srm.standard}}" size="20px"></mb-colour-box> {{beer.srm.standard}} SRM</strong></span>
 			</div>
 			<div class="meta">
-				<span>Volume: <strong><mb-convert id="volume" class="meta-values-input" modelunit="liters" localunit="liters" modelvalue="beer.recipe.volume"></mb-convert></strong></span>
+				<span>Volume: <strong><mb-convert id="volume" class="meta-values-input" modelunit="liters" localunit="{{user.settings.liquid}}" modelvalue="beer.recipe.volume"></mb-convert></strong></span>
 				<span class="meta-values-input"> Efficiency <strong><input type="number" ng-model="beer.recipe.efficiency"/>%</strong>
 			</div>
 		</div>
@@ -58,14 +58,14 @@
 			<h2>Mash</h2>
 			<ul>
 				<li class="step-wrapper" ng-repeat="step in beer.recipe.mashSteps">
-					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
+						<div class="step-number">{{step.stepNumber}}</div>
 						<span class="step-type">Mash step</span>
 						<span class="values">
-							<label for="length">Volume </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
+							<label for="length">Volume </label><mb-convert id="volume" modelunit="liters" localunit="{{user.settings.liquid}}" modelvalue="step.volume"></mb-convert>
 							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
 							<label for="length">Temperature: </label>
-							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+							<mb-convert id="temperature" modelunit="celcius" localunit="{{user.settings.temperature}}" modelvalue="step.temperature"></mb-convert>
 							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
@@ -80,14 +80,14 @@
 		<div class="inner-wrapper">
 			<h2>Boil</h2>
 			<ul>
-				<li class="step-wrapper" ng-repeat="step in beer.recipe.boilSteps">
-					<div class="step-number">{{step.stepNumber}}</div>
+				<li class="step-wrapper" ng-repeat="step in beer.recipe.boilSteps" >
 					<div class="step-meta">
+						<div class="step-number">{{step.stepNumber}}</div>
 						<span class="step-type">Boil step</span>
 						<span class="values">
 							<label for="length">Add at: </label>
 							<input type="text" id="length" ng-model="step.length"/>
-							<label for="volume">Volume: </label><mb-convert id="volume" modelunit="liters" localunit="liters" modelvalue="step.volume"></mb-convert>
+							<label for="volume">Volume: </label><mb-convert id="volume" modelunit="liters" localunit="{{user.settings.liquid}}" modelvalue="step.volume"></mb-convert>
 							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
@@ -103,14 +103,14 @@
 			<h2>Fermentation</h2>
 			<ul>
 				<li class="step-wrapper" ng-repeat="step in beer.recipe.fermentationSteps">
-					<div class="step-number">{{step.stepNumber}}</div>
 					<div class="step-meta">
+						<div class="step-number">{{step.stepNumber}}</div>
 						<span class="step-type">Fermentation step</span>
 						<span class="values">
 							<label for="length">Duration:</label>
 							<mb-convert modelunit="days" localunit="days" modelvalue="step.length"></mb-convert>
 							<label for="length">Temperature: </label>
-							<mb-convert id="temperature" modelunit="celcius" localunit="celcius" modelvalue="step.temperature"></mb-convert>
+							<mb-convert id="temperature" modelunit="celcius" localunit="{{user.settings.temperature}}" modelvalue="step.temperature"></mb-convert>
 							<button class="remove form-button" ng-click="removeStep(step)">X</button>
 						</span>
 					</div>
