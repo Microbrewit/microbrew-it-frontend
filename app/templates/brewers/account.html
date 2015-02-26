@@ -1,16 +1,23 @@
-<article class="brewers">
+
+<article class="account">
+
 	<header>
 		<div class="header-bubble inner-wrapper">
 			<div class="icon">
-				<gravatar url="{{bubble}}" size="78px"></gravatar>
+				<gravatar url="{{user.gravatar}}" size="78px"></gravatar>
 			</div>
 		</div>
 	
-		<h1>{{user.username}}</h1>
+		<h1 ng-if="user.username">{{user.username}}</h1>
+		<h1 ng-if="!user.username">Login</h1>
 		<div class="subheader">Account and settings</div>
 	</header>
 	
-	<nav class="sub-nav">
+	<section ng-if="!user.username" ng-controller="UserController">
+		<div ng-include="'templates/brewers/user.login.html'"></div>
+	</section>
+
+	<nav class="sub-nav" ng-if="user.username" >
 		<ul>
 			<li><a ui-sref="account.beers" ng-class="{active: is('account.beers')}">My Beers</a></li>
 			<li><a ui-sref="account.breweries" ng-class="{active: is('account.breweries')}">My Breweries</a></li>
@@ -20,7 +27,7 @@
 		</ul>
 	</nav>
 
-	<div class="the-content">
+	<div class="the-content" ng-if="user.username" >
 		<div ui-view></div>
 	</div>
 </article>

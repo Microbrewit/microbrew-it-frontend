@@ -1,7 +1,7 @@
 <article class="account-settings">
-	<section class="measurements">
+	<section class="measurements inner-wrapper">
 		<h2>Measurements</h2>
-		<div class="meta weight">
+		<div class="settings weight">
 			<strong>Weight</strong>
 			<span>
 				Large weights:
@@ -13,57 +13,35 @@
 			</span>
 		</div>
 
-		<div class="meta liquids">
+		<div class="settings liquids">
 			<strong>Liquids</strong>
+			<select ng-model="settings.liquid" ng-options="value for value in liquidsAvailable"></select>
 		</div>
 
-		<div class="meta temperature">
+		<div class="settings temperature">
 			<strong>Temperature</strong>
+			<select ng-model="settings.temperature" ng-options="value for value in temperaturesAvailable"></select>
 		</div>
 	</section>
-	<section class="formulas">
+	<section class="inner-wrapper formulas">
 		<h2>Formulas</h2>
-		<div class="meta abv">
+		<div class="settings abv">
 			<strong>ABV</strong>
+			<select ng-model="settings.abv.formula" ng-options="value for value in abvFormulasAvailable"></select>
+			<select ng-model="settings.abv.unit" ng-options="value for value in abvUnitsAvailable"></select>
 		</div>
-		<div class="meta abv">
+		<div class="settings bitterness">
 			<strong>Bitterness</strong>
+			<select ng-model="settings.bitterness.formula" ng-options="value for value in bitternessFormulasAvailable"></select>
+			<select ng-model="settings.bitterness.unit" ng-options="value for value in bitternessUnitsAvailable"></select>
 		</div>
-		<div class="meta abv">
+		<div class="settings colour">
 			<strong>Colour</strong>
+			<select ng-model="settings.colour.formula" ng-options="value for value in colourFormulasAvailable"></select>
+			<select ng-model="settings.colour.unit" ng-options="value for value in colourUnitsAvailable"></select>
 		</div>
 	</section>
+
+	<button class="submit" ng-click="updateUser()">Update settings</button>
 </article>
 
-
-$rootScope.user.settings = 
-						measurements:
-							weight:
-								large: 
-									name: 'kilograms'
-									short: 'kg'
-								small: 
-									name: 'grams'
-									short: 'g'
-							liquids: 
-								name: 'liters'
-								short: 'l'
-							temperature: 
-								name: 'Celcius'
-								short: '°C'
-						abv:
-							formula: 'microbrewit'
-							unit: 
-								name: 'specific-gravity'
-								short: 'sg'
-						bitterness:
-							formula: 'tinseth'
-							unit: 
-								name: 'ibu'
-								short: 'ibu'
-						colour:
-							formula: 'morey'
-							unit:
-								name: 'srm'
-								short: 'srm'
-				)
