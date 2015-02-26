@@ -1,3 +1,9 @@
-<ul id="notifications">
-	<li ng-repeat="alert in alerts" class="message {{::alert.type}}" ng-click="closeAlert($index)"><strong>{{::alert.title}}</strong><br />{{alert.body}}</li>
-</ul>
+<ol id="notifications">
+	<li ng-repeat="alert in alerts" class="message {{::alert.type}}">
+		<div class="button close" ng-if="!alert.accept" ng-click="closeAlert($index)">Close</div>
+		<div class="button decline" ng-if="alert.decline" ng-click="alert.decline($index)">Decline</div>
+		<div class="button accept" ng-if="alert.accept" ng-click="alert.accept($index)">Accept</div>
+		<strong>{{::alert.title}}</strong>
+		<br />{{::alert.body}}
+	</li>
+</ol>
