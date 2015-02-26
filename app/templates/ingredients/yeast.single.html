@@ -5,7 +5,7 @@
 		<span ng-show="yeast.supplier.name">{{yeast.supplier.name}} / {{yeast.brewerySource}}</span>
 	</div>
 
-	<nav class="sub-nav" ng-show="user || user.role === 'admin'">
+	<nav class="sub-nav" ng-show="user.username === 'torstein' || user.role === 'admin'">
 		<ul>
 			<li><a ui-sref="yeasts.edit({id:yeast.yeastId})">Edit</a></li>
 		</ul>

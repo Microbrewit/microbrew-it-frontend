@@ -5,7 +5,7 @@
 		<span ng-show="hop.origin.name">{{hop.origin.name}}</span>
 	</div>
 
-	<nav class="sub-nav" ng-show="user || user.role === 'admin'">
+	<nav class="sub-nav" ng-show="user.username === 'torstein' || user.role === 'admin'">
 		<ul>
 			<li><a ui-sref="hops.edit({id:hop.hopId})">Edit</a></li>
 		</ul>
