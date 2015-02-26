@@ -42,8 +42,8 @@ angular.module('Microbrewit/core/Network')
 
 		# Update user
 		factory.update = (userObj) ->
-			if $rootScope?.user.username and userObj.username? and userObj.email?
-				mbRequest.put("#{endpoint}/#{userObj.username}")
+			if userObj.username?
+				return mbRequest.put("#{endpoint}/#{userObj.username}")
 			else
 				notification.add
 					title: "Could not update user"
@@ -57,4 +57,6 @@ angular.module('Microbrewit/core/Network')
 		factory.resend = (userObj) ->
 			if $rootScope.user?.username and userObj.username?
 				mbRequest.post("#{endpoint}/resend?username=#{userObj.username}")
+
+		return factory
 ])

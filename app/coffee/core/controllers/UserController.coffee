@@ -11,20 +11,47 @@ angular.module('Microbrewit').controller('UserController', [
 	'localStorage'
 	'$rootScope'
 	'convert'
-	($scope, mbUser, $state, localStorage, $rootScope, convert) ->
+	'mbAccount'
+	($scope, mbUser, $state, localStorage, $rootScope, convert, mbAccount) ->
 
 		setupSettings = () ->
 			console.log 'weightLarge: ' + $rootScope.user?.settings?.largeWeight
 			$scope.weightAvailable = [$scope.user?.settings?.largeWeight].concat(convert.available($scope.user?.settings?.largeWeight))
+			$scope.liquidsAvailable = [$scope.user?.settings?.liquid].concat(convert.available($scope.user?.settings?.liquid))
+			$scope.temperaturesAvailable = [$scope.user?.settings?.temperature].concat(convert.available($scope.user?.settings?.temperature))
+			$scope.abvFormulasAvailable = ['microbrewit']
+			$scope.abvUnitsAvailable = ['sg']
+			$scope.bitternessFormulasAvailable = ['tinseth']
+			$scope.bitternessUnitsAvailable = ['ibu']
+			$scope.colourFormulasAvailable = ['morey']
+			$scope.colourUnitsAvailable = ['srm']
+
+			console.log $scope.user?.settings?.liquid
 
 			$scope.settings = {
 				largeWeight: $scope.weightAvailable[0]
 				smallWeight: $scope.weightAvailable[$scope.weightAvailable.indexOf($scope.user?.settings?.smallWeight)]
+				liquid: $scope.liquidsAvailable[0]
+				temperature: $scope.temperaturesAvailable[0]
+				abv:
+					formula: $scope.abvFormulasAvailable[$scope.abvFormulasAvailable.indexOf($scope.user.settings.abv.formula)]
+					unit: $scope.abvUnitsAvailable[$scope.abvUnitsAvailable.indexOf($scope.user.settings.abv.unit)]
+				bitterness:
+					formula: $scope.bitternessFormulasAvailable[$scope.bitternessFormulasAvailable.indexOf($scope.user.settings.bitterness.formula)]
+					unit: $scope.bitternessUnitsAvailable[$scope.bitternessUnitsAvailable.indexOf($scope.user.settings.bitterness.unit)]
+				colour:
+					formula: $scope.colourFormulasAvailable[$scope.colourFormulasAvailable.indexOf($scope.user.settings.colour.formula)]
+					unit: $scope.colourUnitsAvailable[$scope.colourUnitsAvailable.indexOf($scope.user.settings.colour.unit)]
 			}
 
-			$scope.liquidAvailable = convert.available('liters').concat(['liters'])
+		console.log $scope.user
 
 		if $state.current.name is 'account.settings'
+
+			$scope.updateUser = () ->
+				$scope.user.settings = $scope.settings
+
+				mbAccount.update($scope.user).then((obj) -> console.log obj)
 
 			if $scope.user?.settings?
 				setupSettings()
