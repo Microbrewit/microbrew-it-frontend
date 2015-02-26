@@ -1,3 +1,15 @@
 .single-fermentable {
 
 }
+
+.hops-list, .fermentables-list, .yeasts-list {
+	td, th {
+		text-align:left;
+	}
+	tr:nth-child(odd) {
+		background: #ddd;
+	}
+	tr:nth-child(1) {
+		background: #666;
+	}
+}

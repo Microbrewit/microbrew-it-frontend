@@ -3,23 +3,57 @@ button {
 }
 
 button.submit {
-	@include col(1/8, 5px, false);
+	display: block;
+	padding: 15px 25px;
 	margin: 0 auto;
 	height: 50px;
 	font-size: 15px;
 	line-height: 25px;
 	background: #CD2729;
-	color: white;border:0;
+	color: white;
+	border:0;
+
+	&:hover {
+		cursor: pointer;
+		background: #8F1B1C;
+	}
+
+	&.disabled {
+		background: #ccc;
+		color: #666;
+		&:hover {
+			background: #ccc;
+			color: #666;
+		}
+	}
+
 }
 
 button.loading, .ng-submitted button.submit {
 	background: #ccc;
 	border: #aaa;
 	color: #666;
+	position: relative;
+	padding-right: 50px;
 
-	padding-right: 20px;
+	&:hover {
+		background: #ccc;
+		color: #666;
+		cursor: default;
+	}
 
-	background-image: url(images/spinner.gif) no-repeat right center;
+	&:after {
+		@extend .spinner-icon;
+
+		border-top-color:  #666 !important;
+		border-left-color: #666 !important;
+		
+		content: '';
+		position: absolute;
+		top: 50%;
+		margin-top: -7px;
+		right: 25px;
+	}
 }
 
 .success {

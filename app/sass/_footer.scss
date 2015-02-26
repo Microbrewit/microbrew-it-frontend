@@ -5,8 +5,6 @@
 	color: white;
 	bottom: 0;
 
-	padding-bottom: 75px;
-
 	.footer-inner-wrapper {
 		width: 100%;
 				
@@ -45,45 +43,21 @@
 .footer-content {
 	@extend .inner-wrapper;
 
-	margin-top: 50px;
+	margin-top: 0px;
 	padding: 50px 0;
 
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-
-	h3 {
-		margin: 0;
-		padding-top: 0;
-		font-weight: normal;
-		font-size: $normal-font-size;
-	}
-	div {
-		@include col(1/5);
-		padding-bottom: 0;
-		margin-bottom: 0;
-	}
-	.footer-logo {
-		border-right: 1px solid #ccc;
-		height: 103px;
-		@include col(1/5);
-		text-align:center;
-
-	}
-	.connect-links {
-		@include col(2/5);
-
-		li {
-			@include col(1/6, 0);
-		}
-	}
 	ul, li {
 		list-style:none;
 		margin:0;
 		padding: 0;
 	}
-}
-
-.copyright {
+	ul {
+		text-align:center;
+		margin-bottom: 25px;
+	}
+	li {
+		display: inline-block;
+		padding: 25px 5px;
+	}
 	text-align:center;
-	margin: 50px auto;
 }

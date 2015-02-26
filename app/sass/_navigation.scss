@@ -26,6 +26,7 @@
 		margin: 0 auto;
 	}
 	li {
+		box-sizing: border-box;
 		float:left;
 		height: 50px;
 		line-height: 50px;
@@ -103,6 +104,7 @@ h1 + .sub-nav {
 		}
 
 		a {
+			box-sizing: border-box;
 			border: 1px solid #ccc;
 			margin:0;
 			margin-left: -1px;
@@ -120,3 +122,17 @@ h1 + .sub-nav {
 	}
 }
 
+@media only screen and (max-width: 760px), (min-device-width: 200px) and (max-device-width: 1024px)  {
+	#main-navigation {
+		width: 100%;
+		height: auto;
+		ul {
+			display: block;
+		}
+		li {
+			width: 50%;
+			float:left !important;
+			border-bottom: 1px solid rgba(0,0,0,0.2);
+		}
+	}
+}

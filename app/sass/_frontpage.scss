@@ -83,3 +83,9 @@ html, body, .main, .ui-view-container {
 	} 
 
 }
+
+@media only screen and (max-width: 760px), (min-device-width: 200px) and (max-device-width: 1024px)  {
+	.frontpage header {
+		margin-top: 0;
+	}
+}

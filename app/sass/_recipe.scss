@@ -136,13 +136,15 @@ ul, li {
 	font-size: 40px;
 	text-align:center;
 	line-height: 50px;
+	margin-right: 25px;
 	@include col(1/20, 0);
 }
 .step-meta {
 	background: rgba(0,0,0,0.1);
 	line-height: 46px;
-	@include col(19/20, 0);
-	padding: 0 25px;
+	width: 100%;
+	padding: 0;
+	padding-right: 5px;
 
 	span {
 		padding:0;

@@ -32,7 +32,7 @@ $font-recipe-name: 20px;
 $link-color: #00ABD6;
 
 // --- Lattice configuration ---
-$grid-width: 1000px;
+$grid-width: 100%;
 $number-of-columns: 12;
 $default-grid-gutter: 25px;
 @import "../../bower_components/lattice/scss/grid";
@@ -87,7 +87,7 @@ a {
 }
 .right { float:right !important; }
 
-.loading {
+.fullscreenLoading {
 	width: 100%;
 	height:100%;
 	border-radius: 5px;
@@ -149,13 +149,11 @@ h1 + .subheader {
 .main {
 	@extend .cf;
 	box-shadow: 0 9px 9px rgba(0,0,0,0.5);
-	background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
-	background-image:-moz-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
-	background-image:radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
 
 	position: relative;
 	z-index: 3;
 	background: #FBFBFB;
+	width: 100%;
 }
 
 .inner-wrapper {
@@ -167,26 +165,50 @@ h1 + .subheader {
 	clear: both;
 }
 
+@media only screen and (max-width: 760px), (min-device-width: 200px) and (max-device-width: 1024px)  {
+	.inner-wrapper {
+		width: 100%;
+		padding: 0 25px;
+		height: auto;
+		margin: 25px auto;
+	}
+}
+
 #notifications {
 	position: fixed;
-	right: 20px;
-	top: 55px;
-	@include col(3, 0, false);
+	left:0;
+	right:0;
+	top:0;
+	// right: 20px;
+	// top: 55px;
+	// @include col(3, 0, false);
 
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	z-index: 100;
 
+	.button {
+		float:right;
+		background: rgba(0,0,0,0.3);
+		padding: 10px 15px;
+		margin-left: 10px;
+
+		&:hover {
+			cursor: pointer;
+			background: rgba(0,0,0,0.5);
+		}
+	}
 
 	li {
-		list-style: none;
+		@extend .cf;
+		// list-style: none;
 		background: rgba(255,255,255,0.8);
 		border: 1px solid #ccc;
 		color: #333;
-		padding: 25px;
+		padding: 15px 25px;
 		margin-bottom: 5px;
-		border-radius: 5px;
+		// border-radius: 5px;
 
 		&:hover {
 			cursor: pointer;
@@ -325,5 +347,6 @@ h1 + .subheader {
 @import "brewery";
 @import "recipe";
 @import "angular-loading-bar";
+@import "ng-sortable";
 
 // External dependencies

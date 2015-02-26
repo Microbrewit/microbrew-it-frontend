@@ -30,3 +30,28 @@
 		color: #999;
 	}
 }
+
+.settings {
+	position: relative;
+	padding: 15px;
+	text-align:center;
+	background: #efefef;
+
+	// &:before {
+	// 	position:absolute;
+	// 	left:0;
+	// 	right:0;
+	// 	top:0;
+	// 	bottom:0;
+	// 	border:1px solid white;
+	// 	content: '';
+	// }
+
+	&:nth-of-type(odd) {
+		background: #ddd;
+	}
+
+	strong, select {
+		margin-right: 15px;
+	}
+}
