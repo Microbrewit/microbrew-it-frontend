@@ -43,6 +43,9 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 					$scope.breweries = apiResponse.breweries
 				)
 
+			else if currentState is 'account.breweries'
+				$scope.breweries = $scope.user.breweries
+
 		setControllerState()
 		$rootScope.$on('$stateChangeStart', setControllerState)
 ])

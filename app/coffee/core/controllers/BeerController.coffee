@@ -56,6 +56,9 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 				get.beers({latest:true}).then((apiResponse) ->
 					$scope.brews = apiResponse.beers
 				)
+			else if currentState is 'account.beers'
+				$scope.brews = $scope.user.beers
+				
 			else if currentState is 'brews.search'
 				$scope.headers = 
 					title: 'Beer'
