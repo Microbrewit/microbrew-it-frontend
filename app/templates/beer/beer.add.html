@@ -25,6 +25,7 @@
 
 		<ul class="meta brewers" ng-show="user">
 			<li class="brewer"><gravatar style="display: inline-block;"size="25px" url="{{user.gravatar}}"></gravatar> {{user.username}}</li>
+			<li ng-repeat="brewery in beer.breweries">Brewery: {{brewery.name}}</li>
 		</ul>
 
 		<div class="meta meta-calculations">

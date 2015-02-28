@@ -92,9 +92,12 @@ angular.module('Microbrewit/core/Network')
 # @param [Beer Object] beer
 # @return [Object] postRecipe A beer object readied for post/put
 parseBeerPostObject = (beer) ->
+	console.log 'BEER HAS BREWERIES?'
+	console.log beer.breweries
 	postRecipe = {
 		name: beer.name
 		beerStyle: beer.beerStyle
+		breweries: beer.breweries
 		recipe: {
 			volume: beer.recipe.volume
 			efficiency: beer.recipe.efficiency

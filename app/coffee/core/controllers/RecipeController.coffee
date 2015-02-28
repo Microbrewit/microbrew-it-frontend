@@ -139,7 +139,10 @@ mbit.controller('RecipeController', [
 						# We need to refresh token
 						mbUser.login(false,false,$scope.token).then(mbPost.recipe($scope.beer).async().then())
 					else
-						mbPost.recipe($scope.beer).async().then()
+						console.log 'HAS BREWERY AT SAVE' if $scope.beer.breweries.length > 0
+						mbBeer.add($scope.beer).then((beer) ->
+							$state.go('brews.single({id:beer.id})')
+						)
 
 			if currentState is 'fork' or currentState is 'edit'
 
@@ -246,6 +249,12 @@ mbit.controller('RecipeController', [
 							}
 						]
 						notes: ""
+
+				# If adding to a brewery
+				if $scope.brewery
+					console.log 'HAS BREWERY IN SCOPE'
+					$scope.beer.breweries.push _.cloneDeep $scope.brewery
+					$scope.brewery = undefined
 
 				$scope.addMashStep()
 				$scope.addBoilStep()
