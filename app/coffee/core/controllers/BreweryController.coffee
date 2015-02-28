@@ -25,6 +25,10 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 				breweryId ?= $state.params.id
 				get.brewery(breweryId).then((apiResponse) ->
 					# $scope.loading--
+					$scope.addBeer = () ->
+						console.log 'ADD BEER'
+						$rootScope.brewery = _.cloneDeep $scope.brewery
+						$state.go('add')
 					$scope.brewery = apiResponse.breweries[0]
 					subHeader = $scope.brewery.type
 					subHeader += " since #{$scope.brewery.established}" if $scope.brewery.established?
