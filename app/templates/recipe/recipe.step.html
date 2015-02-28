@@ -54,7 +54,7 @@
 			<td><select ng-model="hop.hopForm" ng-options="type.name for type in hopForms"></select></td>
 			<td><input type="text" ng-model="hop.aaValue"/>%</td>
 			<td><input type="text" ng-model="hop.betaValue"/>%</td>
-			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="1.08" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
+			<td><mb-bitterness ingredient="hop" boilVolume="{{step.volume}}" boilGravity="{{beer.recipe.og}}" boilTime="{{step.length}}" formula="{{user.settings.bitterness.formula}}" change="updateHopsValues"/></td>
 			<td class="form-button"><button class="remove form-button" ng-click="removeFromStep(hop, step.hops)">X</button></td>
 		</tr>
 	</table>
@@ -96,7 +96,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td><input type="text" ng-model="yeast.amount"/></td>
+			<td><input type="text" ng-model="yeast.amount"/> BN Cells</td>
 			<td>{{yeast.attenutionRange}}</td>
 			<td>{{yeast.flocculation}}</td>
 			<td>{{yeast.alcoholTolerance}}</td>
