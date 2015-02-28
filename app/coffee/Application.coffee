@@ -11,13 +11,14 @@ angular.module('Microbrewit',
 		'Microbrewit/core/Utils'
 		'ngDrop'
 		'ui.select'
+		'ui.sortable'
 	]
 )
 	.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
 		# Enable CORS
 		$httpProvider.defaults.useXDomain = true
 
-		$locationProvider.html5Mode(true)
+		#$locationProvider.html5Mode(true)
 
 		# For any unmatched url, redirect to /state1
 		$urlRouterProvider
