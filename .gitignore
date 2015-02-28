@@ -7,3 +7,6 @@ tmp
 sftpCache.json
 
 microbrew-it.json
+
+*.db
+icons-raw/Thumbs.db
