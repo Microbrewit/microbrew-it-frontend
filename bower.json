@@ -10,6 +10,6 @@
     "angular-loading-bar": "~0.6.0",
     "better-module": "https://gist.github.com/a0fea86616d968a706f6.git",
     "ng-sortable": "~1.1.9",
-    "ui-select": "*"
+    "angular-ui-select": "*"
   }
 }
