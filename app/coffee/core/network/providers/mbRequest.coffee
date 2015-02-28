@@ -28,10 +28,20 @@ angular.module('Microbrewit/core/Network')
 
 			# Create promise
 			promise = $http.jsonp(requestUrl, {})
-				.error((data, status) ->
+				.error((data, status, headers) ->
 					$rootScope.loading--
 					console.error("GET #{requestUrl} gave HTTP #{status}")
 					console.error(data)
+
+					if headers('refresh_token')
+						token = 
+							expires: new Date(headers('.expires')).getTime()
+							token: headers('access_token')
+							refresh: headers('refresh_token')
+
+						if localStorage.getItem('token')
+							localStorage.setItem('token', token)
+
 					notification.add
 						title: "Error #{status}" # required
 						body: 'Could not get data from server' # optional
@@ -42,7 +52,7 @@ angular.module('Microbrewit/core/Network')
 				.then((response) ->
 
 					# Save auth token
-					if response.headers('access_token')
+					if response.headers('refresh_token')
 						token = 
 							expires: new Date(response.headers('.expires')).getTime()
 							token: response.headers('access_token')
@@ -75,9 +85,18 @@ angular.module('Microbrewit/core/Network')
 						}
 					}
 				)
-					.error((data, status) ->
+					.error((data, status, headers) ->
 						$rootScope.loading--
 						console.log data
+
+						if headers('refresh_token')
+							token = 
+								expires: new Date(headers('.expires')).getTime()
+								token: headers('access_token')
+								refresh: headers('refresh_token')
+
+							if localStorage.getItem('token')
+								localStorage.setItem('token', token)
 
 						for key, value of data.ModelState
 							title = 'Error: ' + value[0]
@@ -108,14 +127,15 @@ angular.module('Microbrewit/core/Network')
 							type: 'success'
 							time: 5000
 							
-						token = 
-							expires: new Date(response.headers('.expires')).getTime()
-							token: response.headers('access_token')
-							refresh: response.headers('refresh_token')
+						if response.headers('refresh_token')
+							token = 
+								expires: new Date(response.headers('.expires')).getTime()
+								token: response.headers('access_token')
+								refresh: response.headers('refresh_token')
 
-						# Save new auth token
-						$rootScope.token = token
-						localStorage.setItem('token', token)
+							# Save new auth token
+							$rootScope.token = token
+							localStorage.setItem('token', token)
 
 						$rootScope.loading--
 						return response.data
@@ -125,7 +145,7 @@ angular.module('Microbrewit/core/Network')
 
 		request.put = (requestUrl, object) ->
 			requestUrl = "#{ApiUrl}#{requestUrl}"
-			console.log "mbPut: #{requestUrl}"
+			console.log "mbRequest.put: #{requestUrl}"
 
 			$rootScope.loading++
 			request = $http.put(
@@ -138,10 +158,19 @@ angular.module('Microbrewit/core/Network')
 					}
 				}
 			)
-				.error((data, status) ->
+				.error((data, status, headers) ->
 					$rootScope.loading--
 					console.error(status)
 					console.error(data)
+
+					if headers('refresh_token')
+						token = 
+							expires: new Date(headers('.expires')).getTime()
+							token: headers('access_token')
+							refresh: headers('refresh_token')
+
+						if localStorage.getItem('token')
+							localStorage.setItem('token', token)
 
 					title = "Could not update"
 					if status is 401
@@ -157,14 +186,21 @@ angular.module('Microbrewit/core/Network')
 						time: 2000
 				)
 				.then((response) ->
-					token = 
-						expires: new Date(response.headers('.expires')).getTime()
-						token: response.headers('access_token')
-						refresh: response.headers('refresh_token')
 
-					# Save new auth token
-					$rootScope.token = token
-					localStorage.setItem('token', token)
+					if response.headers('refresh_token')
+						token = 
+							expires: new Date(response.headers('.expires')).getTime()
+							token: response.headers('access_token')
+							refresh: response.headers('refresh_token')
+
+						# Save new auth token
+						$rootScope.token = token
+						localStorage.setItem('token', token)
+					
+					notification.add
+						title: 'Updated Successfully'
+						type: 'success'
+						time: 500
 
 					$rootScope.loading--
 					return response.data

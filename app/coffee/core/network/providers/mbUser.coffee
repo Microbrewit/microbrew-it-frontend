@@ -1,4 +1,3 @@
-# API USER methods
 # 
 # Methods for gettings, setting, logging in and out users.
 #
@@ -43,6 +42,8 @@ angular.module('Microbrewit/core/Network')
 			console.log "username: #{username}"
 			# AUTH using token
 			if token
+				console.log "Using refresh token"
+				console.log token.refresh
 				dataPayload = "grant_type=refresh_token&refresh_token=#{token.refresh}"
 
 			# AUTH using un/pw
@@ -63,7 +64,7 @@ angular.module('Microbrewit/core/Network')
 			})
 			.error((data, status) ->
 				$rootScope.token = null
-				localStorage.removeItem('token')
+				#localStorage.removeItem('token')
 				$rootScope.user = null
 				console.log 'We received error'
 				notification.add
