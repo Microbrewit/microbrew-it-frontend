@@ -66,6 +66,25 @@
 		</div>
 	</section>
 
+	<section class="sparge steps">
+		<div class="inner-wrapper">
+			<h2>Sparge</h2>
+			<div class="step-meta" title="Fly sparge is when you add water slowly to the malt which then trickles into the boil kettle. Batch sparge is when you submerge the malt in the sparge water and then add it to the boil kettle.">
+				<div class="step-number">{{beer.recipe.spargeStep.stepNumber}}</div>
+				<span class="step-type">Sparge</span>
+				<span class="values">
+					<label for="type">Type: </label>
+					<select id="type" style="width: auto;display:inline-block" ng-model="beer.recipe.spargeStep.type" ng-options="type for type in spargeTypes"></select>
+
+					<label for="amount">Amount: </label><mb-convert id="amount" modelunit="liters" localunit="{{user.settings.liquid}}" modelvalue="beer.recipe.spargeStep.amount"></mb-convert>
+
+					<label for="temperature">Temperature: </label><mb-convert id="temperature" modelunit="celcius" localunit="{{user.settings.temperature}}" modelvalue="beer.recipe.spargeStep.temperature"></mb-convert>
+				</span>
+			</div>
+			<textarea class="step-notes" ng-model="beer.recipe.spargeStep.notes" placeholder="notes"></textarea>
+		</div>
+	</section>
+
 	<section class="boil steps">
 		<div class="inner-wrapper">
 			<h2>Boil</h2>

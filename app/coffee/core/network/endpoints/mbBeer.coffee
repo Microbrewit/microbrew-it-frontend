@@ -88,7 +88,7 @@ angular.module('Microbrewit/core/Network')
 ])
 
 # Recreate the recipe object
-# to make sure that we are not posting unwated stuff
+# to make sure that we are not posting unwanted stuff
 # @param [Beer Object] beer
 # @return [Object] postRecipe A beer object readied for post/put
 parseBeerPostObject = (beer) ->
@@ -97,6 +97,7 @@ parseBeerPostObject = (beer) ->
 	postRecipe = {
 		name: beer.name
 		beerStyle: beer.beerStyle
+		brewers: beer.brewers
 		breweries: beer.breweries
 		recipe: {
 			volume: beer.recipe.volume
@@ -104,6 +105,7 @@ parseBeerPostObject = (beer) ->
 			og: beer.recipe.og
 			fg: beer.recipe.fg
 			mashSteps: []
+			sparge: beer.recipe.sparge
 			boilSteps: []
 			fermentationSteps: []
 		}

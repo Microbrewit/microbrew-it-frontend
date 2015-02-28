@@ -15,15 +15,19 @@ mbit.controller('RecipeController', [
 	'mbBeer'
 	($rootScope, $scope, mbGet, mbPost, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
 		$scope.hopTypes = []
+		$scope.spargeTypes = ['fly sparge', 'batch sparge']
 
 		# There must be a better way
 		updateStepNumbers = () ->
 			for i in [0...$scope.beer.recipe.mashSteps.length]
 				$scope.beer.recipe.mashSteps[i].stepNumber = i+1
+
+			$scope.beer.recipe.spargeStep.stepNumber = $scope.beer.recipe.mashSteps.length + 1
+
 			for i in [0...$scope.beer.recipe.boilSteps.length]
-				$scope.beer.recipe.boilSteps[i].stepNumber = $scope.beer.recipe.mashSteps.length+i+1
+				$scope.beer.recipe.boilSteps[i].stepNumber = $scope.beer.recipe.mashSteps.length+i+2
 			for i in [0...$scope.beer.recipe.fermentationSteps.length]
-				$scope.beer.recipe.fermentationSteps[i].stepNumber = $scope.beer.recipe.mashSteps.length+$scope.beer.recipe.boilSteps.length+i+1
+				$scope.beer.recipe.fermentationSteps[i].stepNumber = $scope.beer.recipe.mashSteps.length+$scope.beer.recipe.boilSteps.length+i+2
 
 		# Get ingredients, beerstyles, etc.
 		mbGet.hopForms().then((response) ->
@@ -196,15 +200,6 @@ mbit.controller('RecipeController', [
 				)
 
 			else
-				mbGet.beerstyles().then((response) ->
-
-					$scope.beerStyles = response.beerStyles
-					$scope.beer.beerStyle = $scope.beerStyles[0]
-
-					$scope.groupBeerstyles = (style)->
-						return style.superBeerStyle.name if style.superBeerStyle?.name?
-						return style.name
-				)
 
 				$scope.beer = 
 					name: ''
@@ -240,6 +235,15 @@ mbit.controller('RecipeController', [
 						volume: 30
 						dataType: 'recipe'
 						mashSteps: []
+
+						spargeStep: {
+							stepNumber: 0
+							amount: 5
+							temperature: 78
+							type: $scope.spargeTypes[0]
+							notes: ''
+						}
+
 						boilSteps: []
 						fermentationSteps: []
 						priming: [
@@ -249,6 +253,16 @@ mbit.controller('RecipeController', [
 							}
 						]
 						notes: ""
+
+				mbGet.beerstyles().then((response) ->
+
+					$scope.beerStyles = response.beerStyles
+					$scope.beer.beerStyle = $scope.beerStyles[0]
+
+					$scope.groupBeerstyles = (style)->
+						return style.superBeerStyle.name if style.superBeerStyle?.name?
+						return style.name
+				)
 
 				# If adding to a brewery
 				if $scope.brewery
