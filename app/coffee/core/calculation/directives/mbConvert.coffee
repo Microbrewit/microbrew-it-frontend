@@ -20,9 +20,21 @@ angular.module('Microbrewit/core/Calculation')
 				scope.conversions = available
 
 				updateLocalValue = ->
-					if scope.modelvalue? and attrs.modelunit? and scope.localunit?
-						value = +(convert.convert(scope.modelvalue, attrs.modelunit, scope.localunit))
-						scope.localvalue = value if value?
+					console.log 'update local value'
+					console.log "modelvalue #{scope.modelvalue} - modelunit #{attrs.modelunit} - localunit #{scope.localunit}"
+					scope.modelvalue = 0 unless scope.modelvalue?
+
+					modelvalue = scope.modelvalue
+					modelvalue ?= 0
+
+					localunit = scope.localunit
+
+					console.log "typeof localunit: #{typeof localunit}"
+					scope.localunit = attrs.modelunit if localunit is ''
+
+					if modelvalue? and attrs.modelunit? and localunit?
+						value = +(convert.convert(modelvalue, attrs.modelunit, localunit))
+						scope.localvalue = value if value? and not isNaN(value)
 
 				updateModelValue = ->
 					if scope.localvalue?
