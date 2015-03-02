@@ -4,14 +4,13 @@
 angular.module('Microbrewit', 
 	[
 		'ui.router' # External
+		'ui.select' # External
+		'ui.sortable' # External
 		'angular-loading-bar' # External
 		'Microbrewit/core/Calculation'
 		'Microbrewit/core/Network'
 		'Microbrewit/core/Notifications'
 		'Microbrewit/core/Utils'
-		'ngDrop'
-		'ui.select'
-		'ui.sortable'
 	]
 )
 	.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
@@ -207,7 +206,7 @@ angular.module('Microbrewit',
 				controller: "RecipeController"
 			})
 
-			
+			# Company
 			.state('privacyPolicy', {
 				url: "/privacy-policy"
 				templateUrl: "templates/company/privacy-policy.html"
