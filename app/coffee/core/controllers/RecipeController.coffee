@@ -4,7 +4,6 @@ mbit.controller('RecipeController', [
 	'$rootScope'
 	'$scope'
 	'mbGet'
-	'mbPost'
 	'localStorage'
 	'sessionStorage'
 	'$stateParams'
@@ -13,7 +12,7 @@ mbit.controller('RecipeController', [
 	'$state'
 	'mbUser'
 	'mbBeer'
-	($rootScope, $scope, mbGet, mbPost, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
+	($rootScope, $scope, mbGet, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
 		$scope.hopTypes = []
 		$scope.spargeTypes = ['fly sparge', 'batch sparge']
 
@@ -137,15 +136,17 @@ mbit.controller('RecipeController', [
 				$scope.submitRecipe = () ->
 					if not $scope.token?
 						# we need username and password
-						mbUser.login($scope.username,$scope.password,false).then(mbPost.recipe($scope.beer).async().then())
+						mbUser.login($scope.username,$scope.password,false).then(mbBeer.add($scope.beer).then())
 
 					else if $scope.token?.token?.expires <= new Date().getTime()
 						# We need to refresh token
-						mbUser.login(false,false,$scope.token).then(mbPost.recipe($scope.beer).async().then())
+						mbUser.login(false,false,$scope.token).then(mbBeer.add($scope.beer).then())
 					else
 						console.log 'HAS BREWERY AT SAVE' if $scope.beer.breweries.length > 0
-						mbBeer.add($scope.beer).then((beer) ->
-							$state.go('brews.single({id:beer.id})')
+						mbBeer.add($scope.beer).then((response) ->
+							console.log 'response'
+							console.log response.beer
+							$state.go('brews.single({id:response.beer.id})')
 						)
 
 			if currentState is 'fork' or currentState is 'edit'
@@ -194,13 +195,15 @@ mbit.controller('RecipeController', [
 
 					else if currentState is 'edit'
 						$scope.submitRecipe = () ->
-							mbBeer.update($scope.beer).then()
+							mbBeer.update($scope.beer).then(() ->
+								$state.go('brews.single({id:$scope.beer.id})')
+							)
 					
 					mbGet.beerstyles().then((response) -> $scope.beerStyles = response.beerStyles)
 				)
 
 			else
-
+				console.log 'SET DEFAULT RECIPE VALUES'
 				$scope.beer = 
 					name: ''
 					mcu: 0
@@ -278,7 +281,7 @@ mbit.controller('RecipeController', [
 			sessionId = "recipe-#{new Date().getTime()}"
 
 		setControllerState()
-		$rootScope.$on('$stateChangeStart', setControllerState)
+		$scope.$on('$stateChangeStart', setControllerState)
 
 		$scope.updateFermentableValues = () ->
 			totalMCU = 0
