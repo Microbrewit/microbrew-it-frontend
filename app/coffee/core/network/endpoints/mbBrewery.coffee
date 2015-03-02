@@ -89,6 +89,8 @@ angular.module('Microbrewit/core/Network')
 		# @todo implement
 		factory.removeMember = (brewery, user) ->
 
+		return factory
+
 ])
 
 # We'll most likely have to do something with breweries before posting

@@ -7,13 +7,12 @@ angular.module('Microbrewit/core/Network')
 .factory('mbUser', [
 	'$http'
 	'mbGet'
-	'mbPost'
 	'ClientUrl'
 	'$rootScope'
 	'localStorage'
 	'notification'
 	'ApiUrl'
-	($http, mbGet, mbPost, ClientUrl, $rootScope, localStorage, notification, ApiUrl) ->
+	($http, mbGet, ClientUrl, $rootScope, localStorage, notification, ApiUrl) ->
 		factory = {}
 
 		# Get a single user (by id) or a group of users (no ID)
