@@ -86,6 +86,14 @@ a {
 	margin: 0 auto;
 	text-align: center;
 }
+
+.half {
+	@include col(5.75/12);
+	&:nth-child(odd) {
+		@include offset('right', 0.5/12);
+	}
+}
+
 .right { float:right !important; }
 
 .fullscreenLoading {

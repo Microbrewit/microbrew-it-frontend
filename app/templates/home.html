@@ -1,33 +1,63 @@
 <article class="frontpage">
 	<header>
 		<div ng-if="!user.username" class="header-content-wrapper">
-			<h1>A home for brewers</h1>
-			<div class="subheader">Create, discover and share great beer recipes</div>
+			<h1>Welcome to the alpha</h1>
+			<div class="subheader">
+				Already have an account?
+			</div>
 
-			<button class="call-to-action create" ui-sref="add">CREATE</button>
+			<button class="call-to-action create" ui-sref="user.login">LOGIN</button>
 		</div>
 		<div ng-if="user.username" class="header-content-wrapper">
 			<h1>Welcome back, {{::user.username}}!</h1>
-			<div class="subheader">Create, discover and share great beer recipes</div>
+			<div class="subheader"></div>
 
-			<button class="call-to-action create" ui-sref="add">CREATE</button>
+			<button class="call-to-action create" ui-sref="add">CREATE NEW RECIPE</button>
 		</div>
 	</header>
 
-	<div class="the-content">
+	<section class="the-content">
 
-		<div ng-if="!user.username">
-			<h2 style="margin-bottom: 0">Currently in closed alpha<br /><small>Please sign in!</small></h2>
-			<div ng-controller="UserController" style="margin-top: -25px;">
-			<div ng-include="'templates/brewers/user.login.html'"></div>
-		</div>
-		</div>
+		<section class="inner-wrapper">
+			<h2>A new home for homebrewers</h2>
+			<h3>Microbrew.it provides you with the tools you need to design the ultimate beer recipes.</h3>
 
-		<div ng-if="user.username" class="inner-wrapper">
-			<h2>Alpha testing phase</h2>
-			<p>Microbrew.it is currently in an early alpha stage. That means not all features we plan for a minimum viable product (MVP) is here yet. It also means that the server and code can be unstable.</p>
-			<p>Thank you for helping us create Microbrew.it!</p>
-		</div>
-	</div>
+			<div class="half">
+				<h3>Customisability</h3>
+				<p>Ever been annoyed by recipes with imperial or metric values? Maybe you are used to entering your grain bill in kilograms instead of pounds? Well, Microbrew.it doesn't care. You can set up your account to use any sort of measurement, and everything will adapt.</p>
+			</div>
+
+			<div class="half">
+				<h3>Tinseth, rager, srm, ebc</h3>
+				<p>There are a lot of formulas and measurement units out there for beer. And we support them all. You can use the industry standard defaults, or you can use good old Rager. Microbrew.it lets you customise your account to use your prefered formulas.
+				</p>
+			</div>
+
+			<div class="half">
+				<h3>Clones</h3>
+				<p>Made the perfect clone recipe of your favourite commercial brew? Or maybe you wish you had a recipe for something you just tasted at the pub? Microbrew.it supports adding clones for your favourite beers. Just search it up in our database and click the "clone" button.</p>
+			</div>
+
+			<div class="half">
+				<h3>Forks</h3>
+				<p>Have you ever thought "hey, this looks good, but I know just what would make it better"? We support forks, a simple way of creating new variations of existing recipes. Simply navigate to any recipe and click the "fork" button to add your variation.</p>
+			</div>
+
+			<div class="half">
+				<h3>Homebreweries</h3>
+				<p>Do you brew with your friends? Here at Microbrew.it you can create and invite members into homebreweries. That way you can cooperate with your friends and collect all your common recipes in one place.</p>
+			</div>
+
+			<div class="half">
+				<h3>And more...</h3>
+				<p>We have even more features planned before the beta. We want to let you import your recipes, log your brew sessions, rate eachothers homebrew and more. Stay tuned!</p>
+			</div>
+		</section>
+	</section>
+
+	<section class="huge-call-to-action">
+		<h2>Stay tuned for the open beta</h2>
+	</section>
+
 
 </article>
