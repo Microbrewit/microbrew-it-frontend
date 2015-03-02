@@ -39,8 +39,9 @@ mbit.controller('SearchController', ['$scope', 'mbSearch', '$stateParams', '$sta
 				endpoint = "search/ingredients"
 			else 
 				endpoint = $scope.endpoint
-			if query? and query.length >= 3
-				search(query, endpoint).async().then((apiResponse) ->
+				
+			if query?.length >= 3
+				search(query, endpoint).then((apiResponse) ->
 					if $scope.endpoint is "search" or $scope.endpoint is "ingredients"
 
 						parsed = []
