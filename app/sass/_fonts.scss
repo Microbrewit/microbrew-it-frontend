@@ -1,0 +1,41 @@
+@font-face{ 
+	font-family: 'Kingthings Petrock';
+	src: url('../fonts/Kingthings_Petrock-webfont.eot');
+	src: url('../fonts/Kingthings_Petrock-webfont.eot?iefix') format('eot'),
+		 url('../fonts/Kingthings_Petrock-webfont.woff') format('woff'),
+		 url('../fonts/Kingthings_Petrock-webfont.ttf') format('truetype'),
+		 url('../fonts/Kingthings_Petrock-webfont.svg#webfont') format('svg');
+}
+
+@font-face{ 
+	font-family: 'Source Sans Pro';
+	src: url('../fonts/SourceSansPro-Regular-webfont.eot');
+	src: url('../fonts/SourceSansPro-Regular-webfont.eot?iefix') format('eot'),
+		 url('../fonts/SourceSansPro-Regular-webfont.woff') format('woff'),
+		 url('../fonts/SourceSansPro-Regular-webfont.ttf') format('truetype'),
+		 url('../fonts/SourceSansPro-Regular-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face{ 
+	font-family: 'Source Sans Pro';
+	src: url('../fonts/SourceSansPro-Bold-webfont.eot');
+	src: url('../fonts/SourceSansPro-Bold-webfont.eot?iefix') format('eot'),
+		 url('../fonts/SourceSansPro-Bold-webfont.woff') format('woff'),
+		 url('../fonts/SourceSansPro-Bold-webfont.ttf') format('truetype'),
+		 url('../fonts/SourceSansPro-Bold-webfont.svg#webfont') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face{ 
+	font-family: 'Source Sans Pro';
+	src: url('../fonts/SourceSansPro-Light-webfont.eot');
+	src: url('../fonts/SourceSansPro-Light-webfont.eot?iefix') format('eot'),
+		 url('../fonts/SourceSansPro-Light-webfont.woff') format('woff'),
+		 url('../fonts/SourceSansPro-Light-webfont.ttf') format('truetype'),
+		 url('../fonts/SourceSansPro-Light-webfont.svg#webfont') format('svg');
+	font-weight: light;
+	font-style: normal;
+}

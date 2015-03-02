@@ -182,7 +182,7 @@ module.exports = function (grunt) {
 				files: [ {expand: true, cwd: 'app/', src: ['**/*.html'], dest: 'build/', filter: 'isFile'} ]
 			},
 			images: {
-				files: [ {expand: true, cwd: 'app/', src: ['**/*.{png,jpg,jpeg,gif,ico,svg}'], dest: 'build/', filter: 'isFile'} ]
+				files: [ {expand: true, cwd: 'app/', src: ['**/*.{png,jpg,jpeg,gif,ico,svg,woff,svg,eot,ttf}'], dest: 'build/', filter: 'isFile'} ]
 			}
 		},
 
