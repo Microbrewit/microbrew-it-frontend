@@ -1,17 +1,17 @@
 #main-footer {
 	width: 100%;
 	
-	background: #333;
-	color: white;
+	background: white;
+	color: #333;;
 	bottom: 0;
 
 	.footer-inner-wrapper {
-		width: 100%;
+		margin-bottom: 0;
 				
 	}
 	.logo-text {
-		font-size: 20px;
 		font-family: 'Kingthings Petrock';
+		font-size: 30px;
 	}
 }
 
