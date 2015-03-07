@@ -21,9 +21,6 @@ angular.module('Microbrewit',
 
 		# For any unmatched url, redirect to /state1
 		$urlRouterProvider
-			.when('fermentabledto/:id', 'fermentables/:id')
-			.when('yeastdto/:id', 'yeasts/:id')
-			.when('hopdto/:id', 'hops/:id')
 			.otherwise("/")
 
 		# Now set up the states
@@ -96,14 +93,14 @@ angular.module('Microbrewit',
 				url: '/breweries'
 				templateUrl: "templates/breweries/breweries.list.html"
 			})
+			.state('breweries.search', {
+				url: '/breweries/search/:query'
+				controller: 'BreweryController'
+				templateUrl: "templates/breweries/breweries.list.html"
+			})
 			.state('breweries.single', {
 				url: '/breweries/{id:[0-9]{1,4}}'
 				templateUrl: "templates/breweries/breweries.single.html"
-			})
-			.state('breweries.search', {
-				url: '/breweries/search/{searchTerm}'
-				controller: 'SearchController'
-				templateUrl: "templates/search.html"
 			})
 
 			# Brewers (user) states
@@ -114,6 +111,11 @@ angular.module('Microbrewit',
 			})
 			.state('brewers.list', {
 				url: '/brewers'
+				templateUrl: "templates/brewers/brewers.list.html"
+			})
+			.state('brewers.search', {
+				url: '/brewers/search/:query'
+				controller: 'BrewerController'
 				templateUrl: "templates/brewers/brewers.list.html"
 			})
 			.state('brewers.single', {
@@ -130,11 +132,6 @@ angular.module('Microbrewit',
 				controller: 'UserController'
 				templateUrl: "templates/brewers/user.login.html"
 			})
-			.state('user.register', {
-				url: '/user/register'
-				controller: 'UserController'
-				templateUrl: "templates/brewers/user.login.html"
-			})
 
 			.state('account', {
 				abstract: true
@@ -144,6 +141,10 @@ angular.module('Microbrewit',
 			.state('account.settings', {
 				url: '/user/settings'
 				templateUrl: "templates/brewers/account.settings.html"
+			})
+			.state('account.register', {
+				url: '/user/register'
+				templateUrl: "templates/brewers/account.register.html"
 			})
 			.state('account.beers', {
 				url: '/user/beers'
@@ -174,9 +175,9 @@ angular.module('Microbrewit',
 				templateUrl: "templates/beer/beer.single.html"
 			})
 			.state('brews.search', {
-				url: '/beers/search'
-				controller: 'SearchController'
-				templateUrl: "templates/search.html"
+				url: '/beers/search/:query'
+				controller: 'BeerController'
+				templateUrl: "templates/beer/beer.list.html"
 			})
 
 			# Plain search
