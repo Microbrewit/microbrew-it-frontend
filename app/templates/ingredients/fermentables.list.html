@@ -9,26 +9,11 @@
 	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
 	<section class="the-content the-list">
 		<div class="inner-wrapper">
-			<table class="fermentables-list" cellspacing="0">
-				<tr>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Maltster</th>
-					<th>Origin</th>
-					<th title="Sugar content">PPG</th>
-					<th>Colour</th>
-				</tr>
-				<tr ng-repeat="fermentable in fermentables">
-					<td>
-						<a ui-sref="fermentables.single({id:fermentable.fermentableId})">{{fermentable.name}} </a>
-					</td>
-					<td>{{fermentable.type}}</td>
-					<td>{{fermentable.supplier.name}}</td>
-					<td>{{fermentable.supplier.origin.name}}</td>
-					<td>{{fermentable.ppg}}</td>
-					<td><mb-colour-box style="float:left;" class="colour-box" type="lovibond" colour="{{fermentable.lovibond}}" size="25px"></mb-colour-box>({{fermentable.lovibond}}°L)</td>
-				</tr>
-			</table>
+			<ul class="search-grid-results">
+				<li ng-repeat="result in results">
+					<div ng-include="'templates/ingredients/fermentable.gridItem.html'"></div>
+				</li>
+			</ul>
 		</div>
 	</section>
 </article>

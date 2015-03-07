@@ -1,7 +1,12 @@
 <nav class="sub-nav">
 	<ul>
 		<li ><a ui-sref="breweries.list" ng-class="{active: is('breweries.list')}">Latest</a></li>
-		<li><a ui-sref="breweries.search" ng-class="{active: is('breweries.search')}">Search</a></li>
 		<li ng-if="user.username"><a ui-sref="account.breweries">My Breweries</a></li>
+		<li class="search-box">
+			<form ng-submit="search(searchQuery)">
+				<input ng-model="searchQuery" type="text" placeholder="search"/>
+				<button class="searchButton">Search</button>
+			</form>
+		</li>
 	</ul>
 </nav>

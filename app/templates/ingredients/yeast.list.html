@@ -3,27 +3,11 @@
 	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
 	<section class="the-content the-list">
 		<div class="inner-wrapper">
-			<table class="yeasts-list" cellspacing="0">
-				<tr>
-					<th>Code</th>
-					<th>Name</th>
-					<th>Supplier</th>
-					<th>Type</th>
-					<th>Temperature</th>
-					<th>Flocculation</th>
-					<th>Alcohol Tolerance</th>
-				</tr>
-				<tr ng-repeat="yeast in yeasts">
-					<td>{{yeast.productCode}}</td>
-					<td><a ui-sref="yeasts.single({id:yeast.yeastId})">{{yeast.name}}</a></td>
-					<td>{{yeast.supplier.name}}</td>
-					<td>{{yeast.type}}</td>
-					<td>{{yeast.temperaturelow}} - {{yeast.temperaturehigh}}</td>
-					<td>{{yeast.flocculation}}</td>
-					<td>{{yeast.alcoholtolerance}}</td>
-					<td><a ui-sref="yeasts.edit({id:yeast.yeastId})">edit</a></td>
-				</tr>
-			</table>
+			<ul class="search-grid-results">
+				<li ng-repeat="result in results">
+					<div ng-include="'templates/ingredients/yeast.gridItem.html'"></div>
+				</li>
+			</ul>
 		</div>
 	</section>
 </article>

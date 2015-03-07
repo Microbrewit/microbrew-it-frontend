@@ -13,7 +13,7 @@
 		<div class="subheader">Account and settings</div>
 	</header>
 	
-	<section ng-if="!user.username" ng-controller="UserController">
+	<section ng-if="!user.username && !is('account.register')" ng-controller="UserController">
 		<div ng-include="'templates/brewers/user.login.html'"></div>
 	</section>
 
@@ -27,7 +27,7 @@
 		</ul>
 	</nav>
 
-	<div class="the-content" ng-if="user.username" >
+	<div class="the-content" ng-if="user.username || is('account.register')" >
 		<div ui-view></div>
 	</div>
 </article>

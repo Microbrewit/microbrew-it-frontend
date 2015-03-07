@@ -1,9 +1,11 @@
 <nav class="sub-nav">
-	<ul>
+	<ul ng-if="!is('brewers.single')">
 		<li><a ui-sref="brewers.list">Latest</a></li>
-		<li><a ui-sref="brewers.search">Search</a></li>
-		<li ng-show="userIsLogged"><a ui-sref="brewers({id:user.userId})">My Beers</a></li>
-		<li ng-show="userIsLogged"><a ui-sref="brews.list" ng-class="{active: is('user.settings')}">Settings</a></li>
-		<li ng-show="userIsLogged"><a ng-click="logout()">Logout</a></li>
+		<li class="search-box">
+			<form ng-submit="search(searchQuery)">
+				<input ng-model="searchQuery" type="text" placeholder="search"/>
+				<button class="searchButton">Search</button>
+			</form>
+		</li>
 	</ul>
 </nav>

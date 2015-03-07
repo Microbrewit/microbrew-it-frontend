@@ -94,6 +94,37 @@ a {
 	}
 }
 
+.bubble-wrapper {
+	text-align:center;
+}
+
+.bubble {
+	display: inline-block;
+	& + .bubble {
+		margin-left: 25px;
+	}
+}
+
+.info-bubble-label {
+	line-height: 40px;
+	font-size: 20px;
+	display: block;
+	text-align:center;
+}
+
+.info-bubble {
+	display: block;
+	margin: 0 auto;
+	text-align:center;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 25px;
+	background: #CD2729;
+	color: white;
+	border-radius: 50%;
+}
+
 .right { float:right !important; }
 
 .fullscreenLoading {

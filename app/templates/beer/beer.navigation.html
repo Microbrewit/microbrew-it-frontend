@@ -2,10 +2,16 @@
 	<ul ng-if="is('brews.single')">
 		<li><a ui-sref="fork({id:beer.id})">Add my fork</a></li>
 		<li ng-if="isUserRecipe"><a ui-sref="edit({id:beer.id})">Edit this recipe</a></li>
+		<li ng-if="user.username === 'torstein'"><button ng-click="delete(beer.id)">Delete</button></li>
 	</ul>
-	<ul ng-if="!is('brews.single')">
+	<ul ng-if="!is('brews.single')" style="display: inline-block">
 		<li><a ui-sref="brews.list" ng-class="{active: is('brews.list')}">Latest</a></li>
 		<li ng-if="user.username"><a ui-sref="account.beers">My Beers</a></li>
-		<li><a ui-sref="brews.search" ng-class="{active: is('brews.search')}">Search</a></li>
+		<li class="search-box">
+			<form ng-submit="search(searchQuery)">
+				<input ng-model="searchQuery" type="text" placeholder="search"/>
+				<button class="searchButton">Search</button>
+			</form>
+		</li>
 	</ul>
 </nav>

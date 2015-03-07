@@ -6,18 +6,14 @@
 	</nav>
 	<section class="the-content">
 		<div class="inner-wrapper">
-			<div class="meta">
-				<span class="number-of-beers">Number of brews <strong>{{brewery.beers.length}}</strong></span>
-				<span class="number-of-members">Number of members <strong>{{brewery.members.length}}</strong></span>
-			</div>
-			<div class="meta" ng-show="brewery.description">
-				<p>{{brewery.description}}</p>
-			</div>
-			<div class="meta" ng-show="brewery.socials">
+			<div class="meta" ng-if="brewery.socials.length > 0">
 				<ul class="socials">
 					<li ng-show="brewery.website"><a class="website" title="Visit {{::brewery.name}}'s website" href="{{::brewery.website}}">Website</a></li>
 					<li ng-repeat="(type, url) in brewery.socials"><a class="{{::type}}" href="{{::url}}" title="See {{::brewery.name}} on {{::type}}">{{::type}}</a></li>
 				</ul>
+			</div>
+			<div class="meta" ng-if="brewery.description !== ''">
+				<p>{{brewery.description}}</p>
 			</div>
 		</div>
 	</section>

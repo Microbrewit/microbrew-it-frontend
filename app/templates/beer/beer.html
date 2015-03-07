@@ -8,6 +8,10 @@
 		</div>
 		<h1>{{headers.title}}</h1>
 		<div ng-show="headers.subheader" class="subheader">{{headers.subheader}}</div>
+		<ul class="meta brewers" style="margin-top: -10px;" ng-if="beer && (beer.brewers.length > 0 || beer.breweries.length > 0)">
+			<li ng-repeat="brewer in beer.brewers" class="brewer"><a ui-sref="brewers.single({id:brewer.username})"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</a></li>
+			<li ng-repeat="brewery in beer.breweries" class="brewer"><a ui-sref="breweries.single({id:brewery.id})"><gravatar style="display: inline-block;"size="25px" url="{{brewery.avatar}}"></gravatar> {{::brewery.name}}</a></li>
+		</ul>
 	</header>
 
 	<div ng-show="showNav" ng-include="'templates/beer/beer.navigation.html'"></div>

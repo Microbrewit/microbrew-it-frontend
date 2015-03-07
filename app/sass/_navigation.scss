@@ -120,6 +120,24 @@ h1 + .sub-nav {
 		}
 
 	}
+	.search-box {
+		input {
+			@include transition(width 0.2s);
+			display: inline-block;
+			width:70px;
+			height: 100%;
+			line-height:50px;
+			font-size:15px;
+			padding:0 10px;
+			border: 1px solid #ccc;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+
+			&:focus {
+				width: 300px;
+			}
+		}
+	}
 }
 
 @media only screen and (max-width: 760px), (min-device-width: 200px) and (max-device-width: 1024px)  {

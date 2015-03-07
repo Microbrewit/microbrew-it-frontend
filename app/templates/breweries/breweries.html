@@ -6,15 +6,39 @@
 				<img src="images/fermentable-large.png" alt="Malt"/>
 			</div>
 		</div>
-		<h1>{{header.title.toUpperCase()}}</h1>
+		<h1>{{header.title}}</h1>
 		<div class="subheader" ng-show="header.subHeader">{{header.subHeader}}</div>
+		<div class="bubble-wrapper" ng-if="is('breweries.single')" style="margin-bottom: 50px;">
+			<span class="number-of-beers bubble">
+				<span class="info-bubble">
+					{{brewery.beers.length}}
+				</span>
+				<span class="info-bubble-label">
+					Beers
+				</span>
+			</span>
+
+			<span class="number-of-members bubble">
+				<span class="info-bubble">
+					{{brewery.members.length}}
+				</span>
+				<span class="info-bubble-label">
+					Brewers
+				</span>
+			</span>
+
+			<span class="nationality bubble" ng-if="brewery.origin">
+				<span class="info-bubble bubble">
+					{{brewery.origin.name.substr(0,2).toUpperCase()}}
+				</span>
+				<span class="info-bubble-label">
+					{{brewery.origin.name}}
+				</span>
+			</span>
+		</div>
 	</header>
 
 	<div ng-show="header.navigation.length > 0" ng-include="'templates/breweries/breweries.navigation.html'"></div>
-
-	<div class="loading" ng-show="loading > 0">
-		<div class="inner">Loading<br/><img src="images/spinner.gif"/></div>
-	</div>
 	
 	<div class="the-content">
 		<div ui-view></div>

@@ -3,22 +3,11 @@
 	<div ng-include="'templates/ingredients/ingredients.navigation.html'"></div>
 	<section class="the-content the-list">
 		<div class="inner-wrapper">
-			<table class="hops-list" cellspacing="0">
-				<tr>
-					<th>Name</th>
-					<th>Origin</th>
-					<th>Alpha</th>
-					<th>Beta</th>
-					<th>Flavours</th>
-				</tr>
-				<tr ng-repeat="hop in hops">
-					<td><a ui-sref="hops.single({id:hop.hopId})">{{hop.name}}</a></td>
-					<td>{{hop.origin.name}}</td>
-					<td>{{hop.aaLow}}% - {{hop.aaHigh}}%</td>
-					<td>{{hop.betaLow}}% - {{hop.betaHigh}}%</td>
-					<td>{{hop.flavours.join(',')}}</td>
-				</tr>
-			</table>
+			<ul class="search-grid-results">
+				<li ng-repeat="result in results">
+					<div ng-include="'templates/ingredients/hop.gridItem.html'"></div>
+				</li>
+			</ul>
 		</div>
 	</section>
 </article>

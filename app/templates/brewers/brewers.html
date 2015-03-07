@@ -7,12 +7,38 @@
 		</div>
 	
 		<h1>{{title}}</h1>
+
+		<div class="bubble-wrapper" ng-if="is('brewers.single')" style="margin-top: -25px;margin-bottom: 25px;">
+			<span class="number-of-beers bubble">
+				<span class="info-bubble">
+					{{brewer.beers.length}}
+				</span>
+				<span class="info-bubble-label">
+					Beers
+				</span>
+			</span>
+
+			<span class="number-of-breweries bubble">
+				<span class="info-bubble">
+					{{brewer.breweries.length}}
+				</span>
+				<span class="info-bubble-label">
+					Breweries
+				</span>
+			</span>
+
+			<span class="nationality" ng-if="brewer.nationality">
+				<span class="info-bubble bubble">
+					{{brewer.nationality}}
+				</span>
+				<span class="info-bubble-label">
+					{{brewer.nationality}}
+				</span>
+			</span>
+		</div>
 	</header>
 	<div ng-show="showNav" ng-include="'templates/brewers/user.navigation.html'"></div>
 
-	<div class="loading" ng-show="loading > 0">
-		<div class="inner">Loading<br/><img src="images/spinner.gif"/></div>
-	</div>
 	<div class="the-content">
 		<div ui-view></div>
 	</div>

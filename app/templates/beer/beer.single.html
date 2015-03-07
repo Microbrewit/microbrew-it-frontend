@@ -1,20 +1,13 @@
 <section id="single-beer">
 	<section class="beer-meta">
 		<div class="inner-wrapper">
-			<ul class="meta brewers">
-				<li ng-repeat="brewer in beer.brewers" class="brewer"><a ui-sref="brewers.single({id:brewer.username})"><gravatar style="display: inline-block;"size="25px" url="{{brewer.gravatar}}"></gravatar> {{::brewer.username}}</a></li>
-			</ul>
-
-			<section class="meta-calculations">
-				<div class="meta">
-					<span class="abv" title="ABV or alcohol by volume is how many % of the beer's volume that consists of alcohol.">Alcohol: <strong><mb-abv og="{{::beer.recipe.og}}" fg="{{::beer.recipe.fg}}" formula="microbrewit"/></mb-abv>%</strong></span>
-					<span class="og" title="OG or original gravity is the boyency of the liquid after the mash. It is used to calculate ABV.">Original Gravity: <strong>{{::beer.recipe.og.toFixed(3)}}</strong></span>
-					<span class="fg" title="FG or final gravity is the boyency of the beer after fermentation. It is used to calculate ABV.">Final Gravity: <strong>{{::beer.recipe.fg.toFixed(3)}}</strong></span>
-					<span class="bitterness" title="IBU/EBU is a measure of the bitterness of the beer.">Bitterness: <strong>{{::beer.ibu.tinseth}} IBU</strong></span>
-					<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong>{{::beer.srm.standard}} SRM</strong></span>
-				</div>
+			<section class="meta calculations">
+				<span class="abv" title="ABV or alcohol by volume is how many % of the beer's volume that consists of alcohol.">Alcohol: <strong><mb-abv og="{{::beer.recipe.og}}" fg="{{::beer.recipe.fg}}" formula="microbrewit"/></mb-abv>%</strong></span>
+				<span class="og" title="OG or original gravity is the boyency of the liquid after the mash. It is used to calculate ABV.">Original Gravity: <strong>{{::beer.recipe.og.toFixed(3)}}</strong></span>
+				<span class="fg" title="FG or final gravity is the boyency of the beer after fermentation. It is used to calculate ABV.">Final Gravity: <strong>{{::beer.recipe.fg.toFixed(3)}}</strong></span>
+				<span class="bitterness" title="IBU/EBU is a measure of the bitterness of the beer.">Bitterness: <strong>{{::beer.ibu.tinseth}} IBU</strong></span>
+				<span class="colour" title="SRM/EBC is used to measure the colour of the beer.">Colour: <strong>{{::beer.srm.standard}} SRM</strong></span>
 			</section>
-			
 		</div>
 	</section>
 
