@@ -13,9 +13,27 @@ angular.module('Microbrewit/core/Network')
 	($http, $rootScope, ApiUrl, ClientUrl, localStorage, notification) ->
 		request = {}
 
-		request.get = (requestUrl) ->
+		# @param [Object] options
+		# @option options [string] cache Key to cache as in localStorage
+		request.get = (requestUrl, options = {}) ->
 			requestUrl = "#{ApiUrl}#{requestUrl}"
 
+			# Enable a fullscreen loading screen
+			if options.fullscreenLoading
+				$rootScope.loading++
+
+			# Return cached if available
+			if options.cache?
+				console.log 'RETURN CACHE'
+				cache = localStorage.getItem(options.cache)
+				console.log cache
+				if cache
+					return new Promise((fulfill) ->
+						if options.fullscreenLoading
+							$rootScope.loading--
+						fulfill(cache)
+					)
+			
 			# Add callback
 			if requestUrl.indexOf('?') is -1
 				requestUrl += "?callback=JSON_CALLBACK"
@@ -24,12 +42,10 @@ angular.module('Microbrewit/core/Network')
 
 			console.log "GET: #{requestUrl}"
 
-			$rootScope.loading++
-
 			# Create promise
 			promise = $http.jsonp(requestUrl, {})
 				.error((data, status, headers) ->
-					$rootScope.loading--
+					$rootScope.loading-- if options.fullscreenLoading
 					console.error("GET #{requestUrl} gave HTTP #{status}")
 					console.error(data)
 
@@ -64,8 +80,15 @@ angular.module('Microbrewit/core/Network')
 						if localStorage.getItem('token')
 							localStorage.setItem('token', token)
 
-					$rootScope.loading--
-					return response.data
+					$rootScope.loading-- if options.fullscreenLoading
+
+					returnData = response.data
+					if options.returnProperty? and response.data[options.returnProperty]?
+						returnData = response.data[options.returnProperty]
+
+					localStorage.setItem(options.cache, returnData) if options.cache?
+
+					return returnData
 				)
 
 			return promise
@@ -208,12 +231,11 @@ angular.module('Microbrewit/core/Network')
 			
 			return request
 
-		request.delete = (requestUrl, object) ->
+		request.delete = (requestUrl) ->
 			console.log "mbDelete #{requestUrl}"
 
 			request = $http.delete(
 				requestUrl, 
-				object,
 				{
 					withCredentials: true
 					headers: {
@@ -223,8 +245,6 @@ angular.module('Microbrewit/core/Network')
 			)
 				.error((data, status) ->
 					$rootScope.loading--
-					$log.error(data)
-					$log.error(status)
 					console.error(status)
 					console.error(data)
 				)

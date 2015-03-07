@@ -7,7 +7,7 @@ angular.module('Microbrewit/core/Network')
 	'mbRequest'
 	'notification'
 	(mbRequest, notification) ->
-		endpoint = "/breweries"
+		endpoint = "breweries"
 		factory = {}
 
 		factory.getSingle = (id) ->
@@ -19,9 +19,9 @@ angular.module('Microbrewit/core/Network')
 					time: 2000 # default: null, ms until autoclose
 					#medium: 'native' # default: null, native = browser Notification API
 			else
-				requestUrl = "#{endpoint}/#{id}"
+				requestUrl = "/#{endpoint}/#{id}"
 				console.log "mbRequest.get = #{mbRequest.get?}"
-				return mbRequest.get(requestUrl)
+				return mbRequest.get(requestUrl, {returnProperty: endpoint, fullscreenLoading: true})
 
 		# Get a single or several breweries
 		# @param [Object] query
@@ -49,9 +49,9 @@ angular.module('Microbrewit/core/Network')
 
 			# Get breweries
 			else
-				requestUrl = "#{endpoint}"
+				requestUrl = "/#{endpoint}"
 
-			return mbRequest.get(requestUrl)
+			return mbRequest.get(requestUrl, {returnProperty: endpoint, fullscreenLoading: true})
 
 		factory.add = (brewery) ->
 			unless brewery.id 
@@ -63,7 +63,7 @@ angular.module('Microbrewit/core/Network')
 
 			breweryParsed = parseBreweryPostObject(brewery)
 			breweryParsed.id = beer.id
-			requestUrl = "#{endpoint}/#{brewery.id}"
+			requestUrl = "/#{endpoint}/#{brewery.id}"
 
 			return mbRequest.post(requestUrl, breweryParsed)
 
@@ -77,7 +77,7 @@ angular.module('Microbrewit/core/Network')
 
 			breweryParsed = parseBreweryPostObject(brewery)
 			breweryParsed.id = beer.id
-			requestUrl = "#{endpoint}/#{brewery.id}"
+			requestUrl = "/#{endpoint}/#{brewery.id}"
 
 			return mbRequest.put(requestUrl, breweryParsed)
 

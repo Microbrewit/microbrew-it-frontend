@@ -12,5 +12,5 @@ angular.module('Microbrewit/core/Network', [])
 	# .value('ClientUrl', 'beta.microbrew.it')
 
 	# PROD
-	#.value('ApiUrl', 'http://api.microbrew.it')
+	# .value('ApiUrl', 'http://api.microbrew.it')
 	# .value('ClientUrl', 'microbrew.it')

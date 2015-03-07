@@ -6,22 +6,25 @@ angular.module('Microbrewit/core/Network')
 .factory('mbFermentable', [
 	'mbRequest'
 	'notification'
-	(mbRequest, notification) ->
+	'localStorage'
+	(mbRequest, notification, localStorage) ->
 
-		endpoint = '/fermentables'
+		endpoint = 'fermentables'
 		factory = {}
 
 		factory.get = (id = null, from = 0, size = 20) ->
-			# Check if we have cache
-			cache = localStorage.getItem('fermentables') unless id
-			return new Promise((fulfill) -> fulfill(cache)) if cache
-
 			if id
-				requestUrl = "#{endpoint}/#{id}?callback=JSON_CALLBACK"
+				requestUrl = "/#{endpoint}/#{id}"
+				return mbRequest.get(requestUrl, {
+					returnProperty: endpoint
+				})
 			else
-				requestUrl = "#{endpoint}?callback=JSON_CALLBACK"
-
-			return mbRequest.get(requestUrl)
+				requestUrl = "/#{endpoint}"
+				return mbRequest.get(requestUrl, { 
+					cache: endpoint
+					returnProperty: endpoint
+					fullscreenLoading: true
+				})
 
 		# Update a fermentable
 		# @param [Fermentable Object] fermentable
@@ -33,13 +36,13 @@ angular.module('Microbrewit/core/Network')
 					type: 'error'
 					time: 2000 # default: null, ms until autoclose
 
-			requestUrl = "#{endpoint}/#{fermentable.id}"
+			requestUrl = "/#{endpoint}/#{fermentable.id}"
 
 			return mbRequest.put(requestUrl, fermentable)
 
 		# Add a new fermentable
 		factory.add = (fermentable) ->
-			requestUrl = "#{endpoint}"
+			requestUrl = "/#{endpoint}"
 
 			return mbRequest.post(requestUrl, fermentable)
 

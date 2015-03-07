@@ -6,31 +6,67 @@
 angular.module('Microbrewit/core/Network')
 .factory('mbUser', [
 	'$http'
-	'mbGet'
+	'mbRequest'
 	'ClientUrl'
 	'$rootScope'
 	'localStorage'
 	'notification'
 	'ApiUrl'
-	($http, mbGet, ClientUrl, $rootScope, localStorage, notification, ApiUrl) ->
+	($http, mbRequest, ClientUrl, $rootScope, localStorage, notification, ApiUrl) ->
 		factory = {}
+		endpoint = '/users'
 
-		# Get a single user (by id) or a group of users (no ID)
-		# @param [String] userId ID of user to get (same as username)
-		factory.get = (id = null) ->
-			if id
-				requestUrl = "#{ApiUrl}/users/#{id}?callback=JSON_CALLBACK"
+		# Get a single or several beers
+		# @param [Object] query
+		# @option query [Number] id Id of beer to get (if single)
+		# @option query [Number] from Offset
+		# @option query [Number] size Number of items to return
+		# @option query [String] query Search string
+		factory.get = (query = {}) ->
+			# Get specific beer
+			if query.id
+				requestUrl = "#{endpoint}/#{query.id}"
+
+			# Get beer with query string
+			else if query.query?
+				query.from ?= 0
+				query.size ?= 20
+				
+				requestUrl = "#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}"
+
+			# Get latest added beers
+			else if query.latest
+				query.from ?= 0
+				query.size ?= 20
+				requestUrl = "#{endpoint}?from=#{query.from}&size=#{query.size}"
+
+			# Get beers
 			else
-				requestUrl = "#{ApiUrl}/users?callback=JSON_CALLBACK"
+				requestUrl = "#{endpoint}"
 
-			return mbGet.get(requestUrl)
+			return mbRequest.get(requestUrl)
+
+		# Get a single beer. Works if you need to be absolutely sure that you only get a single beer
+		# @param [Number] id
+		factory.getSingle = (id) ->
+			unless id
+				notification.add
+					title: "Can't find user" # required
+					body: "We can't find the user you asked for." # optional
+					type: 'error'
+					time: 2000 # default: null, ms until autoclose
+					#medium: 'native' # default: null, native = browser Notification API
+			else
+				requestUrl = "#{endpoint}/#{id}"
+				console.log "mbRequest.get = #{mbRequest.get?}"
+				return mbRequest.get(requestUrl)
 
 		# Search in users endpoint
 		# @param [String] query Querystring to search for
 		factory.search = (query) ->
 			requestUrl = "#{endpoint}?query=#{query}&callback=JSON_CALLBACK"
 
-			return mbGet.get(reuestUrl)
+			return mbRequest.get(requestUrl)
 
 		# Login a user, we need either username + password or a token object
 		# @param [String] username
@@ -50,8 +86,6 @@ angular.module('Microbrewit/core/Network')
 				dataPayload = "grant_type=password&username=#{username}&password=#{password}"
 
 			dataPayload+="&client_id=#{ClientUrl}"
-
-			console.log dataPayload
 
 			promise = $http({
 				url: "#{ApiUrl}/token"
@@ -76,7 +110,7 @@ angular.module('Microbrewit/core/Network')
 			)
 			.then((response) ->
 				notification.add
-					title: 'Welcome back!' # required
+					title: "Welcome back, #{response.data.username}" # required
 					#body: 'Wrong username/password' # optional
 					type: 'success'
 					time: 2000 # default: null, ms until autoclose

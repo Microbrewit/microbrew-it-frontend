@@ -8,7 +8,7 @@ angular.module('Microbrewit/core/Network')
 	'notification'
 	(mbRequest, notification) ->
 		factory = {}
-		endpoint = '/beers'
+		endpoint = 'beers'
 
 		# Get a single or several beers
 		# @param [Object] query
@@ -21,12 +21,19 @@ angular.module('Microbrewit/core/Network')
 			if query.id
 				requestUrl = "/#{endpoint}/#{query.id}"
 
+				options =
+					fullscreenLoading: true
+					returnProperty: endpoint
+
 			# Get beer with query string
 			else if query.query?
 				query.from ?= 0
 				query.size ?= 20
 				
 				requestUrl = "/#{endpoint}?query=#{query.query}&from=#{query.from}&size=#{query.size}"
+				options =
+					returnProperty: endpoint
+					fullscreenLoading: true
 
 			# Get latest added beers
 			else if query.latest
@@ -34,11 +41,19 @@ angular.module('Microbrewit/core/Network')
 				query.size ?= 20
 				requestUrl = "/#{endpoint}/last?from=#{query.from}&size=#{query.size}"
 
+				options =
+					returnProperty: endpoint
+					fullscreenLoading: true
+
 			# Get beers
 			else
-				requestUrl = "#{endpoint}"
+				requestUrl = "/#{endpoint}"
 
-			return mbRequest.get(requestUrl)
+				options =
+					returnProperty: endpoint
+					fullscreenLoading: true
+
+			return mbRequest.get(requestUrl, options)
 
 		# Get a single beer. Works if you need to be absolutely sure that you only get a single beer
 		# @param [Number] id
@@ -51,7 +66,7 @@ angular.module('Microbrewit/core/Network')
 					time: 2000 # default: null, ms until autoclose
 					#medium: 'native' # default: null, native = browser Notification API
 			else
-				requestUrl = "#{endpoint}/#{id}"
+				requestUrl = "/#{endpoint}/#{id}"
 				console.log "mbRequest.get = #{mbRequest.get?}"
 				return mbRequest.get(requestUrl)
 
@@ -67,7 +82,7 @@ angular.module('Microbrewit/core/Network')
 
 			beerParsed = parseBeerPostObject(beer)
 			beerParsed.id = beer.id
-			requestUrl = "#{endpoint}/#{beer.id}"
+			requestUrl = "/#{endpoint}/#{beer.id}"
 
 			return mbRequest.put(requestUrl, beerParsed)
 
@@ -80,9 +95,14 @@ angular.module('Microbrewit/core/Network')
 		# @param [Beer Object] beer
 		factory.add = (beer) ->
 			beer = parseBeerPostObject(beer)
-			requestUrl = "#{endpoint}"
+
+			requestUrl = "/#{endpoint}"
 
 			return mbRequest.post(requestUrl, beer)
+
+		factory.delete = (id) ->
+			requestUrl = "/#{endpoint}/#{id}"
+			return mbRequest.delete(requestUrl)
 		
 		return factory			
 ])
@@ -100,6 +120,8 @@ parseBeerPostObject = (beer) ->
 		brewers: beer.brewers
 		breweries: beer.breweries
 		recipe: {
+			brewers: beer.brewers
+			breweries: beer.breweries
 			volume: beer.recipe.volume
 			efficiency: beer.recipe.efficiency
 			og: beer.recipe.og

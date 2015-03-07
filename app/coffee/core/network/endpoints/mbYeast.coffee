@@ -6,21 +6,24 @@ angular.module('Microbrewit/core/Network')
 .factory('mbYeast', [
 	'mbRequest'
 	'notification'
-	(mbRequest, notification) ->
-		endpoint = '/yeasts'
+	'localStorage'
+	(mbRequest, notification, localStorage) ->
+		endpoint = 'yeasts'
 		factory = {}
 
 		factory.get = (id = null, from = 0, size = 20) ->
-			# Check if we have cache
-			cache = localStorage.getItem('yeasts') unless id
-			return new Promise((fulfill) -> fulfill(cache)) if cache
-
 			if id
-				requestUrl = "#{endpoint}/#{id}?callback=JSON_CALLBACK"
+				requestUrl = "/#{endpoint}/#{id}"
+				return mbRequest.get(requestUrl, {
+					returnProperty: endpoint
+				})
 			else
-				requestUrl = "#{endpoint}?callback=JSON_CALLBACK"
-
-			return mbRequest.get(requestUrl)
+				requestUrl = "/#{endpoint}"
+				return mbRequest.get(requestUrl, { 
+					cache: endpoint
+					returnProperty: endpoint
+					fullscreenLoading: true
+				})
 
 		# Update a ingredient
 		# @param [ingredient Object] ingredient
@@ -32,13 +35,13 @@ angular.module('Microbrewit/core/Network')
 					type: 'error'
 					time: 2000 # default: null, ms until autoclose
 
-			requestUrl = "#{endpoint}/#{ingredient.id}"
+			requestUrl = "/#{endpoint}/#{ingredient.id}"
 
 			return mbRequest.put(requestUrl, ingredient)
 
 		# Add a new ingredient
 		factory.add = (ingredient) ->
-			requestUrl = "#{endpoint}"
+			requestUrl = "/#{endpoint}"
 
 			return mbRequest.post(requestUrl, ingredient)
 

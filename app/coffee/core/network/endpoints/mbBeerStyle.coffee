@@ -4,9 +4,10 @@
 # @copyright 2015 Microbrew.it
 angular.module('Microbrewit/core/Network')
 .factory('mbBeerStyle', [
-	'mbGet'
-	'mbPost'
-	'mbPut'
+	'mbRequest'
 	'notification'
-	(mbGet, mbPost, mbPut, notification) ->
+	(mbRequest, notification) ->
+		factory = {}
+		endpoint = "/beerstyles"
+		
 ])
