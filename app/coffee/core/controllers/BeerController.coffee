@@ -1,7 +1,12 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_'
-	($rootScope, $scope, $state, get, _) ->
+mbit.controller('BeerController', [
+	'$rootScope'
+	'$scope'
+	'$state'
+	'_'
+	'mbBeer'
+	($rootScope, $scope, $state, _, mbBeer) ->
 		$scope.bubble = 19
 
 		# Set the state of the controller
@@ -27,9 +32,9 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 				beerId = toParams?.id
 				beerId ?= $state.params.id
 
-				get.beers({id: beerId}).then((apiResponse) ->
+				mbBeer.get({id: beerId}).then((apiResponse) ->
 
-					$scope.beer = apiResponse.beers[0]
+					$scope.beer = apiResponse[0]
 					$scope.bubble = $scope.beer.srm.standard or= 19
 					if $scope.user 
 						for user in $scope.beer.brewers
@@ -52,19 +57,29 @@ mbit.controller('BeerController', ['$rootScope', '$scope', '$state', 'mbGet', '_
 
 			# We are on the beer listing/discovery page
 			else if currentState is 'brews.list'
-
-				get.beers({latest:true}).then((apiResponse) ->
-					$scope.brews = apiResponse.beers
+				mbBeer.get({latest:true}).then((apiResponse) ->
+					$scope.results = apiResponse
 				)
+
 			else if currentState is 'account.beers'
-				$scope.brews = $scope.user.beers
+				$scope.results = $scope.user.beers
 				
 			else if currentState is 'brews.search'
-				$scope.headers = 
-					title: 'Beer'
-					subheader: 'Find beer'
+				query = toParams?.query
+				query ?= $state.params.query
 
+
+				mbBeer.get({query: query}, 'beers').then((apiResponse) ->
+					$scope.results = apiResponse
+					$scope.resultsNumber = apiResponse.length
+				)
 
 		setControllerState()
 		$scope.$on('$stateChangeStart', setControllerState)
+		
+		$scope.search = (query) ->
+			$state.go('brews.search', {query:query})
+
+		$scope.delete = (id) ->
+			mbBeer.delete(id).then(() -> $state.go('brews.list'))
 ])
