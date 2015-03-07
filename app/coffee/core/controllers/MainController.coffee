@@ -24,33 +24,6 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 			mbUser.logout()
 			$state.go('home')
 
-		# notification.add
-		# 	type: 'question'
-		# 	title: 'Test'
-		# 	body: 'Test body'
-		# 	accept: (index) -> 
-		# 		console.log('test accept')
-		# 		$scope.$$childHead.closeAlert(index)
-		# 	decline: (index) -> 
-		# 		console.log('test decline')
-		# 		$scope.$$childHead.closeAlert(index)
-
-		# Download and store default ingredients
-		# These are used in recipe generation and calculators
-		unless localStorage.getItem('fermentables')
-			mbGet.fermentables().then((fermentables) ->
-				localStorage.setItem('fermentables', fermentables)
-			)
-		unless localStorage.getItem('hops')
-			mbGet.hops().then((hops) ->
-				console.log 'Storing hops'
-				localStorage.setItem('hops', hops)
-			)
-		unless localStorage.getItem('yeasts')
-			mbGet.yeasts().then((yeasts) ->
-				console.log 'Storing yeasts'
-				localStorage.setItem('yeasts', yeasts)
-			)
 		unless localStorage.getItem('beerstyles')
 			mbGet.beerstyles().then((beerstyles) ->
 				console.log 'Storing beerstyles'
@@ -84,6 +57,7 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 		if token
 			$rootScope.token = token
 			mbUser.login(false, false, token).then((userId) -> 
+				console.log "userId: #{userId}"
 				mbUser.getSingle(userId).then((response) ->
 					$rootScope.user = response.users[0]
 					unless $rootScope.user.settings?.largeWeight?
