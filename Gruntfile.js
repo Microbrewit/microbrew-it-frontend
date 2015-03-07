@@ -114,6 +114,36 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+
+		ngAnnotate: {
+			options: {
+				singleQuotes: true,
+			},
+			app1: {
+				files: {
+					'build/build.annotated.js': ['build/build.js']
+				},
+			},
+			app2: {
+				files: [
+					{
+						expand: true,
+						src: ['f.js'],
+						ext: '.annotated.js', // Dest filepaths will have this extension.
+						extDot: 'last',       // Extensions in filenames begin after the last dot
+					},
+				],
+			},
+			app3: {
+				files: [
+					{
+						expand: true,
+						src: ['g.js'],
+						rename: function (dest, src) { return src + '-annotated'; },
+					},
+				],
+			},
+		},
 		
 		uglify: {
 			options: {
@@ -129,7 +159,7 @@ module.exports = function (grunt) {
 			},
 			prod: {
 				files: {
-					'build/build.min.js': ['build/build.js']
+					'build/build.min.js': ['build/build.annotated.js']
 				}
 			}
 		},
@@ -222,7 +252,7 @@ module.exports = function (grunt) {
 			grunt.log.writeln('#### DETECTED COFFEE CHANGE - COMMENCING REBUILD ####');
 			// run coffee only on changed files, for some reason coffee needs exact filepath in order to be able to write the file
 
-			grunt.task.run('coffee', 'coffee:develop', 'concat:source', 'uglify:prod');
+			grunt.task.run('coffee', 'coffee:develop', 'concat:source', 'ngAnnotate:app1', 'uglify:prod');
 		}
 
 		else if(fileExt === "scss" || fileExt === "css") {
@@ -422,7 +452,7 @@ module.exports = function (grunt) {
 		grunt.task.run(['upload']);
 	});
 
-	grunt.registerTask('build', 'Build Microbrew.it development version (coffee, sass)', ['init', 'clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'uglify:prod', 'copy:html', 'copy:images' ]);
+	grunt.registerTask('build', 'Build Microbrew.it development version (coffee, sass)', ['init', 'clean', 'coffee', 'coffee:develop', 'compass', 'concat:source', 'ngAnnotate:app1', 'uglify:prod', 'copy:html', 'copy:images' ]);
 
 
 	grunt.registerTask('default', 'Runs develop task and concurrent (watcher + connect).', ['build', 'concurrent']);
