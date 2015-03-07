@@ -1,0 +1,65 @@
+<article class="account">
+	<section class="account inner-wrapper">
+		<div class="settings username">
+			<strong>Username</strong>
+			<input type="text" ng-model="account.username" required/>
+		</div>
+
+		<div class="settings email">
+			<strong>Email</strong>
+			<input type="email" ng-model="account.email" required/>
+		</div>
+
+		<div class="settings">
+			<strong>Password</strong>
+			<input type="text" ng-model="account.password" required/>
+			<input type="text" ng-model="account.confirmPassword" required/>
+		</div>
+		
+	</section>
+
+	<section class="measurements inner-wrapper">
+		<h2>Measurements</h2>
+		<div class="settings weight">
+			<strong>Weight</strong>
+			<span>
+				Large weights:
+				<select ng-model="settings.largeWeight" ng-options="value for value in weightAvailable"></select>
+			</span>
+			<span>
+				Small weights: 
+				<select ng-model="settings.smallWeight" ng-options="value for value in weightAvailable"></select>
+			</span>
+		</div>
+
+		<div class="settings liquids">
+			<strong>Liquids</strong>
+			<select ng-model="settings.liquid" ng-options="value for value in liquidsAvailable"></select>
+		</div>
+
+		<div class="settings temperature">
+			<strong>Temperature</strong>
+			<select ng-model="settings.temperature" ng-options="value for value in temperaturesAvailable"></select>
+		</div>
+	</section>
+	<section class="inner-wrapper formulas">
+		<h2>Formulas</h2>
+		<div class="settings abv">
+			<strong>ABV</strong>
+			<select ng-model="settings.abv.formula" ng-options="value for value in abvFormulasAvailable"></select>
+			<select ng-model="settings.abv.unit" ng-options="value for value in abvUnitsAvailable"></select>
+		</div>
+		<div class="settings bitterness">
+			<strong>Bitterness</strong>
+			<select ng-model="settings.bitterness.formula" ng-options="value for value in bitternessFormulasAvailable"></select>
+			<select ng-model="settings.bitterness.unit" ng-options="value for value in bitternessUnitsAvailable"></select>
+		</div>
+		<div class="settings colour">
+			<strong>Colour</strong>
+			<select ng-model="settings.colour.formula" ng-options="value for value in colourFormulasAvailable"></select>
+			<select ng-model="settings.colour.unit" ng-options="value for value in colourUnitsAvailable"></select>
+		</div>
+	</section>
+
+	<button class="submit" ng-click="registerUser()">Register account</button>
+</article>

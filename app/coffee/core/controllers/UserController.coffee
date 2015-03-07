@@ -49,7 +49,7 @@ angular.module('Microbrewit').controller('UserController', [
 		if $state.current.name is 'account.settings'
 
 			$scope.updateUser = () ->
-				$scope.user.settings = $scope.settings
+				$scope.user.settings = _.cloneDeep $scope.settings
 
 				mbAccount.update($scope.user).then((obj) -> console.log obj)
 
@@ -61,6 +61,22 @@ angular.module('Microbrewit').controller('UserController', [
 						watcher()
 						setupSettings()
 				)
+
+		if $state.current.name is 'account.register'
+			if $scope.user?.settings?
+				setupSettings()
+			$scope.account =
+				username: ""
+				password: "null"
+				confirmPassword: "null"
+				email: ""
+				settings: null
+
+			$scope.registerUser = () ->
+
+				$scope.account.settings = _.cloneDeep $scope.settings
+
+				mbAccount.register($scope.account).then()
 
 		$scope.remember = true
 
@@ -83,7 +99,7 @@ angular.module('Microbrewit').controller('UserController', [
 			password = $scope.password or $scope.$$childHead.password
 			console.log $scope
 			mbUser.login(username, password).then((userId) ->
-				mbUser.get(userId).then((response) ->
+				mbUser.getSingle(userId).then((response) ->
 					user = response.users[0]
 					$rootScope.user = user
 					
