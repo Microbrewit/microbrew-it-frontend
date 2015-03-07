@@ -4,6 +4,9 @@ mbit.controller('RecipeController', [
 	'$rootScope'
 	'$scope'
 	'mbGet'
+	'mbFermentable'
+	'mbHop'
+	'mbYeast'
 	'localStorage'
 	'sessionStorage'
 	'$stateParams'
@@ -12,7 +15,7 @@ mbit.controller('RecipeController', [
 	'$state'
 	'mbUser'
 	'mbBeer'
-	($rootScope, $scope, mbGet, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
+	($rootScope, $scope, mbGet, mbFermentable, mbHop, mbYeast, localStorage, sessionStorage, $stateParams, _, colourCalc, $state, mbUser, mbBeer) ->
 		$scope.hopTypes = []
 		$scope.spargeTypes = ['fly sparge', 'batch sparge']
 
@@ -33,14 +36,14 @@ mbit.controller('RecipeController', [
 			$scope.hopForms = response
 			$scope.hopTypes = response
 		)
-		mbGet.fermentables().then((response) ->
-			$scope.fermentables = response.fermentables
+		mbFermentable.get().then((response) ->
+			$scope.fermentables = response
 			$scope.groupFermentables = (fermentable)->
 				return fermentable.type
 		)
 
-		mbGet.hops().then((response) ->
-			for hop in response.hops
+		mbHop.get().then((response) ->
+			for hop in response
 				hop.aaValue = hop.aaLow
 				if hop.aaHigh isnt 0
 					hop.aaValue = (hop.aaValue + hop.aaLow) / 2
@@ -49,13 +52,13 @@ mbit.controller('RecipeController', [
 					hop.betaValue = (hop.betaValue+ hop.aaLow) / 2
 				hop.hopForm = $scope.hopForms[0]
 
-			$scope.hops = response.hops
+			$scope.hops = response
 			$scope.groupHops = (hops)->
 				return hops.origin.name if hops.origin?.name?
 				return 'other'
 		)
-		mbGet.yeasts().then((response) ->
-			$scope.yeasts = response.yeasts
+		mbYeast.get().then((response) ->
+			$scope.yeasts = response
 			$scope.groupYeasts = (yeast)->
 				return yeast.supplier.name if yeast.supplier?.name?
 				return 'Other'
@@ -136,16 +139,24 @@ mbit.controller('RecipeController', [
 				$scope.submitRecipe = () ->
 					if not $scope.token?
 						# we need username and password
-						mbUser.login($scope.username,$scope.password,false).then(mbBeer.add($scope.beer).then())
+						mbUser.login($scope.username,$scope.password,false).then(
+							$scope.beer.brewers.push $scope.user
+							mbBeer.add($scope.beer).then((response) ->
+								$state.go('brews.single({id:response.beer.id})')
+							)
+						)
 
-					else if $scope.token?.token?.expires <= new Date().getTime()
+					else if $scope.token?.expires <= new Date().getTime()
 						# We need to refresh token
-						mbUser.login(false,false,$scope.token).then(mbBeer.add($scope.beer).then())
+						mbUser.login(false,false,$scope.token).then(
+							$scope.beer.brewers.push $scope.user
+							mbBeer.add($scope.beer).then((response) ->
+								$state.go('brews.single({id:response.beer.id})')
+							)
+						)
 					else
-						console.log 'HAS BREWERY AT SAVE' if $scope.beer.breweries.length > 0
+						$scope.beer.brewers.push $scope.user
 						mbBeer.add($scope.beer).then((response) ->
-							console.log 'response'
-							console.log response.beer
 							$state.go('brews.single({id:response.beer.id})')
 						)
 

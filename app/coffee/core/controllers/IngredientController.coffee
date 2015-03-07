@@ -1,7 +1,7 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('IngredientController', ['$scope', 'mbGet', 'mbDelete', 'mbPut', '$stateParams', '_', '$state', '$rootScope',
-	($scope, get, mbDelete, mbPut, $stateParams, _, $state, $rootScope) ->
+mbit.controller('IngredientController', ['$scope', 'mbFermentable', 'mbHop', 'mbYeast', '_', '$state',
+	($scope, mbFermentable, mbHop, mbYeast, _, $state) ->
 
 		setControllerState = (event, toState, toParams, fromState, fromParams) ->
 
@@ -15,44 +15,36 @@ mbit.controller('IngredientController', ['$scope', 'mbGet', 'mbDelete', 'mbPut',
 			else
 				params = $state.params
 
-			console.log 'params'
-			console.log params
-
 			# Looking at fermentables
 			if 'fermentables' in stateArr
-				console.log 'fermentables'
 				# We are doing something with a single hop
 				if params.id
-					console.log "ID: #{params.id}"
-					get.fermentables(params.id).then((apiResponse) -> 
-						$scope.fermentable = apiResponse.fermentables[0]
+					mbFermentable.get(params.id).then((apiResponse) -> 
+						$scope.fermentable = apiResponse[0]
 					)
 				else
-					get.fermentables().then((apiResponse) -> 
-						$scope.fermentables = _.sortBy(apiResponse.fermentables, (ingredient) -> return ingredient.name)
-						console.log 'fucking apply'
+					mbFermentable.get().then((apiResponse) -> 
+						$scope.results = _.sortBy(apiResponse, (ingredient) -> return ingredient.name)
 						$scope.$digest()
 					)
-				
-				# Editing Hop
+
 				if currentState is 'fermentables.edit'
 					$scope.update = () ->
-						mbPut.fermentables($scope.fermentables).then()
+						mbFermentable.update($scope.fermentable).then()
 
 					$scope.delete = () ->
-						mbDelete.fermentables($scope.fermentables).then()
+						mbFermentable.delete($scope.fermentable).then()
 
 			# Looking at yeasts
 			if 'yeasts' in stateArr
-				console.log 'yeasts'
 				# We are doing something with a single hop
 				if params.id
-					get.yeasts(params.id).then((apiResponse) -> 
-						$scope.yeast = apiResponse.yeasts[0]
+					mbYeast.get(params.id).then((apiResponse) -> 
+						$scope.yeast = apiResponse[0]
 					)
 				else
-					get.yeasts().then((apiResponse) -> 
-						$scope.yeasts = _.sortBy(apiResponse.yeasts, (ingredient) -> return ingredient.name)
+					mbYeast.get().then((apiResponse) -> 
+						$scope.results = _.sortBy(apiResponse, (ingredient) -> return ingredient.name)
 						console.log 'fucking apply'
 						$scope.$digest()
 					)
@@ -60,22 +52,21 @@ mbit.controller('IngredientController', ['$scope', 'mbGet', 'mbDelete', 'mbPut',
 				# Editing Hop
 				if currentState is 'yeasts.edit'
 					$scope.update = () ->
-						mbPut.yeasts($scope.yeasts).then()
+						mbYeast.update($scope.yeast).then()
 
 					$scope.delete = () ->
-						mbDelete.yeasts($scope.yeasts).then()
+						mbYeast.delete($scope.yeast).then()
 
 			# Looking at hops
 			if 'hops' in stateArr
-				console.log 'hops'
 				# We are doing something with a single hop
 				if params.id
-					get.hops(params.id).then((apiResponse) -> 
-						$scope.hop = apiResponse.hops[0]
+					mbHop.get(params.id).then((apiResponse) -> 
+						$scope.hop = apiResponse[0]
 					)
 				else
-					get.hops().then((apiResponse) -> 
-						$scope.hops = _.sortBy(apiResponse.hops, (ingredient) -> return ingredient.name)
+					mbHop.get().then((apiResponse) -> 
+						$scope.results = _.sortBy(apiResponse, (ingredient) -> return ingredient.name)
 						console.log 'fucking apply'
 						$scope.$digest()
 					)
@@ -83,10 +74,10 @@ mbit.controller('IngredientController', ['$scope', 'mbGet', 'mbDelete', 'mbPut',
 				# Editing Hop
 				if currentState is 'hops.edit'
 					$scope.update = () ->
-						mbPut.hops($scope.hops).async().then()
+						mbHop.update($scope.hop).then()
 
 					$scope.delete = () ->
-						mbDelete.hops($scope.hops).async().then()
+						mbHop.delete($scope.hop).then()
 
 		$scope.$on('$stateChangeStart', setControllerState)
 		setControllerState()

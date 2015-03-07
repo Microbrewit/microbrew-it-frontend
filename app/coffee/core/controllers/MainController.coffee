@@ -84,7 +84,7 @@ mbit.controller('MainController', ['$rootScope', '$scope', 'mbUser', '$statePara
 		if token
 			$rootScope.token = token
 			mbUser.login(false, false, token).then((userId) -> 
-				mbUser.get(userId).then((response) ->
+				mbUser.getSingle(userId).then((response) ->
 					$rootScope.user = response.users[0]
 					unless $rootScope.user.settings?.largeWeight?
 						$rootScope.user.settings = 

@@ -1,7 +1,7 @@
 mbit = angular.module('Microbrewit')
 
-mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet', '$stateParams', '_'
-	($rootScope, $scope, $state, get, $stateParams, _) ->
+mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbBrewery', '$stateParams', '_'
+	($rootScope, $scope, $state, mbBrewery, $stateParams, _) ->
 
 				# Set the state of the controller
 		# BeerController is used as a main controller for all beer-related things
@@ -16,20 +16,19 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 				description: ""
 				navigation: [
 					{title:'Latest', sref:'breweries.list'}
-					{title:'Search', sref:'breweries.search'}
 				]
 			
 			# We are displaying information about a single user
 			if currentState is 'breweries.single'
 				breweryId = toParams?.id
 				breweryId ?= $state.params.id
-				get.brewery(breweryId).then((apiResponse) ->
+				mbBrewery.get(breweryId).then((apiResponse) ->
 					# $scope.loading--
 					$scope.addBeer = () ->
 						console.log 'ADD BEER'
 						$rootScope.brewery = _.cloneDeep $scope.brewery
 						$state.go('add')
-					$scope.brewery = apiResponse.breweries[0]
+					$scope.brewery = apiResponse[0]
 					subHeader = $scope.brewery.type
 					subHeader += " since #{$scope.brewery.established}" if $scope.brewery.established?
 					$scope.header = 
@@ -43,13 +42,26 @@ mbit.controller('BreweryController', ['$rootScope', '$scope', '$state', 'mbGet',
 			# User search page
 			else if currentState is 'breweries.list'
 				
-				get.brewery().then((apiResponse) ->
-					$scope.breweries = apiResponse.breweries
+				mbBrewery.get().then((apiResponse) ->
+					$scope.results = apiResponse
 				)
 
 			else if currentState is 'account.breweries'
-				$scope.breweries = $scope.user.breweries
+				$scope.results = $scope.user.breweries
+
+			else if currentState is 'breweries.search'
+				query = toParams?.query
+				query ?= $state.params.query
+
+
+				mbBrewery.get({query: query}, 'breweries').then((apiResponse) ->
+					$scope.results = apiResponse
+					$scope.resultsNumber = apiResponse.length
+				)
 
 		setControllerState()
-		$rootScope.$on('$stateChangeStart', setControllerState)
+		$scope.$on('$stateChangeStart', setControllerState)
+
+		$scope.search = (query) ->
+			$state.go('breweries.search', {query:query})
 ])

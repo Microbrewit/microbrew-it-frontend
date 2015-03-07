@@ -28,11 +28,11 @@ angular.module('Microbrewit').controller('BrewerController', [
 				brewerId ?= $state.params.id
 
 				# Get brewer
-				mbUser.get(brewerId).then((apiResponse) ->
+				mbUser.getSingle(brewerId).then((apiResponse) ->
 					$scope.brewer = apiResponse.users[0]
 
 					console.log "#{$scope.brewer.username} is #{$scope.user?.username}"
-					$scope.isLoggedUser = $scope.brewer.userId is $scope.user?.userId.toLowerCase() # Show settings menu if logged user
+					$scope.isLoggedUser = $scope.brewer.username is $scope.user?.username?.toLowerCase() # Show settings menu if logged user
 
 					if $scope.brewer.gravatar isnt "" then $scope.bubble = $scope.brewer.gravatar else $scope.bubble = $scope.brewer.username
 					$scope.title = $scope.brewer.username
@@ -41,10 +41,23 @@ angular.module('Microbrewit').controller('BrewerController', [
 			# User search page
 			else if currentState is 'brewers.list'
 				
-				mbUser.get().then((apiResponse) ->
+				mbUser.get({latest: true}).then((apiResponse) ->
 					$scope.brewers = apiResponse.users
+				)
+
+			else if currentState is 'brewers.search'
+				query = toParams?.query
+				query ?= $state.params.query
+
+
+				mbUser.get({query: query}, 'users').then((apiResponse) ->
+					$scope.brewers = apiResponse.users
+					$scope.resultsNumber = apiResponse.users.length
 				)
 
 		setControllerState()
 		$scope.$on('$stateChangeStart', setControllerState)
+
+		$scope.search = (query) ->
+			$state.go('brewers.search', {query:query})
 ])
