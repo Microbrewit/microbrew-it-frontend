@@ -8,7 +8,7 @@ angular.module('Microbrewit/core/Network')
 			if query.length >= 3
 				if endpoint isnt ""
 					endpoint = "/"+endpoint
-				requestUrl = "#{ApiUrl}#{endpoint}?query=#{query}"
+				requestUrl = "#{endpoint}?query=#{query}"
 
 				return mbRequest.get(requestUrl)
 	])
