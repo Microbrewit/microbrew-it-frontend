@@ -105,10 +105,10 @@
 		</tr>
 	</table>
 
-	<textarea class="step-notes" ng-model="step.notes" placeholder="notes"></textarea>
-
 	<div class="add-ingredient-wrapper">
-		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'fermentable')" title="Malt/Sugar/Extract">Add Fermentable</span>
-		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'hop')" title="">Add Hop</span>
-		<span class="add-ingredient" ng-show="step.stepType === 'fermentationSteps'" ng-click="addIngredientToStep(step, 'yeast')">Add Yeast</span>
+		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'fermentable')" title="Malt/Sugar/Extract">Fermentable</span>
+		<span class="add-ingredient" ng-click="addIngredientToStep(step, 'hop')" title="">Hop</span>
+		<span class="add-ingredient" ng-show="step.stepType === 'fermentationSteps'" ng-click="addIngredientToStep(step, 'yeast')">Yeast</span>
 	</div>
+	
+	<textarea class="step-notes" ng-model="step.notes" placeholder="notes"></textarea>

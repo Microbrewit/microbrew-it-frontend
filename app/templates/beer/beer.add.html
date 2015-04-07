@@ -45,12 +45,12 @@
 
 	<section class="mash steps">
 		<div class="inner-wrapper">
-			<h2>Mash</h2>
 			<ul>
 				<li class="step-wrapper" ng-repeat="step in beer.recipe.mashSteps">
 					<div class="step-meta">
 						<div class="step-number">{{step.stepNumber}}</div>
 						<span class="step-type">Mash step</span>
+
 						<span class="values">
 							<label for="length">Volume </label><mb-convert id="volume" modelunit="liters" localunit="{{user.settings.liquid}}" modelvalue="step.volume"></mb-convert>
 							<label for="length">Length: </label><input type="text" id="length" ng-model="step.length"/>
@@ -62,13 +62,12 @@
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
-			<button class="add-step" ng-click="addMashStep()">Add Step</button>
+			<button class="add-step" ng-click="addMashStep()">Add Mash Step</button>
 		</div>
 	</section>
 
 	<section class="sparge steps">
 		<div class="inner-wrapper">
-			<h2>Sparge</h2>
 			<div class="step-meta" title="Fly sparge is when you add water slowly to the malt which then trickles into the boil kettle. Batch sparge is when you submerge the malt in the sparge water and then add it to the boil kettle.">
 				<div class="step-number">{{beer.recipe.spargeStep.stepNumber}}</div>
 				<span class="step-type">Sparge</span>
@@ -87,7 +86,6 @@
 
 	<section class="boil steps">
 		<div class="inner-wrapper">
-			<h2>Boil</h2>
 			<ul>
 				<li class="step-wrapper" ng-repeat="step in beer.recipe.boilSteps" >
 					<div class="step-meta">
@@ -103,13 +101,12 @@
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
-			<button class="add-step" ng-click="addBoilStep()">Add Step</button>
+			<button class="add-step" ng-click="addBoilStep()">Add Boil Step</button>
 		</div>
 	</section>
 
 	<section class="fermentation steps">
 		<div class="inner-wrapper">
-			<h2>Fermentation</h2>
 			<ul>
 				<li class="step-wrapper" ng-repeat="step in beer.recipe.fermentationSteps">
 					<div class="step-meta">
@@ -126,7 +123,7 @@
 					<div ng-include="'templates/recipe/recipe.step.html'"></div>
 				</li>
 			</ul>
-			<button class="add-step" ng-click="addFermentationStep()">Add Step</button>
+			<button class="add-step" ng-click="addFermentationStep()">Add Fermentation Step</button>
 		</div>
 	</section>
 
@@ -137,17 +134,16 @@
 		</div>
 	</section>
 
-	<section class="wrap-up" ng-show="false">
+	<section class="wrap-up steps" ng-show="false">
 		<div class="inner-wrapper">
 			<h2>Wrap up</h2>
 			Bottling/kegging/whatever.
 		</div>
 	</section>
 
-	<section class="conclusion">
+	<section class="conclusion steps">
 		<div class="inner-wrapper">
-			<h2>Looks good!</h2>
-
+			<h2>Style check</h2>
 			<div class="recipe-beer-meta">
 				<div class="meta">
 					<span class="abv" title="ABV or alcohol by volume is how many % of the beer's volume that consists of alcohol.">Alcohol: <strong><mb-abv og="{{beer.recipe.og}}" fg="{{beer.recipe.fg}}" formula="microbrewit"/></mb-abv>%</strong></span>
@@ -158,8 +154,20 @@
 					<span class="volume" title="Volume of finished beer.">Volume: <strong>{{beer.recipe.volume}}l</strong></span>
 				</div>
 			</div>
-			<h2>Please sign in</h2>
-			<h3>You need to sign in before saving the recipe <small>(don't worry, you'll stay right here)</small></h3>
+
+			<mb-beerstyle type="abv" beer="beer"></mb-beerstyle>
+			<mb-beerstyle type="og" beer="beer"></mb-beerstyle>
+			<mb-beerstyle type="fg" beer="beer"></mb-beerstyle>
+			<mb-beerstyle type="srm" beer="beer"></mb-beerstyle>
+			<mb-beerstyle type="ibu" beer="beer"></mb-beerstyle>
+
+		</div>
+	</section>
+
+	<section class="conclusion">
+		<div class="inner-wrapper">
+			<h2 ng-if="!user.username">Please sign in</h2>
+			<h3 ng-if="!user.username">You need to sign in before saving the recipe <small>(don't worry, you'll stay right here)</small></h3>
 			<div ng-include="'templates/brewers/user.login.html'" ng-if="!user.username" ng-controller="UserController"></div>
 			<button class="submit" ng-if="user.username" ng-click="submitRecipe()">Save</button>
 		</div>

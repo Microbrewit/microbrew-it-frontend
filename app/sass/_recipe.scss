@@ -194,7 +194,7 @@ ul, li {
 }
 
 .add-step {
-	//float:right;
+	float:right;
 	display: block;
 	line-height: 50px;
 	font-size: 20px;
@@ -202,6 +202,7 @@ ul, li {
 	font-weight: normal;
 	padding: 0 10px;
 	margin: 0 auto;
+	margin-bottom: 20px;
 	border:0;
 	border-bottom: 1px solid rgba(0,0,0,0.7);
 	border-right: 1px solid rgba(0,0,0,0.7);
@@ -242,12 +243,19 @@ ul, li {
 	}
 }
 
+.steps {
+	@extend .cf;
+	border-top: 1px solid #ccc;
+}
+
 .step-notes {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	float:right;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	width: 600px;
+	height: 33px;
 	font-size: 15px;
-	padding: 10px;
-	width: 100%;
+	padding: 5px;
 	box-sizing: border-box;
 	border: 1px solid rgba(0,0,0,0.1);
 	background: rgba(255,255,255,0.3);
@@ -260,20 +268,38 @@ ul, li {
 }
 .add-ingredient {
 	display: inline-block;
-	margin: 25px 5px;
+	font-size: 15px;
+	line-height: 20px;
+	margin-right: 1px;
 	border: 0;
 	padding: 5px 10px;
 	color: white;
+	float:left;
+
+	&:last-child {
+		margin-right: 0;
+	}
 
 	&:hover {
 		cursor: pointer;
 	}
 }
 .add-ingredient-wrapper {
-	text-align:center;
-	padding-bottom: 25;
-	border-bottom: 1px solid rgba(0,0,0,0.1);
-	margin-bottom: 25px;
+	text-align:right;
+	display: inline-block;
+	margin: 15px 0;
+
+	&:before {
+		display: block;
+		float:left;
+		content: 'ADD';
+		margin-right: 1px;
+		padding: 5px 10px;
+		background: rgba(0,0,0,0.2);
+		color: white;
+		font-size: 15px;
+		line-height: 20px;
+	}
 }
 
 .embedded-search {
@@ -296,7 +322,7 @@ ul, li {
 
 .steps, .ingredients {
 	margin-top: 1px;
-	padding-bottom: 50px;
+	//padding-bottom: 50px;
 
 	table {
 		width: 100%;
