@@ -20,8 +20,8 @@ angular.module('Microbrewit/core/Calculation')
 				scope.conversions = available
 
 				updateLocalValue = ->
-					console.log 'update local value'
-					console.log "modelvalue #{scope.modelvalue} - modelunit #{attrs.modelunit} - localunit #{scope.localunit}"
+					# console.log 'update local value'
+					# console.log "modelvalue #{scope.modelvalue} - modelunit #{attrs.modelunit} - localunit #{scope.localunit}"
 					scope.modelvalue = 0 unless scope.modelvalue?
 
 					modelvalue = scope.modelvalue
@@ -29,7 +29,7 @@ angular.module('Microbrewit/core/Calculation')
 
 					localunit = scope.localunit
 
-					console.log "typeof localunit: #{typeof localunit}"
+					# console.log "typeof localunit: #{typeof localunit}"
 					scope.localunit = attrs.modelunit if localunit is ''
 
 					if modelvalue? and attrs.modelunit? and localunit?
