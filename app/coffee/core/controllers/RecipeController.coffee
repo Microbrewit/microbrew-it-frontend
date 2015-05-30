@@ -343,6 +343,29 @@ mbit.controller('RecipeController', [
 		$scope.addIngredientToStep = (step, ingredient) -> addIngredientToStep(step, ingredient, $scope)
 ])
 
+# Filters an ingredients list by properties given.
+# @param [Array] of ingringredients to be filtered.
+# @param [Array] of parameters to filter the ingredients by.
+mbit.filter 'propsFilter', -> 
+	(ingredients, props) ->
+		out = []
+		if angular.isArray(ingredients)
+			for ingredient in ingredients
+	 			itemMatches = false
+
+	 			keys = Object.keys(props)
+	 			for key in keys
+	 				text = props[key].toLowerCase()
+	 				if ingredient[key].toString().toLowerCase().indexOf(text) isnt -1
+	 					itemMatches = true
+	 					break
+	 			if itemMatches
+	 				out.push(ingredient)
+		else 
+			out = ingredients
+		return out
+
+
 # Add an empty ingredient to a step
 # @param [Object] step The step to add an ingredient to
 # @param [String] ingredient The type of ingredient to add

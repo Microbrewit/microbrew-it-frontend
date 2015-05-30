@@ -87,11 +87,12 @@
 		</tr>
 		<tr ng-repeat="yeast in step.yeasts">
 			<td style="position:relative">
-				<ui-select ng-model="yeast.original" on-select="refreshIngredient(yeast, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a yest">
-					<ui-select-match placeholder="Select a yeast in the list or search">{{$select.selected.name}}</ui-select-match>
-					<ui-select-choices group-by="groupYeasts" ng-show="$select.open && " repeat="result in yeasts | filter: {name: $select.search}">
+				<ui-select ng-model="yeast.original" on-select="refreshIngredient(yeast, $model)" ng-disabled="disabled" style="min-width: 300px;" title="Choose a yeast">
+					<ui-select-match placeholder="Select a yeast in the list or search">{{$select.selected.name}} ({{$select.selected.productCode}})</ui-select-match>
+					<ui-select-choices group-by="groupYeasts" ng-show="$select.open && " repeat="result in yeasts | propsFilter: {name: $select.search, productCode: $select.search}">
 						<!-- <div ng-bind-html="hoporg.name | highlight: $select.search"> -->
-							{{result.name}}
+							{{result.name}} ({{result.productCode}})
+
 						<!-- </div> -->
 					</ui-select-choices>
 				</ui-select>
