@@ -348,23 +348,22 @@ mbit.controller('RecipeController', [
 # @param [Array] of parameters to filter the ingredients by.
 mbit.filter 'propsFilter', -> 
 	(ingredients, props) ->
-		out = [];
+		out = []
 		if angular.isArray(ingredients)
 			for ingredient in ingredients
-	 			itemMatches = false;
+	 			itemMatches = false
 
 	 			keys = Object.keys(props)
 	 			for key in keys
 	 				text = props[key].toLowerCase()
-	 				index = ingredient[key].toString().toLowerCase().indexOf(text)
-	 				if index != -1
+	 				if ingredient[key].toString().toLowerCase().indexOf(text) isnt -1
 	 					itemMatches = true
 	 					break
 	 			if itemMatches
 	 				out.push(ingredient)
 		else 
 			out = ingredients
-		out
+		return out
 
 
 # Add an empty ingredient to a step
